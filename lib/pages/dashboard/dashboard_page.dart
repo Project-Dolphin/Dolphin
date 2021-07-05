@@ -47,11 +47,11 @@ class DashboardPage extends StatelessWidget {
   _bottomNavigationBarItem({Widget icon, String label}) {
     return BottomNavigationBarItem(
       icon: Container(
-        margin: EdgeInsets.only(right: 3, bottom: 8),
+        margin: EdgeInsets.only(top: 8, right: 3, bottom: 8),
         child: icon,
       ),
       activeIcon: Container(
-          margin: EdgeInsets.only(right: 3, bottom: 8),
+          margin: EdgeInsets.only(top: 8, right: 3, bottom: 8),
           child: Stack(
             children: <Widget>[
               Transform.translate(
@@ -141,10 +141,8 @@ class DashboardPage extends StatelessWidget {
               label: '학사일정',
             ),
             _bottomNavigationBarItem(
-              icon: Icon(
-                CupertinoIcons.ellipsis,
-                size: 28,
-              ),
+              icon: ImageIcon(AssetImage(
+                  'assets/images/bottomNavigationIcon/ellipsis.png')),
               label: '더보기',
             ),
           ],
