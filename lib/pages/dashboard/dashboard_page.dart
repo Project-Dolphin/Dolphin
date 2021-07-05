@@ -52,15 +52,6 @@ class DashboardPage extends StatelessWidget {
       ),
       activeIcon: Container(
           margin: EdgeInsets.only(right: 3, bottom: 8),
-          // child: Container(
-          //   decoration: BoxDecoration(boxShadow: [
-          //     BoxShadow(
-          //       color: Color(0xFFB4D5F1).withOpacity(0.5),
-          //       spreadRadius: 1,
-          //       blurRadius: 5,
-          //       offset: Offset(0, 3),
-          //     )
-          //   ]),
           child: Stack(
             children: <Widget>[
               Transform.translate(
@@ -89,11 +80,11 @@ class DashboardPage extends StatelessWidget {
                 icon,
                 LinearGradient(
                     colors: <Color>[
-                      Color(0xFF1E7AFF).withOpacity(0.8),
-                      Color(0xFF009DF5).withOpacity(0.8),
+                      Color(0xFF009DF5),
+                      Color(0xFF1E7AFF),
                     ],
-                    begin: const FractionalOffset(0.0, 0.0),
-                    end: const FractionalOffset(1.0, 1.0),
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                     stops: [0.0, 1.0],
                     tileMode: TileMode.clamp),
               ),
@@ -123,7 +114,7 @@ class DashboardPage extends StatelessWidget {
           showUnselectedLabels: true,
           selectedFontSize: 10,
           unselectedFontSize: 10,
-          selectedLabelStyle: TextStyle(),
+          selectedLabelStyle: TextStyle(color: Color(0xFF1E7AFF)),
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white.withOpacity(0.8),
           elevation: 0,

@@ -17,9 +17,9 @@ class GradientIcon extends StatelessWidget {
         child: icon,
       ),
       shaderCallback: (Rect bounds) {
-        final Rect rect = Rect.fromLTRB(0, 0, 50, 50);
-        return gradient.createShader(rect);
+        return gradient.createShader(bounds);
       },
+      blendMode: BlendMode.srcATop,
     );
   }
 }
