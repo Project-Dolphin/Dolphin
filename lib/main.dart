@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.list,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
+      // darkTheme: AppTheme.dark,
+      // themeMode: ThemeMode.system,
     );
   }
 }

@@ -5,4 +5,5 @@ ThemeData darkTheme = ThemeData(
   scaffoldBackgroundColor: Colors.black87,
   highlightColor: Colors.transparent,
   splashColor: Colors.transparent,
+  fontFamily: 'Noto Sans KR',
 );

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:getx_app/common/container/glassMorphism.dart';
+
 import 'package:getx_app/widgets/carousel.dart';
+
 
 import 'bus_controller.dart';
 
@@ -10,8 +14,10 @@ class BusPage extends GetView<BusController> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Carousel(pageList: testPageList, titleList: titleList),
+
     );
   }
 }
@@ -21,7 +27,27 @@ class test1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.red,);
+    return GlassMorphism(
+          width: 300,
+          height: 478,
+          widget: Container(
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '정류장 선택',
+                    style: TextStyle(
+                      color: Color(0xff005A9E),
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    '해양대구본관',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  )
+                ],
+              )),;
   }
 }
 class test2 extends StatelessWidget {
@@ -29,7 +55,27 @@ class test2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.blue,);
+    return GlassMorphism(
+          width: 300,
+          height: 478,
+          widget: Container(
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '정류장 선택',
+                    style: TextStyle(
+                      color: Color(0xff005A9E),
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    '해양대구본관',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  )
+                ],
+              )),;
   }
 }
 class test3 extends StatelessWidget {
@@ -37,7 +83,27 @@ class test3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.black,);
+    return GlassMorphism(
+          width: 300,
+          height: 478,
+          widget: Container(
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '정류장 선택',
+                    style: TextStyle(
+                      color: Color(0xff005A9E),
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    '해양대구본관',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  )
+                ],
+              )),;
   }
 }
 class test4 extends StatelessWidget {
@@ -45,6 +111,26 @@ class test4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.yellow,);
+    return GlassMorphism(
+          width: 300,
+          height: 478,
+          widget: Container(
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '정류장 선택',
+                    style: TextStyle(
+                      color: Color(0xff005A9E),
+                      fontSize: 10,
+                    ),
+                  ),
+                  Text(
+                    '해양대구본관',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  )
+                ],
+              )),;
   }
 }

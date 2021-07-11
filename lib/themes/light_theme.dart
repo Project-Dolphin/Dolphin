@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 ThemeData lightTheme = ThemeData(
-  brightness: Brightness.light,
-  scaffoldBackgroundColor: Colors.white,
-  highlightColor: Colors.transparent,
-  splashColor: Colors.transparent,
-);
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: Colors.white,
+    highlightColor: Colors.transparent,
+    splashColor: Colors.transparent,
+    fontFamily: 'Noto Sans KR');
