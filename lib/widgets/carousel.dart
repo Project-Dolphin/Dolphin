@@ -19,6 +19,7 @@ class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Column(
         children: [
           Expanded(
@@ -69,8 +70,7 @@ class _CarouselState extends State<Carousel> {
                                   .withOpacity(_current == entry.key ? 0.8 : 0),
                           borderRadius: BorderRadius.circular(
                               _current == entry.key ? 10 : 0)),
-                      child: Center(
-                          child: Text(widget.titleList[entry.key])),
+                      child: Center(child: Text(widget.titleList[entry.key])),
                     ),
                   );
                 },
