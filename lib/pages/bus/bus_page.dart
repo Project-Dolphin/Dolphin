@@ -7,15 +7,33 @@ import 'package:getx_app/widgets/carousel.dart';
 
 import 'bus_controller.dart';
 
+import '../../common/titlebox/onelineTitle.dart';
+
 class BusPage extends GetView<BusController> {
   final List<String> titleList = ['190번', '셔틀버스', '통근버스', '학교버스'];
   List<dynamic> testPageList = [test1(), test2(), test3(), test4()];
+  final name = '버스', description = '6월 28일 월요일 16:00', stat = '시험기간';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Carousel(pageList: testPageList, titleList: titleList),
+      body: Stack(
+        children: [
+          OnelineTitle(
+            name: name,
+            description: description,
+            stat: stat,
+            fontsize1: 24.0,
+            fontsize2: 14.0,
+            fontsize3: 12.0,
+            fontweight1: FontWeight.w700,
+            fontweight2: FontWeight.w400,
+            fontweight3: FontWeight.w400,
+          ),
+          Carousel(pageList: testPageList, titleList: titleList),
+        ],
+      ),
     );
   }
 }
