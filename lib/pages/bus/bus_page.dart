@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:getx_app/common/container/glassMorphism.dart';
 
-import 'package:getx_app/widgets/carousel.dart';
+import 'package:getx_app/common/carousel/carousel.dart';
 
 import 'bus_controller.dart';
 

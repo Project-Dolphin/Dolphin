@@ -52,7 +52,7 @@ class _CarouselState extends State<Carousel> {
             height: 40,
             margin: EdgeInsets.all(20),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), color: Colors.black12),
+                borderRadius: BorderRadius.circular(10), color: Colors.white),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
@@ -63,14 +63,43 @@ class _CarouselState extends State<Carousel> {
                     child: Container(
                       width: 90,
                       decoration: BoxDecoration(
-                          color:
-                              (Theme.of(context).brightness == Brightness.dark
-                                      ? Colors.white
-                                      : Colors.blue)
-                                  .withOpacity(_current == entry.key ? 0.8 : 0),
+                          // color:
+                          //     (Theme.of(context).brightness == Brightness.dark
+                          //             ? Colors.white
+                          //             : Colors.blue)
+                          //         .withOpacity(_current == entry.key ? 0.8 : 0),
+                          gradient: _current == entry.key
+                              ? LinearGradient(
+                                  colors: <Color>[
+                                    Color(0xFF009DF5),
+                                    Color(0xFF1E7AFF),
+                                  ],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  stops: [0.0, 1.0],
+                                  tileMode: TileMode.clamp)
+                              : null,
+                          boxShadow: _current == entry.key
+                              ? [
+                                  BoxShadow(
+                                      color: Color(0xFFB4D5F1),
+                                      offset: Offset(0, 3),
+                                      blurRadius: 5,
+                                      spreadRadius: 2)
+                                ]
+                              : null,
                           borderRadius: BorderRadius.circular(
                               _current == entry.key ? 10 : 0)),
-                      child: Center(child: Text(widget.titleList[entry.key])),
+                      child: Center(
+                          child: Text(
+                        widget.titleList[entry.key],
+                        style: TextStyle(
+                            color: _current == entry.key
+                                ? Colors.white
+                                : Color(0xFF919191),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      )),
                     ),
                   );
                 },
