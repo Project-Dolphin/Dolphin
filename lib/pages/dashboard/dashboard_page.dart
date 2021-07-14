@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_app/common/icon/gradientIcon.dart';
+import 'package:getx_app/common/sizeConfig.dart';
 
 import 'package:getx_app/pages/bus/bus_page.dart';
 import 'package:getx_app/pages/calendar/calendar_page.dart';
@@ -16,6 +17,7 @@ import 'dashboard_controller.dart';
 class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return GetBuilder<DashboardController>(
       builder: (controller) {
         return Container(

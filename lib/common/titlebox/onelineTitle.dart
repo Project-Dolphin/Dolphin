@@ -22,27 +22,30 @@ class OnelineTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Row(
-          // crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            MainTitle(
-              title: name,
-              fontsize: fontsize1,
-              fontweight: fontweight1,
-            ),
-            SubText(
-              description: description,
-              fontsize: fontsize2,
-              fontweight: fontweight2,
-            ),
-            StatusContainer(
-              stat: stat,
-              fontsize: fontsize3,
-              fontweight: fontweight3,
-            ),
-          ],
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Row(
+            // crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              MainTitle(
+                title: name,
+                fontsize: fontsize1,
+                fontweight: fontweight1,
+              ),
+              SubText(
+                description: description,
+                fontsize: fontsize2,
+                fontweight: fontweight2,
+              ),
+              StatusContainer(
+                stat: stat,
+                fontsize: fontsize3,
+                fontweight: fontweight3,
+              ),
+            ],
+          ),
         ),
       ),
     );
