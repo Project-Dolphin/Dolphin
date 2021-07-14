@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:getx_app/common/sizeConfig.dart';
 
 class Carousel extends StatefulWidget {
   final List<dynamic> pageList;
@@ -18,8 +19,6 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Expanded(
       child: Container(
         color: Colors.transparent,
@@ -41,7 +40,7 @@ class _CarouselState extends State<Carousel> {
                   autoPlay: false,
                   enableInfiniteScroll: false,
                   enlargeCenterPage: false,
-                  height: height,
+                  height: SizeConfig.blockSizeVertical * 100,
                   onPageChanged: (index, reason) {
                     setState(
                       () {
@@ -55,9 +54,9 @@ class _CarouselState extends State<Carousel> {
             Positioned(
               bottom: 0,
               child: Container(
-                width: width - 20,
-                height: 40,
-                margin: EdgeInsets.all(20),
+                width: SizeConfig.blockSizeHorizontal * 90,
+                height: SizeConfig.sizeByHeight(40),
+                margin: EdgeInsets.all(SizeConfig.sizeByWidth(20)),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white),
@@ -69,7 +68,8 @@ class _CarouselState extends State<Carousel> {
                       return GestureDetector(
                         onTap: () => _controller.animateToPage(entry.key),
                         child: Container(
-                          width: (width - 20) / widget.pageList.length,
+                          width: (SizeConfig.blockSizeHorizontal * 90) /
+                              widget.pageList.length,
                           decoration: BoxDecoration(
                               // color:
                               //     (Theme.of(context).brightness == Brightness.dark
@@ -99,15 +99,18 @@ class _CarouselState extends State<Carousel> {
                               borderRadius: BorderRadius.circular(
                                   _current == entry.key ? 10 : 0)),
                           child: Center(
-                              child: Text(
-                            widget.titleList[entry.key],
-                            style: TextStyle(
-                                color: _current == entry.key
-                                    ? Colors.white
-                                    : Color(0xFF919191),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
-                          )),
+                            child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  widget.titleList[entry.key],
+                                  style: TextStyle(
+                                      color: _current == entry.key
+                                          ? Colors.white
+                                          : Color(0xFF919191),
+                                      fontSize: SizeConfig.sizeByWidth(16),
+                                      fontWeight: FontWeight.w600),
+                                )),
+                          ),
                         ),
                       );
                     },

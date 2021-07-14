@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getx_app/common/sizeConfig.dart';
 
 class IconSet extends StatelessWidget {
   const IconSet({
@@ -11,35 +12,41 @@ class IconSet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.all(19.0),
+        padding: EdgeInsets.all(SizeConfig.sizeByWidth(19)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFFFFFFFF),
-                shape: CircleBorder(),
-                padding: EdgeInsets.all(8.5),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFFFFFFFF),
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(SizeConfig.sizeByWidth(8.5)),
+                ),
+                child: Icon(
+                  Icons.search,
+                  size: SizeConfig.sizeByWidth(27.5),
+                  color: iconColor,
+                ),
+                onPressed: () {},
               ),
-              child: Icon(
-                Icons.search,
-                size: 27.5,
-                color: iconColor,
-              ),
-              onPressed: () {},
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFFFFFFFF),
-                shape: CircleBorder(),
-                padding: EdgeInsets.all(8.5),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFFFFFFFF),
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(SizeConfig.sizeByWidth(8.5)),
+                ),
+                child: Icon(
+                  Icons.notifications_none,
+                  size: SizeConfig.sizeByWidth(27.5),
+                  color: iconColor,
+                ),
+                onPressed: () {},
               ),
-              child: Icon(
-                Icons.notifications_none,
-                size: 27.5,
-                color: iconColor,
-              ),
-              onPressed: () {},
             ),
           ],
         ),

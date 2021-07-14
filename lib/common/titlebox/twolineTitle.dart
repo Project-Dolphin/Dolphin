@@ -22,7 +22,7 @@ class TwolineTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24.0,24.0,14.0,24.0),
+      padding: const EdgeInsets.fromLTRB(24.0, 24.0, 14.0, 24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,20 +34,23 @@ class TwolineTitle extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                child: Row(
-                  children: [
-                    SubTitle(
-                      title: subname,
-                      fontsize: fontsize2,
-                      fontweight: fontweight2,
-                    ),
-                    StatusContainer(
-                      stat: stat,
-                      fontsize: fontsize3,
-                      fontweight: fontweight3,
-                    ),
-                  ],
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Container(
+                  child: Row(
+                    children: [
+                      SubTitle(
+                        title: subname,
+                        fontsize: fontsize2,
+                        fontweight: fontweight2,
+                      ),
+                      StatusContainer(
+                        stat: stat,
+                        fontsize: fontsize3,
+                        fontweight: fontweight3,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               MoreText(
@@ -77,13 +80,16 @@ class MainTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 11.0),
-      child: Text(
-        name,
-        style: TextStyle(
-          fontSize: fontsize1,
-          fontWeight: fontweight1,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 11.0),
+        child: Text(
+          name,
+          style: TextStyle(
+            fontSize: fontsize1,
+            fontWeight: fontweight1,
+          ),
         ),
       ),
     );
@@ -161,17 +167,24 @@ class MoreText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          description,
-          style: TextStyle(
-            fontSize: fontsize,
-            fontWeight: fontweight,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        children: [
+          Text(
+            description,
+            style: TextStyle(
+              fontSize: fontsize,
+              fontWeight: fontweight,
+            ),
           ),
-        ),
-        Icon(Icons.arrow_forward_ios, color: Color(0xFF939393), size: 15.0,),
-      ],
+          Icon(
+            Icons.arrow_forward_ios,
+            color: Color(0xFF939393),
+            size: 15.0,
+          ),
+        ],
+      ),
     );
   }
 }

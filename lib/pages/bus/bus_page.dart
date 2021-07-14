@@ -5,6 +5,7 @@ import 'package:getx_app/common/container/glassMorphism.dart';
 
 import 'package:getx_app/common/carousel/carousel.dart';
 import 'package:getx_app/common/dropdown/dropdownButton.dart';
+import 'package:getx_app/common/sizeConfig.dart';
 import 'package:intl/intl.dart';
 
 import 'bus_controller.dart';
@@ -13,7 +14,7 @@ import '../../common/titlebox/onelineTitle.dart';
 
 class BusPage extends GetView<BusController> {
   final List<String> titleList = ['190번', '셔틀버스', '통근버스', '학교버스'];
-  List<dynamic> testPageList = [CityBus(), test2(), test3(), test4()];
+  final List<dynamic> testPageList = [CityBus(), test2(), test3(), test4()];
   final name = '버스', stat = '시험기간';
 
   @override
@@ -29,9 +30,9 @@ class BusPage extends GetView<BusController> {
             name: name,
             description: formattedDate,
             stat: stat,
-            fontsize1: 24.0,
-            fontsize2: 14.0,
-            fontsize3: 12.0,
+            fontsize1: SizeConfig.sizeByWidth(24),
+            fontsize2: SizeConfig.sizeByWidth(14),
+            fontsize3: SizeConfig.sizeByWidth(12),
             fontweight1: FontWeight.w700,
             fontweight2: FontWeight.w400,
             fontweight3: FontWeight.w400,
@@ -56,22 +57,25 @@ class _CityBusState extends State<CityBus> {
   @override
   Widget build(BuildContext context) {
     return GlassMorphism(
-      width: 300,
-      height: 478,
+      width: SizeConfig.sizeByWidth(300),
+      height: SizeConfig.sizeByHeight(478),
       widget: Container(
           margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                '정류장 선택',
-                style: TextStyle(
-                  color: Color(0xff005A9E),
-                  fontSize: 10,
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  '정류장 선택',
+                  style: TextStyle(
+                    color: Color(0xff005A9E),
+                    fontSize: SizeConfig.sizeByWidth(10),
+                  ),
                 ),
               ),
               SizedBox(
-                height: 6,
+                height: SizeConfig.sizeByHeight(6),
               ),
               Dropdown(
                   stationList,
