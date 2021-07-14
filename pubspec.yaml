@@ -29,6 +29,7 @@ dependencies:
     # Use with the CupertinoIcons class for iOS style icons.
     cupertino_icons: ^1.0.0
     carousel_slider: ^4.0.0
+    intl:
 
 dev_dependencies:
     flutter_test:
@@ -48,6 +49,7 @@ flutter:
     assets:
         - assets/images/
         - assets/images/bottomNavigationIcon/
+        - assets/images/dropdown/
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware.
