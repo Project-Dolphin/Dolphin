@@ -71,11 +71,6 @@ class _CarouselState extends State<Carousel> {
                           width: (SizeConfig.blockSizeHorizontal * 90) /
                               widget.pageList.length,
                           decoration: BoxDecoration(
-                              // color:
-                              //     (Theme.of(context).brightness == Brightness.dark
-                              //             ? Colors.white
-                              //             : Colors.blue)
-                              //         .withOpacity(_current == entry.key ? 0.8 : 0),
                               gradient: _current == entry.key
                                   ? LinearGradient(
                                       colors: <Color>[

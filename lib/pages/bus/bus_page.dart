@@ -1,11 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:getx_app/common/container/glassMorphism.dart';
-
 import 'package:getx_app/common/carousel/carousel.dart';
-import 'package:getx_app/common/dropdown/dropdownButton.dart';
 import 'package:getx_app/common/sizeConfig.dart';
+import 'package:getx_app/pages/bus/widgets/cityBus.dart';
 import 'package:intl/intl.dart';
 
 import 'bus_controller.dart';
@@ -17,18 +17,36 @@ class BusPage extends GetView<BusController> {
   final List<dynamic> testPageList = [CityBus(), test2(), test3(), test4()];
   final name = '버스', stat = '시험기간';
 
+  String weekdayToKor(String date) {
+    if (date.contains('Mon')) return date.replaceFirst('Mon', '월요일');
+    if (date.contains('Tue')) return date.replaceFirst('Tue', '화요일');
+    if (date.contains('Wed')) return date.replaceFirst('Wed', '수요일');
+    if (date.contains('Thr')) return date.replaceFirst('Thr', '목요일');
+    if (date.contains('Fri')) return date.replaceFirst('Fri', '금요일');
+    if (date.contains('Sat')) return date.replaceFirst('Sat', '토요일');
+    if (date.contains('Sun')) return date.replaceFirst('Sun', '일요일');
+    return date;
+  }
+
+  String getDate() {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('M월 d일 E HH:mm');
+    return weekdayToKor(formatter.format(now));
+  }
+
   @override
   Widget build(BuildContext context) {
-    var now = new DateTime.now();
-    var formatter = new DateFormat('M월 d일 E H:m');
-    String formattedDate = formatter.format(now);
+    controller.setDate(getDate());
+    Timer.periodic(
+        Duration(seconds: 10), (Timer t) => controller.setDate(getDate()));
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           OnelineTitle(
             name: name,
-            description: formattedDate,
+            description: controller.formattedDate,
             stat: stat,
             fontsize1: SizeConfig.sizeByWidth(24),
             fontsize2: SizeConfig.sizeByWidth(14),
@@ -40,51 +58,6 @@ class BusPage extends GetView<BusController> {
           Carousel(pageList: testPageList, titleList: titleList),
         ],
       ),
-    );
-  }
-}
-
-class CityBus extends StatefulWidget {
-  @override
-  _CityBusState createState() => _CityBusState();
-}
-
-class _CityBusState extends State<CityBus> {
-  final stationList = ['주변정류장', '해양대구본관', '부산역', '영도대교'];
-  var selectedStation = '주변정류장';
-  bool isDropdownOpen = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return GlassMorphism(
-      width: SizeConfig.sizeByWidth(300),
-      height: SizeConfig.sizeByHeight(478),
-      widget: Container(
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  '정류장 선택',
-                  style: TextStyle(
-                    color: Color(0xff005A9E),
-                    fontSize: SizeConfig.sizeByWidth(10),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.sizeByHeight(6),
-              ),
-              Dropdown(
-                  stationList,
-                  selectedStation,
-                  (value) => setState(() {
-                        selectedStation = value;
-                      })),
-            ],
-          )),
     );
   }
 }

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:getx_app/common/sizeConfig.dart';
+import 'package:getx_app/common/titlebox/onelineTitle.dart';
 
 class Dropdown extends StatefulWidget {
-  const Dropdown(this.itemList, this.selectedItem, this.setItemState, {Key key})
+  const Dropdown(this.itemList, this.selectedItem, this.setItemState,
+      {this.subText, Key key})
       : super(key: key);
 
   final List<String> itemList;
 
   final String selectedItem;
   final Function setItemState;
+  final List<String> subText;
 
   @override
   _DropdownState createState() => _DropdownState();
@@ -51,12 +54,35 @@ class _DropdownState extends State<Dropdown> {
                     width: dropdownWidth,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Text(
-                        widget.selectedItem,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: SizeConfig.sizeByWidth(15),
-                            fontWeight: FontWeight.w700),
+                      child: Row(
+                        children: [
+                          Text(
+                            widget.selectedItem,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: SizeConfig.sizeByHeight(15),
+                                fontWeight: FontWeight.w700),
+                          ),
+                          widget.selectedItem == '주변정류장' ||
+                                  widget.selectedItem == '부산역' ||
+                                  widget.selectedItem == '영도대교'
+                              ? Row(
+                                  children: [
+                                    SizedBox(
+                                      width: SizeConfig.sizeByWidth(4),
+                                    ),
+                                    Text(
+                                      '해양대행',
+                                      style: TextStyle(
+                                        color: Color(0xFF0C98F5),
+                                        fontSize: SizeConfig.sizeByHeight(12),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Container()
+                        ],
                       ),
                     ),
                   ),
@@ -83,7 +109,7 @@ class _DropdownState extends State<Dropdown> {
                 decoration: BoxDecoration(
                   border: Border.all(color: Color(0xFF0797F8), width: 0.5),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Colors.white.withOpacity(0.6),
+                  color: Colors.white.withOpacity(0.8),
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(0, 6),
@@ -121,14 +147,86 @@ class _DropdownState extends State<Dropdown> {
                                 child: FittedBox(
                                   fit: BoxFit.scaleDown,
                                   alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    item,
-                                    style: TextStyle(
-                                        color: widget.selectedItem == item
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontSize: SizeConfig.sizeByWidth(14),
-                                        fontWeight: FontWeight.w500),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        item,
+                                        style: TextStyle(
+                                            color: widget.selectedItem == item
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontSize:
+                                                SizeConfig.sizeByHeight(14),
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      item == '주변정류장'
+                                          ? Row(
+                                              children: [
+                                                SizedBox(
+                                                  width:
+                                                      SizeConfig.sizeByWidth(4),
+                                                ),
+                                                Text(
+                                                  '해양대행',
+                                                  style: TextStyle(
+                                                    color:
+                                                        widget.selectedItem ==
+                                                                item
+                                                            ? Colors.white
+                                                            : Color(0xFF0C98F5),
+                                                    fontSize:
+                                                        SizeConfig.sizeByHeight(
+                                                            12),
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width:
+                                                      SizeConfig.sizeByWidth(8),
+                                                ),
+                                                Transform.rotate(
+                                                  angle: 0.7,
+                                                  child: Icon(
+                                                    Icons.navigation_outlined,
+                                                    size:
+                                                        SizeConfig.sizeByHeight(
+                                                      14,
+                                                    ),
+                                                    color:
+                                                        widget.selectedItem ==
+                                                                item
+                                                            ? Colors.white
+                                                            : Color(0xFF0C98F5),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          : item == '부산역' || item == '영도대교'
+                                              ? Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: SizeConfig
+                                                          .sizeByWidth(4),
+                                                    ),
+                                                    Text(
+                                                      '해양대행',
+                                                      style: TextStyle(
+                                                        color:
+                                                            widget.selectedItem ==
+                                                                    item
+                                                                ? Colors.white
+                                                                : Color(
+                                                                    0xFF0C98F5),
+                                                        fontSize: SizeConfig
+                                                            .sizeByHeight(12),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              : Container()
+                                    ],
                                   ),
                                 ),
                               ),
