@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_app/pages/bus/stationData.dart';
 
 import 'routes/app_pages.dart';
 import 'routes/app_routes.dart';
 import 'themes/app_theme.dart';
 
-void main() {
+void main() async {
+  await findNearStation();
   runApp(MyApp());
 }
 

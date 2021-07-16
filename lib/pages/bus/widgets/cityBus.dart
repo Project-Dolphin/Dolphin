@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:getx_app/common/container/glassMorphism.dart';
 import 'package:getx_app/common/dropdown/dropdownButton.dart';
 import 'package:getx_app/common/sizeConfig.dart';
 import 'package:getx_app/common/text/textBox.dart';
+import 'package:getx_app/pages/bus/bus_controller.dart';
 
 class CityBus extends StatefulWidget {
   @override
@@ -16,109 +18,114 @@ class _CityBusState extends State<CityBus> {
 
   @override
   Widget build(BuildContext context) {
-    return GlassMorphism(
-      width: SizeConfig.sizeByWidth(300),
-      height: SizeConfig.sizeByHeight(478),
-      widget: Container(
-          margin: EdgeInsets.symmetric(
-              vertical: SizeConfig.sizeByWidth(8),
-              horizontal: SizeConfig.sizeByHeight(16)),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      '정류장 선택',
-                      style: TextStyle(
-                        color: Color(0xff005A9E),
-                        fontSize: SizeConfig.sizeByHeight(10),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.sizeByHeight(6),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.sizeByHeight(45),
-                  ),
-                  Container(
-                    height: SizeConfig.sizeByHeight(290),
-                    child: Stack(
+    return GetBuilder<BusController>(
+        init: BusController(),
+        builder: (_) {
+          return GlassMorphism(
+            width: SizeConfig.sizeByWidth(300),
+            height: SizeConfig.sizeByHeight(478),
+            widget: Container(
+                margin: EdgeInsets.symmetric(
+                    vertical: SizeConfig.sizeByWidth(8),
+                    horizontal: SizeConfig.sizeByHeight(16)),
+                child: Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          width: 1,
-                          margin:
-                              EdgeInsets.only(left: SizeConfig.sizeByWidth(40)),
-                          height: SizeConfig.sizeByHeight(290),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: <Color>[
-                                  Color(0xFF339EFB).withOpacity(0),
-                                  Color(0xFF3299F3),
-                                  Color(0xFF339EFB).withOpacity(0),
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                stops: [0.0, 0.5, 1.0],
-                                tileMode: TileMode.clamp),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            '정류장 선택',
+                            style: TextStyle(
+                              color: Color(0xff005A9E),
+                              fontSize: SizeConfig.sizeByHeight(10),
+                            ),
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            FirstArrive(),
-                            SecondArrive(),
-                            ThirdArrive(),
-                          ],
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(6),
                         ),
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(45),
+                        ),
+                        Container(
+                          height: SizeConfig.sizeByHeight(290),
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: 1,
+                                margin: EdgeInsets.only(
+                                    left: SizeConfig.sizeByWidth(40)),
+                                height: SizeConfig.sizeByHeight(290),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors: <Color>[
+                                        Color(0xFF339EFB).withOpacity(0),
+                                        Color(0xFF3299F3),
+                                        Color(0xFF339EFB).withOpacity(0),
+                                      ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      stops: [0.0, 0.5, 1.0],
+                                      tileMode: TileMode.clamp),
+                                ),
+                              ),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  FirstArrive(),
+                                  SecondArrive(),
+                                  ThirdArrive(),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(40),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.transparent,
+                                  shadowColor: Colors.transparent,
+                                  padding: EdgeInsets.all(
+                                      SizeConfig.sizeByHeight(8.5)),
+                                ),
+                                child: Row(
+                                  children: [
+                                    TextBox('버스위치보기', 12, FontWeight.w500,
+                                        Color(0xff3F3F3F)),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: SizeConfig.sizeByHeight(12),
+                                      color: Color(0xff3F3F3F),
+                                    )
+                                  ],
+                                )),
+                          ],
+                        )
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.sizeByHeight(40),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            padding:
-                                EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
-                          ),
-                          child: Row(
-                            children: [
-                              TextBox('버스위치보기', 12, FontWeight.w500,
-                                  Color(0xff3F3F3F)),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: SizeConfig.sizeByHeight(12),
-                                color: Color(0xff3F3F3F),
-                              )
-                            ],
-                          )),
-                    ],
-                  )
-                ],
-              ),
-              Positioned(
-                top: SizeConfig.sizeByHeight(24),
-                left: SizeConfig.sizeByWidth(45),
-                child: Dropdown(
-                    stationList,
-                    selectedStation,
-                    (value) => setState(() {
-                          selectedStation = value;
-                        })),
-              ),
-            ],
-          )),
-    );
+                    Positioned(
+                      top: SizeConfig.sizeByHeight(24),
+                      left: SizeConfig.sizeByWidth(45),
+                      child: Dropdown(
+                          stationList,
+                          selectedStation,
+                          (value) => setState(() {
+                                selectedStation = value;
+                              })),
+                    ),
+                  ],
+                )),
+          );
+        });
   }
 }
 

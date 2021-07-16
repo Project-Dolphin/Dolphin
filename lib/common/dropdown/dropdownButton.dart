@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getx_app/common/sizeConfig.dart';
-import 'package:getx_app/common/titlebox/onelineTitle.dart';
+import 'package:getx_app/pages/bus/bus_controller.dart';
 
 class Dropdown extends StatefulWidget {
   const Dropdown(this.itemList, this.selectedItem, this.setItemState,
@@ -22,6 +23,8 @@ class _DropdownState extends State<Dropdown> {
   double dropdownWidth = SizeConfig.sizeByWidth(160);
   @override
   Widget build(BuildContext context) {
+    Get.put(BusController());
+
     return Column(
       children: [
         GestureDetector(
@@ -57,7 +60,9 @@ class _DropdownState extends State<Dropdown> {
                       child: Row(
                         children: [
                           Text(
-                            widget.selectedItem,
+                            widget.selectedItem == '주변정류장'
+                                ? Get.find<BusController>().nearStation
+                                : widget.selectedItem,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: SizeConfig.sizeByHeight(15),
