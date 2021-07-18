@@ -7,6 +7,7 @@ import 'package:getx_app/common/carousel/carousel.dart';
 import 'package:getx_app/common/sizeConfig.dart';
 import 'package:getx_app/common/text/textBox.dart';
 import 'package:getx_app/pages/bus/widgets/cityBus.dart';
+import 'package:getx_app/pages/bus/widgets/commuterBus.dart';
 import 'package:getx_app/pages/bus/widgets/shuttleBus.dart';
 
 import 'bus_controller.dart';
@@ -18,7 +19,7 @@ class BusPage extends GetView<BusController> {
   final List<dynamic> testPageList = [
     CityBus(),
     ShuttleBus(),
-    test3(),
+    CommuterBus(),
     test4()
   ];
   final name = '버스', stat = '시험기간';
