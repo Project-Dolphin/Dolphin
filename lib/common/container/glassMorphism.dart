@@ -3,11 +3,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class GlassMorphism extends StatelessWidget {
-  GlassMorphism({this.widget, this.width, this.height});
+  GlassMorphism({this.widget, this.width, this.height, Key? key})
+      : super(key: key);
 
-  final Widget widget;
-  final double width;
-  final double height;
+  final Widget? widget;
+  final double? width;
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return Container(

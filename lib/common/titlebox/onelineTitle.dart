@@ -4,7 +4,7 @@ import 'package:getx_app/common/sizeConfig.dart';
 
 class OnelineTitle extends StatelessWidget {
   const OnelineTitle({
-    Key key,
+    Key? key,
     @required this.name,
     @required this.description,
     @required this.stat,
@@ -16,9 +16,9 @@ class OnelineTitle extends StatelessWidget {
     @required this.fontweight3,
   }) : super(key: key);
 
-  final String name, description, stat;
-  final double fontsize1, fontsize2, fontsize3;
-  final FontWeight fontweight1, fontweight2, fontweight3;
+  final String? name, description, stat;
+  final double? fontsize1, fontsize2, fontsize3;
+  final FontWeight? fontweight1, fontweight2, fontweight3;
 
   @override
   Widget build(BuildContext context) {

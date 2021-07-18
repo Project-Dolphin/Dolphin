@@ -3,10 +3,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:getx_app/common/sizeConfig.dart';
 
 class Carousel extends StatefulWidget {
-  final List<dynamic> pageList;
-  final List<String> titleList;
+  final List<dynamic>? pageList;
+  final List<String>? titleList;
 
-  const Carousel({Key key, @required this.pageList, @required this.titleList})
+  const Carousel({Key? key, @required this.pageList, @required this.titleList})
       : super(key: key);
 
   @override
@@ -27,7 +27,7 @@ class _CarouselState extends State<Carousel> {
           children: [
             Container(
               child: CarouselSlider(
-                items: widget.pageList
+                items: widget.pageList!
                     .map((item) => Container(
                           margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
                           child: Column(
@@ -63,13 +63,13 @@ class _CarouselState extends State<Carousel> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
-                  children: widget.pageList.asMap().entries.map(
+                  children: widget.pageList!.asMap().entries.map(
                     (entry) {
                       return GestureDetector(
                         onTap: () => _controller.animateToPage(entry.key),
                         child: Container(
                           width: (SizeConfig.blockSizeHorizontal * 90) /
-                              widget.pageList.length,
+                              widget.pageList!.length,
                           decoration: BoxDecoration(
                               gradient: _current == entry.key
                                   ? LinearGradient(
@@ -97,7 +97,7 @@ class _CarouselState extends State<Carousel> {
                             child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  widget.titleList[entry.key],
+                                  widget.titleList![entry.key],
                                   style: TextStyle(
                                       color: _current == entry.key
                                           ? Colors.white

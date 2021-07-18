@@ -1,20 +1,23 @@
+import 'dart:math';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:getx_app/pages/bus/bus_controller.dart';
 
 Future<String> findNearStation() async {
-  String nearStation;
-  double stationDistance = 100;
-  Position _currentLocation = await _determinePosition();
+  String? nearStation;
+  num stationDistance = 100;
+  Position? _currentLocation = await _determinePosition();
   station_190.forEach((element) {
     var _distance =
-        (element['gpsX'].toDouble() - _currentLocation.longitude).abs() +
-            (element['gpsY'].toDouble() - _currentLocation.latitude).abs();
+        pow((element['gpsX'].toDouble() - _currentLocation.longitude), 2) +
+            pow((element['gpsY'].toDouble() - _currentLocation.latitude), 2);
     if (_distance < stationDistance) {
       stationDistance = _distance;
       nearStation = element['nodeName'];
     }
   });
+  print(_currentLocation);
   print(nearStation);
   Get.put(BusController());
   Get.find<BusController>().setStation(nearStation);
@@ -23,8 +26,8 @@ Future<String> findNearStation() async {
 }
 
 Future<Position> _determinePosition() async {
-  bool serviceEnabled;
-  LocationPermission permission;
+  bool? serviceEnabled;
+  LocationPermission? permission;
 
   // Test if location services are enabled.
   serviceEnabled = await Geolocator.isLocationServiceEnabled();

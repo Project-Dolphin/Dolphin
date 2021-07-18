@@ -3,7 +3,7 @@ import 'package:getx_app/common/sizeConfig.dart';
 
 class TextBox extends StatelessWidget {
   const TextBox(this.text, this.fontSize, this.fontWeight, this.color,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   final String text;

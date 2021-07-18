@@ -6,7 +6,7 @@ class IconSet extends StatelessWidget {
     @required this.iconColor,
   });
 
-  final Color iconColor;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
