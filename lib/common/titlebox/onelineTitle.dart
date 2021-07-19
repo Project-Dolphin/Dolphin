@@ -26,7 +26,7 @@ class OnelineTitle extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Padding(
-          padding: EdgeInsets.all(SizeConfig.sizeByWidth(24)),
+          padding: EdgeInsets.all(SizeConfig.sizeByHeight(24)),
           child: Row(
             // crossAxisAlignment: CrossAxisAlignment.end,
             children: [

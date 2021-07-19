@@ -30,8 +30,8 @@ class _CityBusState extends State<CityBus> {
                 height: SizeConfig.sizeByHeight(478),
                 widget: Container(
                     margin: EdgeInsets.symmetric(
-                        vertical: SizeConfig.sizeByWidth(8),
-                        horizontal: SizeConfig.sizeByHeight(16)),
+                        vertical: SizeConfig.sizeByHeight(8),
+                        horizontal: SizeConfig.sizeByWidth(16)),
                     child: Stack(
                       children: [
                         Column(
@@ -48,10 +48,7 @@ class _CityBusState extends State<CityBus> {
                               ),
                             ),
                             SizedBox(
-                              height: SizeConfig.sizeByHeight(6),
-                            ),
-                            SizedBox(
-                              height: SizeConfig.sizeByHeight(45),
+                              height: SizeConfig.sizeByHeight(55),
                             ),
                             Container(
                               height: SizeConfig.sizeByHeight(290),
@@ -118,14 +115,20 @@ class _CityBusState extends State<CityBus> {
                         ),
                         Positioned(
                           top: SizeConfig.sizeByHeight(24),
-                          left: SizeConfig.sizeByWidth(28),
-                          child:
-                              Dropdown(stationList, selectedStation, (value) {
-                            setState(() {
-                              selectedStation = value;
-                            });
-                            findNearStation();
-                          }),
+                          child: Container(
+                            width: SizeConfig.sizeByWidth(268),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Dropdown(stationList, selectedStation, (value) {
+                                  setState(() {
+                                    selectedStation = value;
+                                  });
+                                  findNearStation();
+                                }),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     )),

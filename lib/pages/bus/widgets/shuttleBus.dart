@@ -49,10 +49,7 @@ class _ShuttleBusState extends State<ShuttleBus> {
                               ),
                             ),
                             SizedBox(
-                              height: SizeConfig.sizeByHeight(6),
-                            ),
-                            SizedBox(
-                              height: SizeConfig.sizeByHeight(45),
+                              height: SizeConfig.sizeByHeight(55),
                             ),
                             selectedStation == '학교종점 (아치나루터)'
                                 ? Column(children: [
@@ -173,13 +170,20 @@ class _ShuttleBusState extends State<ShuttleBus> {
                         ),
                         Positioned(
                           top: SizeConfig.sizeByHeight(24),
-                          right: SizeConfig.sizeByWidth(24),
-                          child: Dropdown(
-                              stationList,
-                              selectedStation,
-                              (value) => setState(() {
-                                    selectedStation = value;
-                                  })),
+                          child: Container(
+                            width: SizeConfig.sizeByWidth(268),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Dropdown(
+                                    stationList,
+                                    selectedStation,
+                                    (value) => setState(() {
+                                          selectedStation = value;
+                                        })),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     )),

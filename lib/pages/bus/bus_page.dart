@@ -1,13 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/common/container/glassMorphism.dart';
 import 'package:getx_app/common/carousel/carousel.dart';
 import 'package:getx_app/common/sizeConfig.dart';
 import 'package:getx_app/common/text/textBox.dart';
 import 'package:getx_app/pages/bus/widgets/cityBus.dart';
 import 'package:getx_app/pages/bus/widgets/commuterBus.dart';
+import 'package:getx_app/pages/bus/widgets/schoolBus.dart';
 import 'package:getx_app/pages/bus/widgets/shuttleBus.dart';
 
 import 'bus_controller.dart';
@@ -20,7 +18,7 @@ class BusPage extends GetView<BusController> {
     CityBus(),
     ShuttleBus(),
     CommuterBus(),
-    test4()
+    SchoolBus()
   ];
   final name = '버스', stat = '시험기간';
 
@@ -50,103 +48,20 @@ class BusPage extends GetView<BusController> {
             ],
           ),
           Positioned(
-            bottom: SizeConfig.sizeByHeight(72),
-            left: SizeConfig.sizeByWidth(36),
-            child: TextBox('학교 출발시간은 실시간 위치가 아닌 홈페이지 기준 고정값입니다.', 11,
-                FontWeight.w300, Colors.black),
+            top: SizeConfig.screenHeight * 0.8,
+            child: Container(
+              width: SizeConfig.screenWidth,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextBox('학교 출발시간은 실시간 위치가 아닌 홈페이지 기준 고정값입니다.', 11,
+                      FontWeight.w300, Colors.black),
+                ],
+              ),
+            ),
           )
         ],
       ),
-    );
-  }
-}
-
-class test2 extends StatelessWidget {
-  const test2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GlassMorphism(
-      width: 300,
-      height: 478,
-      widget: Container(
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                '정류장 선택',
-                style: TextStyle(
-                  color: Color(0xff005A9E),
-                  fontSize: 10,
-                ),
-              ),
-              Text(
-                '해양대구본관',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-              )
-            ],
-          )),
-    );
-  }
-}
-
-class test3 extends StatelessWidget {
-  const test3({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GlassMorphism(
-      width: 300,
-      height: 478,
-      widget: Container(
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                '정류장 선택',
-                style: TextStyle(
-                  color: Color(0xff005A9E),
-                  fontSize: 10,
-                ),
-              ),
-              Text(
-                '해양대구본관',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-              )
-            ],
-          )),
-    );
-  }
-}
-
-class test4 extends StatelessWidget {
-  const test4({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GlassMorphism(
-      width: 300,
-      height: 478,
-      widget: Container(
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                '정류장 선택',
-                style: TextStyle(
-                  color: Color(0xff005A9E),
-                  fontSize: 10,
-                ),
-              ),
-              Text(
-                '해양대구본관',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-              )
-            ],
-          )),
     );
   }
 }
