@@ -6,8 +6,10 @@ import 'package:getx_app/common/container/glassMorphism.dart';
 import 'package:getx_app/common/carousel/carousel.dart';
 import 'package:getx_app/common/dropdown/dropdownButton.dart';
 import 'package:getx_app/common/sizeConfig.dart';
+import 'package:getx_app/pages/bus/bus_arrive_Info.dart';
 import 'package:intl/intl.dart';
 
+import 'bur_arrive_info_viewmodel.dart';
 import 'bus_controller.dart';
 
 import '../../common/titlebox/onelineTitle.dart';
@@ -83,6 +85,7 @@ class _CityBusState extends State<CityBus> {
                   (value) => setState(() {
                         selectedStation = value;
                       })),
+              Container(child: ListWidget())
             ],
           )),
     );
@@ -175,6 +178,33 @@ class test4 extends StatelessWidget {
               )
             ],
           )),
+    );
+  }
+}
+
+class ListWidget extends StatelessWidget {
+  final ArriveInfoViewModel viewModel = ArriveInfoViewModel();
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<ArriveInfo>>(
+      future: this.viewModel.fetchBstop('167720201'),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text('${snapshot.data[index].nodeNm}'),
+                subtitle: Text('${snapshot.data[index].carNo1}'),
+              );
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
     );
   }
 }
