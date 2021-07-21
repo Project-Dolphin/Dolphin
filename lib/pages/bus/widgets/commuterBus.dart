@@ -14,124 +14,185 @@ class CommuterBus extends StatefulWidget {
 
 class _CommuterBusState extends State<CommuterBus> {
   final busList = [
-    '통근 버스 1호',
-    '통근 버스 2호',
-    '통근 버스 3호',
+    '통근 버스 1호 출근',
+    '통근 버스 2호 출근',
+    '통근 버스 3호 출근',
+    '통근 버스 1호 퇴근',
+    '통근 버스 2호 퇴근',
+    '통근 버스 3호 퇴근',
   ];
-  var selectedBus = '통근 버스 1호';
-  List<String> stationList_1 = [
-    '풍년혼수마트',
-    '롯데캐슬 상가 앞',
-    '장전동 기아자동차',
-    '장전동 놀이터',
-    '온천장 홈플러스',
-    '롯데백화점 정류장',
-    '삼성프라자(온천점)',
-    '교대역',
-    '연산동, 연제초교',
-    '양정역',
-    '부전역',
-    '서면역',
-    '범일역 5번출구',
-    '부산진역 7번출구',
-    '부산역 3번출구',
-    '영도대교 대궁한정식',
-    '학교도착',
+  var selectedBus = '통근 버스 1호 출근';
+  List<List<String>> stationList_1 = [
+    [
+      '풍년혼수마트',
+      '롯데캐슬 상가 앞',
+      '장전동 기아자동차',
+      '장전동 놀이터',
+      '온천장 홈플러스',
+      '롯데백화점 정류장',
+      '삼성프라자(온천점)',
+      '교대역',
+      '연산동, 연제초교',
+      '양정역',
+      '부전역',
+      '서면역',
+      '범일역 5번출구',
+      '부산진역 7번출구',
+      '부산역 3번출구',
+      '영도대교 대궁한정식',
+      '학교도착',
+    ],
+    [
+      '학교출발',
+      '영도구청',
+      '중앙역',
+      '부산역',
+      '서면',
+      '시청',
+      '동래',
+      '부산대',
+    ]
   ];
 
-  List<String> stationList_2 = [
-    '서면역',
-    '범일역 5번출구',
-    '부산진역 7번출구',
-    '부산역 3번출구',
-    '영도대교 대궁한정식',
-    '관사',
-    '학교도착',
+  List<List<String>> stationList_2 = [
+    [
+      '서면역',
+      '범일역 5번출구',
+      '부산진역 7번출구',
+      '부산역 3번출구',
+      '영도대교 대궁한정식',
+      '관사',
+      '학교도착',
+    ],
+    [
+      '학교출발',
+      '중리 관사앞',
+      '영도소방서',
+      '롯데백화점 (광복점)',
+      '부산역',
+      '부산진역',
+      '문현동',
+      '대연동',
+    ]
   ];
 
-  List<String> stationList_3 = [
-    '연산9동 안락뜨란채',
-    '망미동 주공아파트',
-    '수영국민은행',
-    '수영역 10번출구',
-    '한서병원',
-    'KBS방송국',
-    '남천역 버스정류장',
-    '봄봄카페',
-    '더맛한우',
-    '대연자이아파트 후문',
-    '한라아파트',
-    '동삼동 농협',
-    '부산항대교',
-    '학교도착',
+  List<List<String>> stationList_3 = [
+    [
+      '연산9동 안락뜨란채',
+      '망미동 주공아파트',
+      '수영국민은행',
+      '수영역 10번출구',
+      '한서병원',
+      'KBS방송국',
+      '남천역 버스정류장',
+      '봄봄카페',
+      '더맛한우',
+      '대연자이아파트 후문',
+      '한라아파트',
+      '동삼동 농협',
+      '부산항대교',
+      '학교도착',
+    ],
+    [
+      '학교출발',
+      '부산항대교',
+      '경성대',
+      '남천역',
+      '수영로타리',
+      '망미동 주공아파트',
+    ]
   ];
   bool isDropdownOpen = false;
 
+  findCommuterBusTitle(item) {
+    return item.contains('출근')
+        ? item.replaceFirst(' 출근', '')
+        : item.contains('퇴근')
+            ? item.replaceFirst(' 퇴근', '')
+            : item;
+  }
+
+  findCommuterBusSubTitle(item) {
+    return item.contains('출근')
+        ? '출근'
+        : item.contains('퇴근')
+            ? '퇴근'
+            : '';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GetBuilder<BusController>(
-            init: BusController(),
-            builder: (_) {
-              return GlassMorphism(
-                width: SizeConfig.sizeByWidth(300),
-                height: SizeConfig.sizeByHeight(478),
-                widget: Container(
-                    margin: EdgeInsets.symmetric(
-                        vertical: SizeConfig.sizeByHeight(8),
-                        horizontal: SizeConfig.sizeByWidth(16)),
-                    child: Stack(
+    return GetBuilder<BusController>(
+        init: BusController(),
+        builder: (_) {
+          return GlassMorphism(
+            width: SizeConfig.sizeByWidth(300),
+            height: SizeConfig.sizeByHeight(478),
+            widget: Container(
+                margin: EdgeInsets.symmetric(
+                    vertical: SizeConfig.sizeByHeight(8),
+                    horizontal: SizeConfig.sizeByWidth(16)),
+                child: Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                '버스 선택',
-                                style: TextStyle(
-                                  color: Color(0xff005A9E),
-                                  fontSize: SizeConfig.sizeByHeight(10),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: SizeConfig.sizeByHeight(55),
-                            ),
-                            selectedBus == '통근 버스 1호'
-                                ? renderStationStatus(
-                                    stationList_1, '07:25', '08:50')
-                                : selectedBus == '통근 버스 2호'
-                                    ? renderStationStatus(
-                                        stationList_2, '07:58', '08:45')
-                                    : renderStationStatus(
-                                        stationList_3, '07:35', '08:50')
-                          ],
-                        ),
-                        Positioned(
-                          top: SizeConfig.sizeByHeight(24),
-                          child: Container(
-                            width: SizeConfig.sizeByWidth(268),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Dropdown(
-                                    busList,
-                                    selectedBus,
-                                    (value) => setState(() {
-                                          selectedBus = value;
-                                        })),
-                              ],
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            '버스 선택',
+                            style: TextStyle(
+                              color: Color(0xff005A9E),
+                              fontSize: SizeConfig.sizeByHeight(10),
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(55),
+                        ),
+                        setStationStatus(selectedBus)
                       ],
-                    )),
-              );
-            }),
-      ],
-    );
+                    ),
+                    Positioned(
+                      top: SizeConfig.sizeByHeight(24),
+                      child: Container(
+                        width: SizeConfig.sizeByWidth(268),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Dropdown(
+                              busList,
+                              selectedBus,
+                              (value) => setState(() {
+                                selectedBus = value;
+                              }),
+                              findTitle: findCommuterBusTitle,
+                              findSubTitle: findCommuterBusSubTitle,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          );
+        });
+  }
+
+  setStationStatus(selectedBus) {
+    if (selectedBus == '통근 버스 1호 출근') {
+      return renderStationStatus(stationList_1[0], '07:25', '08:50');
+    } else if (selectedBus == '통근 버스 2호 출근') {
+      return renderStationStatus(stationList_2[0], '07:58', '08:45');
+    } else if (selectedBus == '통근 버스 3호 출근') {
+      return renderStationStatus(stationList_3[0], '07:35', '08:50');
+    } else if (selectedBus == '통근 버스 1호 퇴근') {
+      return renderStationStatus(stationList_1[1], '18:10', ' ');
+    } else if (selectedBus == '통근 버스 2호 퇴근') {
+      return renderStationStatus(stationList_2[1], '18:10', ' ');
+    } else if (selectedBus == '통근 버스 3호 퇴근') {
+      return renderStationStatus(stationList_3[1], '18:10', ' ');
+    }
   }
 
   renderStationStatus(
@@ -142,12 +203,12 @@ class _CommuterBusState extends State<CommuterBus> {
           child: Container(
             margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(11)),
             width: 1,
-            height: SizeConfig.sizeByHeight(315),
+            height: SizeConfig.sizeByHeight(320),
             color: Color(0xFF339EFB),
           ),
         ),
         Container(
-          height: SizeConfig.sizeByHeight(365),
+          height: SizeConfig.sizeByHeight(368),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[

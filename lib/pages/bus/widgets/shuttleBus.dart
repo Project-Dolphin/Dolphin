@@ -19,178 +19,175 @@ class _ShuttleBusState extends State<ShuttleBus> {
   var selectedStation = '학교종점 (아치나루터)';
   bool isDropdownOpen = false;
 
+  findShuttleBusSubTitle(item) {
+    return item == '하리상가' ? 'beta' : '';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GetBuilder<BusController>(
-            init: BusController(),
-            builder: (_) {
-              return GlassMorphism(
-                width: SizeConfig.sizeByWidth(300),
-                height: SizeConfig.sizeByHeight(478),
-                widget: Container(
-                    margin: EdgeInsets.symmetric(
-                        vertical: SizeConfig.sizeByWidth(8),
-                        horizontal: SizeConfig.sizeByHeight(16)),
-                    child: Stack(
+    return GetBuilder<BusController>(
+        init: BusController(),
+        builder: (_) {
+          return GlassMorphism(
+            width: SizeConfig.sizeByWidth(300),
+            height: SizeConfig.sizeByHeight(478),
+            widget: Container(
+                margin: EdgeInsets.symmetric(
+                    vertical: SizeConfig.sizeByWidth(8),
+                    horizontal: SizeConfig.sizeByHeight(16)),
+                child: Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                '정류장 선택',
-                                style: TextStyle(
-                                  color: Color(0xff005A9E),
-                                  fontSize: SizeConfig.sizeByHeight(10),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: SizeConfig.sizeByHeight(55),
-                            ),
-                            selectedStation == '학교종점 (아치나루터)'
-                                ? Column(children: [
-                                    BeforeArrive(),
-                                    Container(
-                                      height: SizeConfig.sizeByHeight(290),
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            width: 1,
-                                            margin: EdgeInsets.only(
-                                                left:
-                                                    SizeConfig.sizeByWidth(40)),
-                                            height:
-                                                SizeConfig.sizeByHeight(290),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                  colors: <Color>[
-                                                    Color(0xFF339EFB)
-                                                        .withOpacity(0),
-                                                    Color(0xFF3299F3),
-                                                    Color(0xFF339EFB)
-                                                        .withOpacity(0),
-                                                  ],
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  stops: [0.0, 0.5, 1.0],
-                                                  tileMode: TileMode.clamp),
-                                            ),
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              FirstArrive('4분 52초', '21:23'),
-                                              SecondArrive('4분 52초', '21:23'),
-                                              ThirdArrive('4분 52초', '21:23'),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ])
-                                : Column(
-                                    children: [
-                                      SizedBox(
-                                        height: SizeConfig.sizeByHeight(20),
-                                      ),
-                                      Container(
-                                        height: SizeConfig.sizeByHeight(290),
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              width: 1,
-                                              margin: EdgeInsets.only(
-                                                  left: SizeConfig.sizeByWidth(
-                                                      40)),
-                                              height:
-                                                  SizeConfig.sizeByHeight(290),
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                    colors: <Color>[
-                                                      Color(0xFF339EFB)
-                                                          .withOpacity(0),
-                                                      Color(0xFF3299F3),
-                                                      Color(0xFF339EFB)
-                                                          .withOpacity(0),
-                                                    ],
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
-                                                    stops: [0.0, 0.5, 1.0],
-                                                    tileMode: TileMode.clamp),
-                                              ),
-                                            ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                HomeDeparted('학교에서 2분전 출발'),
-                                                FirstArrive('약 4분', ''),
-                                                SecondArrive('약 7분', ''),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                            SizedBox(
-                              height: SizeConfig.sizeByHeight(10),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.transparent,
-                                      shadowColor: Colors.transparent,
-                                      padding: EdgeInsets.all(
-                                          SizeConfig.sizeByHeight(8.5)),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        TextBox('전체시간보기', 12, FontWeight.w500,
-                                            Color(0xff3F3F3F)),
-                                        Icon(
-                                          Icons.arrow_forward_ios_rounded,
-                                          size: SizeConfig.sizeByHeight(12),
-                                          color: Color(0xff3F3F3F),
-                                        )
-                                      ],
-                                    )),
-                              ],
-                            )
-                          ],
-                        ),
-                        Positioned(
-                          top: SizeConfig.sizeByHeight(24),
-                          child: Container(
-                            width: SizeConfig.sizeByWidth(268),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Dropdown(
-                                    stationList,
-                                    selectedStation,
-                                    (value) => setState(() {
-                                          selectedStation = value;
-                                        })),
-                              ],
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            '정류장 선택',
+                            style: TextStyle(
+                              color: Color(0xff005A9E),
+                              fontSize: SizeConfig.sizeByHeight(10),
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(55),
+                        ),
+                        selectedStation == '학교종점 (아치나루터)'
+                            ? Column(children: [
+                                BeforeArrive(),
+                                Container(
+                                  height: SizeConfig.sizeByHeight(290),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: 1,
+                                        margin: EdgeInsets.only(
+                                            left: SizeConfig.sizeByWidth(40)),
+                                        height: SizeConfig.sizeByHeight(290),
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              colors: <Color>[
+                                                Color(0xFF339EFB)
+                                                    .withOpacity(0),
+                                                Color(0xFF3299F3),
+                                                Color(0xFF339EFB)
+                                                    .withOpacity(0),
+                                              ],
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              stops: [0.0, 0.5, 1.0],
+                                              tileMode: TileMode.clamp),
+                                        ),
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          FirstArrive('4분 52초', '21:23'),
+                                          SecondArrive('4분 52초', '21:23'),
+                                          ThirdArrive('4분 52초', '21:23'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ])
+                            : Column(
+                                children: [
+                                  SizedBox(
+                                    height: SizeConfig.sizeByHeight(20),
+                                  ),
+                                  Container(
+                                    height: SizeConfig.sizeByHeight(290),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          width: 1,
+                                          margin: EdgeInsets.only(
+                                              left: SizeConfig.sizeByWidth(40)),
+                                          height: SizeConfig.sizeByHeight(290),
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                                colors: <Color>[
+                                                  Color(0xFF339EFB)
+                                                      .withOpacity(0),
+                                                  Color(0xFF3299F3),
+                                                  Color(0xFF339EFB)
+                                                      .withOpacity(0),
+                                                ],
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                stops: [0.0, 0.5, 1.0],
+                                                tileMode: TileMode.clamp),
+                                          ),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            HomeDeparted('학교에서 2분전 출발'),
+                                            FirstArrive('약 4분', ''),
+                                            SecondArrive('약 7분', ''),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(10),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.transparent,
+                                  shadowColor: Colors.transparent,
+                                  padding: EdgeInsets.all(
+                                      SizeConfig.sizeByHeight(8.5)),
+                                ),
+                                child: Row(
+                                  children: [
+                                    TextBox('전체시간보기', 12, FontWeight.w500,
+                                        Color(0xff3F3F3F)),
+                                    Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: SizeConfig.sizeByHeight(12),
+                                      color: Color(0xff3F3F3F),
+                                    )
+                                  ],
+                                )),
+                          ],
+                        )
                       ],
-                    )),
-              );
-            }),
-      ],
-    );
+                    ),
+                    Positioned(
+                      top: SizeConfig.sizeByHeight(24),
+                      child: Container(
+                        width: SizeConfig.sizeByWidth(268),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Dropdown(
+                              stationList,
+                              selectedStation,
+                              (value) => setState(() {
+                                selectedStation = value;
+                              }),
+                              findSubTitle: findShuttleBusSubTitle,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          );
+        });
   }
 }
 

@@ -21,7 +21,7 @@ class SchoolBus extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(12)),
-                height: SizeConfig.sizeByHeight(380),
+                height: SizeConfig.sizeByHeight(360),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

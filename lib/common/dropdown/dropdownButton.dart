@@ -5,14 +5,15 @@ import 'package:getx_app/pages/bus/bus_controller.dart';
 
 class Dropdown extends StatefulWidget {
   const Dropdown(this.itemList, this.selectedItem, this.setItemState,
-      {this.subText, Key? key})
+      {this.findTitle, this.findSubTitle, Key? key})
       : super(key: key);
 
   final List<String> itemList;
 
   final String selectedItem;
   final Function setItemState;
-  final List<String>? subText;
+  final Function? findTitle;
+  final Function? findSubTitle;
 
   @override
   _DropdownState createState() => _DropdownState();
@@ -64,39 +65,24 @@ class _DropdownState extends State<Dropdown> {
                       child: Row(
                         children: [
                           Text(
-                            widget.selectedItem == '주변정류장'
-                                ? Get.find<BusController>().nearStation
+                            widget.findTitle != null
+                                ? widget.findTitle!(widget.selectedItem) ??
+                                    widget.selectedItem
                                 : widget.selectedItem,
                             style: TextStyle(
                                 fontSize: SizeConfig.sizeByHeight(15),
                                 fontWeight: FontWeight.w700),
                           ),
-                          widget.selectedItem == '주변정류장' ||
-                                  widget.selectedItem == '부산역' ||
-                                  widget.selectedItem == '영도대교'
-                              ? Row(
-                                  children: [
-                                    SizedBox(
-                                      width: SizeConfig.sizeByWidth(4),
-                                    ),
-                                    Text(
-                                      '해양대행',
-                                      style: TextStyle(
-                                        color: Color(0xFF0C98F5),
-                                        fontSize: SizeConfig.sizeByHeight(12),
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : widget.selectedItem == '하리상가'
+                          widget.findSubTitle != null
+                              ? widget.findSubTitle!(widget.selectedItem) != ''
                                   ? Row(
                                       children: [
                                         SizedBox(
                                           width: SizeConfig.sizeByWidth(4),
                                         ),
                                         Text(
-                                          'beta',
+                                          widget.findSubTitle!(
+                                              widget.selectedItem),
                                           style: TextStyle(
                                             color: Color(0xFF0C98F5),
                                             fontSize:
@@ -107,6 +93,7 @@ class _DropdownState extends State<Dropdown> {
                                       ],
                                     )
                                   : Container()
+                              : Container()
                         ],
                       ),
                     ),
@@ -175,7 +162,11 @@ class _DropdownState extends State<Dropdown> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        item,
+                                        item.contains('출근')
+                                            ? item.replaceFirst(' 출근', '')
+                                            : item.contains('퇴근')
+                                                ? item.replaceFirst(' 퇴근', '')
+                                                : item,
                                         style: TextStyle(
                                             color: widget.selectedItem == item
                                                 ? Colors.white
@@ -184,49 +175,10 @@ class _DropdownState extends State<Dropdown> {
                                                 SizeConfig.sizeByHeight(16),
                                             fontWeight: FontWeight.w500),
                                       ),
-                                      item == '주변정류장'
-                                          ? Row(
-                                              children: [
-                                                SizedBox(
-                                                  width:
-                                                      SizeConfig.sizeByWidth(4),
-                                                ),
-                                                Text(
-                                                  '해양대행',
-                                                  style: TextStyle(
-                                                    color:
-                                                        widget.selectedItem ==
-                                                                item
-                                                            ? Colors.white
-                                                            : Color(0xFF0C98F5),
-                                                    fontSize:
-                                                        SizeConfig.sizeByHeight(
-                                                            12),
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width:
-                                                      SizeConfig.sizeByWidth(8),
-                                                ),
-                                                Transform.rotate(
-                                                  angle: 0.7,
-                                                  child: Icon(
-                                                    Icons.navigation_outlined,
-                                                    size:
-                                                        SizeConfig.sizeByHeight(
-                                                      14,
-                                                    ),
-                                                    color:
-                                                        widget.selectedItem ==
-                                                                item
-                                                            ? Colors.white
-                                                            : Color(0xFF0C98F5),
-                                                  ),
-                                                )
-                                              ],
-                                            )
-                                          : item == '부산역' || item == '영도대교'
+                                      widget.findSubTitle != null
+                                          ? widget.findSubTitle!(
+                                                      widget.selectedItem) !=
+                                                  ''
                                               ? Row(
                                                   children: [
                                                     SizedBox(
@@ -234,7 +186,12 @@ class _DropdownState extends State<Dropdown> {
                                                           .sizeByWidth(4),
                                                     ),
                                                     Text(
-                                                      '해양대행',
+                                                      widget.findSubTitle !=
+                                                              null
+                                                          ? widget.findSubTitle!(
+                                                                  item) ??
+                                                              item
+                                                          : item,
                                                       style: TextStyle(
                                                         color:
                                                             widget.selectedItem ==
@@ -248,34 +205,37 @@ class _DropdownState extends State<Dropdown> {
                                                             FontWeight.w500,
                                                       ),
                                                     ),
+                                                    item == '주변정류장'
+                                                        ? Row(children: [
+                                                            SizedBox(
+                                                              width: SizeConfig
+                                                                  .sizeByWidth(
+                                                                      8),
+                                                            ),
+                                                            Transform.rotate(
+                                                              angle: 0.7,
+                                                              child: Icon(
+                                                                Icons
+                                                                    .navigation_outlined,
+                                                                size: SizeConfig
+                                                                    .sizeByHeight(
+                                                                  14,
+                                                                ),
+                                                                color: widget
+                                                                            .selectedItem ==
+                                                                        item
+                                                                    ? Colors
+                                                                        .white
+                                                                    : Color(
+                                                                        0xFF0C98F5),
+                                                              ),
+                                                            )
+                                                          ])
+                                                        : Container()
                                                   ],
                                                 )
-                                              : item == '하리상가'
-                                                  ? Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          width: SizeConfig
-                                                              .sizeByWidth(4),
-                                                        ),
-                                                        Text(
-                                                          'beta',
-                                                          style: TextStyle(
-                                                            color: widget
-                                                                        .selectedItem ==
-                                                                    item
-                                                                ? Colors.white
-                                                                : Color(
-                                                                    0xFF0C98F5),
-                                                            fontSize: SizeConfig
-                                                                .sizeByHeight(
-                                                                    12),
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  : Container()
+                                              : Container()
+                                          : Container(),
                                     ],
                                   ),
                                 ),
