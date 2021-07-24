@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:getx_app/pages/bus/stationData.dart';
 
@@ -14,7 +16,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      // Replace the 3 second delay with your initialization code:
       future: findNearStation(),
       builder: (context, AsyncSnapshot snapshot) {
         // Show splash screen while waiting for app resources to load:
@@ -41,9 +42,11 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Icon(
-          Icons.apartment_outlined,
-          size: MediaQuery.of(context).size.width * 0.785,
+        child: Container(
+          child: SpinKitWave(
+            color: Colors.lightBlue,
+            size: 50,
+          ),
         ),
       ),
     );

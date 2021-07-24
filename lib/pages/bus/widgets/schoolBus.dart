@@ -31,7 +31,7 @@ class SchoolBus extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: SizeConfig.sizeByHeight(40),
+                height: SizeConfig.sizeByHeight(20),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

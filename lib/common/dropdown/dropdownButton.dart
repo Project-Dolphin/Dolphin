@@ -176,9 +176,7 @@ class _DropdownState extends State<Dropdown> {
                                             fontWeight: FontWeight.w500),
                                       ),
                                       widget.findSubTitle != null
-                                          ? widget.findSubTitle!(
-                                                      widget.selectedItem) !=
-                                                  ''
+                                          ? widget.findSubTitle!(item) != ''
                                               ? Row(
                                                   children: [
                                                     SizedBox(
@@ -186,12 +184,9 @@ class _DropdownState extends State<Dropdown> {
                                                           .sizeByWidth(4),
                                                     ),
                                                     Text(
-                                                      widget.findSubTitle !=
-                                                              null
-                                                          ? widget.findSubTitle!(
-                                                                  item) ??
-                                                              item
-                                                          : item,
+                                                      widget.findSubTitle!(
+                                                              item) ??
+                                                          item,
                                                       style: TextStyle(
                                                         color:
                                                             widget.selectedItem ==

@@ -4,29 +4,17 @@ import 'package:getx_app/common/container/glassMorphism.dart';
 import 'package:getx_app/common/dropdown/dropdownButton.dart';
 import 'package:getx_app/common/sizeConfig.dart';
 import 'package:getx_app/common/text/textBox.dart';
-import 'package:getx_app/pages/bus/bus_controller.dart';
+import 'package:getx_app/pages/bus/shuttleBus/shuttleBusController.dart';
 
-class ShuttleBus extends StatefulWidget {
-  @override
-  _ShuttleBusState createState() => _ShuttleBusState();
-}
-
-class _ShuttleBusState extends State<ShuttleBus> {
-  final stationList = [
-    '학교종점 (아치나루터)',
-    '하리상가',
-  ];
-  var selectedStation = '학교종점 (아치나루터)';
-  bool isDropdownOpen = false;
-
+class ShuttleBus extends GetView<ShuttleBusController> {
   findShuttleBusSubTitle(item) {
     return item == '하리상가' ? 'beta' : '';
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BusController>(
-        init: BusController(),
+    return GetBuilder<ShuttleBusController>(
+        init: ShuttleBusController(),
         builder: (_) {
           return GlassMorphism(
             width: SizeConfig.sizeByWidth(300),
@@ -53,11 +41,11 @@ class _ShuttleBusState extends State<ShuttleBus> {
                         SizedBox(
                           height: SizeConfig.sizeByHeight(55),
                         ),
-                        selectedStation == '학교종점 (아치나루터)'
+                        _.selectedStation == '학교종점 (아치나루터)'
                             ? Column(children: [
                                 BeforeArrive(),
                                 Container(
-                                  height: SizeConfig.sizeByHeight(290),
+                                  height: SizeConfig.sizeByHeight(280),
                                   child: Stack(
                                     children: [
                                       Container(
@@ -173,11 +161,9 @@ class _ShuttleBusState extends State<ShuttleBus> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Dropdown(
-                              stationList,
-                              selectedStation,
-                              (value) => setState(() {
-                                selectedStation = value;
-                              }),
+                              _.stationList,
+                              _.selectedStation,
+                              (value) => _.setSelectedStation(value),
                               findSubTitle: findShuttleBusSubTitle,
                             ),
                           ],
@@ -345,8 +331,8 @@ class ThirdArrive extends StatelessWidget {
           child: Center(
             child: Image.asset(
               'assets/images/busPage/notiIcon_later.png',
-              width: SizeConfig.sizeByWidth(30),
-              height: SizeConfig.sizeByWidth(30),
+              width: SizeConfig.sizeByHeight(30),
+              height: SizeConfig.sizeByHeight(30),
             ),
           ),
         ),
@@ -403,8 +389,8 @@ class HomeDeparted extends StatelessWidget {
           child: Center(
             child: Image.asset(
               'assets/images/busPage/busIcon_home.png',
-              width: SizeConfig.sizeByWidth(50),
-              height: SizeConfig.sizeByWidth(50),
+              width: SizeConfig.sizeByHeight(50),
+              height: SizeConfig.sizeByHeight(50),
             ),
           ),
         ),

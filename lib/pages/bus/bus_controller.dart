@@ -1,12 +1,10 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class BusController extends GetxController {
   final String title = 'Home Title';
   String formattedDate = '';
-  String nearStation = '';
 
   @override
   void onInit() {
@@ -19,13 +17,6 @@ class BusController extends GetxController {
     formattedDate = date;
     update();
   }
-
-  void setStation(station) {
-    nearStation = station;
-    update();
-  }
-
-  void setCommuterStation(bus) {}
 
   String weekdayToKor(String date) {
     if (date.contains('Mon')) return date.replaceFirst('Mon', '월요일');

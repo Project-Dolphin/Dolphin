@@ -1,12 +1,15 @@
 import 'dart:math';
-
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/pages/bus/bus_controller.dart';
+import 'package:getx_app/pages/bus/cityBus/cityBusController.dart';
+import 'package:getx_app/pages/bus/cityBus/cityBusRepository.dart';
 
-Future<String> findNearStation() async {
+Future<void> findNearStation() async {
   String? nearStation;
+  String? nodeId;
   num stationDistance = 100;
+  Get.put(CityBusController());
+  Get.find<CityBusController>().setIsLoading(true);
   Position? _currentLocation = await _determinePosition();
   station_190.forEach((element) {
     var _distance =
@@ -15,14 +18,23 @@ Future<String> findNearStation() async {
     if (_distance < stationDistance) {
       stationDistance = _distance;
       nearStation = element['nodeName'];
+      nodeId = element['nodeId'].toString();
     }
   });
   print(_currentLocation);
   print(nearStation);
-  Get.put(BusController());
-  Get.find<BusController>().setStation(nearStation);
+  Get.find<CityBusController>().setStation(nearStation);
+  // Get.find<CityBusController>()
+  //     .setResponseCityBus(await CityBusRepository().fetchCityBus(nodeId!));
+  Get.find<CityBusController>().setIsLoading(false);
+}
 
-  return 'success';
+Future<void> fetchStation(String nodeId) async {
+  Get.put(CityBusController());
+  Get.find<CityBusController>().setIsLoading(true);
+  // Get.find<CityBusController>()
+  //     .setResponseCityBus(await CityBusRepository().fetchCityBus(nodeId));
+  Get.find<CityBusController>().setIsLoading(false);
 }
 
 Future<Position> _determinePosition() async {
@@ -39,17 +51,6 @@ Future<Position> _determinePosition() async {
   }
 
   permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      // Permissions are denied, next time you could try
-      // requesting permissions again (this is also where
-      // Android's shouldShowRequestPermissionRationale
-      // returned true. According to Android guidelines
-      // your App should show an explanatory UI now.
-      return Future.error('Location permissions are denied');
-    }
-  }
 
   if (permission == LocationPermission.deniedForever) {
     // Permissions are denied forever, handle appropriately.
