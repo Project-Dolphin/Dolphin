@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_app/common/sizeConfig.dart';
+import 'package:getx_app/common/text/textBox.dart';
 import 'package:getx_app/pages/bus/bus_controller.dart';
 
 class Dropdown extends StatefulWidget {
@@ -64,15 +65,14 @@ class _DropdownState extends State<Dropdown> {
                       fit: BoxFit.scaleDown,
                       child: Row(
                         children: [
-                          Text(
-                            widget.findTitle != null
-                                ? widget.findTitle!(widget.selectedItem) ??
-                                    widget.selectedItem
-                                : widget.selectedItem,
-                            style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15),
-                                fontWeight: FontWeight.w700),
-                          ),
+                          TextBox(
+                              widget.findTitle != null
+                                  ? widget.findTitle!(widget.selectedItem) ??
+                                      widget.selectedItem
+                                  : widget.selectedItem,
+                              14,
+                              FontWeight.w700,
+                              Colors.black),
                           widget.findSubTitle != null
                               ? widget.findSubTitle!(widget.selectedItem) != ''
                                   ? Row(

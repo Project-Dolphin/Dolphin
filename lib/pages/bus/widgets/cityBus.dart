@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:getx_app/common/container/glassMorphism.dart';
 import 'package:getx_app/common/dialog/dialog.dart';
 import 'package:getx_app/common/dropdown/dropdownButton.dart';
-import 'package:getx_app/common/icon/gradientIcon.dart';
 import 'package:getx_app/common/sizeConfig.dart';
 import 'package:getx_app/common/text/textBox.dart';
 import 'package:getx_app/pages/bus/cityBus/cityBusController.dart';
@@ -69,13 +68,85 @@ class CityBus extends GetView<CityBusController> {
                                 tileMode: TileMode.clamp),
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            FirstArrive(),
-                            SecondArrive(),
-                            ThirdArrive(),
-                          ],
+                        GetBuilder<CityBusController>(
+                          init: CityBusController(),
+                          builder: (_) {
+                            return _.selectedStation == '해양대구본관'
+                                ? Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      FirstArrive(
+                                          _.nextDepartCityBus!.length > 0
+                                              ? _.nextDepartCityBus![0]
+                                                  .difference(DateTime.now())
+                                                  .inMinutes
+                                                  .toString()
+                                              : '없음',
+                                          _.nextDepartCityBus!.length > 0
+                                              ? DateFormat('HH:mm').format(
+                                                  _.nextDepartCityBus![0])
+                                              : ' '),
+                                      SecondArrive(
+                                          _.nextDepartCityBus!.length > 1
+                                              ? _.nextDepartCityBus![1]
+                                                  .difference(DateTime.now())
+                                                  .inMinutes
+                                                  .toString()
+                                              : '없음',
+                                          _.nextDepartCityBus!.length > 1
+                                              ? DateFormat('HH:mm').format(
+                                                  _.nextDepartCityBus![1])
+                                              : ' '),
+                                      ThirdArrive(
+                                          _.nextDepartCityBus!.length > 2
+                                              ? _.nextDepartCityBus![2]
+                                                  .difference(DateTime.now())
+                                                  .inMinutes
+                                                  .toString()
+                                              : '없음',
+                                          _.nextDepartCityBus!.length > 2
+                                              ? DateFormat('HH:mm').format(
+                                                  _.nextDepartCityBus![2])
+                                              : ' '),
+                                    ],
+                                  )
+                                : Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      _.isLoading
+                                          ? SpinKitThreeBounce(
+                                              color: Colors.lightBlue,
+                                              size: SizeConfig.sizeByHeight(30),
+                                            )
+                                          : FirstArrive(
+                                              _.responseCityBus?.min1,
+                                              _.responseCityBus != null
+                                                  ? DateFormat('HH:mm').format(
+                                                      DateTime.now().add(Duration(
+                                                          minutes: int.parse(_
+                                                              .responseCityBus!
+                                                              .min1))))
+                                                  : 'error'),
+                                      _.isLoading
+                                          ? SpinKitThreeBounce(
+                                              color: Colors.lightBlue,
+                                              size: SizeConfig.sizeByHeight(30),
+                                            )
+                                          : SecondArrive(
+                                              _.responseCityBus?.min2,
+                                              _.responseCityBus != null
+                                                  ? DateFormat('HH:mm').format(
+                                                      DateTime.now().add(Duration(
+                                                          minutes: int.parse(_
+                                                              .responseCityBus!
+                                                              .min2))))
+                                                  : 'error'),
+                                      ThirdArrive(null, "error"),
+                                    ],
+                                  );
+                          },
                         ),
                       ],
                     ),
@@ -129,7 +200,7 @@ class CityBus extends GetView<CityBusController> {
                                         ? fetchStation('169100201')
                                         : value == '영도대교'
                                             ? fetchStation('167850202')
-                                            : print('해양대구본관');
+                                            : _.findNextDepartCityBus();
 
                                 controller.setSelectedStation(value);
                               },
@@ -148,192 +219,186 @@ class CityBus extends GetView<CityBusController> {
 }
 
 class FirstArrive extends StatelessWidget {
-  const FirstArrive({Key? key}) : super(key: key);
+  const FirstArrive(this.remainTime, this.arriveTime, {Key? key})
+      : super(key: key);
+  final String arriveTime;
+  final String? remainTime;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CityBusController>(
-        init: CityBusController(),
-        builder: (_) {
-          return Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: SizeConfig.sizeByWidth(80),
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/busPage/busIcon_190.png',
-                        width: SizeConfig.sizeByHeight(80),
-                        height: SizeConfig.sizeByHeight(80),
+    return Column(
+      children: [
+        Row(
+          children: [
+            Container(
+              width: SizeConfig.sizeByWidth(80),
+              child: Center(
+                child: Image.asset(
+                  'assets/images/busPage/busIcon_190.png',
+                  width: SizeConfig.sizeByHeight(80),
+                  height: SizeConfig.sizeByHeight(80),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: SizeConfig.sizeByWidth(15),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '도착까지',
+                  style: TextStyle(
+                      color: Color(0xFF0797F8),
+                      fontSize: SizeConfig.sizeByHeight(12),
+                      fontWeight: FontWeight.w700),
+                ),
+                Container(
+                  height: SizeConfig.sizeByHeight(70),
+                  child: Center(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              remainTime == '없음'
+                                  ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
+                                      Color(0xFF3F3F3F))
+                                  : TextBox(
+                                      '약 ${remainTime != null ? remainTime : '300'}분',
+                                      28,
+                                      FontWeight.w700,
+                                      Color(0xFF3F3F3F)),
+                              SizedBox(
+                                width: SizeConfig.sizeByWidth(10),
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextBox(
+                                    '$arriveTime',
+                                    14,
+                                    FontWeight.w500,
+                                    Color(0xFF717171),
+                                  ),
+                                  SizedBox(
+                                    height: SizeConfig.sizeByHeight(6),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: SizeConfig.sizeByHeight(25),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: SizeConfig.sizeByWidth(15),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '도착까지',
-                        style: TextStyle(
-                            color: Color(0xFF0797F8),
-                            fontSize: SizeConfig.sizeByHeight(12),
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Container(
-                        height: SizeConfig.sizeByHeight(70),
-                        child: Center(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Column(
-                              children: [
-                                _.isLoading
-                                    ? SpinKitThreeBounce(
-                                        color: Colors.lightBlue,
-                                        size: SizeConfig.sizeByHeight(30),
-                                      )
-                                    : Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          TextBox(
-                                              '약 ${_.responseCityBus != null ? _.responseCityBus!.min1 : 300}분',
-                                              28,
-                                              FontWeight.w700,
-                                              Color(0xFF3F3F3F)),
-                                          SizedBox(
-                                            width: SizeConfig.sizeByWidth(10),
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              TextBox(
-                                                '${_.responseCityBus != null ? DateFormat('HH:mm').format(DateTime.now().add(Duration(minutes: int.parse(_.responseCityBus!.min1)))) : 'error'}',
-                                                14,
-                                                FontWeight.w500,
-                                                Color(0xFF717171),
-                                              ),
-                                              SizedBox(
-                                                height:
-                                                    SizeConfig.sizeByHeight(6),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                SizedBox(
-                                  height: SizeConfig.sizeByHeight(25),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              )
-            ],
-          );
-        });
+                ),
+              ],
+            )
+          ],
+        )
+      ],
+    );
   }
 }
 
 class SecondArrive extends StatelessWidget {
-  const SecondArrive({Key? key}) : super(key: key);
+  const SecondArrive(this.remainTime, this.arriveTime, {Key? key})
+      : super(key: key);
+  final String arriveTime;
+  final String? remainTime;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CityBusController>(
-        init: CityBusController(),
-        builder: (_) {
-          return Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: SizeConfig.sizeByWidth(80),
-                    child: Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.transparent,
-                          shadowColor: Colors.transparent,
+    return Column(
+      children: [
+        Row(
+          children: [
+            Container(
+              width: SizeConfig.sizeByWidth(80),
+              child: Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                  ),
+                  onPressed: () {
+                    Get.dialog(
+                        AlertDialog(
+                          contentPadding: EdgeInsets.fromLTRB(
+                              SizeConfig.sizeByHeight(20),
+                              SizeConfig.sizeByHeight(20),
+                              SizeConfig.sizeByHeight(20),
+                              0),
+                          content: dialog,
                         ),
-                        onPressed: () {
-                          Get.dialog(
-                              AlertDialog(
-                                contentPadding: EdgeInsets.fromLTRB(
-                                    SizeConfig.sizeByHeight(20),
-                                    SizeConfig.sizeByHeight(20),
-                                    SizeConfig.sizeByHeight(20),
-                                    0),
-                                content: dialog,
-                              ),
-                              transitionDuration: Duration(milliseconds: 200),
-                              name: '버스알림');
-                        },
-                        child: Image.asset(
-                          'assets/images/busPage/notiIcon_next.png',
-                          width: SizeConfig.sizeByHeight(60),
-                          height: SizeConfig.sizeByHeight(60),
-                        ),
-                      ),
+                        transitionDuration: Duration(milliseconds: 200),
+                        name: '버스알림');
+                  },
+                  child: Image.asset(
+                    'assets/images/busPage/notiIcon_next.png',
+                    width: SizeConfig.sizeByHeight(60),
+                    height: SizeConfig.sizeByHeight(60),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: SizeConfig.sizeByWidth(15),
+            ),
+            Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    remainTime == '없음'
+                        ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
+                            Color(0xFF3F3F3F))
+                        : TextBox(
+                            '약 ${remainTime != null ? remainTime : '300'}분',
+                            22,
+                            FontWeight.w700,
+                            Color(0xFF3F3F3F)),
+                    SizedBox(
+                      width: SizeConfig.sizeByWidth(10),
                     ),
-                  ),
-                  SizedBox(
-                    width: SizeConfig.sizeByWidth(15),
-                  ),
-                  Column(
-                    children: [
-                      _.isLoading
-                          ? SpinKitThreeBounce(
-                              color: Colors.lightBlue,
-                              size: SizeConfig.sizeByHeight(30),
-                            )
-                          : Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                TextBox(
-                                    '약 ${_.responseCityBus != null ? _.responseCityBus?.min2 : '300'}분',
-                                    22,
-                                    FontWeight.w700,
-                                    Color(0xFF3F3F3F)),
-                                SizedBox(
-                                  width: SizeConfig.sizeByWidth(10),
-                                ),
-                                Column(
-                                  children: [
-                                    TextBox(
-                                      '${_.responseCityBus != null ? DateFormat('HH:mm').format(DateTime.now().add(Duration(minutes: int.parse(_.responseCityBus!.min2)))) : 'error'}',
-                                      14,
-                                      FontWeight.w500,
-                                      Color(0xFF717171),
-                                    ),
-                                    SizedBox(
-                                      height: SizeConfig.sizeByHeight(3),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                      SizedBox(
-                        height: SizeConfig.sizeByHeight(5),
-                      )
-                    ],
-                  )
-                ],
-              )
-            ],
-          );
-        });
+                    Column(
+                      children: [
+                        TextBox(
+                          '$arriveTime',
+                          14,
+                          FontWeight.w500,
+                          Color(0xFF717171),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(3),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: SizeConfig.sizeByHeight(5),
+                )
+              ],
+            )
+          ],
+        )
+      ],
+    );
   }
 }
 
 class ThirdArrive extends StatelessWidget {
-  const ThirdArrive({Key? key}) : super(key: key);
+  const ThirdArrive(this.remainTime, this.arriveTime, {Key? key})
+      : super(key: key);
+  final String? arriveTime;
+  final String? remainTime;
 
   @override
   Widget build(BuildContext context) {
@@ -359,14 +424,21 @@ class ThirdArrive extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    TextBox('4분 52초', 18, FontWeight.w500, Color(0xFF3F3F3F)),
+                    remainTime == '없음'
+                        ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
+                            Color(0xFF3F3F3F))
+                        : TextBox(
+                            '약 ${remainTime != null ? remainTime : '300'}분',
+                            18,
+                            FontWeight.w500,
+                            Color(0xFF3F3F3F)),
                     SizedBox(
                       width: SizeConfig.sizeByWidth(10),
                     ),
                     Column(
                       children: [
                         TextBox(
-                          '21:45',
+                          '$arriveTime',
                           14,
                           FontWeight.w500,
                           Color(0xFF717171),

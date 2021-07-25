@@ -58,6 +58,7 @@ flutter:
         - assets/images/dropdown/
         - assets/images/busPage/
         - assets/json/190_bus_last.json
+        - assets/json/190_bus_departSchool.json
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware.

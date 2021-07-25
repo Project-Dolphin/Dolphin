@@ -1,5 +1,7 @@
 import 'dart:convert' as convert;
 
+import 'package:flutter/services.dart';
+import 'package:getx_app/pages/bus/cityBus/departCityBus.dart';
 import 'package:getx_app/pages/bus/cityBus/responseCityBus.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
@@ -26,5 +28,15 @@ class CityBusRepository {
       print('error ${response.statusCode}');
       return ResponseCityBus();
     }
+  }
+
+  Future<List<String>?> fetchDepartCityBus(String today) async {
+    final json =
+        await rootBundle.loadString('assets/json/190_bus_departSchool.json');
+    final jsonResult = convert.jsonDecode(json);
+    final jsonDepartCityBus = jsonResult['$today'];
+    final result = Weekday.fromJson(jsonDepartCityBus).data;
+
+    return result;
   }
 }
