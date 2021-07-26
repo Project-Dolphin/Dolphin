@@ -44,7 +44,7 @@ class CalendarPage extends GetView<CalendarController> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0,7,0,0),
+                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 0),
                           child: MoreText(
                             description: more,
                             fontsize: SizeConfig.sizeByWidth(12),
@@ -59,7 +59,7 @@ class CalendarPage extends GetView<CalendarController> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0,80,0,0),
+            padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
             child: Column(
               children: [
                 Center(
@@ -84,7 +84,7 @@ class CalendarPage extends GetView<CalendarController> {
 }
 
 class test2 extends StatelessWidget {
-  const test2({Key key}) : super(key: key);
+  const test2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +92,10 @@ class test2 extends StatelessWidget {
       width: 320,
       height: 319,
       widget: Container(
-          child: TableCalendar(
-            locale: 'ko_KR',
-          )
-      ),
+          // child: TableCalendar(
+          //   locale: 'ko_KR',
+          // )
+          ),
     );
   }
 }

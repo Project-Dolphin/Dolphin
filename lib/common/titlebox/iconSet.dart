@@ -6,13 +6,13 @@ class IconSet extends StatelessWidget {
     @required this.iconColor,
   });
 
-  final Color iconColor;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.all(SizeConfig.sizeByWidth(19)),
+        padding: EdgeInsets.all(SizeConfig.sizeByHeight(19)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -22,11 +22,11 @@ class IconSet extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xFFFFFFFF),
                   shape: CircleBorder(),
-                  padding: EdgeInsets.all(SizeConfig.sizeByWidth(8.5)),
+                  padding: EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
                 ),
                 child: Icon(
                   Icons.search,
-                  size: SizeConfig.sizeByWidth(27.5),
+                  size: SizeConfig.sizeByHeight(27.5),
                   color: iconColor,
                 ),
                 onPressed: () {},
@@ -38,11 +38,11 @@ class IconSet extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xFFFFFFFF),
                   shape: CircleBorder(),
-                  padding: EdgeInsets.all(SizeConfig.sizeByWidth(8.5)),
+                  padding: EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
                 ),
                 child: Icon(
                   Icons.notifications_none,
-                  size: SizeConfig.sizeByWidth(27.5),
+                  size: SizeConfig.sizeByHeight(27.5),
                   color: iconColor,
                 ),
                 onPressed: () {},

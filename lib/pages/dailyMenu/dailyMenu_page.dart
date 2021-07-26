@@ -9,7 +9,13 @@ import 'package:getx_app/common/container/glassMorphism.dart';
 
 class DailyMenuPage extends GetView<DailyMenuController> {
   final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
-  final List<dynamic> testPageList = [CityBus(), CityBus(), CityBus(), CityBus(), CityBus()];
+  final List<dynamic> testPageList = [
+    CityBus(),
+    CityBus(),
+    CityBus(),
+    CityBus(),
+    CityBus()
+  ];
   final name = '식단', subname = '0층 식단', stat = '운영중', more = '이번주 식단 보기';
   var index = 0;
 
@@ -29,7 +35,7 @@ class DailyMenuPage extends GetView<DailyMenuController> {
           fontweight2: FontWeight.w500,
           fontweight3: FontWeight.w400,
         ),
-        Carousel(pageList: testPageList, titleList: titleList),
+        Carousel(pageList: testPageList, titleList: titleList, bar: true),
       ],
     );
   }
@@ -42,7 +48,16 @@ class CityBus extends StatefulWidget {
 
 class _CityBusState extends State<CityBus> {
   var mealTime = ["Time ~ Time", "Time ~ Time", "Time ~ Time"];
-  var mealMenu = ["잡곡밥", "양배추샐러드", "배추김치", "제육볶음", "순대찜", "깍두기", "야쿠르트", "아이스크림"];
+  var mealMenu = [
+    "잡곡밥",
+    "양배추샐러드",
+    "배추김치",
+    "제육볶음",
+    "순대찜",
+    "깍두기",
+    "야쿠르트",
+    "아이스크림"
+  ];
   bool isDropdownOpen = false;
 
   @override
@@ -58,16 +73,37 @@ class _CityBusState extends State<CityBus> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(bottom: SizeConfig.sizeByWidth(29.0),),
-                child: MealContentColumn(mealName: "점심", mealTime: mealTime[0], mealMenu: mealMenu, iconColor: 0xffF2994A,),
+                padding: EdgeInsets.only(
+                  bottom: SizeConfig.sizeByWidth(29.0),
+                ),
+                child: MealContentColumn(
+                  mealName: "점심",
+                  mealTime: mealTime[0],
+                  mealMenu: mealMenu,
+                  iconColor: 0xffF2994A,
+                ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: SizeConfig.sizeByWidth(29.0),),
-                child: MealContentColumn(mealName: "저녁", mealTime: mealTime[1], mealMenu: mealMenu, iconColor: 0xffEB5757,),
+                padding: EdgeInsets.only(
+                  bottom: SizeConfig.sizeByWidth(29.0),
+                ),
+                child: MealContentColumn(
+                  mealName: "저녁",
+                  mealTime: mealTime[1],
+                  mealMenu: mealMenu,
+                  iconColor: 0xffEB5757,
+                ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: SizeConfig.sizeByWidth(29.0),),
-                child: MealContentColumn(mealName: "일품식", mealTime: mealTime[2], mealMenu: mealMenu, iconColor: 0xff9B51E0,),
+                padding: EdgeInsets.only(
+                  bottom: SizeConfig.sizeByWidth(29.0),
+                ),
+                child: MealContentColumn(
+                  mealName: "일품식",
+                  mealTime: mealTime[2],
+                  mealMenu: mealMenu,
+                  iconColor: 0xff9B51E0,
+                ),
               ),
             ],
           ),
@@ -79,7 +115,7 @@ class _CityBusState extends State<CityBus> {
 
 class MealContentColumn extends StatelessWidget {
   const MealContentColumn({
-    Key key,
+    Key? key,
     @required this.mealName,
     @required this.mealTime,
     @required this.mealMenu,

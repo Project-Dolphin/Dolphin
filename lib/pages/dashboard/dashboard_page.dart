@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:getx_app/common/icon/gradientIcon.dart';
 import 'package:getx_app/common/sizeConfig.dart';
@@ -15,6 +16,9 @@ import 'package:getx_app/pages/notice/notice_page.dart';
 import 'dashboard_controller.dart';
 
 class DashboardPage extends StatelessWidget {
+  DashboardPage() {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -46,7 +50,7 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  _bottomNavigationBarItem({Widget icon, String label}) {
+  _bottomNavigationBarItem({Widget? icon, String? label}) {
     return BottomNavigationBarItem(
       icon: Container(
         margin: EdgeInsets.only(top: 8, right: 3, bottom: 8),
@@ -79,7 +83,7 @@ class DashboardPage extends StatelessWidget {
                 ),
               ),
               GradientIcon(
-                icon,
+                icon!,
                 LinearGradient(
                     colors: <Color>[
                       Color(0xFF009DF5),

@@ -13,7 +13,11 @@ import '../../common/titlebox/iconSet.dart';
 
 class NoticePage extends GetView<NoticeController> {
   final List<String> titleList = ['일반 공지', '고정 공지', '도서관'];
-  final List<dynamic> testPageList = [NormalNotice(), FixedNotice(), LibNotice()];
+  final List<dynamic> testPageList = [
+    NormalNotice(),
+    FixedNotice(),
+    LibNotice()
+  ];
   final name = '공지사항', subname = '아치마당', stat = '일반', more = '학교 홈페이지';
   var iconColor = Color(0xFF000000);
 
@@ -23,7 +27,9 @@ class NoticePage extends GetView<NoticeController> {
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          IconSet(iconColor: iconColor,),
+          IconSet(
+            iconColor: iconColor,
+          ),
           Column(
             children: [
               TwolineTitle(
@@ -38,7 +44,7 @@ class NoticePage extends GetView<NoticeController> {
                 fontweight2: FontWeight.w500,
                 fontweight3: FontWeight.w400,
               ),
-              Carousel(pageList: testPageList, titleList: titleList),
+              Carousel(pageList: testPageList, titleList: titleList, bar: true),
             ],
           ),
         ],
@@ -48,7 +54,7 @@ class NoticePage extends GetView<NoticeController> {
 }
 
 class NormalNotice extends StatelessWidget {
-  const NormalNotice({Key key}) : super(key: key);
+  const NormalNotice({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +84,7 @@ class NormalNotice extends StatelessWidget {
 }
 
 class FixedNotice extends StatelessWidget {
-  const FixedNotice({Key key}) : super(key: key);
+  const FixedNotice({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +114,7 @@ class FixedNotice extends StatelessWidget {
 }
 
 class LibNotice extends StatelessWidget {
-  const LibNotice({Key key}) : super(key: key);
+  const LibNotice({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

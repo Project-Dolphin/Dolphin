@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getx_app/common/sizeConfig.dart';
+import 'package:getx_app/common/text/textBox.dart';
+import 'package:getx_app/pages/bus/bus_controller.dart';
 
 class Dropdown extends StatefulWidget {
-  const Dropdown(this.itemList, this.selectedItem, this.setItemState, {Key key})
+  const Dropdown(this.itemList, this.selectedItem, this.setItemState,
+      {this.findTitle, this.findSubTitle, Key? key})
       : super(key: key);
 
   final List<String> itemList;
 
   final String selectedItem;
   final Function setItemState;
+  final Function? findTitle;
+  final Function? findSubTitle;
 
   @override
   _DropdownState createState() => _DropdownState();
@@ -16,9 +22,11 @@ class Dropdown extends StatefulWidget {
 
 class _DropdownState extends State<Dropdown> {
   bool isDropdownOpen = false;
-  double dropdownWidth = SizeConfig.sizeByWidth(160);
+  double dropdownWidth = SizeConfig.sizeByWidth(200);
   @override
   Widget build(BuildContext context) {
+    Get.put(BusController());
+
     return Column(
       children: [
         GestureDetector(
@@ -29,9 +37,11 @@ class _DropdownState extends State<Dropdown> {
           },
           child: Container(
               width: dropdownWidth,
-              height: SizeConfig.sizeByHeight(30),
+              height: SizeConfig.sizeByHeight(35),
               decoration: BoxDecoration(
-                border: Border.all(color: Color(0xFF0797F8), width: 0.5),
+                border: isDropdownOpen
+                    ? Border.all(color: Color(0xFF0797F8), width: 0.5)
+                    : null,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 color: Colors.white.withOpacity(0.6),
                 boxShadow: [
@@ -43,31 +53,59 @@ class _DropdownState extends State<Dropdown> {
                   )
                 ],
               ),
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              child: Stack(
-                alignment: AlignmentDirectional.centerEnd,
+              padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.sizeByHeight(4),
+                  horizontal: SizeConfig.sizeByWidth(8)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: dropdownWidth,
+                    margin: EdgeInsets.only(left: SizeConfig.sizeByWidth(7)),
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Text(
-                        widget.selectedItem,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: SizeConfig.sizeByWidth(15),
-                            fontWeight: FontWeight.w700),
+                      child: Row(
+                        children: [
+                          TextBox(
+                              widget.findTitle != null
+                                  ? widget.findTitle!(widget.selectedItem) ??
+                                      widget.selectedItem
+                                  : widget.selectedItem,
+                              14,
+                              FontWeight.w700,
+                              Colors.black),
+                          widget.findSubTitle != null
+                              ? widget.findSubTitle!(widget.selectedItem) != ''
+                                  ? Row(
+                                      children: [
+                                        SizedBox(
+                                          width: SizeConfig.sizeByWidth(4),
+                                        ),
+                                        Text(
+                                          widget.findSubTitle!(
+                                              widget.selectedItem),
+                                          style: TextStyle(
+                                            color: Color(0xFF0C98F5),
+                                            fontSize:
+                                                SizeConfig.sizeByHeight(12),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Container()
+                              : Container()
+                        ],
                       ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(right: SizeConfig.sizeByWidth(10)),
+                    margin: EdgeInsets.only(right: SizeConfig.sizeByWidth(2)),
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Image.asset(
                         "assets/images/dropdown/dropdownIcon.png",
-                        width: SizeConfig.sizeByWidth(10),
-                        height: SizeConfig.sizeByWidth(10),
+                        width: SizeConfig.sizeByWidth(14),
+                        height: SizeConfig.sizeByWidth(14),
                       ),
                     ),
                   )
@@ -83,7 +121,7 @@ class _DropdownState extends State<Dropdown> {
                 decoration: BoxDecoration(
                   border: Border.all(color: Color(0xFF0797F8), width: 0.5),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Colors.white.withOpacity(0.6),
+                  color: Colors.white.withOpacity(0.8),
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(0, 6),
@@ -103,14 +141,14 @@ class _DropdownState extends State<Dropdown> {
                               });
                             },
                             child: (Container(
-                              width: SizeConfig.sizeByWidth(158),
+                              width: SizeConfig.sizeByWidth(194),
                               padding: EdgeInsets.symmetric(
                                   vertical: SizeConfig.sizeByHeight(4)),
                               margin: EdgeInsets.symmetric(
                                   horizontal: 1, vertical: 1),
                               decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
+                                    BorderRadius.all(Radius.circular(10)),
                                 color: widget.selectedItem == item
                                     ? Color(0xFF52B9FF)
                                     : Colors.transparent,
@@ -121,14 +159,79 @@ class _DropdownState extends State<Dropdown> {
                                 child: FittedBox(
                                   fit: BoxFit.scaleDown,
                                   alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    item,
-                                    style: TextStyle(
-                                        color: widget.selectedItem == item
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontSize: SizeConfig.sizeByWidth(14),
-                                        fontWeight: FontWeight.w500),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        item.contains('출근')
+                                            ? item.replaceFirst(' 출근', '')
+                                            : item.contains('퇴근')
+                                                ? item.replaceFirst(' 퇴근', '')
+                                                : item,
+                                        style: TextStyle(
+                                            color: widget.selectedItem == item
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontSize:
+                                                SizeConfig.sizeByHeight(16),
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      widget.findSubTitle != null
+                                          ? widget.findSubTitle!(item) != ''
+                                              ? Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: SizeConfig
+                                                          .sizeByWidth(4),
+                                                    ),
+                                                    Text(
+                                                      widget.findSubTitle!(
+                                                              item) ??
+                                                          item,
+                                                      style: TextStyle(
+                                                        color:
+                                                            widget.selectedItem ==
+                                                                    item
+                                                                ? Colors.white
+                                                                : Color(
+                                                                    0xFF0C98F5),
+                                                        fontSize: SizeConfig
+                                                            .sizeByHeight(12),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    item == '주변정류장'
+                                                        ? Row(children: [
+                                                            SizedBox(
+                                                              width: SizeConfig
+                                                                  .sizeByWidth(
+                                                                      8),
+                                                            ),
+                                                            Transform.rotate(
+                                                              angle: 0.7,
+                                                              child: Icon(
+                                                                Icons
+                                                                    .navigation_outlined,
+                                                                size: SizeConfig
+                                                                    .sizeByHeight(
+                                                                  14,
+                                                                ),
+                                                                color: widget
+                                                                            .selectedItem ==
+                                                                        item
+                                                                    ? Colors
+                                                                        .white
+                                                                    : Color(
+                                                                        0xFF0C98F5),
+                                                              ),
+                                                            )
+                                                          ])
+                                                        : Container()
+                                                  ],
+                                                )
+                                              : Container()
+                                          : Container(),
+                                    ],
                                   ),
                                 ),
                               ),

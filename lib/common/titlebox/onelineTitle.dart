@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:getx_app/common/sizeConfig.dart';
 
 class OnelineTitle extends StatelessWidget {
   const OnelineTitle({
-    Key key,
+    Key? key,
     @required this.name,
     @required this.description,
     @required this.stat,
@@ -15,9 +16,9 @@ class OnelineTitle extends StatelessWidget {
     @required this.fontweight3,
   }) : super(key: key);
 
-  final String name, description, stat;
-  final double fontsize1, fontsize2, fontsize3;
-  final FontWeight fontweight1, fontweight2, fontweight3;
+  final String? name, description, stat;
+  final double? fontsize1, fontsize2, fontsize3;
+  final FontWeight? fontweight1, fontweight2, fontweight3;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class OnelineTitle extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(SizeConfig.sizeByHeight(24)),
           child: Row(
             // crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -64,7 +65,7 @@ class MainTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 15.0),
+      padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(15.0)),
       child: Text(
         title,
         style: TextStyle(
@@ -88,7 +89,7 @@ class SubText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 13.0),
+      padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(13.0)),
       child: Text(
         description,
         style: TextStyle(
@@ -113,17 +114,20 @@ class StatusContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text(
-          stat,
-          style: TextStyle(
-            fontSize: fontsize,
-            fontWeight: fontweight,
-            color: Color(0xFF0078D4),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            stat,
+            style: TextStyle(
+              fontSize: fontsize,
+              fontWeight: fontweight,
+              color: Color(0xFF0078D4),
+            ),
           ),
         ),
       ),
-      height: 22,
-      width: 60,
+      height: SizeConfig.sizeByHeight(22),
+      width: SizeConfig.sizeByWidth(60),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(

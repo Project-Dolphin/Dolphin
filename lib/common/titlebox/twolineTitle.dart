@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:getx_app/common/sizeConfig.dart';
 
 class TwolineTitle extends StatelessWidget {
   const TwolineTitle({
@@ -15,14 +16,18 @@ class TwolineTitle extends StatelessWidget {
     @required this.fontweight3,
   });
 
-  final String name, subname, stat, more;
-  final double fontsize1, fontsize2, fontsize3;
-  final FontWeight fontweight1, fontweight2, fontweight3;
+  final String? name, subname, stat, more;
+  final double? fontsize1, fontsize2, fontsize3;
+  final FontWeight? fontweight1, fontweight2, fontweight3;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24.0, 24.0, 14.0, 24.0),
+      padding: EdgeInsets.fromLTRB(
+          SizeConfig.sizeByWidth(24),
+          SizeConfig.sizeByHeight(24),
+          SizeConfig.sizeByWidth(14),
+          SizeConfig.sizeByHeight(24)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,24 +73,24 @@ class TwolineTitle extends StatelessWidget {
 
 class MainTitle extends StatelessWidget {
   const MainTitle({
-    Key key,
+    Key? key,
     @required this.name,
     @required this.fontsize1,
     @required this.fontweight1,
   }) : super(key: key);
 
-  final String name;
-  final double fontsize1;
-  final FontWeight fontweight1;
+  final String? name;
+  final double? fontsize1;
+  final FontWeight? fontweight1;
 
   @override
   Widget build(BuildContext context) {
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 11.0),
+        padding: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(11.0)),
         child: Text(
-          name,
+          name ?? '',
           style: TextStyle(
             fontSize: fontsize1,
             fontWeight: fontweight1,
@@ -108,7 +113,7 @@ class SubTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 15.0),
+      padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(15.0)),
       child: Text(
         title,
         style: TextStyle(
