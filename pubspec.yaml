@@ -30,7 +30,6 @@ dependencies:
     cupertino_icons: ^1.0.0
     carousel_slider: ^4.0.0
     intl:
-    http: ^0.13.3
 
 dev_dependencies:
     flutter_test:
@@ -51,8 +50,6 @@ flutter:
         - assets/images/
         - assets/images/bottomNavigationIcon/
         - assets/images/dropdown/
-        - assets/json/
-        #임시로 json을 response로 사용할 것 20210720 덕현
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware.
