@@ -44,7 +44,11 @@ class BusPage extends GetView<BusController> {
                   fontweight3: FontWeight.w400,
                 ),
               ),
-              Carousel(pageList: testPageList, titleList: titleList),
+              Carousel(
+                pageList: testPageList,
+                titleList: titleList,
+                bar: true,
+              ),
             ],
           ),
           Positioned(
