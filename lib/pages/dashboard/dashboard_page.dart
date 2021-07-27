@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,13 +13,55 @@ import 'package:getx_app/pages/calendar/calendar_page.dart';
 import 'package:getx_app/pages/dailyMenu/dailyMenu_page.dart';
 import 'package:getx_app/pages/more/more_page.dart';
 import 'package:getx_app/pages/notice/notice_page.dart';
+import 'package:getx_app/services/local_notification_service.dart';
 
 import 'dashboard_controller.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   DashboardPage() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
+
+  @override
+  _DashboardPageState createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    LocalNotificationService.initialize(context);
+
+    ///gives you the message on which user taps
+    ///and it opened the app from terminated state
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        final routeFromMessage = message.data["route"];
+
+        Navigator.of(context).pushNamed(routeFromMessage);
+      }
+    });
+
+    ///forground work
+    FirebaseMessaging.onMessage.listen((message) {
+      if (message.notification != null) {
+        print(message.notification!.body);
+        print(message.notification!.title);
+      }
+
+      LocalNotificationService.display(message);
+    });
+
+    ///When the app is in background but opened and user taps
+    ///on the notification
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      final routeFromMessage = message.data["route"];
+
+      Navigator.of(context).pushNamed(routeFromMessage);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

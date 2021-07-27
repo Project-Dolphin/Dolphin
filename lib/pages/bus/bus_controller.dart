@@ -1,10 +1,22 @@
 import 'dart:async';
 import 'package:get/get.dart';
+import 'package:getx_app/pages/bus/widgets/cityBus.dart';
+import 'package:getx_app/pages/bus/widgets/commuterBus.dart';
+import 'package:getx_app/pages/bus/widgets/schoolBus.dart';
+import 'package:getx_app/pages/bus/widgets/shuttleBus.dart';
 import 'package:intl/intl.dart';
 
 class BusController extends GetxController {
   final String title = 'Home Title';
   String formattedDate = '';
+  final List<String> titleList = ['190번', '셔틀버스', '통근버스', '학교버스'];
+  final List<dynamic> testPageList = [
+    CityBus(),
+    ShuttleBus(),
+    CommuterBus(),
+    SchoolBus()
+  ];
+  final name = '버스', stat = '시험기간';
 
   @override
   void onInit() {
