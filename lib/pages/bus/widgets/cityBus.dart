@@ -8,6 +8,7 @@ import 'package:getx_app/common/sizeConfig.dart';
 import 'package:getx_app/common/text/textBox.dart';
 import 'package:getx_app/pages/bus/cityBus/cityBusController.dart';
 import 'package:getx_app/pages/bus/stationData.dart';
+import 'package:getx_app/services/dailyAtTimeNotification.dart';
 import 'package:intl/intl.dart';
 
 class CityBus extends GetView<CityBusController> {
@@ -328,6 +329,8 @@ class SecondArrive extends StatelessWidget {
                     shadowColor: Colors.transparent,
                   ),
                   onPressed: () {
+                    dailyAtTimeNotification('버스 도착 알림', '버스 도착 3분 전이에요.',
+                        (int.parse(remainTime!) - 3));
                     Get.dialog(
                         AlertDialog(
                           contentPadding: EdgeInsets.fromLTRB(

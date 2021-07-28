@@ -7,9 +7,16 @@ class LocalNotificationService {
       FlutterLocalNotificationsPlugin();
 
   static void initialize(BuildContext context) {
+    final initSettingsIOS = IOSInitializationSettings(
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+    );
+    final initSettingsAndroid =
+        AndroidInitializationSettings("@mipmap/ic_launcher");
     final InitializationSettings initializationSettings =
         InitializationSettings(
-            android: AndroidInitializationSettings("@mipmap/ic_launcher"));
+            android: initSettingsAndroid, iOS: initSettingsIOS);
 
     _notificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (String? route) async {
