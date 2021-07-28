@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:getx_app/pages/more/more_controller.dart';
+import 'package:OceanView/pages/more/more_controller.dart';
 
 class MorePage extends GetView<MoreController> {
   @override

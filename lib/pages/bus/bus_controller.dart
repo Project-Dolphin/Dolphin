@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:getx_app/pages/bus/widgets/cityBus.dart';
-import 'package:getx_app/pages/bus/widgets/commuterBus.dart';
-import 'package:getx_app/pages/bus/widgets/schoolBus.dart';
-import 'package:getx_app/pages/bus/widgets/shuttleBus.dart';
+import 'package:OceanView/pages/bus/widgets/cityBus.dart';
+import 'package:OceanView/pages/bus/widgets/commuterBus.dart';
+import 'package:OceanView/pages/bus/widgets/schoolBus.dart';
+import 'package:OceanView/pages/bus/widgets/shuttleBus.dart';
 import 'package:intl/intl.dart';
 
 class BusController extends GetxController {

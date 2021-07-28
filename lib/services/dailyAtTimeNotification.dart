@@ -9,27 +9,29 @@ Future dailyAtTimeNotification(
 
   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   final result = await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>()
-      ?.requestPermissions(
-        alert: true,
-        badge: true,
-        sound: true,
-      );
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          ) ??
+      true;
 
   var android = AndroidNotificationDetails('id', notiTitle, notiDesc,
       importance: Importance.max, priority: Priority.max);
   var ios = IOSNotificationDetails();
   var detail = NotificationDetails(android: android, iOS: ios);
 
-  if (result!) {
+  if (result) {
+    final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.deleteNotificationChannelGroup('id');
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
+      id,
       notiTitle,
       notiDesc,
       _setNotiTime(minute),
@@ -47,7 +49,10 @@ tz.TZDateTime _setNotiTime(int minute) {
   tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
 
   final now = tz.TZDateTime.now(tz.local);
-  var scheduledDate = now.add(Duration(minutes: minute));
+  // var scheduledDate = now.add(Duration(minutes: minute));
+  var scheduledDate = tz.TZDateTime(
+      tz.local, now.year, now.month, now.day, now.minute + minute, 0);
+  print(scheduledDate);
 
   return scheduledDate;
 }

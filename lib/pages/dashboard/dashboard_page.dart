@@ -5,15 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/common/icon/gradientIcon.dart';
-import 'package:getx_app/common/sizeConfig.dart';
+import 'package:OceanView/common/icon/gradientIcon.dart';
+import 'package:OceanView/common/sizeConfig.dart';
 
-import 'package:getx_app/pages/bus/bus_page.dart';
-import 'package:getx_app/pages/calendar/calendar_page.dart';
-import 'package:getx_app/pages/dailyMenu/dailyMenu_page.dart';
-import 'package:getx_app/pages/more/more_page.dart';
-import 'package:getx_app/pages/notice/notice_page.dart';
-import 'package:getx_app/services/local_notification_service.dart';
+import 'package:OceanView/pages/bus/bus_page.dart';
+import 'package:OceanView/pages/calendar/calendar_page.dart';
+import 'package:OceanView/pages/dailyMenu/dailyMenu_page.dart';
+import 'package:OceanView/pages/more/more_page.dart';
+import 'package:OceanView/pages/notice/notice_page.dart';
+import 'package:OceanView/services/local_notification_service.dart';
 
 import 'dashboard_controller.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getx_app/common/sizeConfig.dart';
+import 'package:OceanView/common/sizeConfig.dart';
 
 class IconSet extends StatelessWidget {
   const IconSet({

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/common/carousel/carousel.dart';
-import 'package:getx_app/common/sizeConfig.dart';
-import 'package:getx_app/common/text/textBox.dart';
-import 'package:getx_app/common/titlebox/onelineTitle.dart';
+import 'package:OceanView/common/carousel/carousel.dart';
+import 'package:OceanView/common/sizeConfig.dart';
+import 'package:OceanView/common/text/textBox.dart';
+import 'package:OceanView/common/titlebox/onelineTitle.dart';
 
 import 'bus_controller.dart';
 

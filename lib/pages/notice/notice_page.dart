@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:getx_app/common/container/glassMorphism.dart';
+import 'package:OceanView/common/container/glassMorphism.dart';
 
-import 'package:getx_app/common/carousel/carousel.dart';
-import 'package:getx_app/common/sizeConfig.dart';
+import 'package:OceanView/common/carousel/carousel.dart';
+import 'package:OceanView/common/sizeConfig.dart';
 
-import 'package:getx_app/pages/notice/notice_controller.dart';
+import 'package:OceanView/pages/notice/notice_controller.dart';
 
 import '../../common/titlebox/twolineTitle.dart';
 import '../../common/titlebox/iconSet.dart';
