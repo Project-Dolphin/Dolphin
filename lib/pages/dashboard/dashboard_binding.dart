@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import 'package:OceanView/pages/bus/bus_controller.dart';
-import 'package:OceanView/pages/calendar/calendar_controller.dart';
+import 'package:oceanview/pages/bus/bus_controller.dart';
+import 'package:oceanview/pages/calendar/calendar_controller.dart';
 
 import 'dashboard_controller.dart';
 

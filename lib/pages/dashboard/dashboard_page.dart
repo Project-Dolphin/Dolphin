@@ -1,19 +1,19 @@
 import 'dart:ui';
 
+import 'package:oceanview/pages/home/home_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:OceanView/common/icon/gradientIcon.dart';
-import 'package:OceanView/common/sizeConfig.dart';
+import 'package:oceanview/common/icon/gradientIcon.dart';
+import 'package:oceanview/common/sizeConfig.dart';
 
-import 'package:OceanView/pages/bus/bus_page.dart';
-import 'package:OceanView/pages/calendar/calendar_page.dart';
-import 'package:OceanView/pages/dailyMenu/dailyMenu_page.dart';
-import 'package:OceanView/pages/more/more_page.dart';
-import 'package:OceanView/pages/notice/notice_page.dart';
-import 'package:OceanView/services/local_notification_service.dart';
+import 'package:oceanview/pages/bus/bus_page.dart';
+import 'package:oceanview/pages/calendar/calendar_page.dart';
+import 'package:oceanview/pages/dailyMenu/dailyMenu_page.dart';
+import 'package:oceanview/pages/more/more_page.dart';
+import 'package:oceanview/services/local_notification_service.dart';
 
 import 'dashboard_controller.dart';
 
@@ -78,9 +78,9 @@ class _DashboardPageState extends State<DashboardPage> {
               child: IndexedStack(
                 index: controller.tabIndex,
                 children: [
+                  HomePage(),
                   BusPage(),
                   DailyMenuPage(),
-                  NoticePage(),
                   CalendarPage(),
                   MorePage(),
                 ],

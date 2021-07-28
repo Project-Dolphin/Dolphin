@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:OceanView/common/titlebox/twolineTitle.dart';
+import 'package:oceanview/common/titlebox/twolineTitle.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 
-import 'package:OceanView/common/container/glassMorphism.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
 
-import 'package:OceanView/common/carousel/carousel.dart';
-import 'package:OceanView/common/sizeConfig.dart';
+import 'package:oceanview/common/carousel/carousel.dart';
+import 'package:oceanview/common/sizeConfig.dart';
 
 import 'calendar_controller.dart';
 import '../../common/titlebox/iconSet.dart';

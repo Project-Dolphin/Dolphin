@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:OceanView/common/icon/gradientIcon.dart';
-import 'package:OceanView/common/sizeConfig.dart';
-import 'package:OceanView/common/text/textBox.dart';
+import 'package:oceanview/common/icon/gradientIcon.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
 
 Widget dialog = Container(
   width: SizeConfig.sizeByWidth(300),

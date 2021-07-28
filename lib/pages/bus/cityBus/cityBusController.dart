@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:OceanView/pages/bus/cityBus/cityBusRepository.dart';
-import 'package:OceanView/pages/bus/cityBus/responseCityBus.dart';
+import 'package:oceanview/pages/bus/cityBus/cityBusRepository.dart';
+import 'package:oceanview/pages/bus/cityBus/responseCityBus.dart';
 import 'package:intl/intl.dart';
 
 class CityBusController extends GetxController {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:OceanView/common/container/glassMorphism.dart';
-import 'package:OceanView/common/dialog/dialog.dart';
-import 'package:OceanView/common/dropdown/dropdownButton.dart';
-import 'package:OceanView/common/sizeConfig.dart';
-import 'package:OceanView/common/text/textBox.dart';
-import 'package:OceanView/pages/bus/cityBus/cityBusController.dart';
-import 'package:OceanView/pages/bus/stationData.dart';
-import 'package:OceanView/services/dailyAtTimeNotification.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
+import 'package:oceanview/common/dialog/dialog.dart';
+import 'package:oceanview/common/dropdown/dropdownButton.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
+import 'package:oceanview/pages/bus/stationData.dart';
+import 'package:oceanview/services/dailyAtTimeNotification.dart';
 import 'package:intl/intl.dart';
 
 class CityBus extends GetView<CityBusController> {

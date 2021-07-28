@@ -1,8 +1,8 @@
 import 'dart:convert' as convert;
 
 import 'package:flutter/services.dart';
-import 'package:OceanView/pages/bus/cityBus/departCityBus.dart';
-import 'package:OceanView/pages/bus/cityBus/responseCityBus.dart';
+import 'package:oceanview/pages/bus/cityBus/departCityBus.dart';
+import 'package:oceanview/pages/bus/cityBus/responseCityBus.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 

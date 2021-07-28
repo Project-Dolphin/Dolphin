@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:OceanView/common/sizeConfig.dart';
+import 'package:oceanview/common/sizeConfig.dart';
 
 Widget renderCirleWithShadow(double size) {
   return Container(

@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:OceanView/pages/bus/cityBus/cityBusController.dart';
-import 'package:OceanView/pages/bus/cityBus/cityBusRepository.dart';
+import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
+import 'package:oceanview/pages/bus/cityBus/cityBusRepository.dart';
 
 Future<void> findNearStation() async {
   String? nearStation;

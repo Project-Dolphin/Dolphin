@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:OceanView/common/container/glassMorphism.dart';
-import 'package:OceanView/common/dropdown/dropdownButton.dart';
-import 'package:OceanView/common/shape/circle.dart';
-import 'package:OceanView/common/sizeConfig.dart';
-import 'package:OceanView/common/text/textBox.dart';
-import 'package:OceanView/pages/bus/commuterBus/commuterBusController.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
+import 'package:oceanview/common/dropdown/dropdownButton.dart';
+import 'package:oceanview/common/shape/circle.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/pages/bus/commuterBus/commuterBusController.dart';
 
 class CommuterBus extends GetView<CommuterBusController> {
   findCommuterBusTitle(item) {

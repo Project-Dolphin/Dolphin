@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:OceanView/common/sizeConfig.dart';
+import 'package:oceanview/common/sizeConfig.dart';
 
 class TwolineTitle extends StatelessWidget {
   const TwolineTitle({

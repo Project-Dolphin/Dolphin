@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:OceanView/common/container/glassMorphism.dart';
-import 'package:OceanView/common/dropdown/dropdownButton.dart';
-import 'package:OceanView/common/sizeConfig.dart';
-import 'package:OceanView/common/text/textBox.dart';
-import 'package:OceanView/pages/bus/shuttleBus/shuttleBusController.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
+import 'package:oceanview/common/dropdown/dropdownButton.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
 
 class ShuttleBus extends GetView<ShuttleBusController> {
   findShuttleBusSubTitle(item) {

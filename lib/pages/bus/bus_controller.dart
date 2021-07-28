@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:OceanView/pages/bus/widgets/cityBus.dart';
-import 'package:OceanView/pages/bus/widgets/commuterBus.dart';
-import 'package:OceanView/pages/bus/widgets/schoolBus.dart';
-import 'package:OceanView/pages/bus/widgets/shuttleBus.dart';
+import 'package:oceanview/pages/bus/widgets/cityBus.dart';
+import 'package:oceanview/pages/bus/widgets/commuterBus.dart';
+import 'package:oceanview/pages/bus/widgets/schoolBus.dart';
+import 'package:oceanview/pages/bus/widgets/shuttleBus.dart';
 import 'package:intl/intl.dart';
 
 class BusController extends GetxController {
@@ -34,7 +34,7 @@ class BusController extends GetxController {
     if (date.contains('Mon')) return date.replaceFirst('Mon', '월요일');
     if (date.contains('Tue')) return date.replaceFirst('Tue', '화요일');
     if (date.contains('Wed')) return date.replaceFirst('Wed', '수요일');
-    if (date.contains('Thr')) return date.replaceFirst('Thr', '목요일');
+    if (date.contains('Thu')) return date.replaceFirst('Thu', '목요일');
     if (date.contains('Fri')) return date.replaceFirst('Fri', '금요일');
     if (date.contains('Sat')) return date.replaceFirst('Sat', '토요일');
     if (date.contains('Sun')) return date.replaceFirst('Sun', '일요일');

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:OceanView/pages/dailyMenu/dailyMenu_controller.dart';
+import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import '../../common/titlebox/twolineTitle.dart';
-import 'package:OceanView/common/carousel/carousel.dart';
-import 'package:OceanView/common/sizeConfig.dart';
-import 'package:OceanView/common/container/glassMorphism.dart';
+import 'package:oceanview/common/carousel/carousel.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
 
 class DailyMenuPage extends GetView<DailyMenuController> {
   final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
