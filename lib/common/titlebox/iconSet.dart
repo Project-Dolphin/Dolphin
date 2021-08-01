@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:getx_app/common/sizeConfig.dart';
 
 class IconSet extends StatelessWidget {
+  final Widget? onPressed1;
+  final Widget? onPressed2;
+
   const IconSet({
-    @required this.iconColor,
+    @required this.iconColor, this.onPressed1, this.onPressed2
   });
 
   final Color? iconColor;
@@ -29,7 +32,12 @@ class IconSet extends StatelessWidget {
                   size: SizeConfig.sizeByHeight(27.5),
                   color: iconColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => onPressed1!),
+                  );
+                },
               ),
             ),
             FittedBox(
@@ -45,7 +53,12 @@ class IconSet extends StatelessWidget {
                   size: SizeConfig.sizeByHeight(27.5),
                   color: iconColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => onPressed2!),
+                  );
+                },
               ),
             ),
           ],
