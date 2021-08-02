@@ -196,14 +196,10 @@ Widget renderLeftSide(String value) {
           width: SizeConfig.sizeByWidth(100),
           alignment: Alignment.centerRight,
           child: TextBox(value, 12, FontWeight.w500, Colors.black)),
-      Container(
-        margin: EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(10)),
-        width: SizeConfig.sizeByHeight(11),
-        height: SizeConfig.sizeByHeight(11),
-      ),
+      renderCirleWithShadow(3),
       Container(
         width: SizeConfig.sizeByWidth(100),
-      )
+      ),
     ],
   );
 }
@@ -215,11 +211,7 @@ Widget renderRightSide(String value) {
       Container(
         width: SizeConfig.sizeByWidth(100),
       ),
-      Container(
-        margin: EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(10)),
-        width: SizeConfig.sizeByHeight(11),
-        height: SizeConfig.sizeByHeight(11),
-      ),
+      renderCirleWithShadow(3),
       Container(
           width: SizeConfig.sizeByWidth(100),
           alignment: Alignment.centerLeft,
