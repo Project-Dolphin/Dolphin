@@ -2,22 +2,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:get/get.dart';
-import 'package:getx_app/common/titlebox/twolineTitle.dart';
-import 'package:getx_app/pages/calendar/CalendarSearch.dart';
-import 'package:getx_app/pages/calendar/CalendarAllPage.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-
-
-import 'package:table_calendar/table_calendar.dart';
-
+import 'package:oceanview/common/titlebox/iconSet.dart';
+import 'package:oceanview/common/titlebox/twolineTitle.dart';
+import 'package:oceanview/pages/calendar/CalendarSearch.dart';
+import 'package:oceanview/pages/calendar/CalendarAllPage.dart';
+import 'package:oceanview/pages/calendar/calendar_controller.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
-
-import 'package:oceanview/common/carousel/carousel.dart';
 import 'package:oceanview/common/sizeConfig.dart';
-
-import 'calendar_controller.dart';
-import '../../common/titlebox/iconSet.dart';
 
 Future<Calendar> fetchPost() async {
   try {

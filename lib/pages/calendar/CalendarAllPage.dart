@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:getx_app/pages/calendar/CalendarData.dart';
+import 'package:oceanview/pages/calendar/CalendarData.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'Dart:ui';
@@ -137,7 +137,7 @@ class CalendarInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
                 child: Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +159,8 @@ class CalendarInfo extends StatelessWidget {
                                   .toString() !=
                               DateFormat('yyyy.M.dd(E)', 'ko_KR')
                                   .format(DateFormat("yyyy-M-dd").parse(
-                                      list[index]['term']['endedAt'].toString()))
+                                      list[index]['term']['endedAt']
+                                          .toString()))
                                   .toString()
                           ? Row(
                               children: [

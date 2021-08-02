@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:getx_app/pages/calendar/CalendarData.dart';
+import 'package:oceanview/pages/calendar/CalendarData.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -124,8 +124,8 @@ class _CalendarSearchState extends State<CalendarSearch> {
                                 width: fullwidth * 0.5,
                                 child: SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
-                                    child: new Text(
-                                        _searchResult[i]['content'].toString())),
+                                    child: new Text(_searchResult[i]['content']
+                                        .toString())),
                               ),
                             ],
                           ),
