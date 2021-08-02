@@ -169,6 +169,11 @@ class _DashboardPageState extends State<DashboardPage> {
           elevation: 0,
           items: [
             _bottomNavigationBarItem(
+              icon: ImageIcon(AssetImage(
+                  'assets/images/bottomNavigationIcon/house.fill.png')),
+              label: '홈',
+            ),
+            _bottomNavigationBarItem(
               icon: ImageIcon(
                   AssetImage('assets/images/bottomNavigationIcon/bus.png'),
                   size: 24),
@@ -178,11 +183,6 @@ class _DashboardPageState extends State<DashboardPage> {
               icon: ImageIcon(AssetImage(
                   'assets/images/bottomNavigationIcon/fork.knife.png')),
               label: '식단',
-            ),
-            _bottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(
-                  'assets/images/bottomNavigationIcon/megaphone.fill.png')),
-              label: '공지사항',
             ),
             _bottomNavigationBarItem(
               icon: ImageIcon(AssetImage(
