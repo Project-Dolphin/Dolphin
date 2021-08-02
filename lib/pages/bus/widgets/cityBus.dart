@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/common/container/glassMorphism.dart';
-import 'package:getx_app/common/dialog/dialog.dart';
-import 'package:getx_app/common/dropdown/dropdownButton.dart';
-import 'package:getx_app/common/sizeConfig.dart';
-import 'package:getx_app/common/text/textBox.dart';
-import 'package:getx_app/pages/bus/cityBus/cityBusController.dart';
-import 'package:getx_app/pages/bus/stationData.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
+import 'package:oceanview/common/dialog/dialog.dart';
+import 'package:oceanview/common/dropdown/dropdownButton.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
+import 'package:oceanview/pages/bus/stationData.dart';
+import 'package:oceanview/services/dailyAtTimeNotification.dart';
 import 'package:intl/intl.dart';
 
 class CityBus extends GetView<CityBusController> {
@@ -143,7 +144,11 @@ class CityBus extends GetView<CityBusController> {
                                                               .responseCityBus!
                                                               .min2))))
                                                   : 'error'),
-                                      ThirdArrive(null, "error"),
+                                      SizedBox(
+                                        height: 1,
+                                      ),
+
+                                      // ThirdArrive(null, "error"),
                                     ],
                                   );
                           },
@@ -259,40 +264,26 @@ class FirstArrive extends StatelessWidget {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              remainTime == '없음'
-                                  ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
-                                      Color(0xFF3F3F3F))
-                                  : TextBox(
-                                      '약 ${remainTime != null ? remainTime : '300'}분',
-                                      28,
-                                      FontWeight.w700,
-                                      Color(0xFF3F3F3F)),
-                              SizedBox(
-                                width: SizeConfig.sizeByWidth(10),
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextBox(
-                                    '$arriveTime',
-                                    14,
-                                    FontWeight.w500,
-                                    Color(0xFF717171),
-                                  ),
-                                  SizedBox(
-                                    height: SizeConfig.sizeByHeight(6),
-                                  ),
-                                ],
-                              ),
-                            ],
+                          remainTime == '없음'
+                              ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
+                                  Color(0xFF3F3F3F))
+                              : TextBox(
+                                  '약 ${remainTime != null ? remainTime : '300'}분',
+                                  28,
+                                  FontWeight.w700,
+                                  Color(0xFF3F3F3F)),
+                          TextBox(
+                            '$arriveTime',
+                            14,
+                            FontWeight.w500,
+                            Color(0xFF717171),
                           ),
                           SizedBox(
-                            height: SizeConfig.sizeByHeight(25),
-                          )
+                            height: SizeConfig.sizeByHeight(6),
+                          ),
                         ],
                       ),
                     ),
@@ -327,7 +318,9 @@ class SecondArrive extends StatelessWidget {
                     primary: Colors.transparent,
                     shadowColor: Colors.transparent,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await dailyAtTimeNotification('버스 도착 알림', '버스 도착 3분 전이에요.',
+                        (int.parse(remainTime!) - 3));
                     Get.dialog(
                         AlertDialog(
                           contentPadding: EdgeInsets.fromLTRB(
@@ -352,41 +345,22 @@ class SecondArrive extends StatelessWidget {
               width: SizeConfig.sizeByWidth(15),
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    remainTime == '없음'
-                        ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
-                            Color(0xFF3F3F3F))
-                        : TextBox(
-                            '약 ${remainTime != null ? remainTime : '300'}분',
-                            22,
-                            FontWeight.w700,
-                            Color(0xFF3F3F3F)),
-                    SizedBox(
-                      width: SizeConfig.sizeByWidth(10),
-                    ),
-                    Column(
-                      children: [
-                        TextBox(
-                          '$arriveTime',
-                          14,
-                          FontWeight.w500,
-                          Color(0xFF717171),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.sizeByHeight(3),
-                        ),
-                      ],
-                    ),
-                  ],
+                remainTime == '없음'
+                    ? TextBox(
+                        '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                    : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
+                        22, FontWeight.w700, Color(0xFF3F3F3F)),
+                TextBox(
+                  '$arriveTime',
+                  14,
+                  FontWeight.w500,
+                  Color(0xFF717171),
                 ),
-                SizedBox(
-                  height: SizeConfig.sizeByHeight(5),
-                )
               ],
-            )
+            ),
           ],
         )
       ],
@@ -420,41 +394,29 @@ class ThirdArrive extends StatelessWidget {
               width: SizeConfig.sizeByWidth(15),
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                remainTime == '없음'
+                    ? TextBox(
+                        '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                    : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
+                        18, FontWeight.w500, Color(0xFF3F3F3F)),
+                Column(
                   children: [
-                    remainTime == '없음'
-                        ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
-                            Color(0xFF3F3F3F))
-                        : TextBox(
-                            '약 ${remainTime != null ? remainTime : '300'}분',
-                            18,
-                            FontWeight.w500,
-                            Color(0xFF3F3F3F)),
-                    SizedBox(
-                      width: SizeConfig.sizeByWidth(10),
+                    TextBox(
+                      '$arriveTime',
+                      14,
+                      FontWeight.w500,
+                      Color(0xFF717171),
                     ),
-                    Column(
-                      children: [
-                        TextBox(
-                          '$arriveTime',
-                          14,
-                          FontWeight.w500,
-                          Color(0xFF717171),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.sizeByHeight(2),
-                        ),
-                      ],
+                    SizedBox(
+                      height: SizeConfig.sizeByHeight(2),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: SizeConfig.sizeByHeight(5),
-                )
               ],
-            )
+            ),
           ],
         )
       ],

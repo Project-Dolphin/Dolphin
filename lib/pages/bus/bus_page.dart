@@ -1,27 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/common/carousel/carousel.dart';
-import 'package:getx_app/common/sizeConfig.dart';
-import 'package:getx_app/common/text/textBox.dart';
-import 'package:getx_app/pages/bus/widgets/cityBus.dart';
-import 'package:getx_app/pages/bus/widgets/commuterBus.dart';
-import 'package:getx_app/pages/bus/widgets/schoolBus.dart';
-import 'package:getx_app/pages/bus/widgets/shuttleBus.dart';
+import 'package:oceanview/common/carousel/carousel.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/common/titlebox/onelineTitle.dart';
 
 import 'bus_controller.dart';
 
-import '../../common/titlebox/onelineTitle.dart';
-
 class BusPage extends GetView<BusController> {
-  final List<String> titleList = ['190번', '셔틀버스', '통근버스', '학교버스'];
-  final List<dynamic> testPageList = [
-    CityBus(),
-    ShuttleBus(),
-    CommuterBus(),
-    SchoolBus()
-  ];
-  final name = '버스', stat = '시험기간';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,9 +19,9 @@ class BusPage extends GetView<BusController> {
             children: [
               GetBuilder<BusController>(
                 builder: (_) => OnelineTitle(
-                  name: name,
+                  name: _.name,
                   description: _.formattedDate,
-                  stat: stat,
+                  stat: _.stat,
                   fontsize1: SizeConfig.sizeByHeight(24),
                   fontsize2: SizeConfig.sizeByHeight(14),
                   fontsize3: SizeConfig.sizeByHeight(12),
@@ -45,8 +31,8 @@ class BusPage extends GetView<BusController> {
                 ),
               ),
               Carousel(
-                pageList: testPageList,
-                titleList: titleList,
+                pageList: controller.testPageList,
+                titleList: controller.titleList,
                 bar: true,
               ),
             ],

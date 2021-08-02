@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/common/sizeConfig.dart';
-import 'package:getx_app/common/text/textBox.dart';
-import 'package:getx_app/pages/bus/bus_controller.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/pages/bus/bus_controller.dart';
 
 class Dropdown extends StatefulWidget {
   const Dropdown(this.itemList, this.selectedItem, this.setItemState,

@@ -1,24 +1,67 @@
 import 'dart:ui';
 
+import 'package:oceanview/pages/home/home_page.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/common/icon/gradientIcon.dart';
-import 'package:getx_app/common/sizeConfig.dart';
+import 'package:oceanview/common/icon/gradientIcon.dart';
+import 'package:oceanview/common/sizeConfig.dart';
 
-import 'package:getx_app/pages/bus/bus_page.dart';
-import 'package:getx_app/pages/calendar/calendar_page.dart';
-import 'package:getx_app/pages/dailyMenu/dailyMenu_page.dart';
-import 'package:getx_app/pages/more/more_page.dart';
-import 'package:getx_app/pages/notice/notice_page.dart';
+import 'package:oceanview/pages/bus/bus_page.dart';
+import 'package:oceanview/pages/calendar/calendar_page.dart';
+import 'package:oceanview/pages/dailyMenu/dailyMenu_page.dart';
+import 'package:oceanview/pages/more/more_page.dart';
+import 'package:oceanview/services/local_notification_service.dart';
 
 import 'dashboard_controller.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   DashboardPage() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
+
+  @override
+  _DashboardPageState createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    LocalNotificationService.initialize(context);
+
+    ///gives you the message on which user taps
+    ///and it opened the app from terminated state
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        final routeFromMessage = message.data["route"];
+
+        Navigator.of(context).pushNamed(routeFromMessage);
+      }
+    });
+
+    ///forground work
+    FirebaseMessaging.onMessage.listen((message) {
+      if (message.notification != null) {
+        print(message.notification!.body);
+        print(message.notification!.title);
+      }
+
+      LocalNotificationService.display(message);
+    });
+
+    ///When the app is in background but opened and user taps
+    ///on the notification
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      final routeFromMessage = message.data["route"];
+
+      Navigator.of(context).pushNamed(routeFromMessage);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -35,9 +78,9 @@ class DashboardPage extends StatelessWidget {
               child: IndexedStack(
                 index: controller.tabIndex,
                 children: [
+                  HomePage(),
                   BusPage(),
                   DailyMenuPage(),
-                  NoticePage(),
                   CalendarPage(),
                   MorePage(),
                 ],
@@ -126,6 +169,11 @@ class DashboardPage extends StatelessWidget {
           elevation: 0,
           items: [
             _bottomNavigationBarItem(
+              icon: ImageIcon(AssetImage(
+                  'assets/images/bottomNavigationIcon/house.fill.png')),
+              label: '홈',
+            ),
+            _bottomNavigationBarItem(
               icon: ImageIcon(
                   AssetImage('assets/images/bottomNavigationIcon/bus.png'),
                   size: 24),
@@ -135,11 +183,6 @@ class DashboardPage extends StatelessWidget {
               icon: ImageIcon(AssetImage(
                   'assets/images/bottomNavigationIcon/fork.knife.png')),
               label: '식단',
-            ),
-            _bottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(
-                  'assets/images/bottomNavigationIcon/megaphone.fill.png')),
-              label: '공지사항',
             ),
             _bottomNavigationBarItem(
               icon: ImageIcon(AssetImage(

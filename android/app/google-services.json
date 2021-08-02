@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "238762269352",
+    "project_id": "oceanview-dfdf7",
+    "storage_bucket": "oceanview-dfdf7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238762269352:android:610265db9283c64a96c09d",
+        "android_client_info": {
+          "package_name": "com.dolphin.OceanView"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238762269352-fao456enjpjuu7e9omu1jhq2jkcg0dj1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUAHLNAqHEmkx9M7jOlxYhO6ZFoX83PlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238762269352-fao456enjpjuu7e9omu1jhq2jkcg0dj1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "238762269352-ikv9mmo0pojpr6bvuechl59t8earn89k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dolphin.OceanView"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

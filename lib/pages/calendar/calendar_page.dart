@@ -8,12 +8,13 @@ import 'package:getx_app/pages/calendar/CalendarAllPage.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
+
 import 'package:table_calendar/table_calendar.dart';
 
-import 'package:getx_app/common/container/glassMorphism.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
 
-import 'package:getx_app/common/carousel/carousel.dart';
-import 'package:getx_app/common/sizeConfig.dart';
+import 'package:oceanview/common/carousel/carousel.dart';
+import 'package:oceanview/common/sizeConfig.dart';
 
 import 'calendar_controller.dart';
 import '../../common/titlebox/iconSet.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/common/container/glassMorphism.dart';
-import 'package:getx_app/common/dropdown/dropdownButton.dart';
-import 'package:getx_app/common/sizeConfig.dart';
-import 'package:getx_app/common/text/textBox.dart';
-import 'package:getx_app/pages/bus/shuttleBus/shuttleBusController.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
+import 'package:oceanview/common/dropdown/dropdownButton.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
 
 class ShuttleBus extends GetView<ShuttleBusController> {
   findShuttleBusSubTitle(item) {
@@ -221,35 +221,18 @@ class FirstArrive extends StatelessWidget {
           width: SizeConfig.sizeByWidth(15),
         ),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextBox(remainTime!, 28, FontWeight.w700, Color(0xFF3F3F3F)),
-                SizedBox(
-                  width: SizeConfig.sizeByWidth(10),
-                ),
-                arriveTime != ''
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextBox(
-                            arriveTime!,
-                            14,
-                            FontWeight.w500,
-                            Color(0xFF717171),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.sizeByHeight(6),
-                          ),
-                        ],
-                      )
-                    : Container(),
-              ],
-            ),
-            SizedBox(
-              height: SizeConfig.sizeByHeight(10),
-            )
+            TextBox(remainTime!, 28, FontWeight.w700, Color(0xFF3F3F3F)),
+            arriveTime != ''
+                ? TextBox(
+                    arriveTime!,
+                    14,
+                    FontWeight.w500,
+                    Color(0xFF717171),
+                  )
+                : Container(),
           ],
         ),
       ],
@@ -281,36 +264,23 @@ class SecondArrive extends StatelessWidget {
           width: SizeConfig.sizeByWidth(15),
         ),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextBox(remainTime!, 22, FontWeight.w700, Color(0xFF3F3F3F)),
-                SizedBox(
-                  width: SizeConfig.sizeByWidth(10),
-                ),
-                arriveTime != ''
-                    ? Column(
-                        children: [
-                          TextBox(
-                            arriveTime!,
-                            14,
-                            FontWeight.w500,
-                            Color(0xFF717171),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.sizeByHeight(3),
-                          ),
-                        ],
-                      )
-                    : Container(),
-              ],
-            ),
+            TextBox(remainTime!, 22, FontWeight.w700, Color(0xFF3F3F3F)),
             SizedBox(
-              height: SizeConfig.sizeByHeight(5),
-            )
+              width: SizeConfig.sizeByWidth(10),
+            ),
+            arriveTime != ''
+                ? TextBox(
+                    arriveTime!,
+                    14,
+                    FontWeight.w500,
+                    Color(0xFF717171),
+                  )
+                : Container(),
           ],
-        )
+        ),
       ],
     );
   }
@@ -340,36 +310,20 @@ class ThirdArrive extends StatelessWidget {
           width: SizeConfig.sizeByWidth(15),
         ),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextBox(remainTime!, 18, FontWeight.w500, Color(0xFF3F3F3F)),
-                SizedBox(
-                  width: SizeConfig.sizeByWidth(10),
-                ),
-                arriveTime != ''
-                    ? Column(
-                        children: [
-                          TextBox(
-                            arriveTime!,
-                            14,
-                            FontWeight.w500,
-                            Color(0xFF717171),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.sizeByHeight(2),
-                          ),
-                        ],
-                      )
-                    : Container(),
-              ],
-            ),
-            SizedBox(
-              height: SizeConfig.sizeByHeight(5),
-            )
+            TextBox(remainTime!, 18, FontWeight.w500, Color(0xFF3F3F3F)),
+            arriveTime != ''
+                ? TextBox(
+                    arriveTime!,
+                    14,
+                    FontWeight.w500,
+                    Color(0xFF717171),
+                  )
+                : Container(),
           ],
-        )
+        ),
       ],
     );
   }

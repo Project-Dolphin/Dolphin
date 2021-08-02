@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:getx_app/common/container/glassMorphism.dart';
-import 'package:getx_app/common/shape/circle.dart';
-import 'package:getx_app/common/sizeConfig.dart';
-import 'package:getx_app/common/text/textBox.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
+import 'package:oceanview/common/shape/circle.dart';
+import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
 
 class SchoolBus extends StatelessWidget {
   const SchoolBus({Key? key}) : super(key: key);

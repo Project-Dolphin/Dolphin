@@ -1,4 +1,4 @@
-package com.example.getx_app
+package com.dolphin.OceanView
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:getx_app/pages/bus/cityBus/cityBusController.dart';
-import 'package:getx_app/pages/bus/cityBus/cityBusRepository.dart';
+import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
+import 'package:oceanview/pages/bus/cityBus/cityBusRepository.dart';
 
 Future<void> findNearStation() async {
   String? nearStation;
@@ -25,8 +25,8 @@ Future<void> findNearStation() async {
   print(nearStation);
   Get.find<CityBusController>().setStation(nearStation);
   //직접 api 호출하는 메소드
-  // Get.find<CityBusController>()
-  //     .setResponseCityBus(await CityBusRepository().fetchCityBus(nodeId!));
+  Get.find<CityBusController>()
+      .setResponseCityBus(await CityBusRepository().fetchCityBus(nodeId!));
   Get.find<CityBusController>().setIsLoading(false);
 }
 
@@ -34,8 +34,8 @@ Future<void> fetchStation(String nodeId) async {
   Get.put(CityBusController());
   Get.find<CityBusController>().setIsLoading(true);
   //직접 api 호출하는 메소드
-  // Get.find<CityBusController>()
-  //     .setResponseCityBus(await CityBusRepository().fetchCityBus(nodeId));
+  Get.find<CityBusController>()
+      .setResponseCityBus(await CityBusRepository().fetchCityBus(nodeId));
   Get.find<CityBusController>().setIsLoading(false);
 }
 
