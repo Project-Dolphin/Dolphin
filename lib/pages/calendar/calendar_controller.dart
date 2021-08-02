@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class CalendarController extends GetxController {
+class CalendarController1 extends GetxController {
   var counter = 0.obs;
 
   void increaseCounter() {
