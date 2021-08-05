@@ -38,7 +38,7 @@ Future dailyAtTimeNotification(
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
+      // matchDateTimeComponents: DateTimeComponents.time,
     );
   }
 }
