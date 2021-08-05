@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>238762269352-ikv9mmo0pojpr6bvuechl59t8earn89k.apps.googleusercontent.com</string>
+	<string>238762269352-be7i9oi4cipvlad1010fnuglhvn7pr91.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.238762269352-ikv9mmo0pojpr6bvuechl59t8earn89k</string>
+	<string>com.googleusercontent.apps.238762269352-be7i9oi4cipvlad1010fnuglhvn7pr91</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDUHi8l9A0qVzYtaBdzxrDMn9H0IyvsVl8</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.dolphin.OceanView</string>
+	<string>com.oceanview.oceanview</string>
 	<key>PROJECT_ID</key>
 	<string>oceanview-dfdf7</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:238762269352:ios:673f234da85a639896c09d</string>
+	<string>1:238762269352:ios:ddeeb80c3d1aa71896c09d</string>
 </dict>
 </plist>
