@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -321,18 +322,36 @@ class Header extends StatelessWidget {
   const Header({Key? key, required this.maxHeight, required this.minHeight}) : super(key: key);
 
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return LayoutBuilder(
       builder: (context, constraints) {
         final expandRatio = _calculateExpandRatio(constraints);
         final animation = AlwaysStoppedAnimation(expandRatio);
 
-        return _buildTitle(animation);
-        //   Stack(
-        //   fit: StackFit.expand,
-        //   children: [
-        //     _buildTitle(animation),
-        //   ],
-        // );
+        return
+          Stack(
+          fit: StackFit.expand,
+          children: [
+            Positioned(
+              top: 0,
+              child: ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(
+                    sigmaX: Tween(begin: 10.0, end:0.0).evaluate(animation),
+                    sigmaY: Tween(begin: 10.0, end:0.0).evaluate(animation),
+                  ),
+                  child: Container(
+                    color: Colors.transparent, //test
+                    alignment: Alignment.center,
+                    width: SizeConfig.screenWidth,
+                    height: 50,
+                  ),
+                ),
+              ), // to clip the container
+            ),
+            _buildTitle(animation),
+          ],
+        );
       },
     );
   }
