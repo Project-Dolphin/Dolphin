@@ -10,7 +10,7 @@ import 'package:oceanview/common/container/glassMorphism.dart';
 var time = ["11:30 ~ 13:30", "17:00 ~ 18:30", ""];
 
 class DailyMenuPage extends GetView<DailyMenuController> {
-  final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
+  final List<String> titleList = ['2층 학식', '3층 학식', '5층 학식', '생활관', '승생'];
   final List<dynamic> testPageList = [
     MealCard(),
     MealCard(),
@@ -23,21 +23,45 @@ class DailyMenuPage extends GetView<DailyMenuController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TwolineTitle(
-          name: name,
-          subname: titleList[index] + " 식단",
-          stat: stat,
-          more: more,
-          fontsize1: 26.0,
-          fontsize2: 20.0,
-          fontsize3: 12.0,
-          fontweight1: FontWeight.w700,
-          fontweight2: FontWeight.w500,
-          fontweight3: FontWeight.w400,
+    return CustomScrollView(
+      slivers: <Widget>[
+        new SliverAppBar(
+          backgroundColor: Colors.transparent,
+          forceElevated: true,
+          floating: true,
+          elevation: 0.0,
+          pinned: true,
+          expandedHeight: 110.0,
+          flexibleSpace: FlexibleSpaceBar(
+            title: Header(
+              maxHeight: 90,
+              minHeight: 60,
+            ),
+            background: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.sizeByWidth(22),
+                right: SizeConfig.sizeByWidth(25),
+                top: SizeConfig.sizeByWidth(65),
+              ),
+              child: BottomTitle(
+                subname: titleList[index] + " 식단",
+                stat: stat,
+                more: more,
+                fontsize2: 20.0,
+                fontsize3: 12.0,
+                fontweight2: FontWeight.w500,
+                fontweight3: FontWeight.w400,
+              ),
+            ),
+          ),
         ),
-        Carousel(pageList: testPageList, titleList: titleList, bar: true),
+        SliverFillRemaining(
+          child:
+              Padding(
+                padding: EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
+                child: Carousel(pageList: testPageList, titleList: titleList, bar: true),
+              ),
+        ),
       ],
     );
   }
@@ -140,8 +164,7 @@ class MealContentColumn extends StatelessWidget {
               children: [
                 Image(
                   width: SizeConfig.sizeByHeight(30.0),
-                  image:
-                      AssetImage('assets/images/mealPage/'+ imageName),
+                  image: AssetImage('assets/images/mealPage/' + imageName),
                 ),
                 Text(
                   mealName,
@@ -287,6 +310,59 @@ class MealContentColumn extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  final double maxHeight;
+  final double minHeight;
+
+  const Header({Key? key, required this.maxHeight, required this.minHeight}) : super(key: key);
+
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final expandRatio = _calculateExpandRatio(constraints);
+        final animation = AlwaysStoppedAnimation(expandRatio);
+
+        return _buildTitle(animation);
+        //   Stack(
+        //   fit: StackFit.expand,
+        //   children: [
+        //     _buildTitle(animation),
+        //   ],
+        // );
+      },
+    );
+  }
+
+  double _calculateExpandRatio(BoxConstraints constraints) {
+    var expandRatio =
+        (constraints.maxHeight - minHeight) / (maxHeight - minHeight);
+
+    if (expandRatio > 1.0) expandRatio = 1.0;
+    if (expandRatio < 0.0) expandRatio = 0.0;
+
+    return expandRatio;
+  }
+
+  Align _buildTitle(Animation<double> animation) {
+    return Align(
+      alignment: AlignmentTween(
+              begin: Alignment.center, end: Alignment.bottomLeft)
+          .evaluate(animation),
+      child: Container(
+        margin: EdgeInsets.only(bottom: 14, left: 14,),
+        child: Text(
+          "식단",
+          style: TextStyle(
+            fontSize: Tween<double>(begin: 18, end: 26).evaluate(animation),
+            color: Color(0xFF3F3F3F),
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
     );
   }
 }
