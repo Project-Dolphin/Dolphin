@@ -36,37 +36,63 @@ class TwolineTitle extends StatelessWidget {
             fontsize1: fontsize1,
             fontweight1: fontweight1,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Container(
-                  child: Row(
-                    children: [
-                      SubTitle(
-                        title: subname,
-                        fontsize: fontsize2,
-                        fontweight: fontweight2,
-                      ),
-                      StatusContainer(
-                        stat: stat,
-                        fontsize: fontsize3,
-                        fontweight: fontweight3,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              MoreText(
-                description: more,
-                fontsize: fontsize3,
-                fontweight: fontweight2,
-              ),
-            ],
-          ),
+          BottomTitle(subname: subname, fontsize2: fontsize2, fontweight2: fontweight2, stat: stat, fontsize3: fontsize3, fontweight3: fontweight3, more: more),
         ],
       ),
+    );
+  }
+}
+
+class BottomTitle extends StatelessWidget {
+  const BottomTitle({
+    Key? key,
+    required this.subname,
+    required this.fontsize2,
+    required this.fontweight2,
+    required this.stat,
+    required this.fontsize3,
+    required this.fontweight3,
+    required this.more,
+  }) : super(key: key);
+
+  final String? subname;
+  final double? fontsize2;
+  final FontWeight? fontweight2;
+  final String? stat;
+  final double? fontsize3;
+  final FontWeight? fontweight3;
+  final String? more;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Container(
+            child: Row(
+              children: [
+                SubTitle(
+                  title: subname,
+                  fontsize: fontsize2,
+                  fontweight: fontweight2,
+                ),
+                StatusContainer(
+                  stat: stat,
+                  fontsize: fontsize3,
+                  fontweight: fontweight3,
+                ),
+              ],
+            ),
+          ),
+        ),
+        MoreText(
+          description: more,
+          fontsize: fontsize3,
+          fontweight: fontweight2,
+        ),
+      ],
     );
   }
 }
@@ -92,6 +118,7 @@ class MainTitle extends StatelessWidget {
         child: Text(
           name ?? '',
           style: TextStyle(
+            color: Color(0xFF3F3F3F),
             fontSize: fontsize1,
             fontWeight: fontweight1,
           ),
