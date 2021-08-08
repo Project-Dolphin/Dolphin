@@ -319,8 +319,11 @@ class SecondArrive extends StatelessWidget {
                     shadowColor: Colors.transparent,
                   ),
                   onPressed: () async {
-                    await dailyAtTimeNotification('버스 도착 알림', '버스 도착 3분 전이에요.',
-                        (int.parse(remainTime!) - 3));
+                    await dailyAtTimeNotification(
+                        '버스 도착 알림',
+                        '버스 도착 3분 전이에요.',
+                        // (int.parse(remainTime!) - 3));
+                        1);
                     Get.dialog(
                         AlertDialog(
                           contentPadding: EdgeInsets.fromLTRB(

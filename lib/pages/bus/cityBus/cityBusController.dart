@@ -18,6 +18,7 @@ class CityBusController extends GetxController {
     String today = getDate();
     departSchoolBusData = await CityBusRepository().fetchDepartCityBus(
         today == 'Sat' || today == 'Sun' ? 'weekend' : 'weekday');
+    findNextDepartCityBus();
   }
 
   void setSelectedStation(station) {
