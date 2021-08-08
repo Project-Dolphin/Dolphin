@@ -14,8 +14,9 @@ class OnelineTitle extends StatelessWidget {
     @required this.fontweight1,
     @required this.fontweight2,
     @required this.fontweight3,
+    this.isGradient = false,
   }) : super(key: key);
-
+  final bool isGradient;
   final String? name, description, stat;
   final double? fontsize1, fontsize2, fontsize3;
   final FontWeight? fontweight1, fontweight2, fontweight3;
@@ -28,22 +29,36 @@ class OnelineTitle extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(SizeConfig.sizeByHeight(24)),
           child: Row(
-            // crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               MainTitle(
                 title: name,
                 fontsize: fontsize1,
                 fontweight: fontweight1,
+                isGradient: isGradient,
               ),
-              SubText(
-                description: description,
-                fontsize: fontsize2,
-                fontweight: fontweight2,
-              ),
-              StatusContainer(
-                stat: stat,
-                fontsize: fontsize3,
-                fontweight: fontweight3,
+              Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SubText(
+                        description: description,
+                        fontsize: fontsize2,
+                        fontweight: fontweight2,
+                      ),
+                      StatusContainer(
+                        stat: stat,
+                        fontsize: fontsize3,
+                        fontweight: fontweight3,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: SizeConfig.sizeByHeight(
+                        (fontsize1! - fontsize2!) * 0.2),
+                  )
+                ],
               ),
             ],
           ),
@@ -58,20 +73,28 @@ class MainTitle extends StatelessWidget {
     @required this.title,
     @required this.fontsize,
     @required this.fontweight,
+    required this.isGradient,
   });
-
+  final bool isGradient;
   final title, fontsize, fontweight;
 
   @override
   Widget build(BuildContext context) {
+    final Shader linearGradient = isGradient
+        ? LinearGradient(
+            colors: <Color>[Color(0xFF009DF5), Color(0xFF1E7AFF)],
+          ).createShader(Rect.fromLTWH(0.0, 0.0, 100.0, 50.0))
+        : LinearGradient(
+            colors: <Color>[Color(0xff000000), Color(0xff000000)],
+          ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
     return Padding(
       padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(15.0)),
       child: Text(
         title,
         style: TextStyle(
-          fontSize: fontsize,
-          fontWeight: fontweight,
-        ),
+            fontSize: fontsize,
+            fontWeight: fontweight,
+            foreground: Paint()..shader = linearGradient),
       ),
     );
   }

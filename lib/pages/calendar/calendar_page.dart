@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:collection';
 import 'package:get/get.dart';
+import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
+import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/calendar/CalendarData.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:oceanview/common/titlebox/iconSet.dart';
-import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/calendar/CalendarSearch.dart';
 import 'package:oceanview/pages/calendar/CalendarAllPage.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
@@ -40,10 +40,11 @@ class CalendarPage extends GetView<CalendarController1> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MainTitle(
-                      name: name,
-                      fontsize1: SizeConfig.sizeByWidth(26),
-                      fontweight1: FontWeight.w700,
+                    oneLine.MainTitle(
+                      title: name,
+                      fontsize: SizeConfig.sizeByHeight(26),
+                      fontweight: FontWeight.w700,
+                      isGradient: false,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -139,78 +140,90 @@ class _CalendarState extends State<Calendar> {
       if (_calendarStart == _calendarEnd) {
         kEvents[_calendarStart] = kEvents[_calendarStart] ?? [];
         kEvents[_calendarStart]!.add(Event(_calendarContent));
-      }
-      else if(_calendarStart.month != _calendarEnd.month){
-        if (_calendarStart.month == 1 || _calendarStart.month == 3 || _calendarStart.month == 5 || _calendarStart.month == 7 || _calendarStart.month == 8 || _calendarStart.month == 10 || _calendarStart.month == 12) {
-          for (int j = _calendarStart.day; j < 32; j ++){
+      } else if (_calendarStart.month != _calendarEnd.month) {
+        if (_calendarStart.month == 1 ||
+            _calendarStart.month == 3 ||
+            _calendarStart.month == 5 ||
+            _calendarStart.month == 7 ||
+            _calendarStart.month == 8 ||
+            _calendarStart.month == 10 ||
+            _calendarStart.month == 12) {
+          for (int j = _calendarStart.day; j < 32; j++) {
             kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] ??
+                kEvents[DateTime(
+                        _calendarStart.year, _calendarStart.month, j)] ??
                     [];
             kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
                 .add(Event(_calendarContent));
           }
-          if(_calendarStart.month == 12) {
-            for (int j = 1; j < _calendarEnd.day + 1; j++){
+          if (_calendarStart.month == 12) {
+            for (int j = 1; j < _calendarEnd.day + 1; j++) {
               kEvents[DateTime(_calendarStart.year + 1, 1, j)] =
-                  kEvents[DateTime(_calendarStart.year + 1, 1, j)] ??
-                      [];
+                  kEvents[DateTime(_calendarStart.year + 1, 1, j)] ?? [];
               kEvents[DateTime(_calendarStart.year + 1, 1, j)]!
                   .add(Event(_calendarContent));
             }
           } else {
             for (int j = 1; j < _calendarEnd.day + 1; j++) {
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)] =
-                  kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)] ??
-                      [];
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)]!
+              kEvents[DateTime(
+                  _calendarStart.year, _calendarStart.month + 1, j)] = kEvents[
+                      DateTime(
+                          _calendarStart.year, _calendarStart.month + 1, j)] ??
+                  [];
+              kEvents[DateTime(
+                      _calendarStart.year, _calendarStart.month + 1, j)]!
                   .add(Event(_calendarContent));
             }
           }
-        }
-        else if (_calendarStart.month == 2) {
+        } else if (_calendarStart.month == 2) {
           if (_calendarStart.year % 4 != 0) {
-            for (int j = _calendarStart.day; j < 30; j ++){
+            for (int j = _calendarStart.day; j < 30; j++) {
               kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                  kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] ??
+                  kEvents[DateTime(
+                          _calendarStart.year, _calendarStart.month, j)] ??
                       [];
               kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
                   .add(Event(_calendarContent));
             }
           } else {
-            for (int j = _calendarStart.day; j < 29; j ++){
+            for (int j = _calendarStart.day; j < 29; j++) {
               kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                  kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] ??
+                  kEvents[DateTime(
+                          _calendarStart.year, _calendarStart.month, j)] ??
                       [];
               kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
                   .add(Event(_calendarContent));
             }
           }
           for (int j = 1; j < _calendarEnd.day + 1; j++) {
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)] =
-                kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)] ??
-                    [];
+            kEvents[DateTime(
+                _calendarStart.year, _calendarStart.month + 1, j)] = kEvents[
+                    DateTime(
+                        _calendarStart.year, _calendarStart.month + 1, j)] ??
+                [];
             kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)]!
                 .add(Event(_calendarContent));
           }
-        }
-        else {
-          for (int j = _calendarStart.day; j < 31; j ++){
+        } else {
+          for (int j = _calendarStart.day; j < 31; j++) {
             kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] ??
+                kEvents[DateTime(
+                        _calendarStart.year, _calendarStart.month, j)] ??
                     [];
             kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
                 .add(Event(_calendarContent));
           }
           for (int j = 1; j < _calendarEnd.day + 1; j++) {
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)] =
-                kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)] ??
-                    [];
+            kEvents[DateTime(
+                _calendarStart.year, _calendarStart.month + 1, j)] = kEvents[
+                    DateTime(
+                        _calendarStart.year, _calendarStart.month + 1, j)] ??
+                [];
             kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)]!
                 .add(Event(_calendarContent));
           }
         }
-      }
-      else{
+      } else {
         for (int j = _calendarStart.day; j < _calendarEnd.day + 1; j++) {
           kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
               kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] ??

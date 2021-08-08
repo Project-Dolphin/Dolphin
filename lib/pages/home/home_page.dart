@@ -39,12 +39,13 @@ class HomePage extends GetView<HomeController> {
                   name: name,
                   description: controller.formattedDate,
                   stat: stat,
-                  fontsize1: SizeConfig.sizeByHeight(24),
+                  fontsize1: SizeConfig.sizeByHeight(26),
                   fontsize2: SizeConfig.sizeByHeight(14),
                   fontsize3: SizeConfig.sizeByHeight(12),
                   fontweight1: FontWeight.w700,
                   fontweight2: FontWeight.w400,
                   fontweight3: FontWeight.w400,
+                  isGradient: true,
                 ),
                 Expanded(
                   child: Column(
