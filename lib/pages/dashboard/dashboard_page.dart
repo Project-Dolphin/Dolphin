@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:oceanview/main.dart';
 import 'package:oceanview/pages/home/home_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,14 +12,34 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/common/icon/gradientIcon.dart';
 import 'package:oceanview/common/sizeConfig.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:oceanview/pages/bus/bus_page.dart';
 import 'package:oceanview/pages/calendar/calendar_page.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_page.dart';
 import 'package:oceanview/pages/more/more_page.dart';
-import 'package:oceanview/services/local_notification_service.dart';
+// import 'package:oceanview/services/message.dart';
 
 import 'dashboard_controller.dart';
+
+// Crude counter to make messages unique
+int _messageCount = 0;
+
+/// The API endpoint here accepts a raw FCM payload for demonstration purposes.
+String constructFCMPayload(String token) {
+  _messageCount++;
+  return jsonEncode({
+    'token': token,
+    'data': {
+      'via': 'FlutterFire Cloud Messaging!!!',
+      'count': _messageCount.toString(),
+    },
+    'notification': {
+      'title': 'Hello FlutterFire!',
+      'body': 'This notification (#$_messageCount) was created via FCM!',
+    },
+  });
+}
 
 class DashboardPage extends StatefulWidget {
   DashboardPage() {
@@ -27,39 +51,103 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  String? _token;
+
   @override
   void initState() {
     super.initState();
 
-    LocalNotificationService.initialize(context);
-
-    ///gives you the message on which user taps
-    ///and it opened the app from terminated state
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
       if (message != null) {
-        final routeFromMessage = message.data["route"];
-
-        Navigator.of(context).pushNamed(routeFromMessage);
+        Get.find<DashboardController>().changeTabIndex(3);
       }
     });
 
-    ///forground work
-    FirebaseMessaging.onMessage.listen((message) {
-      if (message.notification != null) {
-        print(message.notification!.body);
-        print(message.notification!.title);
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null && !kIsWeb) {
+        flutterLocalNotificationsPlugin!.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel!.id,
+                channel!.name,
+                channel!.description,
+                // TODO add a proper drawable resource to android, for now using
+                //      one that already exists in example app.
+                icon: 'launch_background',
+              ),
+            ));
       }
-
-      LocalNotificationService.display(message);
     });
 
-    ///When the app is in background but opened and user taps
-    ///on the notification
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      final routeFromMessage = message.data["route"];
-
-      Navigator.of(context).pushNamed(routeFromMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      Get.find<DashboardController>().changeTabIndex(3);
     });
+  }
+
+  Future<void> sendPushMessage() async {
+    if (_token == null) {
+      print('Unable to send FCM message, no token exists.');
+      return;
+    }
+
+    try {
+      await http.post(
+        Uri.parse('https://api.rnfirebase.io/messaging/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: constructFCMPayload(_token!),
+      );
+      print('FCM request for device sent!');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> onActionSelected(String value) async {
+    switch (value) {
+      case 'subscribe':
+        {
+          print(
+              'FlutterFire Messaging Example: Subscribing to topic "fcm_test".');
+          await FirebaseMessaging.instance.subscribeToTopic('fcm_test');
+          print(
+              'FlutterFire Messaging Example: Subscribing to topic "fcm_test" successful.');
+        }
+        break;
+      case 'unsubscribe':
+        {
+          print(
+              'FlutterFire Messaging Example: Unsubscribing from topic "fcm_test".');
+          await FirebaseMessaging.instance.unsubscribeFromTopic('fcm_test');
+          print(
+              'FlutterFire Messaging Example: Unsubscribing from topic "fcm_test" successful.');
+        }
+        break;
+      case 'get_apns_token':
+        {
+          if (defaultTargetPlatform == TargetPlatform.iOS ||
+              defaultTargetPlatform == TargetPlatform.macOS) {
+            print('FlutterFire Messaging Example: Getting APNs token...');
+            String? token = await FirebaseMessaging.instance.getAPNSToken();
+            print('FlutterFire Messaging Example: Got APNs token: $token');
+          } else {
+            print(
+                'FlutterFire Messaging Example: Getting an APNs token is only supported on iOS and macOS platforms.');
+          }
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   @override

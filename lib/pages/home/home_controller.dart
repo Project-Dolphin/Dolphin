@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 class HomeController extends GetxController {
   String formattedDate = '';
+  List noticeList = [];
 
   @override
   void onInit() {
@@ -15,6 +16,11 @@ class HomeController extends GetxController {
 
   void setDate(date) {
     formattedDate = date;
+    update();
+  }
+
+  void setNoticeList(notice) {
+    noticeList = notice;
     update();
   }
 
@@ -31,7 +37,7 @@ class HomeController extends GetxController {
 
   String getDate() {
     var now = new DateTime.now();
-    var formatter = new DateFormat('M월 d일 E');
+    var formatter = new DateFormat('M.d E');
     return weekdayToKor(formatter.format(now));
   }
 }

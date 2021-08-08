@@ -27,3 +27,23 @@ Widget renderCirleWithShadow(double size) {
         ]),
   );
 }
+
+Widget renderCircle(double size) {
+  return Container(
+      margin: EdgeInsets.only(right: SizeConfig.sizeByWidth(7)),
+      width: SizeConfig.sizeByHeight(size),
+      height: SizeConfig.sizeByHeight(size),
+      decoration: BoxDecoration(
+        borderRadius:
+            BorderRadius.all(Radius.circular(SizeConfig.sizeByHeight(size))),
+        gradient: LinearGradient(
+            colors: <Color>[
+              Color(0xFF009DF5),
+              Color(0xFF1E7AFF),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.0, 1.0],
+            tileMode: TileMode.clamp),
+      ));
+}
