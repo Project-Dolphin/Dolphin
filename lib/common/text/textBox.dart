@@ -17,6 +17,7 @@ class TextBox extends StatelessWidget {
         fit: BoxFit.scaleDown,
         child: Text(
           text,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: color,
             fontWeight: fontWeight,
