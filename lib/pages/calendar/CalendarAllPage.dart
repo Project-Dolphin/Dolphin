@@ -22,7 +22,6 @@ class _CalListState extends State<CalList> {
             'https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/calendar'),
       );
       if (response.statusCode == 200) {
-        print(utf8.decode(response.bodyBytes));
         return CalendarData.fromJson(
             json.decode(utf8.decode(response.bodyBytes)));
       } else {
@@ -98,7 +97,6 @@ class _CalListState extends State<CalList> {
               ],
             );
           } else {
-            print(snapshot.data);
             return Column(
               children: <Widget>[
                 SizedBox(
