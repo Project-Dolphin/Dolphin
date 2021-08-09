@@ -11,7 +11,7 @@ import 'package:oceanview/common/container/glassMorphism.dart';
 var time = ["11:30 ~ 13:30", "17:00 ~ 18:30", ""];
 
 class DailyMenuPage extends GetView<DailyMenuController> {
-  final List<String> titleList = ['2층 학식', '3층 학식', '5층 학식', '생활관', '승생'];
+  final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
   final List<dynamic> testPageList = [
     MealCard(),
     MealCard(),
@@ -90,49 +90,47 @@ class _MealCard extends State<MealCard> {
   Widget build(BuildContext context) {
     return GlassMorphism(
       width: SizeConfig.sizeByWidth(310),
-      height: SizeConfig.sizeByHeight(500),
-      widget: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.all(
-            SizeConfig.sizeByWidth(12.0),
-          ),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: SizeConfig.sizeByWidth(29.0),
-                ),
-                child: MealContentColumn(
-                  mealName: "점심",
-                  mealTime: mealTime[0],
-                  mealMenu: mealMenu,
-                  imageName: "cutlery_orange.png",
-                ),
+      height: SizeConfig.screenHeight,
+      widget: Container(
+        margin: EdgeInsets.all(
+          SizeConfig.sizeByWidth(12.0),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: SizeConfig.sizeByWidth(29.0),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: SizeConfig.sizeByWidth(29.0),
-                ),
-                child: MealContentColumn(
-                  mealName: "저녁",
-                  mealTime: mealTime[1],
-                  mealMenu: mealMenu,
-                  imageName: "cutlery_red.png",
-                ),
+              child: MealContentColumn(
+                mealName: "점심",
+                mealTime: mealTime[0],
+                mealMenu: mealMenu,
+                imageName: "cutlery_orange.png",
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: SizeConfig.sizeByWidth(29.0),
-                ),
-                child: MealContentColumn(
-                  mealName: "일품식",
-                  mealTime: mealTime[2],
-                  mealMenu: mealMenu,
-                  imageName: "cutlery_purple.png",
-                ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: SizeConfig.sizeByWidth(29.0),
               ),
-            ],
-          ),
+              child: MealContentColumn(
+                mealName: "저녁",
+                mealTime: mealTime[1],
+                mealMenu: mealMenu,
+                imageName: "cutlery_red.png",
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: SizeConfig.sizeByWidth(29.0),
+              ),
+              child: MealContentColumn(
+                mealName: "일품식",
+                mealTime: mealTime[2],
+                mealMenu: mealMenu,
+                imageName: "cutlery_purple.png",
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -322,7 +320,6 @@ class Header extends StatelessWidget {
   const Header({Key? key, required this.maxHeight, required this.minHeight}) : super(key: key);
 
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
     return LayoutBuilder(
       builder: (context, constraints) {
         final expandRatio = _calculateExpandRatio(constraints);
