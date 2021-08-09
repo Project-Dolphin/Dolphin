@@ -22,7 +22,7 @@ class BusPage extends GetView<BusController> {
                   name: _.name,
                   description: _.formattedDate,
                   stat: _.stat,
-                  fontsize1: SizeConfig.sizeByHeight(24),
+                  fontsize1: SizeConfig.sizeByHeight(26),
                   fontsize2: SizeConfig.sizeByHeight(14),
                   fontsize3: SizeConfig.sizeByHeight(12),
                   fontweight1: FontWeight.w700,

@@ -2,8 +2,10 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
-import '../../common/titlebox/twolineTitle.dart';
+
 import 'package:oceanview/common/carousel/carousel.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
@@ -42,14 +44,14 @@ class DailyMenuPage extends GetView<DailyMenuController> {
               padding: EdgeInsets.only(
                 left: SizeConfig.sizeByWidth(22),
                 right: SizeConfig.sizeByWidth(25),
-                top: SizeConfig.sizeByWidth(65),
+                top: SizeConfig.sizeByHeight(65),
               ),
               child: BottomTitle(
                 subname: titleList[index] + " 식단",
                 stat: stat,
                 more: more,
-                fontsize2: 20.0,
-                fontsize3: 12.0,
+                fontsize2: SizeConfig.sizeByHeight(20),
+                fontsize3: SizeConfig.sizeByHeight(12),
                 fontweight2: FontWeight.w500,
                 fontweight3: FontWeight.w400,
               ),
@@ -57,11 +59,11 @@ class DailyMenuPage extends GetView<DailyMenuController> {
           ),
         ),
         SliverFillRemaining(
-          child:
-              Padding(
-                padding: EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
-                child: Carousel(pageList: testPageList, titleList: titleList, bar: true),
-              ),
+          child: Padding(
+            padding: EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
+            child: Carousel(
+                pageList: testPageList, titleList: titleList, bar: true),
+          ),
         ),
       ],
     );
@@ -317,7 +319,8 @@ class Header extends StatelessWidget {
   final double maxHeight;
   final double minHeight;
 
-  const Header({Key? key, required this.maxHeight, required this.minHeight}) : super(key: key);
+  const Header({Key? key, required this.maxHeight, required this.minHeight})
+      : super(key: key);
 
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -325,8 +328,7 @@ class Header extends StatelessWidget {
         final expandRatio = _calculateExpandRatio(constraints);
         final animation = AlwaysStoppedAnimation(expandRatio);
 
-        return
-          Stack(
+        return Stack(
           fit: StackFit.expand,
           children: [
             Positioned(
@@ -334,8 +336,8 @@ class Header extends StatelessWidget {
               child: ClipRect(
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
-                    sigmaX: Tween(begin: 10.0, end:0.0).evaluate(animation),
-                    sigmaY: Tween(begin: 10.0, end:0.0).evaluate(animation),
+                    sigmaX: Tween(begin: 10.0, end: 0.0).evaluate(animation),
+                    sigmaY: Tween(begin: 10.0, end: 0.0).evaluate(animation),
                   ),
                   child: Container(
                     color: Colors.transparent, //test
@@ -365,20 +367,33 @@ class Header extends StatelessWidget {
 
   Align _buildTitle(Animation<double> animation) {
     return Align(
-      alignment: AlignmentTween(
-              begin: Alignment.center, end: Alignment.bottomLeft)
-          .evaluate(animation),
+      alignment:
+          AlignmentTween(begin: Alignment.center, end: Alignment.bottomLeft)
+              .evaluate(animation),
       child: Container(
-        margin: EdgeInsets.only(bottom: 14, left: 14,),
-        child: Text(
-          "식단",
-          style: TextStyle(
-            fontSize: Tween<double>(begin: 18, end: 26).evaluate(animation),
-            color: Color(0xFF3F3F3F),
-            fontWeight: FontWeight.w800,
+          margin: EdgeInsets.only(
+            bottom: SizeConfig.sizeByHeight(14),
+            left: SizeConfig.sizeByHeight(14),
           ),
-        ),
-      ),
+          child: TextBox(
+              '식단',
+              Tween<double>(
+                      begin: SizeConfig.sizeByHeight(18),
+                      end: SizeConfig.sizeByHeight(24))
+                  .evaluate(animation),
+              FontWeight.w800,
+              Color(0xff3f3f3f))
+          // "식단",
+          // style: TextStyle(
+          //   fontSize: Tween<double>(
+          //           begin: SizeConfig.sizeByHeight(18),
+          //           end: SizeConfig.sizeByHeight(24))
+          //       .evaluate(animation),
+          //   color: Color(0xFF3F3F3F),
+          //   fontWeight: FontWeight.w800,
+          // ),
+
+          ),
     );
   }
 }
