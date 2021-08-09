@@ -3,8 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
-import '../../common/titlebox/twolineTitle.dart';
+
 import 'package:oceanview/common/carousel/carousel.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';

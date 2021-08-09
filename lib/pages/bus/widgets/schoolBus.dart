@@ -86,6 +86,14 @@ class SchoolBus extends StatelessWidget {
             children: [
               Center(
                 child: Container(
+                  margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(5)),
+                  width: SizeConfig.sizeByWidth(180),
+                  height: 1,
+                  color: Color(0xFF339EFB),
+                ),
+              ),
+              Center(
+                child: Container(
                   width: SizeConfig.sizeByWidth(200),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,14 +106,6 @@ class SchoolBus extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
-                child: Container(
-                  margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(5)),
-                  width: SizeConfig.sizeByWidth(180),
-                  height: 1,
-                  color: Color(0xFF339EFB),
-                ),
-              )
             ],
           ),
           SizedBox(

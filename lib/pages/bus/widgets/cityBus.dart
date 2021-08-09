@@ -353,12 +353,16 @@ class SecondArrive extends StatelessWidget {
                         '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
                     : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
                         22, FontWeight.w700, Color(0xFF3F3F3F)),
-                TextBox(
-                  '$arriveTime',
-                  14,
-                  FontWeight.w500,
-                  Color(0xFF717171),
-                ),
+                arriveTime != ' '
+                    ? TextBox(
+                        '$arriveTime',
+                        14,
+                        FontWeight.w500,
+                        Color(0xFF717171),
+                      )
+                    : SizedBox(
+                        height: SizeConfig.sizeByHeight(5),
+                      ),
               ],
             ),
           ],
@@ -402,19 +406,23 @@ class ThirdArrive extends StatelessWidget {
                         '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
                     : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
                         18, FontWeight.w500, Color(0xFF3F3F3F)),
-                Column(
-                  children: [
-                    TextBox(
-                      '$arriveTime',
-                      14,
-                      FontWeight.w500,
-                      Color(0xFF717171),
-                    ),
-                    SizedBox(
-                      height: SizeConfig.sizeByHeight(2),
-                    ),
-                  ],
-                ),
+                arriveTime != ' '
+                    ? Column(
+                        children: [
+                          TextBox(
+                            '$arriveTime',
+                            14,
+                            FontWeight.w500,
+                            Color(0xFF717171),
+                          ),
+                          SizedBox(
+                            height: SizeConfig.sizeByHeight(2),
+                          ),
+                        ],
+                      )
+                    : SizedBox(
+                        height: SizeConfig.sizeByHeight(5),
+                      ),
               ],
             ),
           ],

@@ -111,8 +111,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    findNearStation();
     return FutureBuilder(
-      future: findNearStation(),
+      future: Future.delayed(Duration(seconds: 1)),
       builder: (context, AsyncSnapshot snapshot) {
         // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {
