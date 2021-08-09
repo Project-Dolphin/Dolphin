@@ -184,48 +184,50 @@ class _DashboardPageState extends State<DashboardPage> {
   _bottomNavigationBarItem({Widget? icon, String? label}) {
     return BottomNavigationBarItem(
       icon: Container(
-        margin: EdgeInsets.only(top: 8, right: 3, bottom: 8),
-        child: icon,
+        margin: EdgeInsets.only(top: 8, bottom: 8),
+        child: Center(child: icon),
       ),
       activeIcon: Container(
-          margin: EdgeInsets.only(top: 8, right: 3, bottom: 8),
-          child: Stack(
-            children: <Widget>[
-              Transform.translate(
-                offset: Offset(0, 3),
-                child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.transparent,
-                        width: 0,
+          margin: EdgeInsets.only(top: 8, bottom: 8),
+          child: Center(
+            child: Stack(
+              children: <Widget>[
+                Transform.translate(
+                  offset: Offset(0, 3),
+                  child: ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.transparent,
+                          width: 0,
+                        ),
                       ),
-                    ),
-                    child: Opacity(
-                      opacity: 0.5,
-                      child: ColorFiltered(
-                        colorFilter: ColorFilter.mode(
-                            Color(0xFFB4D5F1), BlendMode.srcATop),
-                        child: icon,
+                      child: Opacity(
+                        opacity: 0.5,
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                              Color(0xFFB4D5F1), BlendMode.srcATop),
+                          child: icon,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              GradientIcon(
-                icon!,
-                LinearGradient(
-                    colors: <Color>[
-                      Color(0xFF009DF5),
-                      Color(0xFF1E7AFF),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: [0.0, 1.0],
-                    tileMode: TileMode.clamp),
-              ),
-            ],
+                GradientIcon(
+                  icon!,
+                  LinearGradient(
+                      colors: <Color>[
+                        Color(0xFF009DF5),
+                        Color(0xFF1E7AFF),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp),
+                ),
+              ],
+            ),
           )),
       label: label,
     );
@@ -249,37 +251,44 @@ class _DashboardPageState extends State<DashboardPage> {
           currentIndex: controller.tabIndex,
           showSelectedLabels: true,
           showUnselectedLabels: true,
-          selectedFontSize: 10,
-          unselectedFontSize: 10,
+          selectedFontSize: SizeConfig.sizeByHeight(10),
+          unselectedFontSize: SizeConfig.sizeByHeight(10),
           selectedLabelStyle: TextStyle(color: Color(0xFF1E7AFF)),
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white.withOpacity(0.8),
           elevation: 0,
           items: [
             _bottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(
-                  'assets/images/bottomNavigationIcon/house.fill.png')),
+              icon: Icon(CupertinoIcons.house_fill),
               label: '홈',
             ),
             _bottomNavigationBarItem(
-              icon: ImageIcon(
-                  AssetImage('assets/images/bottomNavigationIcon/bus.png'),
-                  size: 24),
+              icon: Container(
+                  padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(4)),
+                  child: ImageIcon(
+                      AssetImage('assets/images/bottomNavigationIcon/bus.png'),
+                      size: 24)),
               label: '버스',
             ),
             _bottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(
-                  'assets/images/bottomNavigationIcon/fork.knife.png')),
+              icon: Container(
+                  padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(3)),
+                  child: ImageIcon(AssetImage(
+                      'assets/images/bottomNavigationIcon/fork.knife.png'))),
               label: '식단',
             ),
             _bottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(
-                  'assets/images/bottomNavigationIcon/calendar.png')),
+              icon: Container(
+                  padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(3)),
+                  child: ImageIcon(AssetImage(
+                      'assets/images/bottomNavigationIcon/calendar.png'))),
               label: '학사일정',
             ),
             _bottomNavigationBarItem(
-              icon: ImageIcon(AssetImage(
-                  'assets/images/bottomNavigationIcon/ellipsis.png')),
+              icon: Container(
+                  padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(2)),
+                  child: ImageIcon(AssetImage(
+                      'assets/images/bottomNavigationIcon/ellipsis.png'))),
               label: '더보기',
             ),
           ],

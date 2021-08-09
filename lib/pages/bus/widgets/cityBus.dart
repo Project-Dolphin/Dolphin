@@ -6,6 +6,7 @@ import 'package:oceanview/common/dialog/dialog.dart';
 import 'package:oceanview/common/dropdown/dropdownButton.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
 import 'package:oceanview/services/dailyAtTimeNotification.dart';
@@ -205,7 +206,8 @@ class CityBus extends GetView<CityBusController> {
                                         ? fetchStation('169100201')
                                         : value == '영도대교'
                                             ? fetchStation('167850202')
-                                            : _.findNextDepartCityBus();
+                                            : CityBusRepository()
+                                                .getNextDepartCityBus();
 
                                 controller.setSelectedStation(value);
                               },

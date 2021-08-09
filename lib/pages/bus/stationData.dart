@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/pages/api/api.dart';
+import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
-import 'package:oceanview/pages/bus/cityBus/cityBusRepository.dart';
+import 'package:oceanview/pages/bus/api/shuttleBusRepository.dart';
 import 'package:oceanview/pages/home/notice/noticeRepository.dart';
 
 Future<void> findNearStation() async {
@@ -25,9 +27,11 @@ Future<void> findNearStation() async {
   print(_currentLocation);
   print(nearStation);
   Get.find<CityBusController>().setStation(nearStation);
+  // FetchAPI().fetchBusInfo(167720201);
+  // ShuttleBusRepository().fetchNextShuttle();
   //직접 api 호출하는 메소드
-  // Get.find<CityBusController>()
-  //     .setResponseCityBus(await CityBusRepository().fetchCityBus(nodeId!));
+  await CityBusRepository().getNextDepartCityBus();
+  // await CityBusRepository().getNextCityBus(nodeId);
   NoticeRepository().getNotice();
   Get.find<CityBusController>().setIsLoading(false);
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/dropdown/dropdownButton.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/pages/bus/api/shuttleBusRepository.dart';
 import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
 
 class ShuttleBus extends GetView<ShuttleBusController> {
@@ -72,9 +74,42 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          FirstArrive('4분 52초', '21:23'),
-                                          SecondArrive('4분 52초', '21:23'),
-                                          ThirdArrive('4분 52초', '21:23'),
+                                          FirstArrive(
+                                              _.nextShuttle.length > 0
+                                                  ? _.nextShuttle[0]
+                                                      .difference(
+                                                          DateTime.now())
+                                                      .inMinutes
+                                                      .toString()
+                                                  : '없음',
+                                              _.nextShuttle.length > 0
+                                                  ? DateFormat('HH:mm')
+                                                      .format(_.nextShuttle[0])
+                                                  : ' '),
+                                          SecondArrive(
+                                              _.nextShuttle.length > 1
+                                                  ? _.nextShuttle[1]
+                                                      .difference(
+                                                          DateTime.now())
+                                                      .inMinutes
+                                                      .toString()
+                                                  : '없음',
+                                              _.nextShuttle.length > 1
+                                                  ? DateFormat('HH:mm')
+                                                      .format(_.nextShuttle[1])
+                                                  : ' '),
+                                          ThirdArrive(
+                                              _.nextShuttle.length > 2
+                                                  ? _.nextShuttle[2]
+                                                      .difference(
+                                                          DateTime.now())
+                                                      .inMinutes
+                                                      .toString()
+                                                  : '없음',
+                                              _.nextShuttle.length > 2
+                                                  ? DateFormat('HH:mm')
+                                                      .format(_.nextShuttle[2])
+                                                  : ' ')
                                         ],
                                       ),
                                     ],
@@ -115,8 +150,8 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             HomeDeparted('학교에서 2분전 출발'),
-                                            FirstArrive('약 4분', ''),
-                                            SecondArrive('약 7분', ''),
+                                            FirstArrive('4', ' '),
+                                            SecondArrive('7', ' '),
                                           ],
                                         ),
                                       ],
@@ -163,7 +198,12 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                             Dropdown(
                               _.stationList,
                               _.selectedStation,
-                              (value) => _.setSelectedStation(value),
+                              (value) {
+                                value == '학교종점 (아치나루터)'
+                                    ? ShuttleBusRepository().getNextShuttle()
+                                    : () {};
+                                _.setSelectedStation(value);
+                              },
                               findSubTitle: findShuttleBusSubTitle,
                             ),
                           ],
@@ -224,15 +264,27 @@ class FirstArrive extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextBox(remainTime!, 28, FontWeight.w700, Color(0xFF3F3F3F)),
-            arriveTime != ''
-                ? TextBox(
-                    arriveTime!,
-                    14,
-                    FontWeight.w500,
-                    Color(0xFF717171),
+            remainTime == '없음'
+                ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 28,
+                    FontWeight.w700, Color(0xFF3F3F3F)),
+            arriveTime != ' '
+                ? Column(
+                    children: [
+                      TextBox(
+                        '$arriveTime',
+                        14,
+                        FontWeight.w500,
+                        Color(0xFF717171),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.sizeByHeight(2),
+                      ),
+                    ],
                   )
-                : Container(),
+                : SizedBox(
+                    height: SizeConfig.sizeByHeight(5),
+                  ),
           ],
         ),
       ],
@@ -267,18 +319,20 @@ class SecondArrive extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextBox(remainTime!, 22, FontWeight.w700, Color(0xFF3F3F3F)),
-            SizedBox(
-              width: SizeConfig.sizeByWidth(10),
-            ),
-            arriveTime != ''
+            remainTime == '없음'
+                ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 22,
+                    FontWeight.w700, Color(0xFF3F3F3F)),
+            arriveTime != ' '
                 ? TextBox(
-                    arriveTime!,
+                    '$arriveTime',
                     14,
                     FontWeight.w500,
                     Color(0xFF717171),
                   )
-                : Container(),
+                : SizedBox(
+                    height: SizeConfig.sizeByHeight(5),
+                  ),
           ],
         ),
       ],
@@ -313,15 +367,27 @@ class ThirdArrive extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextBox(remainTime!, 18, FontWeight.w500, Color(0xFF3F3F3F)),
-            arriveTime != ''
-                ? TextBox(
-                    arriveTime!,
-                    14,
-                    FontWeight.w500,
-                    Color(0xFF717171),
+            remainTime == '없음'
+                ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 18,
+                    FontWeight.w500, Color(0xFF3F3F3F)),
+            arriveTime != ' '
+                ? Column(
+                    children: [
+                      TextBox(
+                        '$arriveTime',
+                        14,
+                        FontWeight.w500,
+                        Color(0xFF717171),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.sizeByHeight(2),
+                      ),
+                    ],
                   )
-                : Container(),
+                : SizedBox(
+                    height: SizeConfig.sizeByHeight(5),
+                  ),
           ],
         ),
       ],

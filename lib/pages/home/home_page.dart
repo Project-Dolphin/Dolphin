@@ -16,7 +16,7 @@ class HomePage extends GetView<HomeController> {
 
   Future<Null> onRefresh() async {
     Get.put(CityBusController());
-    Get.find<CityBusController>().findNextDepartCityBus();
+    // Get.find<CityBusController>().findNextDepartCityBus();
     await NoticeRepository().getNotice();
   }
 
