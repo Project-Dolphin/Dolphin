@@ -38,7 +38,7 @@ class BusPage extends GetView<BusController> {
             ],
           ),
           Positioned(
-            top: SizeConfig.screenHeight * 0.72,
+            top: SizeConfig.screenHeight * 0.71,
             child: Container(
               width: SizeConfig.screenWidth,
               child: Row(

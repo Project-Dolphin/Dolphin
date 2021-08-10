@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 class BusController extends GetxController {
   final String title = 'Home Title';
   String formattedDate = '';
+  String stat = '';
   final List<String> titleList = ['190번', '셔틀버스', '통근버스', '학교버스'];
   final List<dynamic> testPageList = [
     CityBus(),
@@ -16,17 +17,23 @@ class BusController extends GetxController {
     CommuterBus(),
     SchoolBus()
   ];
-  final name = '버스', stat = '시험기간';
+  final name = '버스';
 
   @override
   void onInit() {
     super.onInit();
     setDate(getDate());
+    setStat(getWeekDay());
     Timer.periodic(Duration(seconds: 10), (Timer t) => setDate(getDate()));
   }
 
   void setDate(date) {
     formattedDate = date;
+    update();
+  }
+
+  void setStat(newStat) {
+    stat = newStat;
     update();
   }
 
@@ -45,5 +52,19 @@ class BusController extends GetxController {
     var now = new DateTime.now();
     var formatter = new DateFormat('M월 d일 E HH:mm');
     return weekdayToKor(formatter.format(now));
+  }
+
+  String getWeekDay() {
+    var now = new DateTime.now();
+    print([6, 7].contains(now.weekday)
+        ? '주말'
+        : [7, 8, 1, 2].contains(now.month)
+            ? '방학'
+            : '평일');
+    return [6, 7].contains(now.weekday)
+        ? '주말'
+        : [7, 8, 1, 2].contains(now.month)
+            ? '방학'
+            : '평일';
   }
 }

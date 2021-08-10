@@ -11,7 +11,7 @@ import 'package:oceanview/pages/home/widgets/busContainer.dart';
 import 'package:oceanview/pages/home/widgets/noticeContainer.dart';
 
 class HomePage extends GetView<HomeController> {
-  final name = '오션뷰', stat = '시험기간', formattedDate = '7.14 월요일';
+  final name = '오션뷰';
   final Color iconColor = Color(0xFF000000);
 
   Future<Null> onRefresh() async {
@@ -35,18 +35,19 @@ class HomePage extends GetView<HomeController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                OnelineTitle(
-                  name: name,
-                  description: controller.formattedDate,
-                  stat: stat,
-                  fontsize1: SizeConfig.sizeByHeight(26),
-                  fontsize2: SizeConfig.sizeByHeight(14),
-                  fontsize3: SizeConfig.sizeByHeight(12),
-                  fontweight1: FontWeight.w700,
-                  fontweight2: FontWeight.w400,
-                  fontweight3: FontWeight.w400,
-                  isGradient: true,
-                ),
+                GetBuilder<HomeController>(
+                    builder: (_) => OnelineTitle(
+                          name: name,
+                          description: controller.formattedDate,
+                          stat: controller.stat,
+                          fontsize1: SizeConfig.sizeByHeight(26),
+                          fontsize2: SizeConfig.sizeByHeight(14),
+                          fontsize3: SizeConfig.sizeByHeight(12),
+                          fontweight1: FontWeight.w700,
+                          fontweight2: FontWeight.w400,
+                          fontweight3: FontWeight.w400,
+                          isGradient: true,
+                        )),
                 Expanded(
                   child: Column(
                     children: [

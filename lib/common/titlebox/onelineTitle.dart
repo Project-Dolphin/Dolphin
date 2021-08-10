@@ -137,6 +137,7 @@ class StatusContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(7)),
       child: Center(
         child: FittedBox(
           fit: BoxFit.scaleDown,
@@ -151,7 +152,7 @@ class StatusContainer extends StatelessWidget {
         ),
       ),
       height: SizeConfig.sizeByHeight(22),
-      width: SizeConfig.sizeByWidth(60),
+      // width: SizeConfig.sizeByWidth(60),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(

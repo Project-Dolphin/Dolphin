@@ -4,18 +4,24 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class HomeController extends GetxController {
-  String formattedDate = '';
+  String formattedDate = ' ';
   List noticeList = [];
+  String stat = ' ';
 
   @override
   void onInit() {
     super.onInit();
+    setStat(getWeekDay());
     setDate(getDate());
-    Timer.periodic(Duration(seconds: 10), (Timer t) => setDate(getDate()));
   }
 
   void setDate(date) {
     formattedDate = date;
+    update();
+  }
+
+  void setStat(newStat) {
+    stat = newStat;
     update();
   }
 
@@ -39,5 +45,19 @@ class HomeController extends GetxController {
     var now = new DateTime.now();
     var formatter = new DateFormat('M.d E');
     return weekdayToKor(formatter.format(now));
+  }
+
+  String getWeekDay() {
+    var now = new DateTime.now();
+    print([6, 7].contains(now.weekday)
+        ? '주말'
+        : [7, 8, 1, 2].contains(now.month)
+            ? '방학'
+            : '평일');
+    return [6, 7].contains(now.weekday)
+        ? '주말'
+        : [7, 8, 1, 2].contains(now.month)
+            ? '방학'
+            : '평일';
   }
 }

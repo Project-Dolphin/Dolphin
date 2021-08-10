@@ -15,6 +15,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
 
   @override
   Widget build(BuildContext context) {
+    ShuttleBusRepository().getNextShuttle();
     return GetBuilder<ShuttleBusController>(
         init: ShuttleBusController(),
         builder: (_) {
@@ -73,44 +74,49 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          FirstArrive(
-                                              _.nextShuttle.length > 0
-                                                  ? _.nextShuttle[0]
-                                                      .difference(
-                                                          DateTime.now())
-                                                      .inMinutes
-                                                      .toString()
-                                                  : '없음',
-                                              _.nextShuttle.length > 0
-                                                  ? DateFormat('HH:mm')
-                                                      .format(_.nextShuttle[0])
-                                                  : ' '),
-                                          SecondArrive(
-                                              _.nextShuttle.length > 1
-                                                  ? _.nextShuttle[1]
-                                                      .difference(
-                                                          DateTime.now())
-                                                      .inMinutes
-                                                      .toString()
-                                                  : '없음',
-                                              _.nextShuttle.length > 1
-                                                  ? DateFormat('HH:mm')
-                                                      .format(_.nextShuttle[1])
-                                                  : ' '),
-                                          ThirdArrive(
-                                              _.nextShuttle.length > 2
-                                                  ? _.nextShuttle[2]
-                                                      .difference(
-                                                          DateTime.now())
-                                                      .inMinutes
-                                                      .toString()
-                                                  : '없음',
-                                              _.nextShuttle.length > 2
-                                                  ? DateFormat('HH:mm')
-                                                      .format(_.nextShuttle[2])
-                                                  : ' ')
-                                        ],
+                                        children: _.isLoading
+                                            ? [Container()]
+                                            : [
+                                                FirstArrive(
+                                                    _.nextShuttle.length > 0
+                                                        ? _.nextShuttle[0]
+                                                            .difference(
+                                                                DateTime.now())
+                                                            .inMinutes
+                                                            .toString()
+                                                        : '없음',
+                                                    _.nextShuttle.length > 0
+                                                        ? DateFormat('HH:mm')
+                                                            .format(_
+                                                                .nextShuttle[0])
+                                                        : ' '),
+                                                SecondArrive(
+                                                    _.nextShuttle.length > 1
+                                                        ? _.nextShuttle[1]
+                                                            .difference(
+                                                                DateTime.now())
+                                                            .inMinutes
+                                                            .toString()
+                                                        : '없음',
+                                                    _.nextShuttle.length > 1
+                                                        ? DateFormat('HH:mm')
+                                                            .format(_
+                                                                .nextShuttle[1])
+                                                        : ' '),
+                                                ThirdArrive(
+                                                    _.nextShuttle.length > 2
+                                                        ? _.nextShuttle[2]
+                                                            .difference(
+                                                                DateTime.now())
+                                                            .inMinutes
+                                                            .toString()
+                                                        : '없음',
+                                                    _.nextShuttle.length > 2
+                                                        ? DateFormat('HH:mm')
+                                                            .format(_
+                                                                .nextShuttle[2])
+                                                        : ' ')
+                                              ],
                                       ),
                                     ],
                                   ),

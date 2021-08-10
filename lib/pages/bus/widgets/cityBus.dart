@@ -77,41 +77,46 @@ class CityBus extends GetView<CityBusController> {
                                 ? Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      FirstArrive(
-                                          _.nextDepartCityBus!.length > 0
-                                              ? _.nextDepartCityBus![0]
-                                                  .difference(DateTime.now())
-                                                  .inMinutes
-                                                  .toString()
-                                              : '없음',
-                                          _.nextDepartCityBus!.length > 0
-                                              ? DateFormat('HH:mm').format(
-                                                  _.nextDepartCityBus![0])
-                                              : ' '),
-                                      SecondArrive(
-                                          _.nextDepartCityBus!.length > 1
-                                              ? _.nextDepartCityBus![1]
-                                                  .difference(DateTime.now())
-                                                  .inMinutes
-                                                  .toString()
-                                              : '없음',
-                                          _.nextDepartCityBus!.length > 1
-                                              ? DateFormat('HH:mm').format(
-                                                  _.nextDepartCityBus![1])
-                                              : ' '),
-                                      ThirdArrive(
-                                          _.nextDepartCityBus!.length > 2
-                                              ? _.nextDepartCityBus![2]
-                                                  .difference(DateTime.now())
-                                                  .inMinutes
-                                                  .toString()
-                                              : '없음',
-                                          _.nextDepartCityBus!.length > 2
-                                              ? DateFormat('HH:mm').format(
-                                                  _.nextDepartCityBus![2])
-                                              : ' '),
-                                    ],
+                                    children: _.isLoading
+                                        ? [Container()]
+                                        : [
+                                            FirstArrive(
+                                                _.nextDepartCityBus!.length > 0
+                                                    ? _.nextDepartCityBus![0]
+                                                        .difference(
+                                                            DateTime.now())
+                                                        .inMinutes
+                                                        .toString()
+                                                    : '없음',
+                                                _.nextDepartCityBus!.length > 0
+                                                    ? DateFormat('HH:mm').format(
+                                                        _.nextDepartCityBus![0])
+                                                    : ' '),
+                                            SecondArrive(
+                                                _.nextDepartCityBus!.length > 1
+                                                    ? _.nextDepartCityBus![1]
+                                                        .difference(
+                                                            DateTime.now())
+                                                        .inMinutes
+                                                        .toString()
+                                                    : '없음',
+                                                _.nextDepartCityBus!.length > 1
+                                                    ? DateFormat('HH:mm').format(
+                                                        _.nextDepartCityBus![1])
+                                                    : ' '),
+                                            ThirdArrive(
+                                                _.nextDepartCityBus!.length > 2
+                                                    ? _.nextDepartCityBus![2]
+                                                        .difference(
+                                                            DateTime.now())
+                                                        .inMinutes
+                                                        .toString()
+                                                    : '없음',
+                                                _.nextDepartCityBus!.length > 2
+                                                    ? DateFormat('HH:mm').format(
+                                                        _.nextDepartCityBus![2])
+                                                    : ' '),
+                                          ],
                                   )
                                 : Column(
                                     mainAxisAlignment:

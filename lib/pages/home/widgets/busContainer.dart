@@ -70,9 +70,15 @@ class BusContainer extends GetView<CityBusController> {
                                                       .difference(
                                                           DateTime.now())
                                                       .inMinutes >
-                                                  0
+                                                  1
                                               ? '${_.nextDepartCityBus![0].difference(DateTime.now()).inMinutes.toString()}분 후 출발'
-                                              : '${(_.nextDepartCityBus![0].difference(DateTime.now()).inMinutes * -1).toString()}분 전 출발'
+                                              : _.nextDepartCityBus![0]
+                                                          .difference(
+                                                              DateTime.now())
+                                                          .inMinutes >
+                                                      -1
+                                                  ? '곧 도착'
+                                                  : '${(_.nextDepartCityBus![0].difference(DateTime.now()).inMinutes * -1).toString()}분 전 출발'
                                           : '다음 차가 없습니다.',
                                       SizeConfig.sizeByHeight(16),
                                       FontWeight.w700,

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:oceanview/pages/bus/api/shuttleBusRepository.dart';
 
 class ShuttleBusController extends GetxController {
-  bool isLoading = true;
+  bool isLoading = false;
   List<String> stationList = [
     '학교종점 (아치나루터)',
     '하리상가',

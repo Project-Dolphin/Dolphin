@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
+import 'package:oceanview/api/api.dart';
 import 'dart:convert' as convert;
 
-import 'package:oceanview/pages/api/api.dart';
-import 'package:oceanview/pages/bus/api/responseBus.dart';
 import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
 
 class ShuttleBusRepository {
@@ -30,8 +29,9 @@ class ShuttleBusRepository {
 
   getNextShuttle() async {
     Get.put(ShuttleBusController());
-    Get.find<ShuttleBusController>().setNextShuttle([]);
+    Get.find<ShuttleBusController>().setIsLoading(true);
     Get.find<ShuttleBusController>().setNextShuttle(await fetchNextShuttle());
+    Get.find<ShuttleBusController>().setIsLoading(false);
   }
 
   getShuttleList() async {

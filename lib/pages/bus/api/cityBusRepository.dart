@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:oceanview/pages/api/api.dart';
+import 'package:oceanview/api/api.dart';
+
 import 'dart:convert' as convert;
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
 
@@ -26,7 +27,7 @@ class CityBusRepository {
     return apiToJson(await FetchAPI().fetchCityBusList());
   }
 
-  Future<List<dynamic>> fetcNexthDepartCityBus() async {
+  Future<List<dynamic>> fetchNexthDepartCityBus() async {
     return apiToJson(await FetchAPI().fetchNextDepartCityBus());
   }
 
@@ -39,8 +40,9 @@ class CityBusRepository {
 
   getNextDepartCityBus() async {
     Get.put(CityBusController());
-    Get.find<CityBusController>().setResponseCityBus([]);
+    Get.find<CityBusController>().setIsLoading(true);
     Get.find<CityBusController>()
-        .setDepartCityBus(await fetcNexthDepartCityBus());
+        .setDepartCityBus(await fetchNexthDepartCityBus());
+    Get.find<CityBusController>().setIsLoading(false);
   }
 }
