@@ -90,7 +90,8 @@ void main() async {
       criticalAlert: true,
     );
 
-    final initSettingsAndroid = AndroidInitializationSettings('app_icon');
+    final initSettingsAndroid =
+        AndroidInitializationSettings("@mipmap/ic_launcher");
     final initSettingsIOS = IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,

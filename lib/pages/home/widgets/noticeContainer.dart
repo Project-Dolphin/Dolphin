@@ -18,7 +18,7 @@ class NoticeContainer extends StatelessWidget {
     return Container(
         padding: EdgeInsets.symmetric(
             horizontal: SizeConfig.sizeByHeight(15),
-            vertical: SizeConfig.sizeByHeight(6)),
+            vertical: SizeConfig.sizeByHeight(12)),
         child: GetBuilder<HomeController>(
             init: HomeController(),
             builder: (_) {
