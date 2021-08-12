@@ -36,23 +36,56 @@ class HomePage extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GetBuilder<HomeController>(
-                    builder: (_) => OnelineTitle(
-                          name: name,
-                          description: controller.formattedDate,
-                          stat: controller.stat,
-                          fontsize1: SizeConfig.sizeByHeight(26),
-                          fontsize2: SizeConfig.sizeByHeight(14),
-                          fontsize3: SizeConfig.sizeByHeight(12),
-                          fontweight1: FontWeight.w700,
-                          fontweight2: FontWeight.w400,
-                          fontweight3: FontWeight.w500,
-                          isGradient: true,
+                    builder: (_) =>
+                        // OnelineTitle(
+                        //       name: name,
+                        //       description: controller.formattedDate,
+                        //       stat: controller.stat,
+                        //       fontsize1: SizeConfig.sizeByHeight(26),
+                        //       fontsize2: SizeConfig.sizeByHeight(14),
+                        //       fontsize3: SizeConfig.sizeByHeight(12),
+                        //       fontweight1: FontWeight.w700,
+                        //       fontweight2: FontWeight.w400,
+                        //       fontweight3: FontWeight.w500,
+                        //       isGradient: true,
+                        //     )
+                        Container(
+                          padding: EdgeInsets.only(
+                              bottom: SizeConfig.sizeByHeight(12)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MainTitle(
+                                title: 'OceanView',
+                                fontsize: SizeConfig.sizeByHeight(26),
+                                fontweight: FontWeight.w700,
+                                isGradient: true,
+                                fontFamily: 'Pretendard',
+                              ),
+                              Row(
+                                children: [
+                                  SubText(
+                                    description: _.formattedDate,
+                                    fontsize: SizeConfig.sizeByHeight(14),
+                                    fontweight: FontWeight.w400,
+                                    fontFamily: 'Pretendard',
+                                  ),
+                                  StatusContainer(
+                                    stat: _.stat,
+                                    fontsize: SizeConfig.sizeByHeight(12),
+                                    fontweight: FontWeight.w500,
+                                    fontFamily: 'Pretendard',
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         )),
                 Expanded(
                   child: Column(
                     children: [
                       Expanded(
-                          flex: 140,
+                          flex: 134,
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
@@ -74,9 +107,9 @@ class HomePage extends GetView<HomeController> {
                                 ]),
                             child: Container(),
                           )),
-                      Expanded(flex: 15, child: Container()),
+                      Expanded(flex: 12, child: Container()),
                       Expanded(
-                          flex: 190,
+                          flex: 154,
                           child: Row(
                             children: [
                               Expanded(
@@ -92,11 +125,11 @@ class HomePage extends GetView<HomeController> {
                               Expanded(flex: 163, child: GlassMorphism())
                             ],
                           )),
-                      Expanded(flex: 15, child: Container()),
+                      Expanded(flex: 12, child: Container()),
                       Expanded(flex: 80, child: GlassMorphism()),
-                      Expanded(flex: 15, child: Container()),
+                      Expanded(flex: 12, child: Container()),
                       Expanded(
-                          flex: 135,
+                          flex: 190,
                           child: GlassMorphism(
                             widget: NoticeContainer(),
                           )),
