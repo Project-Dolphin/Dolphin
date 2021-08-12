@@ -73,6 +73,18 @@ class CityBus extends GetView<CityBusController> {
                         GetBuilder<CityBusController>(
                           init: CityBusController(),
                           builder: (_) {
+                            var departRemainTime = [];
+                            var departArriveTime = [];
+                            for (var i = 0;
+                                i < _.nextDepartCityBus!.length;
+                                i++) {
+                              departRemainTime.add(_.nextDepartCityBus![i]
+                                  .difference(DateTime.now())
+                                  .inMinutes
+                                  .toString());
+                              departArriveTime.add(DateFormat('HH:mm')
+                                  .format(_.nextDepartCityBus![i]));
+                            }
                             return _.selectedStation == '해양대구본관'
                                 ? Column(
                                     mainAxisAlignment:
@@ -81,40 +93,26 @@ class CityBus extends GetView<CityBusController> {
                                         ? [Container()]
                                         : [
                                             FirstArrive(
+                                                '학교출발까지',
                                                 _.nextDepartCityBus!.length > 0
-                                                    ? _.nextDepartCityBus![0]
-                                                        .difference(
-                                                            DateTime.now())
-                                                        .inMinutes
-                                                        .toString()
+                                                    ? departRemainTime[0]
                                                     : '없음',
                                                 _.nextDepartCityBus!.length > 0
-                                                    ? DateFormat('HH:mm').format(
-                                                        _.nextDepartCityBus![0])
+                                                    ? departArriveTime[0]
                                                     : ' '),
                                             SecondArrive(
                                                 _.nextDepartCityBus!.length > 1
-                                                    ? _.nextDepartCityBus![1]
-                                                        .difference(
-                                                            DateTime.now())
-                                                        .inMinutes
-                                                        .toString()
+                                                    ? departRemainTime[1]
                                                     : '없음',
                                                 _.nextDepartCityBus!.length > 1
-                                                    ? DateFormat('HH:mm').format(
-                                                        _.nextDepartCityBus![1])
+                                                    ? departArriveTime[1]
                                                     : ' '),
                                             ThirdArrive(
                                                 _.nextDepartCityBus!.length > 2
-                                                    ? _.nextDepartCityBus![2]
-                                                        .difference(
-                                                            DateTime.now())
-                                                        .inMinutes
-                                                        .toString()
+                                                    ? departRemainTime[2]
                                                     : '없음',
                                                 _.nextDepartCityBus!.length > 2
-                                                    ? DateFormat('HH:mm').format(
-                                                        _.nextDepartCityBus![2])
+                                                    ? departArriveTime[2]
                                                     : ' '),
                                           ],
                                   )
@@ -128,6 +126,7 @@ class CityBus extends GetView<CityBusController> {
                                               size: SizeConfig.sizeByHeight(30),
                                             )
                                           : FirstArrive(
+                                              '도착까지',
                                               _.responseCityBus?.min1,
                                               _.responseCityBus != null
                                                   ? DateFormat('HH:mm').format(
@@ -231,8 +230,9 @@ class CityBus extends GetView<CityBusController> {
 }
 
 class FirstArrive extends StatelessWidget {
-  const FirstArrive(this.remainTime, this.arriveTime, {Key? key})
+  const FirstArrive(this.title, this.remainTime, this.arriveTime, {Key? key})
       : super(key: key);
+  final String title;
   final String arriveTime;
   final String? remainTime;
 
@@ -259,7 +259,7 @@ class FirstArrive extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '도착까지',
+                  title,
                   style: TextStyle(
                       color: Color(0xFF0797F8),
                       fontSize: SizeConfig.sizeByHeight(12),

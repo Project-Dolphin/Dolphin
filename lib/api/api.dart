@@ -17,7 +17,6 @@ const PATH = const {
 class FetchAPI {
   Future fetchData(path, {queryParameters}) async {
     var url = Uri.https(BASE_URL, '/dev$path', queryParameters);
-    print(url);
     var response = await http.get(url);
     return response;
   }

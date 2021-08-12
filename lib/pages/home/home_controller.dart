@@ -49,11 +49,6 @@ class HomeController extends GetxController {
 
   String getWeekDay() {
     var now = new DateTime.now();
-    print([6, 7].contains(now.weekday)
-        ? '주말'
-        : [7, 8, 1, 2].contains(now.month)
-            ? '방학'
-            : '평일');
     return [6, 7].contains(now.weekday)
         ? '주말'
         : [7, 8, 1, 2].contains(now.month)

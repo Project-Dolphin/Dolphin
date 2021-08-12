@@ -39,7 +39,7 @@ class ShuttleBusController extends GetxController {
               .add(DateTime(now.year, now.month, now.day, hour, minute));
     }
     nextShuttle = newNextShuttle;
-    print(newNextShuttle);
+
     update();
   }
 

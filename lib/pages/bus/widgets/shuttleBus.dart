@@ -19,6 +19,16 @@ class ShuttleBus extends GetView<ShuttleBusController> {
     return GetBuilder<ShuttleBusController>(
         init: ShuttleBusController(),
         builder: (_) {
+          var remainTime = [];
+          var arriveTime = [];
+          for (var i = 0; i < _.nextShuttle.length; i++) {
+            remainTime.add(_.nextShuttle[i]
+                .difference(DateTime.now())
+                .inMinutes
+                .toString());
+            arriveTime.add(DateFormat('HH:mm').format(_.nextShuttle[i]));
+          }
+
           return GlassMorphism(
             width: SizeConfig.sizeByWidth(300),
             height: SizeConfig.sizeByHeight(478),
@@ -79,42 +89,24 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                             : [
                                                 FirstArrive(
                                                     _.nextShuttle.length > 0
-                                                        ? _.nextShuttle[0]
-                                                            .difference(
-                                                                DateTime.now())
-                                                            .inMinutes
-                                                            .toString()
+                                                        ? remainTime[0]
                                                         : '없음',
                                                     _.nextShuttle.length > 0
-                                                        ? DateFormat('HH:mm')
-                                                            .format(_
-                                                                .nextShuttle[0])
+                                                        ? arriveTime[0]
                                                         : ' '),
                                                 SecondArrive(
                                                     _.nextShuttle.length > 1
-                                                        ? _.nextShuttle[1]
-                                                            .difference(
-                                                                DateTime.now())
-                                                            .inMinutes
-                                                            .toString()
+                                                        ? remainTime[1]
                                                         : '없음',
                                                     _.nextShuttle.length > 1
-                                                        ? DateFormat('HH:mm')
-                                                            .format(_
-                                                                .nextShuttle[1])
+                                                        ? arriveTime[1]
                                                         : ' '),
                                                 ThirdArrive(
                                                     _.nextShuttle.length > 2
-                                                        ? _.nextShuttle[2]
-                                                            .difference(
-                                                                DateTime.now())
-                                                            .inMinutes
-                                                            .toString()
+                                                        ? remainTime[2]
                                                         : '없음',
                                                     _.nextShuttle.length > 2
-                                                        ? DateFormat('HH:mm')
-                                                            .format(_
-                                                                .nextShuttle[2])
+                                                        ? arriveTime[2]
                                                         : ' ')
                                               ],
                                       ),
@@ -155,9 +147,15 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            HomeDeparted('학교에서 2분전 출발'),
-                                            FirstArrive('4', ' '),
-                                            SecondArrive('7', ' '),
+                                            HomeDeparted(remainTime[0]),
+                                            FirstArrive(
+                                                (int.parse(remainTime[0]) + 6)
+                                                    .toString(),
+                                                ' '),
+                                            SecondArrive(
+                                                (int.parse(remainTime[1]) + 6)
+                                                    .toString(),
+                                                ' '),
                                           ],
                                         ),
                                       ],
@@ -428,7 +426,13 @@ class HomeDeparted extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                TextBox(remainTime!, 14, FontWeight.w500, Color(0xFF3F3F3F)),
+                TextBox(
+                    int.parse(remainTime!) < 0
+                        ? '학교에서 ${-1 * int.parse(remainTime!)}분 전 출발'
+                        : '학교에서 $remainTime분 후 출발',
+                    14,
+                    FontWeight.w500,
+                    Color(0xFF3F3F3F)),
                 SizedBox(
                   width: SizeConfig.sizeByWidth(10),
                 ),

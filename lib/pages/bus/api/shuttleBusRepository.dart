@@ -10,7 +10,6 @@ class ShuttleBusRepository {
       final jsonResult =
           convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
       final jsonNextShuttle = jsonResult['data'];
-      print(jsonNextShuttle);
 
       return jsonNextShuttle;
     } else {

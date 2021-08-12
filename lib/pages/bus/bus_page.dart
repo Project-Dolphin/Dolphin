@@ -27,7 +27,7 @@ class BusPage extends GetView<BusController> {
                   fontsize3: SizeConfig.sizeByHeight(12),
                   fontweight1: FontWeight.w700,
                   fontweight2: FontWeight.w400,
-                  fontweight3: FontWeight.w400,
+                  fontweight3: FontWeight.w500,
                 ),
               ),
               Carousel(
