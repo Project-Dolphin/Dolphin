@@ -58,10 +58,11 @@ class _CarouselState extends State<Carousel> {
                     bottom: 0,
                     child: Container(
                       width: SizeConfig.blockSizeHorizontal * 90,
-                      height: SizeConfig.sizeByHeight(40),
+                      height: SizeConfig.sizeByHeight(44),
                       margin: EdgeInsets.all(SizeConfig.sizeByWidth(20)),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(
+                              SizeConfig.sizeByHeight(44)),
                           color: Colors.white),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,7 +113,7 @@ class _CarouselState extends State<Carousel> {
                                                 : Color(0xFF919191),
                                             fontSize:
                                                 SizeConfig.sizeByWidth(16),
-                                            fontWeight: FontWeight.w600),
+                                            fontWeight: FontWeight.w700),
                                       )),
                                 ),
                               ),

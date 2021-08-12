@@ -14,9 +14,11 @@ class OnelineTitle extends StatelessWidget {
     @required this.fontweight1,
     @required this.fontweight2,
     @required this.fontweight3,
+    this.fontFamily = 'Noto Sans KR',
     this.isGradient = false,
   }) : super(key: key);
   final bool isGradient;
+  final String fontFamily;
   final String? name, description, stat;
   final double? fontsize1, fontsize2, fontsize3;
   final FontWeight? fontweight1, fontweight2, fontweight3;
@@ -36,6 +38,7 @@ class OnelineTitle extends StatelessWidget {
                 title: name,
                 fontsize: fontsize1,
                 fontweight: fontweight1,
+                fontFamily: fontFamily,
                 isGradient: isGradient,
               ),
               Column(
@@ -47,11 +50,13 @@ class OnelineTitle extends StatelessWidget {
                         description: description,
                         fontsize: fontsize2,
                         fontweight: fontweight2,
+                        fontFamily: fontFamily,
                       ),
                       StatusContainer(
                         stat: stat,
                         fontsize: fontsize3,
                         fontweight: fontweight3,
+                        fontFamily: fontFamily,
                       ),
                     ],
                   ),
@@ -70,14 +75,14 @@ class OnelineTitle extends StatelessWidget {
 }
 
 class MainTitle extends StatelessWidget {
-  MainTitle({
-    @required this.title,
-    @required this.fontsize,
-    @required this.fontweight,
-    required this.isGradient,
-  });
+  MainTitle(
+      {@required this.title,
+      @required this.fontsize,
+      @required this.fontweight,
+      required this.isGradient,
+      this.fontFamily});
   final bool isGradient;
-  final title, fontsize, fontweight;
+  final title, fontsize, fontweight, fontFamily;
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +100,7 @@ class MainTitle extends StatelessWidget {
         style: TextStyle(
             fontSize: fontsize,
             fontWeight: fontweight,
+            fontFamily: fontFamily,
             foreground: Paint()..shader = linearGradient),
       ),
     );
@@ -106,9 +112,10 @@ class SubText extends StatelessWidget {
     @required this.description,
     @required this.fontsize,
     @required this.fontweight,
+    this.fontFamily,
   });
 
-  final description, fontsize, fontweight;
+  final description, fontsize, fontweight, fontFamily;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +126,7 @@ class SubText extends StatelessWidget {
         style: TextStyle(
           fontSize: fontsize,
           fontWeight: fontweight,
+          fontFamily: fontFamily,
         ),
       ),
     );
@@ -130,13 +138,15 @@ class StatusContainer extends StatelessWidget {
     @required this.stat,
     @required this.fontsize,
     @required this.fontweight,
+    this.fontFamily,
   });
 
-  final stat, fontsize, fontweight;
+  final stat, fontsize, fontweight, fontFamily;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(7)),
       child: Center(
         child: FittedBox(
           fit: BoxFit.scaleDown,
@@ -145,13 +155,14 @@ class StatusContainer extends StatelessWidget {
             style: TextStyle(
               fontSize: fontsize,
               fontWeight: fontweight,
+              fontFamily: fontFamily,
               color: Color(0xFF0078D4),
             ),
           ),
         ),
       ),
       height: SizeConfig.sizeByHeight(22),
-      width: SizeConfig.sizeByWidth(60),
+      // width: SizeConfig.sizeByWidth(60),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(

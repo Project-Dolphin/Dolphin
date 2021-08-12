@@ -5,7 +5,7 @@ import 'package:oceanview/common/shape/circle.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/home/home_controller.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:oceanview/services/urlUtils.dart';
 
 const NOTICE_URL =
     'https://www.kmou.ac.kr/kmou/na/ntt/selectNttList.do?mi=2032&bbsId=10373';
@@ -13,20 +13,12 @@ const NOTICE_URL =
 class NoticeContainer extends StatelessWidget {
   const NoticeContainer({Key? key}) : super(key: key);
 
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.symmetric(
             horizontal: SizeConfig.sizeByHeight(15),
-            vertical: SizeConfig.sizeByHeight(6)),
+            vertical: SizeConfig.sizeByHeight(12)),
         child: GetBuilder<HomeController>(
             init: HomeController(),
             builder: (_) {
@@ -43,21 +35,28 @@ class NoticeContainer extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              TextBox('공지사항', SizeConfig.sizeByHeight(16),
-                                  FontWeight.w700, Color(0xFF0C98F5)),
+                              TextBox(
+                                '공지사항',
+                                SizeConfig.sizeByHeight(18),
+                                FontWeight.w700,
+                                Color(0xFF0C98F5),
+                                fontFamily: 'Pretendard',
+                              ),
                               InkWell(
-                                  onTap: () => _launchURL(NOTICE_URL),
+                                  onTap: () => UrlUtils.launchURL(NOTICE_URL),
                                   child: TextBox(
-                                      '학교 홈페이지 ❯',
-                                      SizeConfig.sizeByHeight(10),
-                                      FontWeight.w500,
-                                      Color(0xFF737373)))
+                                    '학교 홈페이지 ❯',
+                                    SizeConfig.sizeByHeight(10),
+                                    FontWeight.w400,
+                                    Color(0xFF0081FF),
+                                    fontFamily: 'Pretendard',
+                                  ))
                             ],
                           ),
                           ..._.noticeList
-                              .sublist(0, 4)
+                              .sublist(0, 5)
                               .map((e) => InkWell(
-                                    onTap: () => _launchURL(e['link']),
+                                    onTap: () => UrlUtils.launchURL(e['link']),
                                     child: Row(
                                       children: [
                                         renderCircle(3),
@@ -67,9 +66,10 @@ class NoticeContainer extends StatelessWidget {
                                               style: TextStyle(
                                                   fontSize:
                                                       SizeConfig.sizeByHeight(
-                                                          12),
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black)),
+                                                          14),
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black,
+                                                  fontFamily: 'Pretendard')),
                                         )
                                       ],
                                     ),

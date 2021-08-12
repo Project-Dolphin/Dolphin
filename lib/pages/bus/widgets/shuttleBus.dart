@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/dropdown/dropdownButton.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/pages/bus/api/shuttleBusRepository.dart';
 import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
+import 'package:oceanview/services/urlUtils.dart';
 
 class ShuttleBus extends GetView<ShuttleBusController> {
   findShuttleBusSubTitle(item) {
@@ -13,9 +16,20 @@ class ShuttleBus extends GetView<ShuttleBusController> {
 
   @override
   Widget build(BuildContext context) {
+    ShuttleBusRepository().getNextShuttle();
     return GetBuilder<ShuttleBusController>(
         init: ShuttleBusController(),
         builder: (_) {
+          var remainTime = [];
+          var arriveTime = [];
+          for (var i = 0; i < _.nextShuttle.length; i++) {
+            remainTime.add(_.nextShuttle[i]
+                .difference(DateTime.now())
+                .inMinutes
+                .toString());
+            arriveTime.add(DateFormat('HH:mm').format(_.nextShuttle[i]));
+          }
+
           return GlassMorphism(
             width: SizeConfig.sizeByWidth(300),
             height: SizeConfig.sizeByHeight(478),
@@ -71,11 +85,31 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          FirstArrive('4분 52초', '21:23'),
-                                          SecondArrive('4분 52초', '21:23'),
-                                          ThirdArrive('4분 52초', '21:23'),
-                                        ],
+                                        children: _.isLoading
+                                            ? [Container()]
+                                            : [
+                                                FirstArrive(
+                                                    _.nextShuttle.length > 0
+                                                        ? remainTime[0]
+                                                        : '없음',
+                                                    _.nextShuttle.length > 0
+                                                        ? arriveTime[0]
+                                                        : ' '),
+                                                SecondArrive(
+                                                    _.nextShuttle.length > 1
+                                                        ? remainTime[1]
+                                                        : '없음',
+                                                    _.nextShuttle.length > 1
+                                                        ? arriveTime[1]
+                                                        : ' '),
+                                                ThirdArrive(
+                                                    _.nextShuttle.length > 2
+                                                        ? remainTime[2]
+                                                        : '없음',
+                                                    _.nextShuttle.length > 2
+                                                        ? arriveTime[2]
+                                                        : ' ')
+                                              ],
                                       ),
                                     ],
                                   ),
@@ -114,9 +148,15 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            HomeDeparted('학교에서 2분전 출발'),
-                                            FirstArrive('약 4분', ''),
-                                            SecondArrive('약 7분', ''),
+                                            HomeDeparted(remainTime[0]),
+                                            FirstArrive(
+                                                (int.parse(remainTime[0]) + 6)
+                                                    .toString(),
+                                                ' '),
+                                            SecondArrive(
+                                                (int.parse(remainTime[1]) + 6)
+                                                    .toString(),
+                                                ' '),
                                           ],
                                         ),
                                       ],
@@ -131,7 +171,8 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () => UrlUtils.launchURL(
+                                    'https://www.kmou.ac.kr/kmou/cm/cntnts/cntntsView.do?mi=1418&cntntsId=328'),
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.transparent,
                                   shadowColor: Colors.transparent,
@@ -163,7 +204,12 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                             Dropdown(
                               _.stationList,
                               _.selectedStation,
-                              (value) => _.setSelectedStation(value),
+                              (value) {
+                                value == '학교종점 (아치나루터)'
+                                    ? ShuttleBusRepository().getNextShuttle()
+                                    : () {};
+                                _.setSelectedStation(value);
+                              },
                               findSubTitle: findShuttleBusSubTitle,
                             ),
                           ],
@@ -224,15 +270,27 @@ class FirstArrive extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextBox(remainTime!, 28, FontWeight.w700, Color(0xFF3F3F3F)),
-            arriveTime != ''
-                ? TextBox(
-                    arriveTime!,
-                    14,
-                    FontWeight.w500,
-                    Color(0xFF717171),
+            remainTime == '없음'
+                ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 28,
+                    FontWeight.w700, Color(0xFF3F3F3F)),
+            arriveTime != ' '
+                ? Column(
+                    children: [
+                      TextBox(
+                        '$arriveTime',
+                        14,
+                        FontWeight.w500,
+                        Color(0xFF717171),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.sizeByHeight(2),
+                      ),
+                    ],
                   )
-                : Container(),
+                : SizedBox(
+                    height: SizeConfig.sizeByHeight(5),
+                  ),
           ],
         ),
       ],
@@ -267,18 +325,20 @@ class SecondArrive extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextBox(remainTime!, 22, FontWeight.w700, Color(0xFF3F3F3F)),
-            SizedBox(
-              width: SizeConfig.sizeByWidth(10),
-            ),
-            arriveTime != ''
+            remainTime == '없음'
+                ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 22,
+                    FontWeight.w700, Color(0xFF3F3F3F)),
+            arriveTime != ' '
                 ? TextBox(
-                    arriveTime!,
+                    '$arriveTime',
                     14,
                     FontWeight.w500,
                     Color(0xFF717171),
                   )
-                : Container(),
+                : SizedBox(
+                    height: SizeConfig.sizeByHeight(5),
+                  ),
           ],
         ),
       ],
@@ -313,15 +373,27 @@ class ThirdArrive extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextBox(remainTime!, 18, FontWeight.w500, Color(0xFF3F3F3F)),
-            arriveTime != ''
-                ? TextBox(
-                    arriveTime!,
-                    14,
-                    FontWeight.w500,
-                    Color(0xFF717171),
+            remainTime == '없음'
+                ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 18,
+                    FontWeight.w500, Color(0xFF3F3F3F)),
+            arriveTime != ' '
+                ? Column(
+                    children: [
+                      TextBox(
+                        '$arriveTime',
+                        14,
+                        FontWeight.w500,
+                        Color(0xFF717171),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.sizeByHeight(2),
+                      ),
+                    ],
                   )
-                : Container(),
+                : SizedBox(
+                    height: SizeConfig.sizeByHeight(5),
+                  ),
           ],
         ),
       ],
@@ -356,7 +428,13 @@ class HomeDeparted extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                TextBox(remainTime!, 14, FontWeight.w500, Color(0xFF3F3F3F)),
+                TextBox(
+                    int.parse(remainTime!) < 0
+                        ? '학교에서 ${-1 * int.parse(remainTime!)}분 전 출발'
+                        : '학교에서 $remainTime분 후 출발',
+                    14,
+                    FontWeight.w500,
+                    Color(0xFF3F3F3F)),
                 SizedBox(
                   width: SizeConfig.sizeByWidth(10),
                 ),
