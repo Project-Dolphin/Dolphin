@@ -7,6 +7,7 @@ import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/bus/api/shuttleBusRepository.dart';
 import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
+import 'package:oceanview/services/urlUtils.dart';
 
 class ShuttleBus extends GetView<ShuttleBusController> {
   findShuttleBusSubTitle(item) {
@@ -170,7 +171,8 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () => UrlUtils.launchURL(
+                                    'https://www.kmou.ac.kr/kmou/cm/cntnts/cntntsView.do?mi=1418&cntntsId=328'),
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.transparent,
                                   shadowColor: Colors.transparent,

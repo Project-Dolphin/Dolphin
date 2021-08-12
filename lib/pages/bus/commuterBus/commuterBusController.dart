@@ -10,7 +10,9 @@ class CommuterBusController extends GetxController {
     '통근 버스 2호 퇴근',
     '통근 버스 3호 퇴근',
   ];
-  String selectedBus = '통근 버스 1호 출근';
+  String selectedBus = DateTime.now().hour > 20 || DateTime.now().hour < 10
+      ? '통근 버스 1호 출근'
+      : '통근 버스 1호 퇴근';
   List<List<String>> stationList_1 = [
     [
       '풍년혼수마트',

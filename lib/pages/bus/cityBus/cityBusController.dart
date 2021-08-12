@@ -38,13 +38,15 @@ class CityBusController extends GetxController {
     var now = DateTime.now();
     List<DateTime> departTimeList = [];
     for (var i = 0; i < response.length; i++) {
-      var hour = int.parse(response[i]['time'].substring(0, 2));
-      var minute = int.parse(response[i]['time'].substring(2, 4));
-      now.hour > hour
-          ? departTimeList
-              .add(DateTime(now.year, now.month, now.day + 1, hour, minute))
-          : departTimeList
-              .add(DateTime(now.year, now.month, now.day, hour, minute));
+      if (response[i]['type'] != 'none') {
+        var hour = int.parse(response[i]['time'].substring(0, 2));
+        var minute = int.parse(response[i]['time'].substring(2, 4));
+        now.hour > hour
+            ? departTimeList
+                .add(DateTime(now.year, now.month, now.day + 1, hour, minute))
+            : departTimeList
+                .add(DateTime(now.year, now.month, now.day, hour, minute));
+      }
     }
     nextDepartCityBus = departTimeList;
     update();
