@@ -68,82 +68,92 @@ class _CalendarSearchState extends State<CalendarSearch> {
   @override
   Widget build(BuildContext context) {
     double fullwidth = MediaQuery.of(context).size.width;
-    return new Scaffold(
-      appBar: new AppBar(
-        elevation: 0.0,
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/background.png"),
+              fit: BoxFit.cover)),
+      child: new Scaffold(
         backgroundColor: Colors.transparent,
-        title: new Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100.0),
-            color: Color.fromRGBO(212, 212, 212, 0.4),
-          ),
-          child: new ListTile(
-            title: new TextField(
-              controller: controller,
-              decoration:
-                  new InputDecoration(hintText: '검색', border: InputBorder.none),
-              onChanged: onSearchTextChanged,
+        appBar: new AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          title: new Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100.0),
+              color: Color.fromRGBO(212, 212, 212, 0.4),
             ),
-            trailing: new IconButton(
-              icon: new Icon(Icons.cancel),
-              onPressed: () {
-                controller.clear();
-                onSearchTextChanged('');
-              },
+            child: new ListTile(
+              title: new TextField(
+                autofocus: true,
+                controller: controller,
+                decoration: new InputDecoration(
+                    hintText: '검색', border: InputBorder.none),
+                onChanged: onSearchTextChanged,
+              ),
+              trailing: new IconButton(
+                icon: new Icon(Icons.cancel),
+                onPressed: () {
+                  controller.clear();
+                  onSearchTextChanged('');
+                },
+              ),
             ),
           ),
         ),
-      ),
-      body: new Column(
-        children: <Widget>[
-          new Expanded(
-            child: _searchResult.length != 0 || controller.text.isNotEmpty
-                ? new ListView.builder(
-                    itemCount: _searchResult.length,
-                    itemBuilder: (context, i) {
-                      return new Card(
-                        child: new ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _searchResultStart[i] != _searchResultEnd[i]
-                                  ? new Text(DateFormat('M.dd(E)', 'ko_KR')
-                                          .format(_searchResultStart[i])
-                                          .toString() +
-                                      ' ~ ' +
-                                      DateFormat('M.dd(E)', 'ko_KR')
-                                          .format(_searchResultEnd[i])
-                                          .toString())
-                                  : new Text(DateFormat('M.dd(E)', 'ko_KR')
-                                      .format(_searchResultStart[i])
-                                      .toString()),
-                              Container(
-                                alignment: Alignment.centerRight,
-                                padding: EdgeInsets.only(right: 8.0),
-                                width: fullwidth * 0.5,
-                                child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: new Text(_searchResult[i]['content']
-                                        .toString())),
-                              ),
-                            ],
+        body: new Column(
+          children: <Widget>[
+            new Expanded(
+              child: _searchResult.length != 0 || controller.text.isNotEmpty
+                  ? new ListView.builder(
+                      itemCount: _searchResult.length,
+                      itemBuilder: (context, i) {
+                        return new Card(color: Colors.transparent,
+                          child: new ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _searchResultStart[i] != _searchResultEnd[i]
+                                    ? new Text(DateFormat('M.dd(E)', 'ko_KR')
+                                            .format(_searchResultStart[i])
+                                            .toString() +
+                                        ' ~ ' +
+                                        DateFormat('M.dd(E)', 'ko_KR')
+                                            .format(_searchResultEnd[i])
+                                            .toString())
+                                    : new Text(DateFormat('M.dd(E)', 'ko_KR')
+                                        .format(_searchResultStart[i])
+                                        .toString()),
+                                Container(
+                                  alignment: Alignment.centerRight,
+                                  padding: EdgeInsets.only(right: 8.0),
+                                  width: fullwidth * 0.5,
+                                  child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: new Text(_searchResult[i]
+                                              ['content']
+                                          .toString())),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        margin: const EdgeInsets.all(0.0),
-                      );
-                    },
-                  )
-                : new ListView.builder(
-                    itemCount: _calendarDetails.length,
-                    itemBuilder: (context, index) {
-                      return new Card(
-                        child: new ListTile(),
-                        margin: const EdgeInsets.all(0.0),
-                      );
-                    },
-                  ),
-          ),
-        ],
+                          margin: const EdgeInsets.all(0.0),
+                        );
+                      },
+                    )
+                  : new ListView.builder(
+                      itemCount: _calendarDetails.length,
+                      itemBuilder: (context, index) {
+                        return new Card(
+                          color: Colors.transparent,
+                          child: new ListTile(),
+                          margin: const EdgeInsets.all(0.0),
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }
