@@ -62,6 +62,7 @@ flutter:
         - assets/images/bottomNavigationIcon/
         - assets/images/dropdown/
         - assets/images/busPage/
+        - assets/images/homePage/
         - assets/json/190_bus_last.json
         - assets/json/190_bus_departSchool.json
         - assets/images/mealPage/
@@ -90,6 +91,19 @@ flutter:
               - asset: assets/fonts/NotoSansKR/NotoSansKR-Bold.otf
                 weight: 700
               - asset: assets/fonts/NotoSansKR/NotoSansKR-Black.otf
+                weight: 900
+        - family: Pretendard
+          fonts:
+              - asset: assets/fonts/Pretendard/Pretendard-Regular.otf
+              - asset: assets/fonts/Pretendard/Pretendard-Thin.otf
+                weight: 100
+              - asset: assets/fonts/Pretendard/Pretendard-Light.otf
+                weight: 300
+              - asset: assets/fonts/Pretendard/Pretendard-Medium.otf
+                weight: 500
+              - asset: assets/fonts/Pretendard/Pretendard-Bold.otf
+                weight: 700
+              - asset: assets/fonts/Pretendard/Pretendard-Black.otf
                 weight: 900
     #   - family: Trajan Pro
     #     fonts:
