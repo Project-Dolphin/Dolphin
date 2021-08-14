@@ -39,11 +39,8 @@ class _DropdownState extends State<Dropdown> {
               width: dropdownWidth,
               height: SizeConfig.sizeByHeight(35),
               decoration: BoxDecoration(
-                border: isDropdownOpen
-                    ? Border.all(color: Color(0xFF0797F8), width: 0.5)
-                    : null,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: Colors.white.withOpacity(0.6),
+                color: Color(0xFFFBFBFB),
                 boxShadow: [
                   BoxShadow(
                     offset: Offset(0, 6),
@@ -72,7 +69,7 @@ class _DropdownState extends State<Dropdown> {
                                   : widget.selectedItem,
                               14,
                               FontWeight.w700,
-                              Colors.black),
+                              Color(0xFF353B45)),
                           widget.findSubTitle != null
                               ? widget.findSubTitle!(widget.selectedItem) != ''
                                   ? Row(
@@ -87,7 +84,7 @@ class _DropdownState extends State<Dropdown> {
                                             color: Color(0xFF0C98F5),
                                             fontSize:
                                                 SizeConfig.sizeByHeight(12),
-                                            fontWeight: FontWeight.w500,
+                                            fontWeight: FontWeight.w400,
                                           ),
                                         ),
                                       ],
@@ -119,9 +116,8 @@ class _DropdownState extends State<Dropdown> {
             ? Container(
                 width: dropdownWidth,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xFF0797F8), width: 0.5),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Colors.white.withOpacity(0.8),
+                  color: Color(0xFFFAFAFA),
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(0, 6),
@@ -150,7 +146,7 @@ class _DropdownState extends State<Dropdown> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
                                 color: widget.selectedItem == item
-                                    ? Color(0xFF52B9FF)
+                                    ? Color(0xFF0081FF)
                                     : Colors.transparent,
                               ),
                               child: Container(
@@ -170,10 +166,13 @@ class _DropdownState extends State<Dropdown> {
                                         style: TextStyle(
                                             color: widget.selectedItem == item
                                                 ? Colors.white
-                                                : Colors.black,
+                                                : Color(0xFF353B45),
                                             fontSize:
                                                 SizeConfig.sizeByHeight(16),
-                                            fontWeight: FontWeight.w500),
+                                            fontWeight:
+                                                widget.selectedItem == item
+                                                    ? FontWeight.w700
+                                                    : FontWeight.w400),
                                       ),
                                       widget.findSubTitle != null
                                           ? widget.findSubTitle!(item) != ''
@@ -197,7 +196,7 @@ class _DropdownState extends State<Dropdown> {
                                                         fontSize: SizeConfig
                                                             .sizeByHeight(12),
                                                         fontWeight:
-                                                            FontWeight.w500,
+                                                            FontWeight.w400,
                                                       ),
                                                     ),
                                                     item == '주변정류장'

@@ -23,7 +23,6 @@ class BusContainer extends GetView<CityBusController> {
           SizeConfig.sizeByHeight(14),
           FontWeight.w400,
           Color(0xFF353B45),
-          fontFamily: 'Pretendard',
         ),
         SizedBox(
           height: SizeConfig.sizeByHeight(10),
@@ -49,7 +48,6 @@ class BusContainer extends GetView<CityBusController> {
                       SizeConfig.sizeByHeight(16),
                       FontWeight.w700,
                       Color(0xFF0081FF),
-                      fontFamily: 'Pretendard',
                     )
                   : SpinKitThreeBounce(
                       size: SizeConfig.sizeByHeight(16),

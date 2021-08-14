@@ -83,8 +83,8 @@ class _CarouselState extends State<Carousel> {
                                     gradient: _current == entry.key
                                         ? LinearGradient(
                                             colors: <Color>[
-                                              Color(0xFF009DF5),
-                                              Color(0xFF1E7AFF),
+                                              Color(0xFF3199FF),
+                                              Color(0xFF0081FF),
                                             ],
                                             begin: Alignment.bottomLeft,
                                             end: Alignment.topRight,

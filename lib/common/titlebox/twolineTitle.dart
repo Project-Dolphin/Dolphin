@@ -36,7 +36,14 @@ class TwolineTitle extends StatelessWidget {
             fontsize1: fontsize1,
             fontweight1: fontweight1,
           ),
-          BottomTitle(subname: subname, fontsize2: fontsize2, fontweight2: fontweight2, stat: stat, fontsize3: fontsize3, fontweight3: fontweight3, more: more),
+          BottomTitle(
+              subname: subname,
+              fontsize2: fontsize2,
+              fontweight2: fontweight2,
+              stat: stat,
+              fontsize3: fontsize3,
+              fontweight3: fontweight3,
+              more: more),
         ],
       ),
     );
@@ -118,7 +125,7 @@ class MainTitle extends StatelessWidget {
         child: Text(
           name ?? '',
           style: TextStyle(
-            color: Color(0xFF3F3F3F),
+            color: Color(0xFF353B45),
             fontSize: fontsize1,
             fontWeight: fontweight1,
           ),

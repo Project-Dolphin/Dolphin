@@ -382,14 +382,14 @@ class Header extends StatelessWidget {
                       end: SizeConfig.sizeByHeight(24))
                   .evaluate(animation),
               FontWeight.w800,
-              Color(0xff3f3f3f))
+              Color(0xFF353B45))
           // "식단",
           // style: TextStyle(
           //   fontSize: Tween<double>(
           //           begin: SizeConfig.sizeByHeight(18),
           //           end: SizeConfig.sizeByHeight(24))
           //       .evaluate(animation),
-          //   color: Color(0xFF3F3F3F),
+          //   color: Color(0xFF353B45),
           //   fontWeight: FontWeight.w800,
           // ),
 

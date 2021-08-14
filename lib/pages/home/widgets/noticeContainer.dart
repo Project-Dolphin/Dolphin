@@ -40,7 +40,6 @@ class NoticeContainer extends StatelessWidget {
                                 SizeConfig.sizeByHeight(18),
                                 FontWeight.w700,
                                 Color(0xFF0C98F5),
-                                fontFamily: 'Pretendard',
                               ),
                               InkWell(
                                   onTap: () => UrlUtils.launchURL(NOTICE_URL),
@@ -49,7 +48,6 @@ class NoticeContainer extends StatelessWidget {
                                     SizeConfig.sizeByHeight(10),
                                     FontWeight.w400,
                                     Color(0xFF0081FF),
-                                    fontFamily: 'Pretendard',
                                   ))
                             ],
                           ),
@@ -68,7 +66,7 @@ class NoticeContainer extends StatelessWidget {
                                                       SizeConfig.sizeByHeight(
                                                           14),
                                                   fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
+                                                  color: Color(0xFF353B45),
                                                   fontFamily: 'Pretendard')),
                                         )
                                       ],

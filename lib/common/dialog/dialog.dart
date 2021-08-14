@@ -6,33 +6,65 @@ import 'package:oceanview/common/text/textBox.dart';
 
 Widget dialog = Container(
   width: SizeConfig.sizeByWidth(300),
-  height: SizeConfig.sizeByHeight(222),
+  height: SizeConfig.sizeByHeight(154),
   child: Center(
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        GradientIcon(
-          ImageIcon(AssetImage('assets/images/bottomNavigationIcon/bus.png'),
-              size: SizeConfig.sizeByHeight(40)),
-          LinearGradient(
-              colors: <Color>[
-                Color(0xFF009DF5),
-                Color(0xFF1E7AFF),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GradientIcon(
+              ImageIcon(
+                  AssetImage('assets/images/bottomNavigationIcon/bus.png'),
+                  size: SizeConfig.sizeByHeight(30)),
+              LinearGradient(
+                  colors: <Color>[
+                    Color(0xFF3199FF),
+                    Color(0xFF0081FF),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp),
+            ),
+            SizedBox(
+              width: SizeConfig.sizeByHeight(22),
+            ),
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextBox('버스 알림', 22, FontWeight.w800, Color(0xFF353B45)),
+                  SizedBox(
+                    height: SizeConfig.sizeByHeight(8),
+                  ),
+                  Container(
+                    width: SizeConfig.sizeByHeight(165),
+                    child: Text.rich(
+                      TextSpan(
+                        text: '버스가 도착하기 ',
+                        children: [
+                          TextSpan(
+                              text: '3분전',
+                              style: TextStyle(fontWeight: FontWeight.w700)),
+                          TextSpan(text: '에 푸시 알림을 보내드려요'),
+                        ],
+                        style: TextStyle(
+                            fontSize: SizeConfig.sizeByHeight(12),
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF353B45)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
         SizedBox(
-          height: SizeConfig.sizeByHeight(15),
+          height: SizeConfig.sizeByHeight(32),
         ),
-        TextBox('버스 도착 3분전 알림', 20, FontWeight.w700, Colors.black),
-        SizedBox(
-          height: SizeConfig.sizeByHeight(10),
-        ),
-        TextBox('다음차가 도착하기 3분전', 14, FontWeight.w400, Colors.black),
-        TextBox('푸시 알림을 보내드려요', 14, FontWeight.w400, Colors.black),
-        SizedBox(height: SizeConfig.sizeByHeight(27)),
         Container(
           width: SizeConfig.sizeByWidth(200),
           height: 0.5,
@@ -45,7 +77,7 @@ Widget dialog = Container(
               shadowColor: Colors.transparent,
             ),
             onPressed: () => Get.back(),
-            child: TextBox('확인', 18, FontWeight.w400, Colors.black))
+            child: TextBox('확인', 18, FontWeight.w400, Color(0xFF353B45)))
       ],
     ),
   ),

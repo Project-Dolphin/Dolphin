@@ -22,11 +22,13 @@ class ShuttleBus extends GetView<ShuttleBusController> {
         builder: (_) {
           var remainTime = [];
           var arriveTime = [];
+          var hariRemainTime = [];
+
           for (var i = 0; i < _.nextShuttle.length; i++) {
-            remainTime.add(_.nextShuttle[i]
-                .difference(DateTime.now())
-                .inMinutes
-                .toString());
+            var differenceMinute =
+                _.nextShuttle[i].difference(DateTime.now()).inMinutes;
+            hariRemainTime.add((differenceMinute + 6).toString());
+            remainTime.add(DateFormat('m분 s초').format(differenceMinute));
             arriveTime.add(DateFormat('HH:mm').format(_.nextShuttle[i]));
           }
 
@@ -55,115 +57,93 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                         SizedBox(
                           height: SizeConfig.sizeByHeight(55),
                         ),
-                        _.selectedStation == '학교종점 (아치나루터)'
-                            ? Column(children: [
-                                BeforeArrive(),
+                        Column(children: [
+                          _.selectedStation == '학교종점 (아치나루터)'
+                              ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
+                                  FontWeight.w400, Color(0xFF353B45))
+                              : hariRemainTime.length > 0 &&
+                                      int.parse(hariRemainTime[0]) <= 6
+                                  ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
+                                      FontWeight.w400, Color(0xFF353B45))
+                                  : SizedBox(
+                                      height: SizeConfig.sizeByHeight(14),
+                                    ),
+                          SizedBox(
+                            height: SizeConfig.sizeByHeight(18),
+                          ),
+                          Container(
+                            height: SizeConfig.sizeByHeight(280),
+                            child: Stack(
+                              children: [
                                 Container(
-                                  height: SizeConfig.sizeByHeight(280),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        width: 1,
-                                        margin: EdgeInsets.only(
-                                            left: SizeConfig.sizeByWidth(40)),
-                                        height: SizeConfig.sizeByHeight(290),
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                              colors: <Color>[
-                                                Color(0xFF339EFB)
-                                                    .withOpacity(0),
-                                                Color(0xFF3299F3),
-                                                Color(0xFF339EFB)
-                                                    .withOpacity(0),
-                                              ],
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              stops: [0.0, 0.5, 1.0],
-                                              tileMode: TileMode.clamp),
-                                        ),
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: _.isLoading
-                                            ? [Container()]
-                                            : [
-                                                FirstArrive(
-                                                    _.nextShuttle.length > 0
-                                                        ? remainTime[0]
-                                                        : '없음',
-                                                    _.nextShuttle.length > 0
-                                                        ? arriveTime[0]
-                                                        : ' '),
-                                                SecondArrive(
-                                                    _.nextShuttle.length > 1
-                                                        ? remainTime[1]
-                                                        : '없음',
-                                                    _.nextShuttle.length > 1
-                                                        ? arriveTime[1]
-                                                        : ' '),
-                                                ThirdArrive(
-                                                    _.nextShuttle.length > 2
-                                                        ? remainTime[2]
-                                                        : '없음',
-                                                    _.nextShuttle.length > 2
-                                                        ? arriveTime[2]
-                                                        : ' ')
-                                              ],
-                                      ),
-                                    ],
+                                  width: 1,
+                                  margin: EdgeInsets.only(
+                                      left: SizeConfig.sizeByWidth(40)),
+                                  height: SizeConfig.sizeByHeight(290),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: <Color>[
+                                          Color(0xFF4BA6FF).withOpacity(0),
+                                          Color(0xFF3299F3),
+                                          Color(0xFF4BA6FF).withOpacity(0),
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        stops: [0.0, 0.5, 1.0],
+                                        tileMode: TileMode.clamp),
                                   ),
                                 ),
-                              ])
-                            : Column(
-                                children: [
-                                  SizedBox(
-                                    height: SizeConfig.sizeByHeight(20),
-                                  ),
-                                  Container(
-                                    height: SizeConfig.sizeByHeight(290),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          width: 1,
-                                          margin: EdgeInsets.only(
-                                              left: SizeConfig.sizeByWidth(40)),
-                                          height: SizeConfig.sizeByHeight(290),
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                                colors: <Color>[
-                                                  Color(0xFF339EFB)
-                                                      .withOpacity(0),
-                                                  Color(0xFF3299F3),
-                                                  Color(0xFF339EFB)
-                                                      .withOpacity(0),
-                                                ],
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                stops: [0.0, 0.5, 1.0],
-                                                tileMode: TileMode.clamp),
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            HomeDeparted(remainTime[0]),
-                                            FirstArrive(
-                                                (int.parse(remainTime[0]) + 6)
-                                                    .toString(),
-                                                ' '),
-                                            SecondArrive(
-                                                (int.parse(remainTime[1]) + 6)
-                                                    .toString(),
-                                                ' '),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: _.isLoading
+                                      ? [Container()]
+                                      : _.selectedStation == '학교종점 (아치나루터)'
+                                          ? [
+                                              FirstArrive(
+                                                  _.nextShuttle.length > 0
+                                                      ? remainTime[0]
+                                                      : '없음',
+                                                  _.nextShuttle.length > 0
+                                                      ? arriveTime[0]
+                                                      : ' '),
+                                              SecondArrive(
+                                                  _.nextShuttle.length > 1
+                                                      ? remainTime[1]
+                                                      : '없음',
+                                                  _.nextShuttle.length > 1
+                                                      ? arriveTime[1]
+                                                      : ' '),
+                                              ThirdArrive(
+                                                  _.nextShuttle.length > 2
+                                                      ? remainTime[2]
+                                                      : '없음',
+                                                  _.nextShuttle.length > 2
+                                                      ? arriveTime[2]
+                                                      : ' ')
+                                            ]
+                                          : [
+                                              FirstArrive(
+                                                  _.nextShuttle.length > 0
+                                                      ? '${hariRemainTime[0]}분 후'
+                                                      : '없음',
+                                                  ' '),
+                                              SecondArrive(
+                                                  _.nextShuttle.length > 1
+                                                      ? '${hariRemainTime[1]}분 후'
+                                                      : '없음',
+                                                  ' '),
+                                              ThirdArrive(
+                                                  _.nextShuttle.length > 2
+                                                      ? '${hariRemainTime[2]}분 후'
+                                                      : '없음',
+                                                  ' ')
+                                            ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ]),
                         SizedBox(
                           height: SizeConfig.sizeByHeight(10),
                         ),
@@ -182,11 +162,11 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                 child: Row(
                                   children: [
                                     TextBox('전체시간보기', 12, FontWeight.w500,
-                                        Color(0xff3F3F3F)),
+                                        Color(0xFF353B45)),
                                     Icon(
                                       Icons.arrow_forward_ios_rounded,
                                       size: SizeConfig.sizeByHeight(12),
-                                      color: Color(0xff3F3F3F),
+                                      color: Color(0xFF353B45),
                                     )
                                   ],
                                 )),
@@ -223,25 +203,25 @@ class ShuttleBus extends GetView<ShuttleBusController> {
   }
 }
 
-class BeforeArrive extends StatelessWidget {
-  const BeforeArrive({Key? key}) : super(key: key);
+// class BeforeArrive extends StatelessWidget {
+//   const BeforeArrive({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-            margin: EdgeInsets.symmetric(vertical: SizeConfig.sizeByHeight(5)),
-            width: SizeConfig.sizeByWidth(80),
-            child: TextBox('이전차', 14, FontWeight.w500, Color(0xFF717171))),
-        SizedBox(
-          width: SizeConfig.sizeByWidth(15),
-        ),
-        TextBox('약 3분전 출발', 12, FontWeight.w500, Color(0xFF3F3F3F))
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Container(
+//             margin: EdgeInsets.symmetric(vertical: SizeConfig.sizeByHeight(5)),
+//             width: SizeConfig.sizeByWidth(80),
+//             child: TextBox('학교에서', 14, FontWeight.w500, Color(0xFF717171))),
+//         SizedBox(
+//           width: SizeConfig.sizeByWidth(15),
+//         ),
+//         TextBox('약 3분전 출발', 12, FontWeight.w500, Color(0xFF353B45))
+//       ],
+//     );
+//   }
+// }
 
 class FirstArrive extends StatelessWidget {
   const FirstArrive(this.remainTime, this.arriveTime, {Key? key})
@@ -271,25 +251,22 @@ class FirstArrive extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             remainTime == '없음'
-                ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
-                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 28,
-                    FontWeight.w700, Color(0xFF3F3F3F)),
+                ? TextBox('운행 정보가 없어요', 18, FontWeight.w700, Color(0xFF353B45))
+                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 30,
+                    FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [
                       TextBox(
                         '$arriveTime',
                         14,
-                        FontWeight.w500,
+                        FontWeight.w400,
                         Color(0xFF717171),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.sizeByHeight(2),
                       ),
                     ],
                   )
                 : SizedBox(
-                    height: SizeConfig.sizeByHeight(5),
+                    height: SizeConfig.sizeByHeight(4),
                   ),
           ],
         ),
@@ -326,14 +303,14 @@ class SecondArrive extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             remainTime == '없음'
-                ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
-                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 22,
-                    FontWeight.w700, Color(0xFF3F3F3F)),
+                ? TextBox('운행 정보가 없어요', 18, FontWeight.w700, Color(0xFF353B45))
+                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 24,
+                    FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? TextBox(
                     '$arriveTime',
                     14,
-                    FontWeight.w500,
+                    FontWeight.w400,
                     Color(0xFF717171),
                   )
                 : SizedBox(
@@ -374,16 +351,16 @@ class ThirdArrive extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             remainTime == '없음'
-                ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                ? TextBox('운행 정보가 없어요', 18, FontWeight.w700, Color(0xFF353B45))
                 : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 18,
-                    FontWeight.w500, Color(0xFF3F3F3F)),
+                    FontWeight.w500, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [
                       TextBox(
                         '$arriveTime',
                         14,
-                        FontWeight.w500,
+                        FontWeight.w400,
                         Color(0xFF717171),
                       ),
                       SizedBox(
@@ -434,7 +411,7 @@ class HomeDeparted extends StatelessWidget {
                         : '학교에서 $remainTime분 후 출발',
                     14,
                     FontWeight.w500,
-                    Color(0xFF3F3F3F)),
+                    Color(0xFF353B45)),
                 SizedBox(
                   width: SizeConfig.sizeByWidth(10),
                 ),

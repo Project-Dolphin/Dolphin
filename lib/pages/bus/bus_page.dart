@@ -27,7 +27,7 @@ class BusPage extends GetView<BusController> {
                   fontsize3: SizeConfig.sizeByHeight(12),
                   fontweight1: FontWeight.w700,
                   fontweight2: FontWeight.w400,
-                  fontweight3: FontWeight.w500,
+                  fontweight3: FontWeight.w400,
                 ),
               ),
               Carousel(
@@ -45,7 +45,7 @@ class BusPage extends GetView<BusController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextBox('학교 출발시간은 실시간 위치가 아닌 홈페이지 기준 고정값입니다.', 11,
-                      FontWeight.w300, Colors.black),
+                      FontWeight.w300, Color(0xFF353B45)),
                 ],
               ),
             ),

@@ -152,33 +152,32 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return GetBuilder<DashboardController>(
-      builder: (controller) {
-        return Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/background.png"),
-                  fit: BoxFit.cover)),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: SafeArea(
-              child: IndexedStack(
-                index: controller.tabIndex,
-                children: [
-                  HomePage(),
-                  BusPage(),
-                  // DailyMenuPage(),
-                  Container(),
-                  CalendarPage(),
-                  MorePage(),
-                ],
+    return Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/background.png"),
+                fit: BoxFit.cover)),
+        child: GetBuilder<DashboardController>(
+          builder: (controller) {
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: SafeArea(
+                child: IndexedStack(
+                  index: controller.tabIndex,
+                  children: [
+                    HomePage(),
+                    BusPage(),
+                    // DailyMenuPage(),
+                    Container(),
+                    CalendarPage(),
+                    MorePage(),
+                  ],
+                ),
               ),
-            ),
-            bottomNavigationBar: _getBtmNavBar(controller),
-          ),
-        );
-      },
-    );
+              bottomNavigationBar: _getBtmNavBar(controller),
+            );
+          },
+        ));
   }
 
   _bottomNavigationBarItem({Widget? icon, String? label}) {
@@ -218,8 +217,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   icon!,
                   LinearGradient(
                       colors: <Color>[
-                        Color(0xFF009DF5),
-                        Color(0xFF1E7AFF),
+                        Color(0xFF3199FF),
+                        Color(0xFF0081FF),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -246,14 +245,14 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         child: BottomNavigationBar(
           unselectedItemColor: Color(0xFF939393),
-          selectedItemColor: Color(0xFF1E7AFF),
+          selectedItemColor: Color(0xFF0081FF),
           onTap: controller.changeTabIndex,
           currentIndex: controller.tabIndex,
           showSelectedLabels: true,
           showUnselectedLabels: true,
           selectedFontSize: SizeConfig.sizeByHeight(10),
           unselectedFontSize: SizeConfig.sizeByHeight(10),
-          selectedLabelStyle: TextStyle(color: Color(0xFF1E7AFF)),
+          selectedLabelStyle: TextStyle(color: Color(0xFF0081FF)),
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white.withOpacity(0.8),
           elevation: 0,
