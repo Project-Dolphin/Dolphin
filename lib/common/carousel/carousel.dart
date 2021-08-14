@@ -58,11 +58,11 @@ class _CarouselState extends State<Carousel> {
                     bottom: 0,
                     child: Container(
                       width: SizeConfig.blockSizeHorizontal * 90,
-                      height: SizeConfig.sizeByHeight(44),
+                      height: SizeConfig.sizeByHeight(46),
                       margin: EdgeInsets.all(SizeConfig.sizeByWidth(20)),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
-                              SizeConfig.sizeByHeight(44)),
+                              SizeConfig.sizeByHeight(46)),
                           color: Colors.white),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,7 +101,9 @@ class _CarouselState extends State<Carousel> {
                                           ]
                                         : null,
                                     borderRadius: BorderRadius.circular(
-                                        _current == entry.key ? 20 : 0)),
+                                        _current == entry.key
+                                            ? SizeConfig.sizeByHeight(46)
+                                            : 0)),
                                 child: Center(
                                   child: FittedBox(
                                       fit: BoxFit.scaleDown,

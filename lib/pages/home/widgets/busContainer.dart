@@ -15,8 +15,8 @@ class BusContainer extends GetView<CityBusController> {
       children: [
         Image.asset(
           'assets/images/homePage/homeIcon_190.png',
-          width: SizeConfig.sizeByHeight(80),
-          height: SizeConfig.sizeByHeight(80),
+          width: SizeConfig.sizeByHeight(90),
+          height: SizeConfig.sizeByHeight(90),
         ),
         TextBox(
           '해양대구본관',

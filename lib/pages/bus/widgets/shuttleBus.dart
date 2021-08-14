@@ -25,10 +25,9 @@ class ShuttleBus extends GetView<ShuttleBusController> {
           var hariRemainTime = [];
 
           for (var i = 0; i < _.nextShuttle.length; i++) {
-            var differenceMinute =
-                _.nextShuttle[i].difference(DateTime.now()).inMinutes;
+            var differenceMinute = _.nextShuttle[i].difference(DateTime.now());
             hariRemainTime.add((differenceMinute + 6).toString());
-            remainTime.add(DateFormat('m분 s초').format(differenceMinute));
+            remainTime.add(differenceMinute.toString());
             arriveTime.add(DateFormat('HH:mm').format(_.nextShuttle[i]));
           }
 
@@ -57,93 +56,97 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                         SizedBox(
                           height: SizeConfig.sizeByHeight(55),
                         ),
-                        Column(children: [
-                          _.selectedStation == '학교종점 (아치나루터)'
-                              ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
-                                  FontWeight.w400, Color(0xFF353B45))
-                              : hariRemainTime.length > 0 &&
-                                      int.parse(hariRemainTime[0]) <= 6
-                                  ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
-                                      FontWeight.w400, Color(0xFF353B45))
-                                  : SizedBox(
-                                      height: SizeConfig.sizeByHeight(14),
-                                    ),
-                          SizedBox(
-                            height: SizeConfig.sizeByHeight(18),
-                          ),
-                          Container(
-                            height: SizeConfig.sizeByHeight(280),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: 1,
-                                  margin: EdgeInsets.only(
-                                      left: SizeConfig.sizeByWidth(40)),
-                                  height: SizeConfig.sizeByHeight(290),
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        colors: <Color>[
-                                          Color(0xFF4BA6FF).withOpacity(0),
-                                          Color(0xFF3299F3),
-                                          Color(0xFF4BA6FF).withOpacity(0),
-                                        ],
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        stops: [0.0, 0.5, 1.0],
-                                        tileMode: TileMode.clamp),
-                                  ),
-                                ),
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: _.isLoading
-                                      ? [Container()]
-                                      : _.selectedStation == '학교종점 (아치나루터)'
-                                          ? [
-                                              FirstArrive(
-                                                  _.nextShuttle.length > 0
-                                                      ? remainTime[0]
-                                                      : '없음',
-                                                  _.nextShuttle.length > 0
-                                                      ? arriveTime[0]
-                                                      : ' '),
-                                              SecondArrive(
-                                                  _.nextShuttle.length > 1
-                                                      ? remainTime[1]
-                                                      : '없음',
-                                                  _.nextShuttle.length > 1
-                                                      ? arriveTime[1]
-                                                      : ' '),
-                                              ThirdArrive(
-                                                  _.nextShuttle.length > 2
-                                                      ? remainTime[2]
-                                                      : '없음',
-                                                  _.nextShuttle.length > 2
-                                                      ? arriveTime[2]
-                                                      : ' ')
-                                            ]
-                                          : [
-                                              FirstArrive(
-                                                  _.nextShuttle.length > 0
-                                                      ? '${hariRemainTime[0]}분 후'
-                                                      : '없음',
-                                                  ' '),
-                                              SecondArrive(
-                                                  _.nextShuttle.length > 1
-                                                      ? '${hariRemainTime[1]}분 후'
-                                                      : '없음',
-                                                  ' '),
-                                              ThirdArrive(
-                                                  _.nextShuttle.length > 2
-                                                      ? '${hariRemainTime[2]}분 후'
-                                                      : '없음',
-                                                  ' ')
-                                            ],
-                                ),
-                              ],
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: SizeConfig.sizeByHeight(12)),
+                          child: Column(children: [
+                            _.selectedStation == '학교종점 (아치나루터)'
+                                ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
+                                    FontWeight.w400, Color(0xFF353B45))
+                                : hariRemainTime.length > 0 &&
+                                        int.parse(hariRemainTime[0]) <= 6
+                                    ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
+                                        FontWeight.w400, Color(0xFF353B45))
+                                    : SizedBox(
+                                        height: SizeConfig.sizeByHeight(14),
+                                      ),
+                            SizedBox(
+                              height: SizeConfig.sizeByHeight(12),
                             ),
-                          ),
-                        ]),
+                            Container(
+                              height: SizeConfig.sizeByHeight(290),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: 1,
+                                    margin: EdgeInsets.only(
+                                        left: SizeConfig.sizeByHeight(45)),
+                                    height: SizeConfig.sizeByHeight(290),
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          colors: <Color>[
+                                            Color(0xFF4BA6FF).withOpacity(0),
+                                            Color(0xFF3299F3),
+                                            Color(0xFF4BA6FF).withOpacity(0),
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          stops: [0.0, 0.5, 1.0],
+                                          tileMode: TileMode.clamp),
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: _.isLoading
+                                        ? [Container()]
+                                        : _.selectedStation == '학교종점 (아치나루터)'
+                                            ? [
+                                                FirstArrive(
+                                                    _.nextShuttle.length > 0
+                                                        ? remainTime[0]
+                                                        : '없음',
+                                                    _.nextShuttle.length > 0
+                                                        ? arriveTime[0]
+                                                        : ' '),
+                                                SecondArrive(
+                                                    _.nextShuttle.length > 1
+                                                        ? remainTime[1]
+                                                        : '없음',
+                                                    _.nextShuttle.length > 1
+                                                        ? arriveTime[1]
+                                                        : ' '),
+                                                ThirdArrive(
+                                                    _.nextShuttle.length > 2
+                                                        ? remainTime[2]
+                                                        : '없음',
+                                                    _.nextShuttle.length > 2
+                                                        ? arriveTime[2]
+                                                        : ' ')
+                                              ]
+                                            : [
+                                                FirstArrive(
+                                                    _.nextShuttle.length > 0
+                                                        ? '${hariRemainTime[0]}분 후'
+                                                        : '없음',
+                                                    ' '),
+                                                SecondArrive(
+                                                    _.nextShuttle.length > 1
+                                                        ? '${hariRemainTime[1]}분 후'
+                                                        : '없음',
+                                                    ' '),
+                                                ThirdArrive(
+                                                    _.nextShuttle.length > 2
+                                                        ? '${hariRemainTime[2]}분 후'
+                                                        : '없음',
+                                                    ' ')
+                                              ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]),
+                        ),
                         SizedBox(
                           height: SizeConfig.sizeByHeight(10),
                         ),
@@ -160,6 +163,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                       SizeConfig.sizeByHeight(8.5)),
                                 ),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     TextBox('전체시간보기', 12, FontWeight.w500,
                                         Color(0xFF353B45)),
@@ -212,10 +216,10 @@ class ShuttleBus extends GetView<ShuttleBusController> {
 //       children: [
 //         Container(
 //             margin: EdgeInsets.symmetric(vertical: SizeConfig.sizeByHeight(5)),
-//             width: SizeConfig.sizeByWidth(80),
+//             width: SizeConfig.sizeByWidth(90),
 //             child: TextBox('학교에서', 14, FontWeight.w500, Color(0xFF717171))),
 //         SizedBox(
-//           width: SizeConfig.sizeByWidth(15),
+//           width: SizeConfig.sizeByHeight(15),
 //         ),
 //         TextBox('약 3분전 출발', 12, FontWeight.w500, Color(0xFF353B45))
 //       ],
@@ -232,26 +236,27 @@ class FirstArrive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: SizeConfig.sizeByWidth(80),
+          width: SizeConfig.sizeByHeight(90),
           child: Center(
             child: Image.asset(
               'assets/images/busPage/busIcon_shuttle.png',
-              width: SizeConfig.sizeByHeight(80),
-              height: SizeConfig.sizeByHeight(80),
+              width: SizeConfig.sizeByHeight(90),
+              height: SizeConfig.sizeByHeight(90),
             ),
           ),
         ),
         SizedBox(
-          width: SizeConfig.sizeByWidth(15),
+          width: SizeConfig.sizeByHeight(15),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             remainTime == '없음'
-                ? TextBox('운행 정보가 없어요', 18, FontWeight.w700, Color(0xFF353B45))
+                ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
                 : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 30,
                     FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
@@ -284,9 +289,10 @@ class SecondArrive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: SizeConfig.sizeByWidth(80),
+          width: SizeConfig.sizeByHeight(90),
           child: Center(
             child: Image.asset(
               'assets/images/busPage/notiIcon_next.png',
@@ -296,14 +302,14 @@ class SecondArrive extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: SizeConfig.sizeByWidth(15),
+          width: SizeConfig.sizeByHeight(15),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             remainTime == '없음'
-                ? TextBox('운행 정보가 없어요', 18, FontWeight.w700, Color(0xFF353B45))
+                ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
                 : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 24,
                     FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
@@ -332,9 +338,10 @@ class ThirdArrive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: SizeConfig.sizeByWidth(80),
+          width: SizeConfig.sizeByHeight(90),
           child: Center(
             child: Image.asset(
               'assets/images/busPage/notiIcon_later.png',
@@ -344,14 +351,14 @@ class ThirdArrive extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: SizeConfig.sizeByWidth(15),
+          width: SizeConfig.sizeByHeight(15),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             remainTime == '없음'
-                ? TextBox('운행 정보가 없어요', 18, FontWeight.w700, Color(0xFF353B45))
+                ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
                 : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 18,
                     FontWeight.w500, Color(0xFF353B45)),
             arriveTime != ' '
@@ -386,9 +393,10 @@ class HomeDeparted extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          width: SizeConfig.sizeByWidth(80),
+          width: SizeConfig.sizeByHeight(90),
           child: Center(
             child: Image.asset(
               'assets/images/busPage/busIcon_home.png',
@@ -398,7 +406,7 @@ class HomeDeparted extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: SizeConfig.sizeByWidth(15),
+          width: SizeConfig.sizeByHeight(15),
         ),
         Column(
           children: [

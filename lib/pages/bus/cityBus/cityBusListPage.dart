@@ -62,7 +62,7 @@ class CityBusListPage extends GetView<CityBusController> {
                               Row(
                                 children: [
                                   TextBox('운행시간', 14, FontWeight.w500,
-                                      Color(0xFF0C98F5)),
+                                      Color(0xFF4BA6FF)),
                                   SizedBox(width: SizeConfig.sizeByHeight(7)),
                                   TextBox('04:55 ~ 21:50', 14, FontWeight.w500,
                                       Color(0xFF005A9E)),
@@ -74,7 +74,7 @@ class CityBusListPage extends GetView<CityBusController> {
                               Row(
                                 children: [
                                   TextBox('배차간격', 14, FontWeight.w500,
-                                      Color(0xFF0C98F5)),
+                                      Color(0xFF4BA6FF)),
                                   SizedBox(width: SizeConfig.sizeByHeight(7)),
                                   TextBox('19분', 14, FontWeight.w500,
                                       Color(0xFF005A9E)),

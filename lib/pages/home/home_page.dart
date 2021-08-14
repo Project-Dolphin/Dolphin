@@ -36,20 +36,7 @@ class HomePage extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GetBuilder<HomeController>(
-                    builder: (_) =>
-                        // OnelineTitle(
-                        //       name: name,
-                        //       description: controller.formattedDate,
-                        //       stat: controller.stat,
-                        //       fontsize1: SizeConfig.sizeByHeight(26),
-                        //       fontsize2: SizeConfig.sizeByHeight(14),
-                        //       fontsize3: SizeConfig.sizeByHeight(12),
-                        //       fontweight1: FontWeight.w700,
-                        //       fontweight2: FontWeight.w400,
-                        //       fontweight3: FontWeight.w500,
-                        //       isGradient: true,
-                        //     )
-                        Container(
+                    builder: (_) => Container(
                           padding: EdgeInsets.only(
                               bottom: SizeConfig.sizeByHeight(12)),
                           child: Row(

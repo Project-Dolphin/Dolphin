@@ -67,7 +67,7 @@ class _DropdownState extends State<Dropdown> {
                                   ? widget.findTitle!(widget.selectedItem) ??
                                       widget.selectedItem
                                   : widget.selectedItem,
-                              14,
+                              16,
                               FontWeight.w700,
                               Color(0xFF353B45)),
                           widget.findSubTitle != null
@@ -75,15 +75,15 @@ class _DropdownState extends State<Dropdown> {
                                   ? Row(
                                       children: [
                                         SizedBox(
-                                          width: SizeConfig.sizeByWidth(4),
+                                          width: SizeConfig.sizeByHeight(8),
                                         ),
                                         Text(
                                           widget.findSubTitle!(
                                               widget.selectedItem),
                                           style: TextStyle(
-                                            color: Color(0xFF0C98F5),
+                                            color: Color(0xFF4BA6FF),
                                             fontSize:
-                                                SizeConfig.sizeByHeight(12),
+                                                SizeConfig.sizeByHeight(14),
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
@@ -139,14 +139,14 @@ class _DropdownState extends State<Dropdown> {
                             child: (Container(
                               width: SizeConfig.sizeByWidth(194),
                               padding: EdgeInsets.symmetric(
-                                  vertical: SizeConfig.sizeByHeight(4)),
+                                  vertical: SizeConfig.sizeByHeight(8)),
                               margin: EdgeInsets.symmetric(
                                   horizontal: 1, vertical: 1),
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
                                 color: widget.selectedItem == item
-                                    ? Color(0xFF0081FF)
+                                    ? Color(0xFF4BA6FF)
                                     : Colors.transparent,
                               ),
                               child: Container(
@@ -180,7 +180,7 @@ class _DropdownState extends State<Dropdown> {
                                                   children: [
                                                     SizedBox(
                                                       width: SizeConfig
-                                                          .sizeByWidth(4),
+                                                          .sizeByHeight(8),
                                                     ),
                                                     Text(
                                                       widget.findSubTitle!(
@@ -192,11 +192,11 @@ class _DropdownState extends State<Dropdown> {
                                                                     item
                                                                 ? Colors.white
                                                                 : Color(
-                                                                    0xFF0C98F5),
+                                                                    0xFF4BA6FF),
                                                         fontSize: SizeConfig
-                                                            .sizeByHeight(12),
+                                                            .sizeByHeight(14),
                                                         fontWeight:
-                                                            FontWeight.w400,
+                                                            FontWeight.w300,
                                                       ),
                                                     ),
                                                     item == '주변정류장'
@@ -221,7 +221,7 @@ class _DropdownState extends State<Dropdown> {
                                                                     ? Colors
                                                                         .white
                                                                     : Color(
-                                                                        0xFF0C98F5),
+                                                                        0xFF4BA6FF),
                                                               ),
                                                             )
                                                           ])

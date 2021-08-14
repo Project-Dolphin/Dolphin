@@ -11,6 +11,7 @@ import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusListPage.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
+
 import 'package:intl/intl.dart';
 
 class CityBus extends GetView<CityBusController> {
@@ -41,13 +42,13 @@ class CityBus extends GetView<CityBusController> {
                     child: Text(
                       '정류장 선택',
                       style: TextStyle(
-                        color: Color(0xff005A9E),
+                        color: Color(0xFF0081FF),
                         fontSize: SizeConfig.sizeByHeight(10),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: SizeConfig.sizeByHeight(55),
+                    height: SizeConfig.sizeByHeight(85),
                   ),
                   Container(
                     height: SizeConfig.sizeByHeight(290),
@@ -55,8 +56,8 @@ class CityBus extends GetView<CityBusController> {
                       children: [
                         Container(
                           width: 1,
-                          margin:
-                              EdgeInsets.only(left: SizeConfig.sizeByWidth(40)),
+                          margin: EdgeInsets.only(
+                              left: SizeConfig.sizeByHeight(45)),
                           height: SizeConfig.sizeByHeight(290),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
@@ -81,10 +82,12 @@ class CityBus extends GetView<CityBusController> {
                               for (var i = 0;
                                   i < _.nextDepartCityBus!.length;
                                   i++) {
-                                departRemainTime.add(_.nextDepartCityBus![i]
+                                var differenceMinute = _.nextDepartCityBus![i]
                                     .difference(DateTime.now())
-                                    .inMinutes
-                                    .toString());
+                                    .inMinutes;
+
+                                departRemainTime
+                                    .add(differenceMinute.toString());
                                 departArriveTime.add(DateFormat('HH:mm')
                                     .format(_.nextDepartCityBus![i]));
                               }
@@ -178,7 +181,7 @@ class CityBus extends GetView<CityBusController> {
                     ),
                   ),
                   SizedBox(
-                    height: SizeConfig.sizeByHeight(40),
+                    height: SizeConfig.sizeByHeight(10),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -199,6 +202,7 @@ class CityBus extends GetView<CityBusController> {
                                 EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
                           ),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               TextBox('버스위치보기', 12, FontWeight.w500,
                                   Color(0xFF353B45)),
@@ -265,17 +269,17 @@ class FirstArrive extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: SizeConfig.sizeByWidth(80),
+              width: SizeConfig.sizeByHeight(90),
               child: Center(
                 child: Image.asset(
                   'assets/images/busPage/busIcon_190.png',
-                  width: SizeConfig.sizeByHeight(80),
-                  height: SizeConfig.sizeByHeight(80),
+                  width: SizeConfig.sizeByHeight(90),
+                  height: SizeConfig.sizeByHeight(90),
                 ),
               ),
             ),
             SizedBox(
-              width: SizeConfig.sizeByWidth(15),
+              width: SizeConfig.sizeByWidth(24),
             ),
             Container(
               height: SizeConfig.sizeByHeight(70),
@@ -291,7 +295,7 @@ class FirstArrive extends StatelessWidget {
                               Color(0xFF353B45))
                           : TextBox(
                               '약 ${remainTime != null ? remainTime : '300'}분',
-                              28,
+                              30,
                               FontWeight.w700,
                               Color(0xFF353B45)),
                       TextBox(
@@ -325,7 +329,7 @@ class SecondArrive extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: SizeConfig.sizeByWidth(80),
+              width: SizeConfig.sizeByHeight(90),
               child: Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -349,14 +353,14 @@ class SecondArrive extends StatelessWidget {
                   },
                   child: Image.asset(
                     'assets/images/busPage/notiIcon_next.png',
-                    width: SizeConfig.sizeByHeight(60),
-                    height: SizeConfig.sizeByHeight(60),
+                    width: SizeConfig.sizeByHeight(70),
+                    height: SizeConfig.sizeByHeight(70),
                   ),
                 ),
               ),
             ),
             SizedBox(
-              width: SizeConfig.sizeByWidth(15),
+              width: SizeConfig.sizeByHeight(24),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -399,7 +403,7 @@ class ThirdArrive extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: SizeConfig.sizeByWidth(80),
+              width: SizeConfig.sizeByHeight(90),
               child: Center(
                 child: Image.asset(
                   'assets/images/busPage/notiIcon_later.png',
@@ -409,7 +413,7 @@ class ThirdArrive extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: SizeConfig.sizeByWidth(15),
+              width: SizeConfig.sizeByHeight(24),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

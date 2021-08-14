@@ -39,7 +39,7 @@ class NoticeContainer extends StatelessWidget {
                                 '공지사항',
                                 SizeConfig.sizeByHeight(18),
                                 FontWeight.w700,
-                                Color(0xFF0C98F5),
+                                Color(0xFF4BA6FF),
                               ),
                               InkWell(
                                   onTap: () => UrlUtils.launchURL(NOTICE_URL),
