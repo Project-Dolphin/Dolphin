@@ -5,4 +5,4 @@ ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
     highlightColor: Colors.transparent,
     splashColor: Colors.transparent,
-    fontFamily: 'Noto Sans KR');
+    fontFamily: 'Pretendard');

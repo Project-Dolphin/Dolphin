@@ -11,8 +11,8 @@ Widget renderCirleWithShadow(double size) {
             BorderRadius.all(Radius.circular(SizeConfig.sizeByHeight(11))),
         gradient: LinearGradient(
             colors: <Color>[
-              Color(0xFF009DF5),
-              Color(0xFF1E7AFF),
+              Color(0xFF3199FF),
+              Color(0xFF0081FF),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -38,8 +38,8 @@ Widget renderCircle(double size) {
             BorderRadius.all(Radius.circular(SizeConfig.sizeByHeight(size))),
         gradient: LinearGradient(
             colors: <Color>[
-              Color(0xFF009DF5),
-              Color(0xFF1E7AFF),
+              Color(0xFF3199FF),
+              Color(0xFF0081FF),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

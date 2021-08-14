@@ -36,20 +36,7 @@ class HomePage extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GetBuilder<HomeController>(
-                    builder: (_) =>
-                        // OnelineTitle(
-                        //       name: name,
-                        //       description: controller.formattedDate,
-                        //       stat: controller.stat,
-                        //       fontsize1: SizeConfig.sizeByHeight(26),
-                        //       fontsize2: SizeConfig.sizeByHeight(14),
-                        //       fontsize3: SizeConfig.sizeByHeight(12),
-                        //       fontweight1: FontWeight.w700,
-                        //       fontweight2: FontWeight.w400,
-                        //       fontweight3: FontWeight.w500,
-                        //       isGradient: true,
-                        //     )
-                        Container(
+                    builder: (_) => Container(
                           padding: EdgeInsets.only(
                               bottom: SizeConfig.sizeByHeight(12)),
                           child: Row(
@@ -60,7 +47,6 @@ class HomePage extends GetView<HomeController> {
                                 fontsize: SizeConfig.sizeByHeight(26),
                                 fontweight: FontWeight.w700,
                                 isGradient: true,
-                                fontFamily: 'Pretendard',
                               ),
                               Row(
                                 children: [
@@ -68,13 +54,11 @@ class HomePage extends GetView<HomeController> {
                                     description: _.formattedDate,
                                     fontsize: SizeConfig.sizeByHeight(14),
                                     fontweight: FontWeight.w400,
-                                    fontFamily: 'Pretendard',
                                   ),
                                   StatusContainer(
                                     stat: _.stat,
                                     fontsize: SizeConfig.sizeByHeight(12),
-                                    fontweight: FontWeight.w500,
-                                    fontFamily: 'Pretendard',
+                                    fontweight: FontWeight.w400,
                                   )
                                 ],
                               )
@@ -88,23 +72,17 @@ class HomePage extends GetView<HomeController> {
                           flex: 134,
                           child: Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                gradient: LinearGradient(
-                                    colors: <Color>[
-                                      Color(0xCC1E7AFF),
-                                      Color(0xCC009DF5),
-                                    ],
-                                    begin: Alignment.centerRight,
-                                    end: Alignment.centerLeft,
-                                    stops: [0.0, 1.0],
-                                    tileMode: TileMode.clamp),
-                                boxShadow: [
-                                  BoxShadow(
-                                      blurRadius: 11,
-                                      spreadRadius: 0,
-                                      offset: Offset(0, 0),
-                                      color: Color(0x6E0068FF))
-                                ]),
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: LinearGradient(
+                                  colors: <Color>[
+                                    Color(0xCC1E7AFF),
+                                    Color(0xCC009DF5),
+                                  ],
+                                  begin: Alignment.centerRight,
+                                  end: Alignment.centerLeft,
+                                  stops: [0.0, 1.0],
+                                  tileMode: TileMode.clamp),
+                            ),
                             child: Container(),
                           )),
                       Expanded(flex: 12, child: Container()),

@@ -29,10 +29,9 @@ Future<void> findNearStation() async {
 
   Get.find<CityBusController>().setStation(nearStation);
   // FetchAPI().fetchBusInfo(167720201);
-  // ShuttleBusRepository().fetchNextShuttle();
   //직접 api 호출하는 메소드
   await CityBusRepository().getNextDepartCityBus();
-  // await CityBusRepository().getNextCityBus(nodeId);
+  await CityBusRepository().getNextCityBus(nodeId);
   NoticeRepository().getNotice();
   Get.find<CityBusController>().setIsLoading(false);
 }
@@ -40,9 +39,7 @@ Future<void> findNearStation() async {
 Future<void> fetchStation(String nodeId) async {
   Get.put(CityBusController());
   Get.find<CityBusController>().setIsLoading(true);
-  //직접 api 호출하는 메소드
-  // Get.find<CityBusController>()
-  //     .setResponseCityBus(await CityBusRepository().fetchCityBus(nodeId));
+  await CityBusRepository().getNextCityBus(nodeId);
   Get.find<CityBusController>().setIsLoading(false);
 }
 
@@ -74,7 +71,6 @@ Future<Position> _determinePosition() async {
 
 List station_190 = [
   {
-    "index": 65,
     "nodeName": "남부민동",
     "nodeId": 168540201,
     "arsNo": "02189",
@@ -82,7 +78,6 @@ List station_190 = [
     "gpsY": 35.083028908476
   },
   {
-    "index": 66,
     "nodeName": "해강노인관",
     "nodeId": 168640301,
     "arsNo": "02174",
@@ -90,7 +85,6 @@ List station_190 = [
     "gpsY": 35.08483
   },
   {
-    "index": 67,
     "nodeName": "남부민동경로당",
     "nodeId": 168640302,
     "arsNo": "02113",
@@ -98,7 +92,6 @@ List station_190 = [
     "gpsY": 35.087435
   },
   {
-    "index": 68,
     "nodeName": "동천아파트",
     "nodeId": 168640303,
     "arsNo": "02110",
@@ -106,7 +99,6 @@ List station_190 = [
     "gpsY": 35.0900566667
   },
   {
-    "index": 69,
     "nodeName": "대원사",
     "nodeId": 168640304,
     "arsNo": "02101",
@@ -114,7 +106,6 @@ List station_190 = [
     "gpsY": 35.0916366667
   },
   {
-    "index": 70,
     "nodeName": "초장동",
     "nodeId": 168640305,
     "arsNo": "02099",
@@ -122,7 +113,6 @@ List station_190 = [
     "gpsY": 35.09255
   },
   {
-    "index": 71,
     "nodeName": "초장중학교",
     "nodeId": 168750301,
     "arsNo": "02096",
@@ -130,7 +120,6 @@ List station_190 = [
     "gpsY": 35.094505
   },
   {
-    "index": 72,
     "nodeName": "하동상회",
     "nodeId": 168750302,
     "arsNo": "02094",
@@ -138,7 +127,6 @@ List station_190 = [
     "gpsY": 35.0962383333
   },
   {
-    "index": 73,
     "nodeName": "아미초등학교",
     "nodeId": 168480201,
     "arsNo": "02079",
@@ -146,7 +134,6 @@ List station_190 = [
     "gpsY": 35.0978
   },
   {
-    "index": 74,
     "nodeName": "아미치안센터",
     "nodeId": 168490301,
     "arsNo": "02077",
@@ -154,7 +141,6 @@ List station_190 = [
     "gpsY": 35.100007
   },
   {
-    "index": 75,
     "nodeName": "토성역.아미동입구",
     "nodeId": 168500101,
     "arsNo": "02067",
@@ -162,7 +148,6 @@ List station_190 = [
     "gpsY": 35.0998
   },
   {
-    "index": 76,
     "nodeName": "부산대학병원(토성역)",
     "nodeId": 168380101,
     "arsNo": "02064",
@@ -170,7 +155,6 @@ List station_190 = [
     "gpsY": 35.1013433333
   },
   {
-    "index": 77,
     "nodeName": "동아대부민캠퍼스",
     "nodeId": 168360101,
     "arsNo": "02058",
@@ -178,7 +162,6 @@ List station_190 = [
     "gpsY": 35.106167
   },
   {
-    "index": 78,
     "nodeName": "서부교회",
     "nodeId": 168350401,
     "arsNo": "02053",
@@ -186,7 +169,6 @@ List station_190 = [
     "gpsY": 35.1086766667
   },
   {
-    "index": 79,
     "nodeName": "서대시장(동대신역)",
     "nodeId": 168370301,
     "arsNo": "02048",
@@ -194,7 +176,6 @@ List station_190 = [
     "gpsY": 35.109864798396
   },
   {
-    "index": 80,
     "nodeName": "서대신역.서부경찰서",
     "nodeId": 168280301,
     "arsNo": "02190",
@@ -202,7 +183,6 @@ List station_190 = [
     "gpsY": 35.10998239
   },
   {
-    "index": 81,
     "nodeName": "서대신역.서대신교차로",
     "nodeId": 168620101,
     "arsNo": "02041",
@@ -210,7 +190,6 @@ List station_190 = [
     "gpsY": 35.112256686977
   },
   {
-    "index": 82,
     "nodeName": "부경고교",
     "nodeId": 168620102,
     "arsNo": "02042",
@@ -218,7 +197,6 @@ List station_190 = [
     "gpsY": 35.11351
   },
   {
-    "index": 83,
     "nodeName": "문화아파트",
     "nodeId": 504570000,
     "arsNo": "02194",
@@ -226,7 +204,6 @@ List station_190 = [
     "gpsY": 35.115276791618
   },
   {
-    "index": 84,
     "nodeName": "동아대병원입구",
     "nodeId": 168470401,
     "arsNo": "02006",
@@ -234,7 +211,6 @@ List station_190 = [
     "gpsY": 35.117447299632
   },
   {
-    "index": 85,
     "nodeName": "동아대학교병원",
     "nodeId": 168950101,
     "arsNo": "02057",
@@ -242,7 +218,6 @@ List station_190 = [
     "gpsY": 35.119427715614
   },
   {
-    "index": 86,
     "nodeName": "경남고등학교",
     "nodeId": 168570501,
     "arsNo": "02170",
@@ -250,7 +225,6 @@ List station_190 = [
     "gpsY": 35.1191366667
   },
   {
-    "index": 87,
     "nodeName": "동대고개",
     "nodeId": 168410202,
     "arsNo": "02011",
@@ -258,7 +232,6 @@ List station_190 = [
     "gpsY": 35.116056837623
   },
   {
-    "index": 88,
     "nodeName": "동대신2동",
     "nodeId": 168410201,
     "arsNo": "02163",
@@ -266,7 +239,6 @@ List station_190 = [
     "gpsY": 35.1149233333
   },
   {
-    "index": 89,
     "nodeName": "대신여중",
     "nodeId": 168410203,
     "arsNo": "02013",
@@ -274,7 +246,6 @@ List station_190 = [
     "gpsY": 35.1133
   },
   {
-    "index": 90,
     "nodeName": "락서암",
     "nodeId": 168410204,
     "arsNo": "02015",
@@ -282,7 +253,6 @@ List station_190 = [
     "gpsY": 35.1103566667
   },
   {
-    "index": 91,
     "nodeName": "혜광고교",
     "nodeId": 168410205,
     "arsNo": "01107",
@@ -290,7 +260,6 @@ List station_190 = [
     "gpsY": 35.1089233333
   },
   {
-    "index": 92,
     "nodeName": "보수아파트",
     "nodeId": 168410206,
     "arsNo": "01105",
@@ -298,7 +267,6 @@ List station_190 = [
     "gpsY": 35.1073866667
   },
   {
-    "index": 93,
     "nodeName": "중구종합사회복지관",
     "nodeId": 168250101,
     "arsNo": "01103",
@@ -306,7 +274,6 @@ List station_190 = [
     "gpsY": 35.10577
   },
   {
-    "index": 94,
     "nodeName": "부산디지털고",
     "nodeId": 167830101,
     "arsNo": "01020",
@@ -314,7 +281,6 @@ List station_190 = [
     "gpsY": 35.1080716667
   },
   {
-    "index": 95,
     "nodeName": "청운아파트",
     "nodeId": 167830102,
     "arsNo": "01016",
@@ -322,7 +288,6 @@ List station_190 = [
     "gpsY": 35.1095733333
   },
   {
-    "index": 96,
     "nodeName": "동주파크맨션",
     "nodeId": 167830103,
     "arsNo": "01012",
@@ -330,7 +295,6 @@ List station_190 = [
     "gpsY": 35.1113366667
   },
   {
-    "index": 97,
     "nodeName": "중앙공원 민주공원입구",
     "nodeId": 167840101,
     "arsNo": "01006",
@@ -338,7 +302,6 @@ List station_190 = [
     "gpsY": 35.114344170943
   },
   {
-    "index": 98,
     "nodeName": "시민아파트",
     "nodeId": 167840102,
     "arsNo": "01004",
@@ -346,7 +309,6 @@ List station_190 = [
     "gpsY": 35.114921364382
   },
   {
-    "index": 99,
     "nodeName": "영주삼거리",
     "nodeId": 167970102,
     "arsNo": "01001",
@@ -354,7 +316,6 @@ List station_190 = [
     "gpsY": 35.1153233333
   },
   {
-    "index": 100,
     "nodeName": "동일파크맨션",
     "nodeId": 167970101,
     "arsNo": "03052",
@@ -362,7 +323,6 @@ List station_190 = [
     "gpsY": 35.117059840336
   },
   {
-    "index": 101,
     "nodeName": "화신아파트",
     "nodeId": 167970103,
     "arsNo": "03050",
@@ -370,7 +330,6 @@ List station_190 = [
     "gpsY": 35.11845
   },
   {
-    "index": 102,
     "nodeName": "금수사",
     "nodeId": 169310101,
     "arsNo": "03044",
@@ -378,7 +337,6 @@ List station_190 = [
     "gpsY": 35.1198316667
   },
   {
-    "index": 103,
     "nodeName": "부산컴퓨터과학고교",
     "nodeId": 169310102,
     "arsNo": "03042",
@@ -386,7 +344,6 @@ List station_190 = [
     "gpsY": 35.1222383333
   },
   {
-    "index": 104,
     "nodeName": "초량6동",
     "nodeId": 169310103,
     "arsNo": "03040",
@@ -394,7 +351,6 @@ List station_190 = [
     "gpsY": 35.12421
   },
   {
-    "index": 105,
     "nodeName": "아르미나아파트",
     "nodeId": 169170201,
     "arsNo": "03171",
@@ -402,7 +358,6 @@ List station_190 = [
     "gpsY": 35.125520955754
   },
   {
-    "index": 106,
     "nodeName": "부산서중학교",
     "nodeId": 169170202,
     "arsNo": "03176",
@@ -410,7 +365,6 @@ List station_190 = [
     "gpsY": 35.12547035
   },
   {
-    "index": 107,
     "nodeName": "수정1동 공영주차장",
     "nodeId": 169470101,
     "arsNo": "03172",
@@ -418,7 +372,6 @@ List station_190 = [
     "gpsY": 35.124840236452
   },
   {
-    "index": 108,
     "nodeName": "한림유치원",
     "nodeId": 169470102,
     "arsNo": "03178",
@@ -426,7 +379,6 @@ List station_190 = [
     "gpsY": 35.12393281
   },
   {
-    "index": 109,
     "nodeName": "걸스카우트회관",
     "nodeId": 169070301,
     "arsNo": "03183",
@@ -434,7 +386,6 @@ List station_190 = [
     "gpsY": 35.122912590858
   },
   {
-    "index": 110,
     "nodeName": "부산고교",
     "nodeId": 169070302,
     "arsNo": "03184",
@@ -442,7 +393,13 @@ List station_190 = [
     "gpsY": 35.120615878985
   },
   {
-    "index": 111,
+    "nodeName": "초량지구대",
+    "nodeId": 169450401,
+    "arsNo": "03066",
+    "gpsX": 129.037728642867,
+    "gpsY": 35.117926224452
+  },
+  {
     "nodeName": "초량시장입구",
     "nodeId": 169130201,
     "arsNo": "03074",
@@ -450,7 +407,6 @@ List station_190 = [
     "gpsY": 35.118492523925
   },
   {
-    "index": 112,
     "nodeName": "부산역",
     "nodeId": 169100201,
     "arsNo": "03064",
@@ -458,7 +414,6 @@ List station_190 = [
     "gpsY": 35.116590670941
   },
   {
-    "index": 113,
     "nodeName": "중부경찰서",
     "nodeId": 167700305,
     "arsNo": "01039",
@@ -466,7 +421,6 @@ List station_190 = [
     "gpsY": 35.1076833333
   },
   {
-    "index": 114,
     "nodeName": "중앙동(중앙역)",
     "nodeId": 167860202,
     "arsNo": "01042",
@@ -474,7 +428,6 @@ List station_190 = [
     "gpsY": 35.105432821007
   },
   {
-    "index": 115,
     "nodeName": "중앙동주민센터",
     "nodeId": 167720201,
     "arsNo": "01055",
@@ -482,7 +435,6 @@ List station_190 = [
     "gpsY": 35.100950218399
   },
   {
-    "index": 116,
     "nodeName": "영도대교",
     "nodeId": 167850202,
     "arsNo": "01064",
@@ -490,7 +442,6 @@ List station_190 = [
     "gpsY": 35.0970583333
   },
   {
-    "index": 117,
     "nodeName": "영도경찰서",
     "nodeId": 171630102,
     "arsNo": "04013",
@@ -498,7 +449,6 @@ List station_190 = [
     "gpsY": 35.092899
   },
   {
-    "index": 118,
     "nodeName": "영도우체국",
     "nodeId": 170180201,
     "arsNo": "04009",
@@ -506,7 +456,6 @@ List station_190 = [
     "gpsY": 35.091685
   },
   {
-    "index": 119,
     "nodeName": "해동병원",
     "nodeId": 170300101,
     "arsNo": "04004",
@@ -514,7 +463,6 @@ List station_190 = [
     "gpsY": 35.091213963098
   },
   {
-    "index": 120,
     "nodeName": "교통순찰대",
     "nodeId": 170350201,
     "arsNo": "04056",
@@ -522,7 +470,6 @@ List station_190 = [
     "gpsY": 35.093660733793
   },
   {
-    "index": 121,
     "nodeName": "한성맨션",
     "nodeId": 170320101,
     "arsNo": "04060",
@@ -530,7 +477,6 @@ List station_190 = [
     "gpsY": 35.0945483333
   },
   {
-    "index": 122,
     "nodeName": "한진중공업",
     "nodeId": 170310101,
     "arsNo": "04063",
@@ -538,7 +484,6 @@ List station_190 = [
     "gpsY": 35.095644168852
   },
   {
-    "index": 123,
     "nodeName": "신도브래뉴아파트",
     "nodeId": 170310102,
     "arsNo": "04065",
@@ -546,7 +491,6 @@ List station_190 = [
     "gpsY": 35.09727769975
   },
   {
-    "index": 124,
     "nodeName": "청학시장",
     "nodeId": 210810101,
     "arsNo": "04066",
@@ -554,7 +498,6 @@ List station_190 = [
     "gpsY": 35.09721
   },
   {
-    "index": 125,
     "nodeName": "청학성당",
     "nodeId": 170930101,
     "arsNo": "04069",
@@ -562,7 +505,6 @@ List station_190 = [
     "gpsY": 35.0957433333
   },
   {
-    "index": 126,
     "nodeName": "청학주유소",
     "nodeId": 211150101,
     "arsNo": "04071",
@@ -570,7 +512,6 @@ List station_190 = [
     "gpsY": 35.092985
   },
   {
-    "index": 127,
     "nodeName": "영도구청",
     "nodeId": 170990101,
     "arsNo": "04072",
@@ -578,7 +519,6 @@ List station_190 = [
     "gpsY": 35.0894483333
   },
   {
-    "index": 128,
     "nodeName": "동삼주공아파트입구",
     "nodeId": 170990102,
     "arsNo": "04075",
@@ -586,7 +526,6 @@ List station_190 = [
     "gpsY": 35.0868883333
   },
   {
-    "index": 129,
     "nodeName": "동삼삼거리",
     "nodeId": 171200101,
     "arsNo": "04082",
@@ -594,7 +533,6 @@ List station_190 = [
     "gpsY": 35.084657800434
   },
   {
-    "index": 130,
     "nodeName": "일동미라주아파트",
     "nodeId": 211100201,
     "arsNo": "04084",
@@ -602,7 +540,6 @@ List station_190 = [
     "gpsY": 35.08184
   },
   {
-    "index": 131,
     "nodeName": "동삼주택",
     "nodeId": 209710201,
     "arsNo": "04087",
@@ -610,7 +547,6 @@ List station_190 = [
     "gpsY": 35.0785666667
   },
   {
-    "index": 132,
     "nodeName": "동삼동국민은행",
     "nodeId": 171190201,
     "arsNo": "04089",
@@ -618,7 +554,6 @@ List station_190 = [
     "gpsY": 35.0757816667
   },
   {
-    "index": 133,
     "nodeName": "동삼혁신지구입구.동삼교회",
     "nodeId": 171130101,
     "arsNo": "04196",
@@ -626,7 +561,6 @@ List station_190 = [
     "gpsY": 35.073838
   },
   {
-    "index": 134,
     "nodeName": "에덴금호아파트",
     "nodeId": 171290101,
     "arsNo": "04092",
@@ -634,7 +568,6 @@ List station_190 = [
     "gpsY": 35.07150438978
   },
   {
-    "index": 135,
     "nodeName": "해양대입구",
     "nodeId": 171290102,
     "arsNo": "04093",

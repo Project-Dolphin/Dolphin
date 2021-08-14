@@ -3,10 +3,10 @@ import 'package:oceanview/common/sizeConfig.dart';
 
 class TextBox extends StatelessWidget {
   const TextBox(this.text, this.fontSize, this.fontWeight, this.color,
-      {this.fontFamily = 'Noto Sans KR', Key? key})
+      {Key? key})
       : super(key: key);
 
-  final String text, fontFamily;
+  final String text;
   final double fontSize;
   final FontWeight fontWeight;
   final Color color;
@@ -19,10 +19,10 @@ class TextBox extends StatelessWidget {
           text,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-              color: color,
-              fontWeight: fontWeight,
-              fontSize: SizeConfig.sizeByHeight(fontSize),
-              fontFamily: fontFamily),
+            color: color,
+            fontWeight: fontWeight,
+            fontSize: SizeConfig.sizeByHeight(fontSize),
+          ),
         ));
   }
 }

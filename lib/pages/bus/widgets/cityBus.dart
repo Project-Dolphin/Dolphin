@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -8,8 +9,9 @@ import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
+import 'package:oceanview/pages/bus/cityBus/cityBusListPage.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
-import 'package:oceanview/services/dailyAtTimeNotification.dart';
+
 import 'package:intl/intl.dart';
 
 class CityBus extends GetView<CityBusController> {
@@ -40,13 +42,13 @@ class CityBus extends GetView<CityBusController> {
                     child: Text(
                       '정류장 선택',
                       style: TextStyle(
-                        color: Color(0xff005A9E),
+                        color: Color(0xFF0081FF),
                         fontSize: SizeConfig.sizeByHeight(10),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: SizeConfig.sizeByHeight(55),
+                    height: SizeConfig.sizeByHeight(85),
                   ),
                   Container(
                     height: SizeConfig.sizeByHeight(290),
@@ -54,15 +56,15 @@ class CityBus extends GetView<CityBusController> {
                       children: [
                         Container(
                           width: 1,
-                          margin:
-                              EdgeInsets.only(left: SizeConfig.sizeByWidth(40)),
+                          margin: EdgeInsets.only(
+                              left: SizeConfig.sizeByHeight(45)),
                           height: SizeConfig.sizeByHeight(290),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 colors: <Color>[
-                                  Color(0xFF339EFB).withOpacity(0),
+                                  Color(0xFF4BA6FF).withOpacity(0),
                                   Color(0xFF3299F3),
-                                  Color(0xFF339EFB).withOpacity(0),
+                                  Color(0xFF4BA6FF).withOpacity(0),
                                 ],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
@@ -75,16 +77,29 @@ class CityBus extends GetView<CityBusController> {
                           builder: (_) {
                             var departRemainTime = [];
                             var departArriveTime = [];
-                            for (var i = 0;
-                                i < _.nextDepartCityBus!.length;
-                                i++) {
-                              departRemainTime.add(_.nextDepartCityBus![i]
-                                  .difference(DateTime.now())
-                                  .inMinutes
-                                  .toString());
-                              departArriveTime.add(DateFormat('HH:mm')
-                                  .format(_.nextDepartCityBus![i]));
+                            var cityBusArriveTime = [];
+                            if (_.selectedStation == '해양대구본관') {
+                              for (var i = 0;
+                                  i < _.nextDepartCityBus!.length;
+                                  i++) {
+                                var differenceMinute = _.nextDepartCityBus![i]
+                                    .difference(DateTime.now())
+                                    .inMinutes;
+
+                                departRemainTime
+                                    .add(differenceMinute.toString());
+                                departArriveTime.add(DateFormat('HH:mm')
+                                    .format(_.nextDepartCityBus![i]));
+                              }
+                            } else {
+                              _.responseCityBus != null
+                                  ? cityBusArriveTime = [
+                                      _.responseCityBus!.min1,
+                                      _.responseCityBus!.min2
+                                    ]
+                                  : cityBusArriveTime = [];
                             }
+
                             return _.selectedStation == '해양대구본관'
                                 ? Column(
                                     mainAxisAlignment:
@@ -93,7 +108,6 @@ class CityBus extends GetView<CityBusController> {
                                         ? [Container()]
                                         : [
                                             FirstArrive(
-                                                '학교출발까지',
                                                 _.nextDepartCityBus!.length > 0
                                                     ? departRemainTime[0]
                                                     : '없음',
@@ -126,14 +140,16 @@ class CityBus extends GetView<CityBusController> {
                                               size: SizeConfig.sizeByHeight(30),
                                             )
                                           : FirstArrive(
-                                              '도착까지',
-                                              _.responseCityBus?.min1,
-                                              _.responseCityBus != null
+                                              cityBusArriveTime != []
+                                                  ? cityBusArriveTime[0]
+                                                      .toString()
+                                                  : 'error',
+                                              cityBusArriveTime != []
                                                   ? DateFormat('HH:mm').format(
                                                       DateTime.now().add(Duration(
-                                                          minutes: int.parse(_
-                                                              .responseCityBus!
-                                                              .min1))))
+                                                          minutes:
+                                                              cityBusArriveTime[
+                                                                  0])))
                                                   : 'error'),
                                       _.isLoading
                                           ? SpinKitThreeBounce(
@@ -141,13 +157,16 @@ class CityBus extends GetView<CityBusController> {
                                               size: SizeConfig.sizeByHeight(30),
                                             )
                                           : SecondArrive(
-                                              _.responseCityBus?.min2,
-                                              _.responseCityBus != null
+                                              cityBusArriveTime != []
+                                                  ? cityBusArriveTime[1]
+                                                      .toString()
+                                                  : 'error',
+                                              cityBusArriveTime != []
                                                   ? DateFormat('HH:mm').format(
                                                       DateTime.now().add(Duration(
-                                                          minutes: int.parse(_
-                                                              .responseCityBus!
-                                                              .min2))))
+                                                          minutes:
+                                                              cityBusArriveTime[
+                                                                  1])))
                                                   : 'error'),
                                       SizedBox(
                                         height: 1,
@@ -162,13 +181,20 @@ class CityBus extends GetView<CityBusController> {
                     ),
                   ),
                   SizedBox(
-                    height: SizeConfig.sizeByHeight(40),
+                    height: SizeConfig.sizeByHeight(10),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            CityBusRepository().getCityBusList();
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                  builder: (context) => CityBusListPage()),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.transparent,
                             shadowColor: Colors.transparent,
@@ -176,13 +202,14 @@ class CityBus extends GetView<CityBusController> {
                                 EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
                           ),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               TextBox('버스위치보기', 12, FontWeight.w500,
-                                  Color(0xff3F3F3F)),
+                                  Color(0xFF353B45)),
                               Icon(
                                 Icons.arrow_forward_ios_rounded,
                                 size: SizeConfig.sizeByHeight(12),
-                                color: Color(0xff3F3F3F),
+                                color: Color(0xFF353B45),
                               )
                             ],
                           )),
@@ -212,7 +239,6 @@ class CityBus extends GetView<CityBusController> {
                                             ? fetchStation('167850202')
                                             : CityBusRepository()
                                                 .getNextDepartCityBus();
-
                                 controller.setSelectedStation(value);
                               },
                               findTitle: findCityBusTitle,
@@ -230,9 +256,9 @@ class CityBus extends GetView<CityBusController> {
 }
 
 class FirstArrive extends StatelessWidget {
-  const FirstArrive(this.title, this.remainTime, this.arriveTime, {Key? key})
+  const FirstArrive(this.remainTime, this.arriveTime, {Key? key})
       : super(key: key);
-  final String title;
+
   final String arriveTime;
   final String? remainTime;
 
@@ -243,61 +269,46 @@ class FirstArrive extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: SizeConfig.sizeByWidth(80),
+              width: SizeConfig.sizeByHeight(90),
               child: Center(
                 child: Image.asset(
                   'assets/images/busPage/busIcon_190.png',
-                  width: SizeConfig.sizeByHeight(80),
-                  height: SizeConfig.sizeByHeight(80),
+                  width: SizeConfig.sizeByHeight(90),
+                  height: SizeConfig.sizeByHeight(90),
                 ),
               ),
             ),
             SizedBox(
-              width: SizeConfig.sizeByWidth(15),
+              width: SizeConfig.sizeByWidth(24),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                      color: Color(0xFF0797F8),
-                      fontSize: SizeConfig.sizeByHeight(12),
-                      fontWeight: FontWeight.w700),
-                ),
-                Container(
-                  height: SizeConfig.sizeByHeight(70),
-                  child: Center(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          remainTime == '없음'
-                              ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
-                                  Color(0xFF3F3F3F))
-                              : TextBox(
-                                  '약 ${remainTime != null ? remainTime : '300'}분',
-                                  28,
-                                  FontWeight.w700,
-                                  Color(0xFF3F3F3F)),
-                          TextBox(
-                            '$arriveTime',
-                            14,
-                            FontWeight.w500,
-                            Color(0xFF717171),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.sizeByHeight(6),
-                          ),
-                        ],
+            Container(
+              height: SizeConfig.sizeByHeight(70),
+              child: Center(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      remainTime == '없음'
+                          ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
+                              Color(0xFF353B45))
+                          : TextBox(
+                              '약 ${remainTime != null ? remainTime : '300'}분',
+                              30,
+                              FontWeight.w700,
+                              Color(0xFF353B45)),
+                      TextBox(
+                        '$arriveTime',
+                        14,
+                        FontWeight.w400,
+                        Color(0xFF717171),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
-            )
+              ),
+            ),
           ],
         )
       ],
@@ -318,7 +329,7 @@ class SecondArrive extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: SizeConfig.sizeByWidth(80),
+              width: SizeConfig.sizeByHeight(90),
               child: Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -326,8 +337,8 @@ class SecondArrive extends StatelessWidget {
                     shadowColor: Colors.transparent,
                   ),
                   onPressed: () async {
-                    await dailyAtTimeNotification('버스 도착 알림', '버스 도착 3분 전이에요.',
-                        (int.parse(remainTime!) - 3));
+                    // await dailyAtTimeNotification('버스 도착 알림', '버스 도착 3분 전이에요.',
+                    //     (int.parse(remainTime!) - 3));
                     Get.dialog(
                         AlertDialog(
                           contentPadding: EdgeInsets.fromLTRB(
@@ -342,14 +353,14 @@ class SecondArrive extends StatelessWidget {
                   },
                   child: Image.asset(
                     'assets/images/busPage/notiIcon_next.png',
-                    width: SizeConfig.sizeByHeight(60),
-                    height: SizeConfig.sizeByHeight(60),
+                    width: SizeConfig.sizeByHeight(70),
+                    height: SizeConfig.sizeByHeight(70),
                   ),
                 ),
               ),
             ),
             SizedBox(
-              width: SizeConfig.sizeByWidth(15),
+              width: SizeConfig.sizeByHeight(24),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -357,14 +368,14 @@ class SecondArrive extends StatelessWidget {
               children: [
                 remainTime == '없음'
                     ? TextBox(
-                        '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                        '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF353B45))
                     : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
-                        22, FontWeight.w700, Color(0xFF3F3F3F)),
+                        22, FontWeight.w700, Color(0xFF353B45)),
                 arriveTime != ' '
                     ? TextBox(
                         '$arriveTime',
                         14,
-                        FontWeight.w500,
+                        FontWeight.w400,
                         Color(0xFF717171),
                       )
                     : SizedBox(
@@ -392,17 +403,17 @@ class ThirdArrive extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: SizeConfig.sizeByWidth(80),
+              width: SizeConfig.sizeByHeight(90),
               child: Center(
                 child: Image.asset(
                   'assets/images/busPage/notiIcon_later.png',
-                  width: SizeConfig.sizeByHeight(30),
-                  height: SizeConfig.sizeByHeight(30),
+                  width: SizeConfig.sizeByHeight(40),
+                  height: SizeConfig.sizeByHeight(40),
                 ),
               ),
             ),
             SizedBox(
-              width: SizeConfig.sizeByWidth(15),
+              width: SizeConfig.sizeByHeight(24),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -410,16 +421,16 @@ class ThirdArrive extends StatelessWidget {
               children: [
                 remainTime == '없음'
                     ? TextBox(
-                        '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF3F3F3F))
+                        '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF353B45))
                     : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
-                        18, FontWeight.w500, Color(0xFF3F3F3F)),
+                        18, FontWeight.w500, Color(0xFF353B45)),
                 arriveTime != ' '
                     ? Column(
                         children: [
                           TextBox(
                             '$arriveTime',
                             14,
-                            FontWeight.w500,
+                            FontWeight.w400,
                             Color(0xFF717171),
                           ),
                           SizedBox(

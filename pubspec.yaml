@@ -79,19 +79,6 @@ flutter:
     # list giving the asset and other descriptors for the font. For
     # example:
     fonts:
-        - family: Noto Sans KR
-          fonts:
-              - asset: assets/fonts/NotoSansKR/NotoSansKR-Regular.otf
-              - asset: assets/fonts/NotoSansKR/NotoSansKR-Thin.otf
-                weight: 100
-              - asset: assets/fonts/NotoSansKR/NotoSansKR-Light.otf
-                weight: 300
-              - asset: assets/fonts/NotoSansKR/NotoSansKR-Medium.otf
-                weight: 500
-              - asset: assets/fonts/NotoSansKR/NotoSansKR-Bold.otf
-                weight: 700
-              - asset: assets/fonts/NotoSansKR/NotoSansKR-Black.otf
-                weight: 900
         - family: Pretendard
           fonts:
               - asset: assets/fonts/Pretendard/Pretendard-Regular.otf

@@ -99,7 +99,6 @@ class _CalendarState extends State<Calendar> {
   LinkedHashMap<DateTime, List<Event>> kEvents =
       LinkedHashMap<DateTime, List<Event>>();
 
-
   bool isHoliday(DateTime day) {
     //print(_holiday.keys);
     return _holiday.keys
@@ -177,15 +176,15 @@ class _CalendarState extends State<Calendar> {
   makeHoliday() {
     for (int i = 0; i < holiday.length; i++) {
       _holidayContent = holiday[i]['content'];
-      DateTime _holidayStart = DateTime
-          .parse(holiday[i]['term']['startedAt'].toString());
-      DateTime _holidayEnd = DateTime
-          .parse(holiday[i]['term']['endedAt'].toString());
+      DateTime _holidayStart =
+          DateTime.parse(holiday[i]['term']['startedAt'].toString());
+      DateTime _holidayEnd =
+          DateTime.parse(holiday[i]['term']['endedAt'].toString());
 
       if (_holidayStart == _holidayEnd) {
         _holiday[_holidayStart] = _holiday[_holidayStart] ?? [];
         _holiday[_holidayStart]!.add(Event(_holidayContent));
-      }else if (_holidayStart != _holidayEnd) {
+      } else if (_holidayStart != _holidayEnd) {
         for (int j = _holidayStart.day; j < _holidayEnd.day + 1; j++) {
           _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] =
               _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] ??
@@ -408,15 +407,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -474,15 +473,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -540,15 +539,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -606,15 +605,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -672,15 +671,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -738,15 +737,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -804,15 +803,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -870,15 +869,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -936,15 +935,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -1002,15 +1001,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -1068,15 +1067,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -1134,15 +1133,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,
@@ -1200,15 +1199,15 @@ class _CalendarState extends State<Calendar> {
                   todayTextStyle: TextStyle(color: Colors.white),
                   todayDecoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xff1e7aff),
+                    color: Color(0xFF0081FF),
                   ),
                   selectedTextStyle: TextStyle(
                       color: _selectedDay.weekday == 7
                           ? Colors.red
-                          : Colors.black),
+                          : Color(0xFF353B45)),
                   selectedDecoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(0xff1e7aff),
+                      color: Color(0xFF0081FF),
                     ),
                     shape: BoxShape.circle,
                     color: null,

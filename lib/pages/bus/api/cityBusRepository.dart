@@ -5,7 +5,7 @@ import 'dart:convert' as convert;
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
 
 class CityBusRepository {
-  List<dynamic> apiToJson(response) {
+  List<dynamic> shuttleApiToJson(response) {
     if (response.statusCode == 200) {
       final jsonResult =
           convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
@@ -18,21 +18,49 @@ class CityBusRepository {
     }
   }
 
-  Future<List<dynamic>> fetchNextCityBus(bstopid) async {
-    return apiToJson(await FetchAPI().fetchCityBusInfo(bstopid));
+  CityBusData cityBusApiToJson(response) {
+    if (response.statusCode == 200) {
+      final jsonResult =
+          convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
+      final jsonNextShuttle = CityBusData.fromJson(jsonResult['data']);
+
+      return jsonNextShuttle;
+    } else {
+      print('error ${response.statusCode}');
+      return CityBusData();
+    }
   }
 
-  Future<List<dynamic>> fetchCityBusList() async {
-    return apiToJson(await FetchAPI().fetchCityBusList());
+  List<CityBusListData> cityBusListApiToJson(response) {
+    if (response.statusCode == 200) {
+      final jsonResult =
+          convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
+      final List<CityBusListData> jsonCityBusList = [
+        ...jsonResult['data'].map((e) => CityBusListData.fromJson(e))
+      ];
+
+      return jsonCityBusList;
+    } else {
+      print('error ${response.statusCode}');
+      return [CityBusListData()];
+    }
+  }
+
+  Future<dynamic> fetchNextCityBus(bstopid) async {
+    print(await FetchAPI().fetchCityBusInfo(bstopid));
+    return cityBusApiToJson(await FetchAPI().fetchCityBusInfo(bstopid));
+  }
+
+  Future<List<CityBusListData>> fetchCityBusList() async {
+    return cityBusListApiToJson(await FetchAPI().fetchCityBusList());
   }
 
   Future<List<dynamic>> fetchNexthDepartCityBus() async {
-    return apiToJson(await FetchAPI().fetchNextDepartCityBus());
+    return shuttleApiToJson(await FetchAPI().fetchNextDepartCityBus());
   }
 
   getNextCityBus(bstopid) async {
     Get.put(CityBusController());
-    Get.find<CityBusController>().setResponseCityBus([]);
     Get.find<CityBusController>()
         .setResponseCityBus(await fetchNextCityBus(bstopid));
   }
@@ -43,5 +71,11 @@ class CityBusRepository {
     Get.find<CityBusController>()
         .setDepartCityBus(await fetchNexthDepartCityBus());
     Get.find<CityBusController>().setIsLoading(false);
+  }
+
+  getCityBusList() async {
+    Get.put(CityBusController());
+    Get.find<CityBusController>()
+        .setResponseCityBusList(await fetchCityBusList());
   }
 }

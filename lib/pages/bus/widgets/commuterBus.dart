@@ -105,8 +105,8 @@ class CommuterBus extends GetView<CommuterBusController> {
           child: Container(
             margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(11)),
             width: 1,
-            height: SizeConfig.sizeByHeight(320),
-            color: Color(0xFF339EFB),
+            height: SizeConfig.sizeByHeight(350),
+            color: Color(0xFF4BA6FF),
           ),
         ),
         Container(
@@ -121,43 +121,30 @@ class CommuterBus extends GetView<CommuterBusController> {
                       width: SizeConfig.sizeByWidth(100),
                       alignment: Alignment.centerRight,
                       child: TextBox(stationList[0], 14, FontWeight.w700,
-                          Color(0xFF0797F8))),
+                          Color(0xFF4BA6FF))),
                   renderCirleWithShadow(11),
                   Container(
                       width: SizeConfig.sizeByWidth(100),
                       alignment: Alignment.centerLeft,
                       child: TextBox(
-                          departTime, 14, FontWeight.w700, Color(0xff3F3F3F)))
+                          departTime, 14, FontWeight.w700, Color(0xFF353B45)))
                 ],
               ),
-              SizedBox(
-                height: SizeConfig.sizeByHeight(10),
-              ),
               getTextWidgets(stationList),
-              SizedBox(
-                height: SizeConfig.sizeByHeight(15),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                      width: SizeConfig.sizeByWidth(80),
+                      width: SizeConfig.sizeByWidth(100),
                       alignment: Alignment.centerRight,
                       child: TextBox(stationList[stationList.length - 1], 14,
-                          FontWeight.w700, Color(0xFF0797F8))),
+                          FontWeight.w700, Color(0xFF4BA6FF))),
+                  renderCirleWithShadow(11),
                   Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.sizeByWidth(14)),
-                      child: Image.asset(
-                        'assets/images/busPage/busIcon_home.png',
-                        width: SizeConfig.sizeByHeight(40),
-                        height: SizeConfig.sizeByHeight(40),
-                      )),
-                  Container(
-                      width: SizeConfig.sizeByWidth(80),
+                      width: SizeConfig.sizeByWidth(100),
                       alignment: Alignment.centerLeft,
                       child: TextBox(
-                          arriveTime, 14, FontWeight.w700, Color(0xff3F3F3F)))
+                          arriveTime, 14, FontWeight.w700, Color(0xFF353B45)))
                 ],
               ),
             ],
@@ -171,7 +158,7 @@ class CommuterBus extends GetView<CommuterBusController> {
 Widget getTextWidgets(List<String> stationList) {
   var i = 0;
   return Container(
-    height: SizeConfig.sizeByHeight(280),
+    height: SizeConfig.sizeByHeight(300),
     child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -195,7 +182,7 @@ Widget renderLeftSide(String value) {
       Container(
           width: SizeConfig.sizeByWidth(100),
           alignment: Alignment.centerRight,
-          child: TextBox(value, 12, FontWeight.w500, Colors.black)),
+          child: TextBox(value, 12, FontWeight.w400, Color(0xFF353B45))),
       renderCirleWithShadow(3),
       Container(
         width: SizeConfig.sizeByWidth(100),
@@ -215,7 +202,7 @@ Widget renderRightSide(String value) {
       Container(
           width: SizeConfig.sizeByWidth(100),
           alignment: Alignment.centerLeft,
-          child: TextBox(value, 12, FontWeight.w500, Colors.black))
+          child: TextBox(value, 12, FontWeight.w400, Color(0xFF353B45)))
     ],
   );
 }

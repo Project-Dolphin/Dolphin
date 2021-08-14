@@ -15,15 +15,14 @@ class BusContainer extends GetView<CityBusController> {
       children: [
         Image.asset(
           'assets/images/homePage/homeIcon_190.png',
-          width: SizeConfig.sizeByHeight(80),
-          height: SizeConfig.sizeByHeight(80),
+          width: SizeConfig.sizeByHeight(90),
+          height: SizeConfig.sizeByHeight(90),
         ),
         TextBox(
           '해양대구본관',
           SizeConfig.sizeByHeight(14),
           FontWeight.w400,
           Color(0xFF353B45),
-          fontFamily: 'Pretendard',
         ),
         SizedBox(
           height: SizeConfig.sizeByHeight(10),
@@ -49,7 +48,6 @@ class BusContainer extends GetView<CityBusController> {
                       SizeConfig.sizeByHeight(16),
                       FontWeight.w700,
                       Color(0xFF0081FF),
-                      fontFamily: 'Pretendard',
                     )
                   : SpinKitThreeBounce(
                       size: SizeConfig.sizeByHeight(16),

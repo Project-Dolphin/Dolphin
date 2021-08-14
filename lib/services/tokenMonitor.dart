@@ -35,6 +35,7 @@ class _TokenMonitor extends State<TokenMonitor> {
             )
         .then((token) {
       setToken(token!);
+      print(_token);
     });
     _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
     _tokenStream.listen(setToken);
