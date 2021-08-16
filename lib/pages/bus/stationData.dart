@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
+import 'package:oceanview/pages/home/home_page.dart';
 
 import 'package:oceanview/pages/home/notice/noticeRepository.dart';
 
@@ -30,9 +31,9 @@ Future<void> findNearStation() async {
   Get.find<CityBusController>().setStation(nearStation);
   // FetchAPI().fetchBusInfo(167720201);
   //직접 api 호출하는 메소드
-  await CityBusRepository().getNextDepartCityBus();
+
   await CityBusRepository().getNextCityBus(nodeId);
-  NoticeRepository().getNotice();
+  await onRefresh();
   Get.find<CityBusController>().setIsLoading(false);
 }
 
