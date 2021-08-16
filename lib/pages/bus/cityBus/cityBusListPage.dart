@@ -51,33 +51,47 @@ class CityBusListPage extends GetView<CityBusController> {
                           padding: EdgeInsets.symmetric(
                               vertical: SizeConfig.sizeByHeight(24),
                               horizontal: SizeConfig.sizeByHeight(10)),
-                          child: Column(
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              TextBox('190번 버스', SizeConfig.sizeByHeight(22),
-                                  FontWeight.w700, Color(0xFF353B45)),
-                              SizedBox(
-                                height: SizeConfig.sizeByHeight(5),
-                              ),
-                              Row(
-                                children: [
-                                  TextBox('운행시간', 14, FontWeight.w500,
-                                      Color(0xFF4BA6FF)),
-                                  SizedBox(width: SizeConfig.sizeByHeight(7)),
-                                  TextBox('04:55 ~ 21:50', 14, FontWeight.w500,
-                                      Color(0xFF005A9E)),
-                                ],
+                              Image.asset(
+                                'assets/images/busPage/busIcon_190.png',
+                                width: SizeConfig.sizeByHeight(90),
+                                height: SizeConfig.sizeByHeight(90),
                               ),
                               SizedBox(
-                                height: SizeConfig.sizeByHeight(5),
+                                width: SizeConfig.sizeByHeight(6),
                               ),
-                              Row(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TextBox('배차간격', 14, FontWeight.w500,
-                                      Color(0xFF4BA6FF)),
-                                  SizedBox(width: SizeConfig.sizeByHeight(7)),
-                                  TextBox('19분', 14, FontWeight.w500,
-                                      Color(0xFF005A9E)),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextBox('운행시간', 12, FontWeight.w400,
+                                          Color(0xFF0081FF)),
+                                      SizedBox(
+                                          width: SizeConfig.sizeByHeight(7)),
+                                      TextBox('04:55 ~ 21:50', 14,
+                                          FontWeight.w400, Color(0xFF353B45)),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: SizeConfig.sizeByHeight(10),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextBox('배차간격', 12, FontWeight.w400,
+                                          Color(0xFF0081FF)),
+                                      SizedBox(
+                                          width: SizeConfig.sizeByHeight(7)),
+                                      TextBox('19분', 14, FontWeight.w400,
+                                          Color(0xFF353B45)),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
@@ -96,7 +110,10 @@ class CityBusListPage extends GetView<CityBusController> {
                                         size: SizeConfig.sizeByHeight(50),
                                       ),
                               );
-                            })
+                            }),
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(50),
+                        )
                       ],
                     );
                   }, childCount: 1))
@@ -140,20 +157,13 @@ class CityBusListPage extends GetView<CityBusController> {
             children: <Widget>[
               Container(
                   width: SizeConfig.sizeByWidth(100),
-                  margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(13)),
+                  margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(13)),
                   alignment: Alignment.center,
                   child: TextBox(
                       stationList[0], 14, FontWeight.w500, Color(0xFF353B45))),
               renderCirleWithShadow(11),
               getTextWidgets(stationList),
-              Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.sizeByWidth(14)),
-                  child: Image.asset(
-                    'assets/images/busPage/busIcon_home.png',
-                    width: SizeConfig.sizeByHeight(40),
-                    height: SizeConfig.sizeByHeight(40),
-                  )),
+              renderCirleWithShadow(11),
               Container(
                   width: SizeConfig.sizeByWidth(80),
                   alignment: Alignment.center,
@@ -165,7 +175,7 @@ class CityBusListPage extends GetView<CityBusController> {
         ...busListIndex.map((e) => Container(
             margin: EdgeInsets.only(
                 top: (e[0] + 1) * SizeConfig.sizeByHeight(49) -
-                    SizeConfig.sizeByHeight(40)),
+                    SizeConfig.sizeByHeight(26)),
             width: double.infinity,
             height: SizeConfig.sizeByHeight(40),
             child: Row(
@@ -175,18 +185,19 @@ class CityBusListPage extends GetView<CityBusController> {
                   width: SizeConfig.sizeByHeight(100),
                 ),
                 Image.asset(
-                  'assets/images/busPage/busIcon_location.png',
-                  width: SizeConfig.sizeByHeight(40),
-                  height: SizeConfig.sizeByHeight(40),
+                  'assets/images/busPage/busIcon_190.png',
+                  width: SizeConfig.sizeByHeight(32),
+                  height: SizeConfig.sizeByHeight(32),
                 ),
                 Container(
                   width: SizeConfig.sizeByHeight(100),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      TextBox(e[1], 12, FontWeight.w400, Color(0xFF353B45)),
-                    ],
-                  ),
+                  // child: Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     TextBox(e[1], 12, FontWeight.w400, Color(0xFF353B45)),
+                  //   ],
+                  // ),
                 ),
               ],
             )))
@@ -222,7 +233,7 @@ class CityBusListPage extends GetView<CityBusController> {
             width: SizeConfig.sizeByWidth(150),
             alignment: Alignment.centerRight,
             child: TextBox(value, 14, FontWeight.w500, Color(0xFF353B45))),
-        renderCirleWithShadow(7),
+        renderCirleWithShadow(5),
         Container(
           width: SizeConfig.sizeByWidth(150),
         ),
@@ -237,7 +248,7 @@ class CityBusListPage extends GetView<CityBusController> {
         Container(
           width: SizeConfig.sizeByWidth(150),
         ),
-        renderCirleWithShadow(7),
+        renderCirleWithShadow(5),
         Container(
             width: SizeConfig.sizeByWidth(150),
             alignment: Alignment.centerLeft,
