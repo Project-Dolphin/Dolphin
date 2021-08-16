@@ -1,24 +1,27 @@
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart';
+import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
 import 'package:oceanview/pages/dashboard/dashboard_controller.dart';
 import 'package:oceanview/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/pages/home/latestEvent/eventRepository.dart';
 import 'package:oceanview/pages/home/notice/noticeRepository.dart';
+import 'package:oceanview/pages/home/widgets/EventsContainer.dart';
 import 'package:oceanview/pages/home/widgets/busContainer.dart';
 import 'package:oceanview/pages/home/widgets/noticeContainer.dart';
+
+Future<Null> onRefresh() async {
+  await CityBusRepository().getNextDepartCityBus();
+  await NoticeRepository().getNotice();
+  await EventRespository().getLatestEventList();
+}
 
 class HomePage extends GetView<HomeController> {
   final name = '오션뷰';
   final Color iconColor = Color(0xFF000000);
-
-  Future<Null> onRefresh() async {
-    Get.put(CityBusController());
-    // Get.find<CityBusController>().findNextDepartCityBus();
-    await NoticeRepository().getNotice();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +107,14 @@ class HomePage extends GetView<HomeController> {
                             ],
                           )),
                       Expanded(flex: 12, child: Container()),
-                      Expanded(flex: 80, child: GlassMorphism()),
+                      Expanded(
+                          flex: 80,
+                          child: GestureDetector(
+                              onTap: () =>
+                                  dashboardController.changeTabIndex(3),
+                              child: GlassMorphism(
+                                widget: EventsContainer(),
+                              ))),
                       Expanded(flex: 12, child: Container()),
                       Expanded(
                           flex: 190,

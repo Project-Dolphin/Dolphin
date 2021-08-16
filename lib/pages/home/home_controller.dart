@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 class HomeController extends GetxController {
   String formattedDate = ' ';
   List noticeList = [];
+  List latestEventList = [];
   String stat = ' ';
 
   @override
@@ -27,6 +28,11 @@ class HomeController extends GetxController {
 
   void setNoticeList(notice) {
     noticeList = notice;
+    update();
+  }
+
+  void setLatestEventList(events) {
+    latestEventList = events;
     update();
   }
 

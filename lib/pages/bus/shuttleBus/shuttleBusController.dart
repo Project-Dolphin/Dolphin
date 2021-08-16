@@ -50,6 +50,7 @@ class ShuttleBusController extends GetxController {
     }
     nextShuttle = newNextShuttle;
     previousShuttle = newPreviousShuttle;
+    print('prev $previousShuttle');
 
     update();
   }

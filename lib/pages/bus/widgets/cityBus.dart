@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/dialog/dialog.dart';
 import 'package:oceanview/common/dropdown/dropdownButton.dart';
+import 'package:oceanview/common/loading/loading.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
@@ -30,226 +31,224 @@ class CityBus extends GetView<CityBusController> {
       width: SizeConfig.sizeByWidth(300),
       height: SizeConfig.sizeByHeight(478),
       widget: Container(
-          margin: EdgeInsets.symmetric(
-              vertical: SizeConfig.sizeByHeight(8),
-              horizontal: SizeConfig.sizeByWidth(16)),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      '정류장 선택',
-                      style: TextStyle(
-                        color: Color(0xFF0081FF),
-                        fontSize: SizeConfig.sizeByHeight(10),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.sizeByHeight(85),
-                  ),
-                  Container(
-                    height: SizeConfig.sizeByHeight(290),
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: 1,
-                          margin: EdgeInsets.only(
-                              left: SizeConfig.sizeByHeight(45)),
-                          height: SizeConfig.sizeByHeight(290),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: <Color>[
-                                  Color(0xFF4BA6FF).withOpacity(0),
-                                  Color(0xFF3299F3),
-                                  Color(0xFF4BA6FF).withOpacity(0),
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                stops: [0.0, 0.5, 1.0],
-                                tileMode: TileMode.clamp),
+        margin: EdgeInsets.symmetric(
+            vertical: SizeConfig.sizeByHeight(8),
+            horizontal: SizeConfig.sizeByWidth(16)),
+        child: GetBuilder<CityBusController>(
+          init: CityBusController(),
+          builder: (_) {
+            var departRemainTime = [];
+            var departArriveTime = [];
+            var cityBusArriveTime = [];
+            print(_.responseCityBus!.min1);
+            if (_.selectedStation == '해양대구본관') {
+              for (var i = 0; i < _.nextDepartCityBus!.length; i++) {
+                var differenceMinute = _.nextDepartCityBus![i]
+                    .difference(DateTime.now())
+                    .inMinutes;
+
+                departRemainTime.add(differenceMinute.toString());
+                departArriveTime
+                    .add(DateFormat('HH:mm').format(_.nextDepartCityBus![i]));
+              }
+            } else {
+              _.responseCityBus != null
+                  ? cityBusArriveTime = [
+                      _.responseCityBus!.min1 ?? 9999,
+                      _.responseCityBus!.min2 ?? 9999
+                    ]
+                  : cityBusArriveTime = [];
+            }
+
+            return _.isLoading
+                ? Loading()
+                : Stack(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              '정류장 선택',
+                              style: TextStyle(
+                                color: Color(0xFF0081FF),
+                                fontSize: SizeConfig.sizeByHeight(10),
+                              ),
+                            ),
                           ),
-                        ),
-                        GetBuilder<CityBusController>(
-                          init: CityBusController(),
-                          builder: (_) {
-                            var departRemainTime = [];
-                            var departArriveTime = [];
-                            var cityBusArriveTime = [];
-                            if (_.selectedStation == '해양대구본관') {
-                              for (var i = 0;
-                                  i < _.nextDepartCityBus!.length;
-                                  i++) {
-                                var differenceMinute = _.nextDepartCityBus![i]
-                                    .difference(DateTime.now())
-                                    .inMinutes;
-
-                                departRemainTime
-                                    .add(differenceMinute.toString());
-                                departArriveTime.add(DateFormat('HH:mm')
-                                    .format(_.nextDepartCityBus![i]));
-                              }
-                            } else {
-                              _.responseCityBus != null
-                                  ? cityBusArriveTime = [
-                                      _.responseCityBus!.min1,
-                                      _.responseCityBus!.min2
-                                    ]
-                                  : cityBusArriveTime = [];
-                            }
-
-                            return _.selectedStation == '해양대구본관'
-                                ? Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: _.isLoading
-                                        ? [Container()]
-                                        : [
-                                            FirstArrive(
-                                                _.nextDepartCityBus!.length > 0
-                                                    ? departRemainTime[0]
-                                                    : '없음',
-                                                _.nextDepartCityBus!.length > 0
-                                                    ? departArriveTime[0]
-                                                    : ' '),
-                                            SecondArrive(
-                                                _.nextDepartCityBus!.length > 1
-                                                    ? departRemainTime[1]
-                                                    : '없음',
-                                                _.nextDepartCityBus!.length > 1
-                                                    ? departArriveTime[1]
-                                                    : ' '),
-                                            ThirdArrive(
-                                                _.nextDepartCityBus!.length > 2
-                                                    ? departRemainTime[2]
-                                                    : '없음',
-                                                _.nextDepartCityBus!.length > 2
-                                                    ? departArriveTime[2]
-                                                    : ' '),
-                                          ],
-                                  )
-                                : Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      _.isLoading
-                                          ? SpinKitThreeBounce(
-                                              color: Colors.lightBlue,
-                                              size: SizeConfig.sizeByHeight(30),
-                                            )
-                                          : FirstArrive(
-                                              cityBusArriveTime != []
+                          SizedBox(
+                            height: SizeConfig.sizeByHeight(85),
+                          ),
+                          Container(
+                            height: SizeConfig.sizeByHeight(290),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  width: 1,
+                                  margin: EdgeInsets.only(
+                                      left: SizeConfig.sizeByHeight(45)),
+                                  height: SizeConfig.sizeByHeight(290),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                        colors: <Color>[
+                                          Color(0xFF4BA6FF).withOpacity(0),
+                                          Color(0xFF3299F3),
+                                          Color(0xFF4BA6FF).withOpacity(0),
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        stops: [0.0, 0.5, 1.0],
+                                        tileMode: TileMode.clamp),
+                                  ),
+                                ),
+                                _.selectedStation == '해양대구본관'
+                                    ? Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          FirstArrive(
+                                              _.nextDepartCityBus!.length > 0
+                                                  ? departRemainTime[0]
+                                                  : '없음',
+                                              _.nextDepartCityBus!.length > 0
+                                                  ? departArriveTime[0]
+                                                  : ' '),
+                                          SecondArrive(
+                                              _.nextDepartCityBus!.length > 1
+                                                  ? departRemainTime[1]
+                                                  : '없음',
+                                              _.nextDepartCityBus!.length > 1
+                                                  ? departArriveTime[1]
+                                                  : ' '),
+                                          ThirdArrive(
+                                              _.nextDepartCityBus!.length > 2
+                                                  ? departRemainTime[2]
+                                                  : '없음',
+                                              _.nextDepartCityBus!.length > 2
+                                                  ? departArriveTime[2]
+                                                  : ' '),
+                                        ],
+                                      )
+                                    : Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          FirstArrive(
+                                              cityBusArriveTime != [] &&
+                                                      cityBusArriveTime[0] !=
+                                                          9999
                                                   ? cityBusArriveTime[0]
                                                       .toString()
-                                                  : 'error',
-                                              cityBusArriveTime != []
+                                                  : '없음',
+                                              cityBusArriveTime != [] &&
+                                                      cityBusArriveTime[0] !=
+                                                          9999
                                                   ? DateFormat('HH:mm').format(
                                                       DateTime.now().add(Duration(
                                                           minutes:
                                                               cityBusArriveTime[
                                                                   0])))
-                                                  : 'error'),
-                                      _.isLoading
-                                          ? SpinKitThreeBounce(
-                                              color: Colors.lightBlue,
-                                              size: SizeConfig.sizeByHeight(30),
-                                            )
-                                          : SecondArrive(
-                                              cityBusArriveTime != []
+                                                  : ' '),
+                                          SecondArrive(
+                                              cityBusArriveTime != [] &&
+                                                      cityBusArriveTime[1] !=
+                                                          9999
                                                   ? cityBusArriveTime[1]
                                                       .toString()
-                                                  : 'error',
-                                              cityBusArriveTime != []
+                                                  : '없음',
+                                              cityBusArriveTime != [] &&
+                                                      cityBusArriveTime[1] !=
+                                                          9999
                                                   ? DateFormat('HH:mm').format(
                                                       DateTime.now().add(Duration(
                                                           minutes:
                                                               cityBusArriveTime[
                                                                   1])))
-                                                  : 'error'),
-                                      SizedBox(
-                                        height: 1,
+                                                  : ' '),
+                                          SizedBox(
+                                            height: 1,
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.sizeByHeight(10),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            CityBusRepository().getCityBusList();
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => CityBusListPage()),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            padding:
-                                EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
+                              ],
+                            ),
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                          SizedBox(
+                            height: SizeConfig.sizeByHeight(10),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              TextBox('버스위치보기', 12, FontWeight.w500,
-                                  Color(0xFF353B45)),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: SizeConfig.sizeByHeight(12),
-                                color: Color(0xFF353B45),
-                              )
+                              ElevatedButton(
+                                  onPressed: () {
+                                    CityBusRepository().getCityBusList();
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (context) =>
+                                              CityBusListPage()),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.transparent,
+                                    shadowColor: Colors.transparent,
+                                    padding: EdgeInsets.all(
+                                        SizeConfig.sizeByHeight(8.5)),
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      TextBox('버스위치보기', 12, FontWeight.w500,
+                                          Color(0xFF353B45)),
+                                      Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        size: SizeConfig.sizeByHeight(12),
+                                        color: Color(0xFF353B45),
+                                      )
+                                    ],
+                                  )),
                             ],
-                          )),
+                          )
+                        ],
+                      ),
+                      Positioned(
+                        top: SizeConfig.sizeByHeight(24),
+                        child: Container(
+                          width: SizeConfig.sizeByWidth(268),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GetBuilder<CityBusController>(
+                                  init: CityBusController(),
+                                  builder: (_) {
+                                    return Dropdown(
+                                      controller.stationList,
+                                      _.selectedStation,
+                                      (value) {
+                                        value == '주변정류장'
+                                            ? findNearStation()
+                                            : value == '부산역'
+                                                ? fetchStation('169100201')
+                                                : value == '영도대교'
+                                                    ? fetchStation('167850202')
+                                                    : CityBusRepository()
+                                                        .getNextDepartCityBus();
+                                        controller.setSelectedStation(value);
+                                      },
+                                      findTitle: findCityBusTitle,
+                                      findSubTitle: findCityBusSubTitle,
+                                    );
+                                  }),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
-                  )
-                ],
-              ),
-              Positioned(
-                top: SizeConfig.sizeByHeight(24),
-                child: Container(
-                  width: SizeConfig.sizeByWidth(268),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GetBuilder<CityBusController>(
-                          init: CityBusController(),
-                          builder: (_) {
-                            return Dropdown(
-                              controller.stationList,
-                              _.selectedStation,
-                              (value) {
-                                value == '주변정류장'
-                                    ? findNearStation()
-                                    : value == '부산역'
-                                        ? fetchStation('169100201')
-                                        : value == '영도대교'
-                                            ? fetchStation('167850202')
-                                            : CityBusRepository()
-                                                .getNextDepartCityBus();
-                                controller.setSelectedStation(value);
-                              },
-                              findTitle: findCityBusTitle,
-                              findSubTitle: findCityBusSubTitle,
-                            );
-                          }),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          )),
+                  );
+          },
+        ),
+      ),
     );
   }
 }

@@ -46,7 +46,7 @@ class CommuterBus extends GetView<CommuterBusController> {
                           child: Text(
                             '버스 선택',
                             style: TextStyle(
-                              color: Color(0xff005A9E),
+                              color: Color(0xFF0081FF),
                               fontSize: SizeConfig.sizeByHeight(10),
                             ),
                           ),
