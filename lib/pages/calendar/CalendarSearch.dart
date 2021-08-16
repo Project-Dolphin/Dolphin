@@ -19,6 +19,7 @@ class CalendarSearch extends StatefulWidget {
 
 class _CalendarSearchState extends State<CalendarSearch> {
   TextEditingController controller = new TextEditingController();
+  FocusNode _focusNode = FocusNode();
 
   Future<CalendarData> getCalendarDetails() async {
     try {
@@ -57,6 +58,11 @@ class _CalendarSearchState extends State<CalendarSearch> {
   void initState() {
     super.initState();
     getCalendarDetails();
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        FocusScope.of(context).requestFocus(_focusNode);
+      }
+    });
   }
 
   @override
@@ -84,9 +90,10 @@ class _CalendarSearchState extends State<CalendarSearch> {
               color: Color.fromRGBO(212, 212, 212, 0.4),
             ),
             child: new ListTile(
-              title: new TextField(
+              title: new TextFormField(
                 autofocus: true,
                 controller: controller,
+                focusNode: _focusNode,
                 decoration: new InputDecoration(
                     hintText: '검색', border: InputBorder.none),
                 onChanged: onSearchTextChanged,
@@ -108,7 +115,9 @@ class _CalendarSearchState extends State<CalendarSearch> {
                   ? new ListView.builder(
                       itemCount: _searchResult.length,
                       itemBuilder: (context, i) {
-                        return new Card(color: Colors.transparent,
+                        return new Card(
+                          color: Colors.transparent,
+                          elevation: 0,
                           child: new ListTile(
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,9 +151,10 @@ class _CalendarSearchState extends State<CalendarSearch> {
                       },
                     )
                   : new ListView.builder(
-                      itemCount: _calendarDetails.length,
+                      itemCount: 0,
                       itemBuilder: (context, index) {
                         return new Card(
+                          elevation: 0,
                           color: Colors.transparent,
                           child: new ListTile(),
                           margin: const EdgeInsets.all(0.0),
