@@ -50,7 +50,7 @@ class BusController extends GetxController {
 
   String getDate() {
     var now = new DateTime.now();
-    var formatter = new DateFormat('M월 d일 E HH:mm');
+    var formatter = new DateFormat('M.d E HH:mm');
     return weekdayToKor(formatter.format(now));
   }
 

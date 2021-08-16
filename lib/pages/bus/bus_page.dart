@@ -18,16 +18,22 @@ class BusPage extends GetView<BusController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GetBuilder<BusController>(
-                builder: (_) => OnelineTitle(
-                  name: _.name,
-                  description: _.formattedDate,
-                  stat: _.stat,
-                  fontsize1: SizeConfig.sizeByHeight(26),
-                  fontsize2: SizeConfig.sizeByHeight(14),
-                  fontsize3: SizeConfig.sizeByHeight(12),
-                  fontweight1: FontWeight.w700,
-                  fontweight2: FontWeight.w400,
-                  fontweight3: FontWeight.w400,
+                builder: (_) => Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.sizeByHeight(20),
+                    vertical: SizeConfig.sizeByHeight(14),
+                  ),
+                  child: OnelineTitle(
+                    name: _.name,
+                    description: _.formattedDate,
+                    stat: _.stat,
+                    fontsize1: SizeConfig.sizeByHeight(26),
+                    fontsize2: SizeConfig.sizeByHeight(14),
+                    fontsize3: SizeConfig.sizeByHeight(12),
+                    fontweight1: FontWeight.w700,
+                    fontweight2: FontWeight.w400,
+                    fontweight3: FontWeight.w400,
+                  ),
                 ),
               ),
               Carousel(

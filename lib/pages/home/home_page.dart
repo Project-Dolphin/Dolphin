@@ -31,14 +31,14 @@ class HomePage extends GetView<HomeController> {
           child: Container(
             height: SizeConfig.sizeByHeight(675),
             margin:
-                EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(14)),
+                EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(20)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 GetBuilder<HomeController>(
                     builder: (_) => Container(
-                          padding: EdgeInsets.only(
-                              bottom: SizeConfig.sizeByHeight(12)),
+                          padding: EdgeInsets.symmetric(
+                              vertical: SizeConfig.sizeByHeight(14)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
