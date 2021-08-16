@@ -13,6 +13,7 @@ import 'package:oceanview/pages/bus/cityBus/cityBusListPage.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
 
 import 'package:intl/intl.dart';
+import 'package:oceanview/services/dailyAtTimeNotification.dart';
 
 class CityBus extends GetView<CityBusController> {
   findCityBusTitle(item) {
@@ -171,8 +172,6 @@ class CityBus extends GetView<CityBusController> {
                                       SizedBox(
                                         height: 1,
                                       ),
-
-                                      // ThirdArrive(null, "error"),
                                     ],
                                   );
                           },
@@ -255,6 +254,21 @@ class CityBus extends GetView<CityBusController> {
   }
 }
 
+handleBusNotification(remainTime) async {
+  if (remainTime != null && remainTime != '없음') {
+    await dailyAtTimeNotification(
+        '버스 도착 알림', '버스 도착 3분 전이에요.', (int.parse(remainTime) - 3));
+    Get.dialog(
+        AlertDialog(
+          contentPadding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(20),
+              SizeConfig.sizeByHeight(20), SizeConfig.sizeByHeight(20), 0),
+          content: dialog,
+        ),
+        transitionDuration: Duration(milliseconds: 200),
+        name: '190버스알림');
+  }
+}
+
 class FirstArrive extends StatelessWidget {
   const FirstArrive(this.remainTime, this.arriveTime, {Key? key})
       : super(key: key);
@@ -291,7 +305,7 @@ class FirstArrive extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       remainTime == '없음'
-                          ? TextBox('다음 차가 없습니다.', 18, FontWeight.w700,
+                          ? TextBox('운행 정보가 없어요', 18, FontWeight.w500,
                               Color(0xFF353B45))
                           : TextBox(
                               '약 ${remainTime != null ? remainTime : '300'}분',
@@ -336,21 +350,7 @@ class SecondArrive extends StatelessWidget {
                     primary: Colors.transparent,
                     shadowColor: Colors.transparent,
                   ),
-                  onPressed: () async {
-                    // await dailyAtTimeNotification('버스 도착 알림', '버스 도착 3분 전이에요.',
-                    //     (int.parse(remainTime!) - 3));
-                    Get.dialog(
-                        AlertDialog(
-                          contentPadding: EdgeInsets.fromLTRB(
-                              SizeConfig.sizeByHeight(20),
-                              SizeConfig.sizeByHeight(20),
-                              SizeConfig.sizeByHeight(20),
-                              0),
-                          content: dialog,
-                        ),
-                        transitionDuration: Duration(milliseconds: 200),
-                        name: '버스알림');
-                  },
+                  onPressed: () => handleBusNotification(remainTime),
                   child: Image.asset(
                     'assets/images/busPage/notiIcon_next.png',
                     width: SizeConfig.sizeByHeight(70),
@@ -368,7 +368,7 @@ class SecondArrive extends StatelessWidget {
               children: [
                 remainTime == '없음'
                     ? TextBox(
-                        '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF353B45))
+                        '운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
                     : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
                         22, FontWeight.w700, Color(0xFF353B45)),
                 arriveTime != ' '
@@ -405,10 +405,17 @@ class ThirdArrive extends StatelessWidget {
             Container(
               width: SizeConfig.sizeByHeight(90),
               child: Center(
-                child: Image.asset(
-                  'assets/images/busPage/notiIcon_later.png',
-                  width: SizeConfig.sizeByHeight(40),
-                  height: SizeConfig.sizeByHeight(40),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                  ),
+                  onPressed: () => handleBusNotification(remainTime),
+                  child: Image.asset(
+                    'assets/images/busPage/notiIcon_later.png',
+                    width: SizeConfig.sizeByHeight(40),
+                    height: SizeConfig.sizeByHeight(40),
+                  ),
                 ),
               ),
             ),
@@ -421,7 +428,7 @@ class ThirdArrive extends StatelessWidget {
               children: [
                 remainTime == '없음'
                     ? TextBox(
-                        '다음 차가 없습니다.', 18, FontWeight.w700, Color(0xFF353B45))
+                        '운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
                     : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
                         18, FontWeight.w500, Color(0xFF353B45)),
                 arriveTime != ' '

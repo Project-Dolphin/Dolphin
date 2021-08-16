@@ -9,6 +9,7 @@ class ShuttleBusController extends GetxController {
   ];
   String selectedStation = '학교종점 (아치나루터)';
   List<dynamic> nextShuttle = [];
+  List<dynamic> previousShuttle = [];
   List<dynamic> shuttleList = [];
 
   @override
@@ -28,11 +29,12 @@ class ShuttleBusController extends GetxController {
 
   void setNextShuttle(response) {
     var now = DateTime.now();
+    List<DateTime> newPreviousShuttle = [];
     List<DateTime> newNextShuttle = [];
-    for (var i = 0; i < response.length; i++) {
-      if (response[i]['type'] != 'none') {
-        var hour = int.parse(response[i]['time'].substring(0, 2));
-        var minute = int.parse(response[i]['time'].substring(2, 4));
+    for (var i = 0; i < response[1].length; i++) {
+      if (response[1][i]['type'] != 'none') {
+        var hour = int.parse(response[1][i]['time'].substring(0, 2));
+        var minute = int.parse(response[1][i]['time'].substring(2, 4));
         now.hour > hour
             ? newNextShuttle
                 .add(DateTime(now.year, now.month, now.day + 1, hour, minute))
@@ -40,7 +42,14 @@ class ShuttleBusController extends GetxController {
                 .add(DateTime(now.year, now.month, now.day, hour, minute));
       }
     }
+    if (response[0] != null && response[0]['type'] != 'none') {
+      var hour = int.parse(response[0]['time'].substring(0, 2));
+      var minute = int.parse(response[0]['time'].substring(2, 4));
+      newPreviousShuttle
+          .add(DateTime(now.year, now.month, now.day, hour, minute));
+    }
     nextShuttle = newNextShuttle;
+    previousShuttle = newPreviousShuttle;
 
     update();
   }

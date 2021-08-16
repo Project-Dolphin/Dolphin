@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
+import 'package:oceanview/common/dialog/dialog.dart';
 import 'package:oceanview/common/dropdown/dropdownButton.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/bus/api/shuttleBusRepository.dart';
 import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
+import 'package:oceanview/services/dailyAtTimeNotification.dart';
 import 'package:oceanview/services/urlUtils.dart';
 
 class ShuttleBus extends GetView<ShuttleBusController> {
@@ -23,9 +25,14 @@ class ShuttleBus extends GetView<ShuttleBusController> {
           var remainTime = [];
           var arriveTime = [];
           var hariRemainTime = [];
+          var previousTime = _.previousShuttle != []
+              ? (_.previousShuttle[0].difference(DateTime.now()).inMinutes * -1)
+                  .toString()
+              : '';
 
           for (var i = 0; i < _.nextShuttle.length; i++) {
-            var differenceMinute = _.nextShuttle[i].difference(DateTime.now());
+            var differenceMinute =
+                _.nextShuttle[i].difference(DateTime.now()).inMinutes;
             hariRemainTime.add((differenceMinute + 6).toString());
             remainTime.add(differenceMinute.toString());
             arriveTime.add(DateFormat('HH:mm').format(_.nextShuttle[i]));
@@ -60,16 +67,20 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                           padding:
                               EdgeInsets.only(top: SizeConfig.sizeByHeight(12)),
                           child: Column(children: [
-                            _.selectedStation == '학교종점 (아치나루터)'
-                                ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
-                                    FontWeight.w400, Color(0xFF353B45))
-                                : hariRemainTime.length > 0 &&
-                                        int.parse(hariRemainTime[0]) <= 6
-                                    ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
-                                        FontWeight.w400, Color(0xFF353B45))
-                                    : SizedBox(
-                                        height: SizeConfig.sizeByHeight(14),
-                                      ),
+                            previousTime == ''
+                                ? SizedBox(
+                                    height: SizeConfig.sizeByHeight(14),
+                                  )
+                                : _.selectedStation == '학교종점 (아치나루터)'
+                                    ? TextBox('이전차는 약 $previousTime분전에 지나갔어요',
+                                        12, FontWeight.w400, Color(0xFF353B45))
+                                    : hariRemainTime.length > 0 &&
+                                            int.parse(hariRemainTime[0]) <= 6
+                                        ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
+                                            FontWeight.w400, Color(0xFF353B45))
+                                        : SizedBox(
+                                            height: SizeConfig.sizeByHeight(14),
+                                          ),
                             SizedBox(
                               height: SizeConfig.sizeByHeight(12),
                             ),
@@ -104,21 +115,21 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                             ? [
                                                 FirstArrive(
                                                     _.nextShuttle.length > 0
-                                                        ? remainTime[0]
+                                                        ? '${remainTime[0]}분'
                                                         : '없음',
                                                     _.nextShuttle.length > 0
                                                         ? arriveTime[0]
                                                         : ' '),
                                                 SecondArrive(
                                                     _.nextShuttle.length > 1
-                                                        ? remainTime[1]
+                                                        ? '${remainTime[1]}분'
                                                         : '없음',
                                                     _.nextShuttle.length > 1
                                                         ? arriveTime[1]
                                                         : ' '),
                                                 ThirdArrive(
                                                     _.nextShuttle.length > 2
-                                                        ? remainTime[2]
+                                                        ? '${remainTime[2]}분'
                                                         : '없음',
                                                     _.nextShuttle.length > 2
                                                         ? arriveTime[2]
@@ -227,6 +238,21 @@ class ShuttleBus extends GetView<ShuttleBusController> {
 //   }
 // }
 
+handleBusNotification(remainTime) async {
+  if (remainTime != null && remainTime != '없음') {
+    await dailyAtTimeNotification(
+        '버스 도착 알림', '버스 도착 3분 전이에요.', (int.parse(remainTime) - 3));
+    Get.dialog(
+        AlertDialog(
+          contentPadding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(20),
+              SizeConfig.sizeByHeight(20), SizeConfig.sizeByHeight(20), 0),
+          content: dialog,
+        ),
+        transitionDuration: Duration(milliseconds: 200),
+        name: '셔틀버스알림');
+  }
+}
+
 class FirstArrive extends StatelessWidget {
   const FirstArrive(this.remainTime, this.arriveTime, {Key? key})
       : super(key: key);
@@ -257,8 +283,7 @@ class FirstArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 30,
-                    FontWeight.w700, Color(0xFF353B45)),
+                : TextBox(remainTime!, 30, FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [
@@ -294,10 +319,17 @@ class SecondArrive extends StatelessWidget {
         Container(
           width: SizeConfig.sizeByHeight(90),
           child: Center(
-            child: Image.asset(
-              'assets/images/busPage/notiIcon_next.png',
-              width: SizeConfig.sizeByHeight(60),
-              height: SizeConfig.sizeByHeight(60),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.transparent,
+                shadowColor: Colors.transparent,
+              ),
+              onPressed: () => handleBusNotification(remainTime),
+              child: Image.asset(
+                'assets/images/busPage/notiIcon_next.png',
+                width: SizeConfig.sizeByHeight(60),
+                height: SizeConfig.sizeByHeight(60),
+              ),
             ),
           ),
         ),
@@ -310,8 +342,7 @@ class SecondArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 24,
-                    FontWeight.w700, Color(0xFF353B45)),
+                : TextBox(remainTime!, 24, FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? TextBox(
                     '$arriveTime',
@@ -343,10 +374,17 @@ class ThirdArrive extends StatelessWidget {
         Container(
           width: SizeConfig.sizeByHeight(90),
           child: Center(
-            child: Image.asset(
-              'assets/images/busPage/notiIcon_later.png',
-              width: SizeConfig.sizeByHeight(30),
-              height: SizeConfig.sizeByHeight(30),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.transparent,
+                shadowColor: Colors.transparent,
+              ),
+              onPressed: () => handleBusNotification(remainTime),
+              child: Image.asset(
+                'assets/images/busPage/notiIcon_later.png',
+                width: SizeConfig.sizeByHeight(40),
+                height: SizeConfig.sizeByHeight(40),
+              ),
             ),
           ),
         ),
@@ -359,8 +397,7 @@ class ThirdArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox('약 ${remainTime != null ? remainTime : '300'}분', 18,
-                    FontWeight.w500, Color(0xFF353B45)),
+                : TextBox(remainTime!, 18, FontWeight.w500, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [
