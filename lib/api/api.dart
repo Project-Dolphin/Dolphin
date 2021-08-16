@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 const BASE_URL = 'pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com';
 const PATH = const {
   'CALENDAR': '/calendar',
+  'LATEST_CALENDAR': '/calendar/latest',
   'NOTICES': '/notices',
   'BUS_190': '/businfo',
   'SHUTTLE_NEXT': '/shuttle/next',
@@ -17,7 +18,6 @@ const PATH = const {
 class FetchAPI {
   Future fetchData(path, {queryParameters}) async {
     var url = Uri.https(BASE_URL, '/dev$path', queryParameters);
-    print(url);
     var response = await http.get(url);
     return response;
   }
@@ -44,6 +44,16 @@ class FetchAPI {
 
   Future fetchShuttleList() async {
     var response = await fetchData(PATH['SHUTTLE_LIST']);
+    return response;
+  }
+
+  Future fetchSchoolNotice() async {
+    var response = await fetchData(PATH['NOTICES']);
+    return response;
+  }
+
+  Future fetchLatestCaelndar() async {
+    var response = await fetchData(PATH['LATEST_CALENDAR']);
     return response;
   }
 }

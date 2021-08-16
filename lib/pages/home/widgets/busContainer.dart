@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/common/loading/loading.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
@@ -49,10 +50,7 @@ class BusContainer extends GetView<CityBusController> {
                       FontWeight.w700,
                       Color(0xFF0081FF),
                     )
-                  : SpinKitThreeBounce(
-                      size: SizeConfig.sizeByHeight(16),
-                      color: Color(0xFF0081FF),
-                    );
+                  : Loading();
             })
       ],
     );

@@ -10,8 +10,10 @@ class ShuttleBusRepository {
       final jsonResult =
           convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
       final jsonNextShuttle = jsonResult['data'];
+      final previousShuttle = jsonNextShuttle['previous'] ?? {'type': 'none'};
+      final nextShuttle = jsonNextShuttle['next'] ?? [];
 
-      return jsonNextShuttle;
+      return [previousShuttle, nextShuttle];
     } else {
       print('error ${response.statusCode}');
       return [];

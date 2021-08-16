@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:oceanview/common/loading/loading.dart';
 import 'package:oceanview/common/shape/circle.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
@@ -23,11 +24,7 @@ class NoticeContainer extends StatelessWidget {
             init: HomeController(),
             builder: (_) {
               return _.noticeList.length == 0
-                  ? Container(
-                      child: SpinKitCircle(
-                        color: Colors.lightBlue,
-                      ),
-                    )
+                  ? Loading()
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

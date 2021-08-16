@@ -39,7 +39,7 @@ class SchoolBus extends StatelessWidget {
 
   Widget renderSchoolBus(String title, String station) {
     return Container(
-      width: SizeConfig.sizeByWidth(260),
+      width: SizeConfig.sizeByWidth(240),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,22 +62,22 @@ class SchoolBus extends StatelessWidget {
             children: [
               Center(
                 child: Container(
-                  margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(5)),
-                  width: SizeConfig.sizeByWidth(180),
+                  margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(2.5)),
+                  width: SizeConfig.sizeByWidth(200),
                   height: 1,
                   color: Color(0xFF4BA6FF),
                 ),
               ),
               Center(
                 child: Container(
-                  width: SizeConfig.sizeByWidth(200),
+                  width: SizeConfig.sizeByWidth(220),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      renderCirleWithShadow(11),
-                      renderCirleWithShadow(11),
-                      renderCirleWithShadow(11),
+                      renderCirleWithShadow(6),
+                      renderCirleWithShadow(6),
+                      renderCirleWithShadow(6),
                     ],
                   ),
                 ),
@@ -85,18 +85,22 @@ class SchoolBus extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: SizeConfig.sizeByHeight(3),
+            height: SizeConfig.sizeByHeight(5),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextBox('09:00', 14, FontWeight.w700, Color(0xFF353B45)),
-              TextBox('09:25', 14, FontWeight.w700, Color(0xFF353B45)),
-              TextBox('09:50', 14, FontWeight.w700, Color(0xFF353B45)),
-            ],
+          Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(3)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextBox('09:00', 14, FontWeight.w700, Color(0xFF353B45)),
+                TextBox('09:25', 14, FontWeight.w700, Color(0xFF353B45)),
+                TextBox('09:50', 14, FontWeight.w700, Color(0xFF353B45)),
+              ],
+            ),
           ),
           SizedBox(
-            height: SizeConfig.sizeByHeight(5),
+            height: SizeConfig.sizeByHeight(8),
           ),
           Container(
               width: SizeConfig.sizeByWidth(140),
@@ -104,6 +108,7 @@ class SchoolBus extends StatelessWidget {
                 station,
                 style: TextStyle(
                     color: Color(0xFF353B45),
+                    height: 1.4,
                     fontWeight: FontWeight.w400,
                     fontSize: SizeConfig.sizeByHeight(14)),
                 textAlign: TextAlign.center,

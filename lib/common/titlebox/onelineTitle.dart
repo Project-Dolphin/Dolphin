@@ -25,46 +25,31 @@ class OnelineTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(24),
-              SizeConfig.sizeByHeight(24), 0, SizeConfig.sizeByHeight(15)),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+      width: SizeConfig.blockSizeHorizontal * 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          MainTitle(
+            title: name,
+            fontsize: fontsize1,
+            fontweight: fontweight1,
+            isGradient: isGradient,
+          ),
+          Row(
             children: [
-              MainTitle(
-                title: name,
-                fontsize: fontsize1,
-                fontweight: fontweight1,
-                isGradient: isGradient,
+              SubText(
+                description: description,
+                fontsize: fontsize2,
+                fontweight: fontweight2,
               ),
-              Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SubText(
-                        description: description,
-                        fontsize: fontsize2,
-                        fontweight: fontweight2,
-                      ),
-                      StatusContainer(
-                        stat: stat,
-                        fontsize: fontsize3,
-                        fontweight: fontweight3,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: SizeConfig.sizeByHeight(
-                        (fontsize1! - fontsize2!) * 0.2),
-                  )
-                ],
+              StatusContainer(
+                stat: stat,
+                fontsize: fontsize3,
+                fontweight: fontweight3,
               ),
             ],
-          ),
-        ),
+          )
+        ],
       ),
     );
   }
