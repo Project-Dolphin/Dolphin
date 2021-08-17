@@ -6,12 +6,11 @@ import 'package:get/get.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/calendar/CalendarData.dart';
+import 'package:oceanview/common/titlebox/iconSet.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
-import 'package:oceanview/common/titlebox/iconSet.dart';
-import 'package:oceanview/pages/calendar/CalendarSearch.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/sizeConfig.dart';
@@ -19,9 +18,7 @@ import 'package:oceanview/common/sizeConfig.dart';
 int _current = kToday.month - 2;
 
 class CalendarPage extends GetView<CalendarController1> {
-  var iconColor = Color(0xFF000000);
   final name = '학사일정';
-  bool _hasBeenPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,55 +26,7 @@ class CalendarPage extends GetView<CalendarController1> {
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          Container(
-            child: Padding(
-              padding: EdgeInsets.all(SizeConfig.sizeByHeight(19)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFFFFFFF),
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
-                      ),
-                      child: Icon(
-                        Icons.search,
-                        size: SizeConfig.sizeByHeight(27.5),
-                        color: iconColor,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CalendarSearch()),
-                        );
-                      },
-                    ),
-                  ),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFFFFFFF),
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
-                      ),
-                      child: Icon(
-                        Icons.notifications_none,
-                        size: SizeConfig.sizeByHeight(27.5),
-                        color: iconColor,
-                      ),
-                      onPressed: () {
-                        showAlertDialog(context);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          CalendarIcon(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -95,32 +44,6 @@ class CalendarPage extends GetView<CalendarController1> {
           Calendar(),
         ],
       ),
-    );
-  }
-
-  showAlertDialog(BuildContext context) {
-
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text("OK"),
-      onPressed: () { },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("My title"),
-      content: Text("This is my message."),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
 
