@@ -31,11 +31,11 @@ class _CarouselState extends State<Carousel> {
               child: CarouselSlider(
                 items: widget.pageList!
                     .map((item) => Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
-                          child: Column(
-                            children: [item],
-                          ),
-                        ))
+                  margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
+                  child: Column(
+                    children: [item],
+                  ),
+                ))
                     .toList(),
                 carouselController: _controller,
                 options: CarouselOptions(
@@ -45,7 +45,7 @@ class _CarouselState extends State<Carousel> {
                   height: SizeConfig.blockSizeVertical * 100,
                   onPageChanged: (index, reason) {
                     setState(
-                      () {
+                          () {
                         _current = index;
                       },
                     );
@@ -55,76 +55,76 @@ class _CarouselState extends State<Carousel> {
             ),
             widget.bar == true
                 ? Positioned(
-                    bottom: 0,
-                    child: Container(
-                      width: SizeConfig.blockSizeHorizontal * 90,
-                      height: SizeConfig.sizeByHeight(46),
-                      margin: EdgeInsets.all(SizeConfig.sizeByWidth(20)),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              SizeConfig.sizeByHeight(46)),
-                          color: Colors.white),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: widget.pageList!.asMap().entries.map(
-                          (entry) {
-                            return GestureDetector(
-                              onTap: () => _controller.animateToPage(entry.key),
-                              child: Container(
-                                width: (SizeConfig.blockSizeHorizontal * 90) /
-                                    widget.pageList!.length,
-                                decoration: BoxDecoration(
-                                    // color:
-                                    //     (Theme.of(context).brightness == Brightness.dark
-                                    //             ? Colors.white
-                                    //             : Colors.blue)
-                                    //         .withOpacity(_current == entry.key ? 0.8 : 0),
-                                    gradient: _current == entry.key
-                                        ? LinearGradient(
-                                            colors: <Color>[
-                                              Color(0xFF3199FF),
-                                              Color(0xFF0081FF),
-                                            ],
-                                            begin: Alignment.bottomLeft,
-                                            end: Alignment.topRight,
-                                            stops: [0.0, 1.0],
-                                            tileMode: TileMode.clamp)
-                                        : null,
-                                    boxShadow: _current == entry.key
-                                        ? [
-                                            BoxShadow(
-                                                color: Color(0xFFB4D5F1),
-                                                offset: Offset(0, 3),
-                                                blurRadius: 5,
-                                                spreadRadius: 2)
-                                          ]
-                                        : null,
-                                    borderRadius: BorderRadius.circular(
-                                        _current == entry.key
-                                            ? SizeConfig.sizeByHeight(46)
-                                            : 0)),
-                                child: Center(
-                                  child: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      child: Text(
-                                        widget.titleList![entry.key],
-                                        style: TextStyle(
-                                            color: _current == entry.key
-                                                ? Colors.white
-                                                : Color(0xFF919191),
-                                            fontSize:
-                                                SizeConfig.sizeByWidth(16),
-                                            fontWeight: FontWeight.w700),
-                                      )),
-                                ),
-                              ),
-                            );
-                          },
-                        ).toList(),
-                      ),
-                    ),
-                  )
+              bottom: 0,
+              child: Container(
+                width: SizeConfig.blockSizeHorizontal * 90,
+                height: SizeConfig.sizeByHeight(46),
+                margin: EdgeInsets.all(SizeConfig.sizeByWidth(20)),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                        SizeConfig.sizeByHeight(46)),
+                    color: Colors.white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: widget.pageList!.asMap().entries.map(
+                        (entry) {
+                      return GestureDetector(
+                        onTap: () => _controller.animateToPage(entry.key),
+                        child: Container(
+                          width: (SizeConfig.blockSizeHorizontal * 90) /
+                              widget.pageList!.length,
+                          decoration: BoxDecoration(
+                            // color:
+                            //     (Theme.of(context).brightness == Brightness.dark
+                            //             ? Colors.white
+                            //             : Colors.blue)
+                            //         .withOpacity(_current == entry.key ? 0.8 : 0),
+                              gradient: _current == entry.key
+                                  ? LinearGradient(
+                                  colors: <Color>[
+                                    Color(0xFF3199FF),
+                                    Color(0xFF0081FF),
+                                  ],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  stops: [0.0, 1.0],
+                                  tileMode: TileMode.clamp)
+                                  : null,
+                              boxShadow: _current == entry.key
+                              ? [
+                              BoxShadow(
+                                  color: Color(0xFFB4D5F1),
+                                  offset: Offset(0, 3),
+                                  blurRadius: 5,
+                                  spreadRadius: 2)
+                              ]
+                                  : null,
+                              borderRadius: BorderRadius.circular(
+                                  _current == entry.key
+                                      ? SizeConfig.sizeByHeight(46)
+                                      : 0)),
+                          child: Center(
+                            child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  widget.titleList![entry.key],
+                                  style: TextStyle(
+                                      color: _current == entry.key
+                                          ? Colors.white
+                                          : Color(0xFF919191),
+                                      fontSize:
+                                      SizeConfig.sizeByWidth(16),
+                                      fontWeight: FontWeight.w700),
+                                )),
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                ),
+              ),
+            )
                 : Container(),
           ],
         ),
