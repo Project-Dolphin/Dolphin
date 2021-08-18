@@ -9,14 +9,18 @@ import 'package:get/get.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/pages/home/latestEvent/eventRepository.dart';
 import 'package:oceanview/pages/home/notice/noticeRepository.dart';
-import 'package:oceanview/pages/home/widgets/EventsContainer.dart';
+import 'package:oceanview/pages/home/weather/weatherRepository.dart';
+import 'package:oceanview/pages/home/widgets/dietContainer.dart';
+import 'package:oceanview/pages/home/widgets/eventsContainer.dart';
 import 'package:oceanview/pages/home/widgets/busContainer.dart';
 import 'package:oceanview/pages/home/widgets/noticeContainer.dart';
+import 'package:oceanview/pages/home/widgets/weatherContainer.dart';
 
 Future<Null> onRefresh() async {
   await CityBusRepository().getNextDepartCityBus();
   await NoticeRepository().getNotice();
   await EventRespository().getLatestEventList();
+  await WeatherRepository().getCurrentWeather();
 }
 
 class HomePage extends GetView<HomeController> {
@@ -86,7 +90,7 @@ class HomePage extends GetView<HomeController> {
                                   stops: [0.0, 1.0],
                                   tileMode: TileMode.clamp),
                             ),
-                            child: Container(),
+                            child: WeatherContainer(),
                           )),
                       Expanded(flex: 12, child: Container()),
                       Expanded(
@@ -103,7 +107,11 @@ class HomePage extends GetView<HomeController> {
                                     ),
                                   )),
                               Expanded(flex: 14, child: Container()),
-                              Expanded(flex: 163, child: GlassMorphism())
+                              Expanded(
+                                  flex: 163,
+                                  child: GlassMorphism(
+                                    widget: DietContainer(),
+                                  ))
                             ],
                           )),
                       Expanded(flex: 12, child: Container()),

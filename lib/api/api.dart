@@ -1,6 +1,3 @@
-import 'dart:convert' as convert;
-
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 const BASE_URL = 'pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com';
@@ -13,6 +10,7 @@ const PATH = const {
   'SHUTTLE_LIST': '/shuttle/today',
   'SHUTTLE_ALL': '/timetable/shuttle',
   'DEPART_190': '/timetable/190',
+  'WEATHER': '/weather/now',
 };
 
 class FetchAPI {
@@ -54,6 +52,11 @@ class FetchAPI {
 
   Future fetchLatestCaelndar() async {
     var response = await fetchData(PATH['LATEST_CALENDAR']);
+    return response;
+  }
+
+  Future fetchWeather() async {
+    var response = await fetchData(PATH['WEATHER']);
     return response;
   }
 }
