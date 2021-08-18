@@ -2,398 +2,211 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
-
-import 'package:oceanview/common/carousel/carousel.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:oceanview/common/sizeConfig.dart';
-import 'package:oceanview/common/container/glassMorphism.dart';
+import 'dailyMenu_contents.dart';
+import 'dailyMenu_header.dart';
+import 'dailyMenu_menu.dart';
 
 var time = ["11:30 ~ 13:30", "17:00 ~ 18:30", ""];
+var timeCafeteria = [];
+var timeEmployer = [];
+var timeDorm = [];
+var timeDormWeekend = [];
+int _current = 0;
+final CarouselController _controller = CarouselController();
+final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
+final List<dynamic> testPageList = [
+  MealCard(),
+  MealCard(),
+  MealCard(),
+  MealCard(),
+  MealCard(),
+];
 
 class DailyMenuPage extends GetView<DailyMenuController> {
-  final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
-  final List<dynamic> testPageList = [
-    MealCard(),
-    MealCard(),
-    MealCard(),
-    MealCard(),
-    MealCard(),
-  ];
   final name = '식단', subname = '0층 식단', stat = '운영중', more = '이번주 식단 보기';
   var index = 0;
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        new SliverAppBar(
-          backgroundColor: Colors.transparent,
-          forceElevated: true,
-          floating: true,
-          elevation: 0.0,
-          pinned: true,
-          expandedHeight: 110.0,
-          flexibleSpace: FlexibleSpaceBar(
-            title: Header(
-              maxHeight: 90,
-              minHeight: 60,
-            ),
-            background: Padding(
-              padding: EdgeInsets.only(
-                left: SizeConfig.sizeByWidth(22),
-                right: SizeConfig.sizeByWidth(25),
-                top: SizeConfig.sizeByHeight(65),
+    return Stack(
+      children: [
+        CustomScrollView(
+          slivers: <Widget>[
+            new SliverAppBar(
+              backgroundColor: Colors.transparent,
+              forceElevated: true,
+              floating: true,
+              elevation: 0.0,
+              pinned: true,
+              expandedHeight: 110.0,
+              flexibleSpace: FlexibleSpaceBar(
+                title: Header(
+                  maxHeight: 90,
+                  minHeight: 60,
+                ),
+                background: Padding(
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.sizeByWidth(22),
+                    right: SizeConfig.sizeByWidth(25),
+                    top: SizeConfig.sizeByHeight(65),
+                  ),
+                  child: BottomTitle(
+                    subname: titleList[index] + " 식단",
+                    stat: stat,
+                    more: more,
+                    fontsize2: SizeConfig.sizeByHeight(20),
+                    fontsize3: SizeConfig.sizeByHeight(12),
+                    fontweight2: FontWeight.w500,
+                    fontweight3: FontWeight.w400,
+                  ),
+                ),
               ),
-              child: BottomTitle(
-                subname: titleList[index] + " 식단",
-                stat: stat,
-                more: more,
-                fontsize2: SizeConfig.sizeByHeight(20),
-                fontsize3: SizeConfig.sizeByHeight(12),
-                fontweight2: FontWeight.w500,
-                fontweight3: FontWeight.w400,
+            ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              fillOverscroll: true,
+              child: Padding(
+                padding: EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
+                child:
+                MenuCarousel(),
               ),
             ),
-          ),
+          ],
         ),
-        SliverFillRemaining(
-          child: Padding(
-            padding: EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
-            child: Carousel(
-                pageList: testPageList, titleList: titleList, bar: true),
-          ),
-        ),
+        MenuCarouselController(),
       ],
     );
   }
 }
 
-class MealCard extends StatefulWidget {
+class MenuCarouselController extends StatefulWidget {
   @override
-  _MealCard createState() => _MealCard();
+  _MenuStateButton createState() => _MenuStateButton();
 }
 
-class _MealCard extends State<MealCard> {
-  List mealTime = time;
-  var mealMenu = [
-    "잡곡밥",
-    "양배추샐러드",
-    "배추김치",
-    "제육볶음",
-    "순대찜",
-    "깍두기",
-    "야쿠르트",
-    "아이스크림"
-  ];
-
+class _MenuStateButton extends State<MenuCarouselController> {
   @override
   Widget build(BuildContext context) {
-    return GlassMorphism(
-      width: SizeConfig.sizeByWidth(310),
-      height: SizeConfig.screenHeight,
-      widget: Container(
-        margin: EdgeInsets.all(
-          SizeConfig.sizeByWidth(12.0),
+    return Positioned(
+      bottom: 0,
+      child: Container(
+        width: SizeConfig.blockSizeHorizontal * 90,
+        height: SizeConfig.sizeByHeight(46),
+        margin: EdgeInsets.all(SizeConfig.sizeByWidth(20)),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+                SizeConfig.sizeByHeight(46)),
+            color: Colors.white),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: testPageList.asMap().entries.map(
+                (entry) {
+              return GestureDetector(
+                onTap: () =>
+                    _controller.animateToPage(entry.key),
+                child: Container(
+                  width: (SizeConfig.blockSizeHorizontal *
+                      90) /
+                      testPageList.length,
+                  decoration: BoxDecoration(
+                      gradient: _current == entry.key
+                          ? LinearGradient(
+                          colors: <Color>[
+                            Color(0xFF3199FF),
+                            Color(0xFF0081FF),
+                          ],
+                          begin: Alignment.bottomLeft,
+                          end: Alignment.topRight,
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp)
+                          : null,
+                      boxShadow: _current == entry.key
+                      ? [
+                      BoxShadow(
+                          color: Color(0xFFB4D5F1),
+                          offset: Offset(0, 3),
+                          blurRadius: 5,
+                          spreadRadius: 2)
+                      ]
+                          : null,
+                      borderRadius: BorderRadius.circular(
+                          _current == entry.key
+                              ? SizeConfig.sizeByHeight(46)
+                              : 0)),
+                  child: Center(
+                    child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          titleList[entry.key],
+                          style: TextStyle(
+                              color: _current == entry.key
+                                  ? Colors.white
+                                  : Color(0xFF919191),
+                              fontSize:
+                              SizeConfig.sizeByWidth(
+                                  16),
+                              fontWeight: FontWeight.w700),
+                        )),
+                  ),
+                ),
+              );
+            },
+          ).toList(),
         ),
-        child: Column(
+      ),
+    );
+  }
+
+}
+
+class MenuCarousel extends StatefulWidget {
+  @override
+  _MenuState createState() => _MenuState();
+}
+
+class _MenuState extends State<MenuCarousel> {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        color: Colors.transparent,
+        child: Stack(
+          alignment: AlignmentDirectional.topCenter,
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(29.0),
-              ),
-              child: MealContentColumn(
-                mealName: "점심",
-                mealTime: mealTime[0],
-                mealMenu: mealMenu,
-                imageName: "cutlery_orange.png",
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(29.0),
-              ),
-              child: MealContentColumn(
-                mealName: "저녁",
-                mealTime: mealTime[1],
-                mealMenu: mealMenu,
-                imageName: "cutlery_red.png",
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(29.0),
-              ),
-              child: MealContentColumn(
-                mealName: "일품식",
-                mealTime: mealTime[2],
-                mealMenu: mealMenu,
-                imageName: "cutlery_purple.png",
+            Container(
+              child: CarouselSlider(
+                items: testPageList!
+                    .map((item) => Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
+                  child: Column(
+                    children: [item],
+                  ),
+                ))
+                    .toList(),
+                carouselController: _controller,
+                options: CarouselOptions(
+                  autoPlay: false,
+                  enableInfiniteScroll: false,
+                  enlargeCenterPage: false,
+                  height: SizeConfig.blockSizeVertical * 100,
+                  onPageChanged: (index, reason) {
+                    setState(
+                          () {
+                        _current = index;
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class MealContentColumn extends StatelessWidget {
-  const MealContentColumn({
-    Key? key,
-    @required this.mealName,
-    @required this.mealTime,
-    @required this.mealMenu,
-    @required this.imageName,
-  }) : super(key: key);
-
-  final mealName;
-  final mealTime;
-  final mealMenu;
-  final imageName;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                Image(
-                  width: SizeConfig.sizeByHeight(30.0),
-                  image: AssetImage('assets/images/mealPage/' + imageName),
-                ),
-                Text(
-                  mealName,
-                  style: TextStyle(
-                    fontSize: SizeConfig.sizeByHeight(16.0),
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              mealTime,
-              style: TextStyle(
-                fontSize: SizeConfig.sizeByHeight(12.0),
-              ),
-            ),
-          ],
-        ),
-        Divider(
-          color: Color(0xffE0E0E0),
-        ),
-        Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: SizeConfig.sizeByWidth(98.0),
-                    child: Text(
-                      mealMenu[0],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: SizeConfig.sizeByWidth(118.0),
-                    child: Text(
-                      mealMenu[1],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: SizeConfig.sizeByWidth(98.0),
-                    child: Text(
-                      mealMenu[2],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: SizeConfig.sizeByWidth(118.0),
-                    child: Text(
-                      mealMenu[3],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: SizeConfig.sizeByWidth(98.0),
-                    child: Text(
-                      mealMenu[4],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: SizeConfig.sizeByWidth(118.0),
-                    child: Text(
-                      mealMenu[5],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: SizeConfig.sizeByWidth(98.0),
-                    child: Text(
-                      mealMenu[6],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: SizeConfig.sizeByWidth(118.0),
-                    child: Text(
-                      mealMenu[7],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class Header extends StatelessWidget {
-  final double maxHeight;
-  final double minHeight;
-
-  const Header({Key? key, required this.maxHeight, required this.minHeight})
-      : super(key: key);
-
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final expandRatio = _calculateExpandRatio(constraints);
-        final animation = AlwaysStoppedAnimation(expandRatio);
-
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            Positioned(
-              top: 0,
-              child: ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: Tween(begin: 10.0, end: 0.0).evaluate(animation),
-                    sigmaY: Tween(begin: 10.0, end: 0.0).evaluate(animation),
-                  ),
-                  child: Container(
-                    color: Colors.transparent, //test
-                    alignment: Alignment.center,
-                    width: SizeConfig.screenWidth,
-                    height: 50,
-                  ),
-                ),
-              ), // to clip the container
-            ),
-            _buildTitle(animation),
-          ],
-        );
-      },
-    );
-  }
-
-  double _calculateExpandRatio(BoxConstraints constraints) {
-    var expandRatio =
-        (constraints.maxHeight - minHeight) / (maxHeight - minHeight);
-
-    if (expandRatio > 1.0) expandRatio = 1.0;
-    if (expandRatio < 0.0) expandRatio = 0.0;
-
-    return expandRatio;
-  }
-
-  Align _buildTitle(Animation<double> animation) {
-    return Align(
-      alignment:
-          AlignmentTween(begin: Alignment.center, end: Alignment.bottomLeft)
-              .evaluate(animation),
-      child: Container(
-          margin: EdgeInsets.only(
-            bottom: SizeConfig.sizeByHeight(14),
-            left: SizeConfig.sizeByHeight(14),
-          ),
-          child: TextBox(
-              '식단',
-              Tween<double>(
-                      begin: SizeConfig.sizeByHeight(18),
-                      end: SizeConfig.sizeByHeight(24))
-                  .evaluate(animation),
-              FontWeight.w800,
-              Color(0xFF353B45))
-          // "식단",
-          // style: TextStyle(
-          //   fontSize: Tween<double>(
-          //           begin: SizeConfig.sizeByHeight(18),
-          //           end: SizeConfig.sizeByHeight(24))
-          //       .evaluate(animation),
-          //   color: Color(0xFF353B45),
-          //   fontWeight: FontWeight.w800,
-          // ),
-
-          ),
     );
   }
 }
