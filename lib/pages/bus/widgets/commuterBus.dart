@@ -52,7 +52,7 @@ class CommuterBus extends GetView<CommuterBusController> {
                           ),
                         ),
                         SizedBox(
-                          height: SizeConfig.sizeByHeight(55),
+                          height: SizeConfig.sizeByHeight(65),
                         ),
                         setStationStatus(_.selectedBus)
                       ],

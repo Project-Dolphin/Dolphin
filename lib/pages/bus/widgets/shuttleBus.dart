@@ -20,34 +20,37 @@ class ShuttleBus extends GetView<ShuttleBusController> {
   @override
   Widget build(BuildContext context) {
     ShuttleBusRepository().getNextShuttle();
-    return GetBuilder<ShuttleBusController>(
-        init: ShuttleBusController(),
-        builder: (_) {
-          var remainTime = [];
-          var arriveTime = [];
-          var hariRemainTime = [];
-          var previousTime = _.previousShuttle.length > 0
-              ? (_.previousShuttle[0].difference(DateTime.now()).inMinutes * -1)
-                  .toString()
-              : '';
+    return GlassMorphism(
+      width: SizeConfig.sizeByWidth(300),
+      height: SizeConfig.sizeByHeight(478),
+      widget: Container(
+          margin: EdgeInsets.symmetric(
+              vertical: SizeConfig.sizeByWidth(8),
+              horizontal: SizeConfig.sizeByHeight(16)),
+          child: GetBuilder<ShuttleBusController>(
+              init: ShuttleBusController(),
+              builder: (_) {
+                var remainTime = [];
+                var arriveTime = [];
+                var hariRemainTime = [];
+                var previousTime = _.previousShuttle.length > 0
+                    ? (_.previousShuttle[0]
+                                .difference(DateTime.now())
+                                .inMinutes *
+                            -1)
+                        .toString()
+                    : '';
 
-          for (var i = 0; i < _.nextShuttle.length; i++) {
-            var differenceMinute =
-                _.nextShuttle[i].difference(DateTime.now()).inMinutes;
-            hariRemainTime.add((differenceMinute + 6).toString());
-            remainTime.add(differenceMinute.toString());
-            arriveTime.add(DateFormat('HH:mm').format(_.nextShuttle[i]));
-          }
-          return _.isLoading
-              ? Loading()
-              : GlassMorphism(
-                  width: SizeConfig.sizeByWidth(300),
-                  height: SizeConfig.sizeByHeight(478),
-                  widget: Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: SizeConfig.sizeByWidth(8),
-                          horizontal: SizeConfig.sizeByHeight(16)),
-                      child: Stack(
+                for (var i = 0; i < _.nextShuttle.length; i++) {
+                  var differenceMinute =
+                      _.nextShuttle[i].difference(DateTime.now()).inMinutes;
+                  hariRemainTime.add((differenceMinute + 6).toString());
+                  remainTime.add(differenceMinute.toString());
+                  arriveTime.add(DateFormat('HH:mm').format(_.nextShuttle[i]));
+                }
+                return _.isLoading
+                    ? Loading()
+                    : Stack(
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,7 +100,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                     height: SizeConfig.sizeByHeight(12),
                                   ),
                                   Container(
-                                    height: SizeConfig.sizeByHeight(290),
+                                    height: SizeConfig.sizeByHeight(350),
                                     child: Stack(
                                       children: [
                                         Container(
@@ -124,84 +127,122 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                         Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: _.selectedStation ==
-                                                  '학교종점 (아치나루터)'
-                                              ? [
-                                                  FirstArrive(
-                                                      _.nextShuttle.length > 0
-                                                          ? '${remainTime[0]}분'
-                                                          : '없음',
-                                                      _.nextShuttle.length > 0
-                                                          ? arriveTime[0]
-                                                          : ' '),
-                                                  SecondArrive(
-                                                      _.nextShuttle.length > 1
-                                                          ? '${remainTime[1]}분'
-                                                          : '없음',
-                                                      _.nextShuttle.length > 1
-                                                          ? arriveTime[1]
-                                                          : ' '),
-                                                  ThirdArrive(
-                                                      _.nextShuttle.length > 2
-                                                          ? '${remainTime[2]}분'
-                                                          : '없음',
-                                                      _.nextShuttle.length > 2
-                                                          ? arriveTime[2]
-                                                          : ' ')
-                                                ]
-                                              : [
-                                                  FirstArrive(
-                                                      _.nextShuttle.length > 0
-                                                          ? '${hariRemainTime[0]}분 후'
-                                                          : '없음',
-                                                      ' '),
-                                                  SecondArrive(
-                                                      _.nextShuttle.length > 1
-                                                          ? '${hariRemainTime[1]}분 후'
-                                                          : '없음',
-                                                      ' '),
-                                                  ThirdArrive(
-                                                      _.nextShuttle.length > 2
-                                                          ? '${hariRemainTime[2]}분 후'
-                                                          : '없음',
-                                                      ' ')
-                                                ],
-                                        ),
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: _.selectedStation ==
+                                                        '학교종점 (아치나루터)'
+                                                    ? [
+                                                        FirstArrive(
+                                                            _.nextShuttle
+                                                                        .length >
+                                                                    0
+                                                                ? '${remainTime[0]}분'
+                                                                : '없음',
+                                                            _.nextShuttle
+                                                                        .length >
+                                                                    0
+                                                                ? arriveTime[0]
+                                                                : ' '),
+                                                        SecondArrive(
+                                                            _.nextShuttle
+                                                                        .length >
+                                                                    1
+                                                                ? '${remainTime[1]}분'
+                                                                : '없음',
+                                                            _.nextShuttle
+                                                                        .length >
+                                                                    1
+                                                                ? arriveTime[1]
+                                                                : ' '),
+                                                        ThirdArrive(
+                                                            _.nextShuttle
+                                                                        .length >
+                                                                    2
+                                                                ? '${remainTime[2]}분'
+                                                                : '없음',
+                                                            _.nextShuttle
+                                                                        .length >
+                                                                    2
+                                                                ? arriveTime[2]
+                                                                : ' ')
+                                                      ]
+                                                    : [
+                                                        FirstArrive(
+                                                            _.nextShuttle
+                                                                        .length >
+                                                                    0
+                                                                ? '${hariRemainTime[0]}분 후'
+                                                                : '없음',
+                                                            ' '),
+                                                        SecondArrive(
+                                                            _.nextShuttle
+                                                                        .length >
+                                                                    1
+                                                                ? '${hariRemainTime[1]}분 후'
+                                                                : '없음',
+                                                            ' '),
+                                                        ThirdArrive(
+                                                            _.nextShuttle
+                                                                        .length >
+                                                                    2
+                                                                ? '${hariRemainTime[2]}분 후'
+                                                                : '없음',
+                                                            ' ')
+                                                      ],
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                ElevatedButton(
+                                                    onPressed: () =>
+                                                        UrlUtils.launchURL(
+                                                            'https://www.kmou.ac.kr/kmou/cm/cntnts/cntntsView.do?mi=1418&cntntsId=328'),
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary:
+                                                          Colors.transparent,
+                                                      shadowColor:
+                                                          Colors.transparent,
+                                                      padding: EdgeInsets.all(
+                                                          SizeConfig
+                                                              .sizeByHeight(
+                                                                  8.5)),
+                                                    ),
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      children: [
+                                                        TextBox(
+                                                            '전체시간보기',
+                                                            12,
+                                                            FontWeight.w500,
+                                                            Color(0xFF353B45)),
+                                                        Icon(
+                                                          Icons
+                                                              .arrow_forward_ios_rounded,
+                                                          size: SizeConfig
+                                                              .sizeByHeight(12),
+                                                          color:
+                                                              Color(0xFF353B45),
+                                                        )
+                                                      ],
+                                                    )),
+                                              ],
+                                            ),
+                                          ],
+                                        )
                                       ],
                                     ),
                                   ),
                                 ]),
                               ),
-                              SizedBox(
-                                height: SizeConfig.sizeByHeight(10),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ElevatedButton(
-                                      onPressed: () => UrlUtils.launchURL(
-                                          'https://www.kmou.ac.kr/kmou/cm/cntnts/cntntsView.do?mi=1418&cntntsId=328'),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.transparent,
-                                        shadowColor: Colors.transparent,
-                                        padding: EdgeInsets.all(
-                                            SizeConfig.sizeByHeight(8.5)),
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          TextBox('전체시간보기', 12, FontWeight.w500,
-                                              Color(0xFF353B45)),
-                                          Icon(
-                                            Icons.arrow_forward_ios_rounded,
-                                            size: SizeConfig.sizeByHeight(12),
-                                            color: Color(0xFF353B45),
-                                          )
-                                        ],
-                                      )),
-                                ],
-                              )
                             ],
                           ),
                           Positioned(
@@ -215,10 +256,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                     _.stationList,
                                     _.selectedStation,
                                     (value) {
-                                      value == '학교종점 (아치나루터)'
-                                          ? ShuttleBusRepository()
-                                              .getNextShuttle()
-                                          : () {};
+                                      ShuttleBusRepository().getNextShuttle();
                                       _.setSelectedStation(value);
                                     },
                                     findSubTitle: findShuttleBusSubTitle,
@@ -228,9 +266,9 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                             ),
                           ),
                         ],
-                      )),
-                );
-        });
+                      );
+              })),
+    );
   }
 }
 

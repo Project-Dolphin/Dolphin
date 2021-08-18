@@ -79,10 +79,10 @@ class CityBus extends GetView<CityBusController> {
                             ),
                           ),
                           SizedBox(
-                            height: SizeConfig.sizeByHeight(85),
+                            height: SizeConfig.sizeByHeight(93),
                           ),
                           Container(
-                            height: SizeConfig.sizeByHeight(290),
+                            height: SizeConfig.sizeByHeight(350),
                             child: Stack(
                               children: [
                                 Container(
@@ -103,114 +103,139 @@ class CityBus extends GetView<CityBusController> {
                                         tileMode: TileMode.clamp),
                                   ),
                                 ),
-                                _.selectedStation == '해양대구본관'
-                                    ? Column(
+                                Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          FirstArrive(
-                                              _.nextDepartCityBus!.length > 0
-                                                  ? departRemainTime[0]
-                                                  : '없음',
-                                              _.nextDepartCityBus!.length > 0
-                                                  ? departArriveTime[0]
-                                                  : ' '),
-                                          SecondArrive(
-                                              _.nextDepartCityBus!.length > 1
-                                                  ? departRemainTime[1]
-                                                  : '없음',
-                                              _.nextDepartCityBus!.length > 1
-                                                  ? departArriveTime[1]
-                                                  : ' '),
-                                          ThirdArrive(
-                                              _.nextDepartCityBus!.length > 2
-                                                  ? departRemainTime[2]
-                                                  : '없음',
-                                              _.nextDepartCityBus!.length > 2
-                                                  ? departArriveTime[2]
-                                                  : ' '),
-                                        ],
-                                      )
-                                    : Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          FirstArrive(
-                                              cityBusArriveTime != [] &&
-                                                      cityBusArriveTime[0] !=
-                                                          9999
-                                                  ? cityBusArriveTime[0]
-                                                      .toString()
-                                                  : '없음',
-                                              cityBusArriveTime != [] &&
-                                                      cityBusArriveTime[0] !=
-                                                          9999
-                                                  ? DateFormat('HH:mm').format(
-                                                      DateTime.now().add(Duration(
-                                                          minutes:
-                                                              cityBusArriveTime[
-                                                                  0])))
-                                                  : ' '),
-                                          SecondArrive(
-                                              cityBusArriveTime != [] &&
-                                                      cityBusArriveTime[1] !=
-                                                          9999
-                                                  ? cityBusArriveTime[1]
-                                                      .toString()
-                                                  : '없음',
-                                              cityBusArriveTime != [] &&
-                                                      cityBusArriveTime[1] !=
-                                                          9999
-                                                  ? DateFormat('HH:mm').format(
-                                                      DateTime.now().add(Duration(
-                                                          minutes:
-                                                              cityBusArriveTime[
-                                                                  1])))
-                                                  : ' '),
-                                          SizedBox(
-                                            height: 1,
-                                          ),
-                                        ],
+                                        children: _.selectedStation == '해양대구본관'
+                                            ? [
+                                                FirstArrive(
+                                                    _.nextDepartCityBus!
+                                                                .length >
+                                                            0
+                                                        ? departRemainTime[0]
+                                                        : '없음',
+                                                    _.nextDepartCityBus!
+                                                                .length >
+                                                            0
+                                                        ? departArriveTime[0]
+                                                        : ' '),
+                                                SecondArrive(
+                                                    _.nextDepartCityBus!
+                                                                .length >
+                                                            1
+                                                        ? departRemainTime[1]
+                                                        : '없음',
+                                                    _.nextDepartCityBus!
+                                                                .length >
+                                                            1
+                                                        ? departArriveTime[1]
+                                                        : ' '),
+                                                ThirdArrive(
+                                                    _.nextDepartCityBus!
+                                                                .length >
+                                                            2
+                                                        ? departRemainTime[2]
+                                                        : '없음',
+                                                    _.nextDepartCityBus!
+                                                                .length >
+                                                            2
+                                                        ? departArriveTime[2]
+                                                        : ' ')
+                                              ]
+                                            : [
+                                                FirstArrive(
+                                                    cityBusArriveTime != [] &&
+                                                            cityBusArriveTime[
+                                                                    0] !=
+                                                                9999
+                                                        ? cityBusArriveTime[0]
+                                                            .toString()
+                                                        : '없음',
+                                                    cityBusArriveTime != [] &&
+                                                            cityBusArriveTime[
+                                                                    0] !=
+                                                                9999
+                                                        ? DateFormat('HH:mm')
+                                                            .format(DateTime
+                                                                    .now()
+                                                                .add(Duration(
+                                                                    minutes:
+                                                                        cityBusArriveTime[
+                                                                            0])))
+                                                        : ' '),
+                                                SecondArrive(
+                                                    cityBusArriveTime != [] &&
+                                                            cityBusArriveTime[
+                                                                    1] !=
+                                                                9999
+                                                        ? cityBusArriveTime[1]
+                                                            .toString()
+                                                        : '없음',
+                                                    cityBusArriveTime != [] &&
+                                                            cityBusArriveTime[
+                                                                    1] !=
+                                                                9999
+                                                        ? DateFormat('HH:mm')
+                                                            .format(DateTime
+                                                                    .now()
+                                                                .add(Duration(
+                                                                    minutes:
+                                                                        cityBusArriveTime[
+                                                                            1])))
+                                                        : ' '),
+                                              ],
                                       ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              CityBusRepository()
+                                                  .getCityBusList();
+                                              Navigator.push(
+                                                context,
+                                                CupertinoPageRoute(
+                                                    builder: (context) =>
+                                                        CityBusListPage()),
+                                              );
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Colors.transparent,
+                                              shadowColor: Colors.transparent,
+                                              padding: EdgeInsets.all(
+                                                  SizeConfig.sizeByHeight(8.5)),
+                                            ),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                TextBox(
+                                                    '버스위치보기',
+                                                    12,
+                                                    FontWeight.w500,
+                                                    Color(0xFF353B45)),
+                                                Icon(
+                                                  Icons
+                                                      .arrow_forward_ios_rounded,
+                                                  size: SizeConfig.sizeByHeight(
+                                                      12),
+                                                  color: Color(0xFF353B45),
+                                                )
+                                              ],
+                                            )),
+                                      ],
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: SizeConfig.sizeByHeight(10),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    CityBusRepository().getCityBusList();
-                                    Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                          builder: (context) =>
-                                              CityBusListPage()),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.transparent,
-                                    shadowColor: Colors.transparent,
-                                    padding: EdgeInsets.all(
-                                        SizeConfig.sizeByHeight(8.5)),
-                                  ),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      TextBox('버스위치보기', 12, FontWeight.w500,
-                                          Color(0xFF353B45)),
-                                      Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        size: SizeConfig.sizeByHeight(12),
-                                        color: Color(0xFF353B45),
-                                      )
-                                    ],
-                                  )),
-                            ],
-                          )
                         ],
                       ),
                       Positioned(
