@@ -167,7 +167,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   children: [
                     HomePage(),
                     BusPage(),
-                    DailyMenuPage(),
+                    // DailyMenuPage(),
                     CalendarPage(),
                     MorePage(),
                   ],

@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:oceanview/pages/home/weather/responseWeather.dart';
 
 class HomeController extends GetxController {
   String formattedDate = ' ';
   List noticeList = [];
   List latestEventList = [];
+  Weather? currentWeather;
   String stat = ' ';
 
   @override
@@ -33,6 +35,11 @@ class HomeController extends GetxController {
 
   void setLatestEventList(events) {
     latestEventList = events;
+    update();
+  }
+
+  void setCurrentWeather(Weather weather) {
+    currentWeather = weather;
     update();
   }
 

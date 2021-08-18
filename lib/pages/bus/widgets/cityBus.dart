@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/dialog/dialog.dart';
@@ -40,24 +39,26 @@ class CityBus extends GetView<CityBusController> {
             var departRemainTime = [];
             var departArriveTime = [];
             var cityBusArriveTime = [];
-            print(_.responseCityBus!.min1);
-            if (_.selectedStation == '해양대구본관') {
-              for (var i = 0; i < _.nextDepartCityBus!.length; i++) {
-                var differenceMinute = _.nextDepartCityBus![i]
-                    .difference(DateTime.now())
-                    .inMinutes;
 
-                departRemainTime.add(differenceMinute.toString());
-                departArriveTime
-                    .add(DateFormat('HH:mm').format(_.nextDepartCityBus![i]));
+            if (!_.isLoading) {
+              if (_.selectedStation == '해양대구본관') {
+                for (var i = 0; i < _.nextDepartCityBus!.length; i++) {
+                  var differenceMinute = _.nextDepartCityBus![i]
+                      .difference(DateTime.now())
+                      .inMinutes;
+
+                  departRemainTime.add(differenceMinute.toString());
+                  departArriveTime
+                      .add(DateFormat('HH:mm').format(_.nextDepartCityBus![i]));
+                }
+              } else {
+                _.responseCityBus != null
+                    ? cityBusArriveTime = [
+                        _.responseCityBus!.min1 ?? 9999,
+                        _.responseCityBus!.min2 ?? 9999
+                      ]
+                    : cityBusArriveTime = [];
               }
-            } else {
-              _.responseCityBus != null
-                  ? cityBusArriveTime = [
-                      _.responseCityBus!.min1 ?? 9999,
-                      _.responseCityBus!.min2 ?? 9999
-                    ]
-                  : cityBusArriveTime = [];
             }
 
             return _.isLoading
