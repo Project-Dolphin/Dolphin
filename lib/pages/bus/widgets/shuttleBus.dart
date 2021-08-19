@@ -48,60 +48,50 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                   remainTime.add(differenceMinute.toString());
                   arriveTime.add(DateFormat('HH:mm').format(_.nextShuttle[i]));
                 }
-                return _.isLoading
-                    ? Loading()
-                    : Stack(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  '정류장 선택',
-                                  style: TextStyle(
-                                    color: Color(0xFF0081FF),
-                                    fontSize: SizeConfig.sizeByHeight(10),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: SizeConfig.sizeByHeight(55),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: SizeConfig.sizeByHeight(12)),
-                                child: Column(children: [
-                                  previousTime == ''
-                                      ? SizedBox(
-                                          height: SizeConfig.sizeByHeight(14),
-                                        )
-                                      : _.selectedStation == '학교종점 (아치나루터)'
-                                          ? TextBox(
-                                              '이전차는 약 $previousTime분전에 지나갔어요',
-                                              12,
-                                              FontWeight.w400,
-                                              Color(0xFF353B45))
-                                          : hariRemainTime.length > 0 &&
-                                                  int.parse(
-                                                          hariRemainTime[0]) <=
-                                                      6
-                                              ? TextBox(
-                                                  '이전차는 약 3분전에 지나갔어요',
-                                                  12,
-                                                  FontWeight.w400,
-                                                  Color(0xFF353B45))
-                                              : SizedBox(
-                                                  height:
-                                                      SizeConfig.sizeByHeight(
-                                                          14),
-                                                ),
-                                  SizedBox(
-                                    height: SizeConfig.sizeByHeight(12),
-                                  ),
-                                  Container(
-                                    height: SizeConfig.sizeByHeight(350),
-                                    child: Stack(
+                return Stack(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            '정류장 선택',
+                            style: TextStyle(
+                              color: Color(0xFF0081FF),
+                              fontSize: SizeConfig.sizeByHeight(10),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(55),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: SizeConfig.sizeByHeight(12)),
+                          child: Column(children: [
+                            _.isLoading || previousTime == ''
+                                ? SizedBox(
+                                    height: SizeConfig.sizeByHeight(14),
+                                  )
+                                : _.selectedStation == '학교종점 (아치나루터)'
+                                    ? TextBox('이전차는 약 $previousTime분전에 지나갔어요',
+                                        12, FontWeight.w400, Color(0xFF353B45))
+                                    : hariRemainTime.length > 0 &&
+                                            int.parse(hariRemainTime[0]) <= 6
+                                        ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
+                                            FontWeight.w400, Color(0xFF353B45))
+                                        : SizedBox(
+                                            height: SizeConfig.sizeByHeight(14),
+                                          ),
+                            SizedBox(
+                              height: SizeConfig.sizeByHeight(12),
+                            ),
+                            Container(
+                              height: SizeConfig.sizeByHeight(350),
+                              child: _.isLoading
+                                  ? Loading()
+                                  : Stack(
                                       children: [
                                         Container(
                                           width: 1,
@@ -140,7 +130,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                                             _.nextShuttle
                                                                         .length >
                                                                     0
-                                                                ? '${remainTime[0]}분'
+                                                                ? '${remainTime[0]}분 후'
                                                                 : '없음',
                                                             _.nextShuttle
                                                                         .length >
@@ -151,7 +141,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                                             _.nextShuttle
                                                                         .length >
                                                                     1
-                                                                ? '${remainTime[1]}분'
+                                                                ? '${remainTime[1]}분 후'
                                                                 : '없음',
                                                             _.nextShuttle
                                                                         .length >
@@ -162,7 +152,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                                             _.nextShuttle
                                                                         .length >
                                                                     2
-                                                                ? '${remainTime[2]}분'
+                                                                ? '${remainTime[2]}분 후'
                                                                 : '없음',
                                                             _.nextShuttle
                                                                         .length >
@@ -240,33 +230,33 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                         )
                                       ],
                                     ),
-                                  ),
-                                ]),
-                              ),
-                            ],
-                          ),
-                          Positioned(
-                            top: SizeConfig.sizeByHeight(24),
-                            child: Container(
-                              width: SizeConfig.sizeByWidth(268),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Dropdown(
-                                    _.stationList,
-                                    _.selectedStation,
-                                    (value) {
-                                      ShuttleBusRepository().getNextShuttle();
-                                      _.setSelectedStation(value);
-                                    },
-                                    findSubTitle: findShuttleBusSubTitle,
-                                  ),
-                                ],
-                              ),
                             ),
-                          ),
-                        ],
-                      );
+                          ]),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      top: SizeConfig.sizeByHeight(24),
+                      child: Container(
+                        width: SizeConfig.sizeByWidth(268),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Dropdown(
+                              _.stationList,
+                              _.selectedStation,
+                              (value) {
+                                ShuttleBusRepository().getNextShuttle();
+                                _.setSelectedStation(value);
+                              },
+                              findSubTitle: findShuttleBusSubTitle,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
               })),
     );
   }

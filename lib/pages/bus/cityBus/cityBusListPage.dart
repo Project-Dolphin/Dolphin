@@ -31,7 +31,7 @@ class CityBusListPage extends GetView<CityBusController> {
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverAppBar(
-                    floating: true,
+                    pinned: true,
                     shadowColor: Colors.transparent,
                     backgroundColor: Colors.white.withOpacity(0.4),
                     iconTheme: IconThemeData(color: Color(0xFF3199FF)),

@@ -21,21 +21,26 @@ class EventsContainer extends GetView<HomeController> {
             return _.latestEventList.length > 0
                 ? Row(children: [
                     Expanded(
-                        flex: 8,
+                        flex: 1,
                         child: renderLatestEvent(_.latestEventList[0]['dDay'],
                             _.latestEventList[0]['content'])),
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: Container(
-                          width: 1,
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: SizeConfig.sizeByHeight(27),
+                        ),
+                        Container(
+                          width: 0.5,
                           height: SizeConfig.sizeByHeight(40),
                           color: Color(0xFF0081FF),
                         ),
-                      ),
+                        SizedBox(
+                          width: SizeConfig.sizeByHeight(27),
+                        ),
+                      ],
                     ),
                     Expanded(
-                        flex: 8,
+                        flex: 1,
                         child: renderLatestEvent(_.latestEventList[1]['dDay'],
                             _.latestEventList[1]['content'])),
                   ])

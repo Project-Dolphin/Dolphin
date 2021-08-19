@@ -24,19 +24,19 @@ Future<Null> onRefresh() async {
 }
 
 class HomePage extends GetView<HomeController> {
-  final name = '오션뷰';
-  final Color iconColor = Color(0xFF000000);
-
   @override
   Widget build(BuildContext context) {
     final dashboardController = Get.put(DashboardController());
+    print(SizeConfig.blockSizeVertical);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: RefreshIndicator(
         onRefresh: onRefresh,
         child: SingleChildScrollView(
           child: Container(
-            height: SizeConfig.sizeByHeight(675),
+            height: SizeConfig.blockSizeVertical > 7
+                ? SizeConfig.blockSizeVertical * 83
+                : SizeConfig.blockSizeVertical * 86,
             margin:
                 EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(20)),
             child: Column(
@@ -109,9 +109,12 @@ class HomePage extends GetView<HomeController> {
                               Expanded(flex: 14, child: Container()),
                               Expanded(
                                   flex: 163,
-                                  child: GlassMorphism(
-                                    widget: DietContainer(),
-                                  ))
+                                  child: GestureDetector(
+                                      onTap: () =>
+                                          dashboardController.changeTabIndex(2),
+                                      child: GlassMorphism(
+                                        widget: DietContainer(),
+                                      )))
                             ],
                           )),
                       Expanded(flex: 12, child: Container()),

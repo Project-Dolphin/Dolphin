@@ -53,19 +53,11 @@ class WeatherContainer extends StatelessWidget {
                                               42,
                                               FontWeight.w700,
                                               Colors.white),
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                width:
-                                                    SizeConfig.sizeByHeight(16),
-                                              ),
-                                              TextBox(
-                                                _.currentWeather!.status!,
-                                                16,
-                                                FontWeight.w400,
-                                                Colors.white,
-                                              ),
-                                            ],
+                                          TextBox(
+                                            _.currentWeather!.status!,
+                                            16,
+                                            FontWeight.w400,
+                                            Colors.white,
                                           ),
                                           SizedBox(
                                             height: SizeConfig.sizeByHeight(12),
