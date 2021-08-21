@@ -220,7 +220,7 @@ class MoreText extends StatelessWidget {
           Icon(
             Icons.arrow_forward_ios,
             color: Color(0xFF939393),
-            size: 10.0,
+            size: SizeConfig.sizeByHeight(10.0),
           ),
         ],
       ),

@@ -71,11 +71,7 @@ class DailyMenuPage extends GetView<DailyMenuController> {
             SliverFillRemaining(
               hasScrollBody: false,
               fillOverscroll: true,
-              child: Padding(
-                padding: EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
-                child:
-                MenuCarousel(),
-              ),
+              child: MenuCarousel(),
             ),
           ],
         ),
