@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/pages/calendar/CalendarData.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -82,24 +83,40 @@ class _CalendarSearchState extends State<CalendarSearch> {
       child: new Scaffold(
         backgroundColor: Colors.transparent,
         appBar: new AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
+          leadingWidth: SizeConfig.sizeByWidth(20),
+          leading: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: IconButton(
+                color: Color(0xff009DF5),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back_ios)),
+          ),
           title: new Container(
+            height: SizeConfig.sizeByHeight(40),
+            margin: EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100.0),
-              color: Color.fromRGBO(212, 212, 212, 0.4),
+              color: Color.fromRGBO(255, 255, 255, 0.6),
             ),
             child: new ListTile(
               title: new TextFormField(
+                style: TextStyle(fontSize: SizeConfig.sizeByHeight(16)),
                 autofocus: true,
                 controller: controller,
                 focusNode: _focusNode,
                 decoration: new InputDecoration(
-                    hintText: '검색', border: InputBorder.none),
+                    hintText: '학사일정을 검색하기 ex.수강신청', border: InputBorder.none),
                 onChanged: onSearchTextChanged,
               ),
-              trailing: new IconButton(
-                icon: new Icon(Icons.cancel),
+              trailing: IconButton(
+                padding: EdgeInsets.zero,
+                icon: Icon(Icons.cancel),
+                color: Color(0xff4ba6ff),
                 onPressed: () {
                   controller.clear();
                   onSearchTextChanged('');
