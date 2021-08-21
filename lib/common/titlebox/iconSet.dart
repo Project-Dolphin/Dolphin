@@ -18,7 +18,8 @@ class _CalendarIconState extends State<CalendarIcon> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(actionsPadding: EdgeInsets.zero,contentPadding: EdgeInsets.fromLTRB(25, 25, 25, 0),
+          return AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(25, 25, 25, 12),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15))),
             content: StatefulBuilder(
@@ -31,8 +32,8 @@ class _CalendarIconState extends State<CalendarIcon> {
                       children: [
                         Image.asset(
                           'assets/images/CalendarPage/CalendarAlarmDialog.png',
-                          width: 25.56,
-                          height: 23.47,
+                          width: SizeConfig.sizeByHeight(25.56),
+                          height: SizeConfig.sizeByHeight(23.47),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
@@ -42,12 +43,16 @@ class _CalendarIconState extends State<CalendarIcon> {
                               Text(
                                 "일정 알림",
                                 style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w800),
+                                    fontSize: SizeConfig.sizeByHeight(22),
+                                    fontWeight: FontWeight.w800),
+                              ),
+                              SizedBox(
+                                height: SizeConfig.sizeByHeight(6),
                               ),
                               Text(
                                 "아침에 해당 일정\n푸시 알림이 와요",
                                 style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: SizeConfig.sizeByHeight(12),
                                     fontWeight: FontWeight.w300,
                                     color: Color(0xff353b45).withOpacity(0.8)),
                               ),
@@ -66,13 +71,17 @@ class _CalendarIconState extends State<CalendarIcon> {
                         )
                       ],
                     ),
+                    SizedBox(
+                      height: SizeConfig.sizeByHeight(26),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           '모든 학사일정 받기',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
+                              fontSize: SizeConfig.sizeByHeight(19),
+                              fontWeight: FontWeight.w400),
                         ),
                         Radio(
                           value: 1,
@@ -87,6 +96,9 @@ class _CalendarIconState extends State<CalendarIcon> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: SizeConfig.sizeByHeight(30),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -96,12 +108,16 @@ class _CalendarIconState extends State<CalendarIcon> {
                             Text(
                               '주요 학사일정 받기',
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w400),
+                                  fontSize: SizeConfig.sizeByHeight(19),
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.sizeByHeight(6),
                             ),
                             Text(
                               '수강신청, 등록금 납입, 시험 등 학생 일정',
                               style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: SizeConfig.sizeByHeight(12),
                                   fontWeight: FontWeight.w300,
                                   color: Color(0xff353b45).withOpacity(0.8)),
                             ),
@@ -120,31 +136,39 @@ class _CalendarIconState extends State<CalendarIcon> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: SizeConfig.sizeByHeight(40),
+                    ),
                     Divider(
                       thickness: 1,
                       color: Color(0xffc5c5c5),
+                    ),
+                    Center(
+                      child: Container(
+                        height: 30,
+                        child: TextButton(
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                            ),
+                            child: Text(
+                              "확인",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: SizeConfig.sizeByHeight(22),
+                                  color: Color(0xff353b45)),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isSwitched = isSwitched;
+                              });
+                              Navigator.pop(context);
+                            }),
+                      ),
                     ),
                   ],
                 );
               },
             ),
-            actions: [
-              Center(
-                child: TextButton(
-                    child: Text(
-                      "확인",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: Color(0xff353b45)),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isSwitched = isSwitched;
-                      });
-                      Navigator.pop(context);
-                    }),
-              ),],
           );
         });
   }

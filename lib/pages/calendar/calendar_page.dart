@@ -46,16 +46,6 @@ class CalendarPage extends GetView<CalendarController1> {
       ),
     );
   }
-
-  _launchURL() async {
-    const url =
-        'https://www.kmou.ac.kr/onestop/cm/cntnts/cntntsView.do?mi=74&cntntsId=1755';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 }
 
 class Calendar extends StatefulWidget {
@@ -318,7 +308,7 @@ class _CalendarState extends State<Calendar> {
                   child: Text(
                     _current < 11 ? '2021' : '2022',
                     style: TextStyle(
-                      fontSize: SizeConfig.sizeByWidth(22),
+                      fontSize: SizeConfig.sizeByHeight(26),
                     ),
                   ),
                 ),
@@ -359,7 +349,7 @@ class _CalendarState extends State<Calendar> {
                         rightChevronVisible: false,
                         titleTextStyle: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(1)),
                         titleCentered: true,
                         titleTextFormatter: (date, locale) =>
@@ -369,10 +359,10 @@ class _CalendarState extends State<Calendar> {
                       daysOfWeekHeight: 30.0,
                       daysOfWeekStyle: DaysOfWeekStyle(
                         weekdayStyle: TextStyle(
-                          fontSize: 12,
+                          fontSize: SizeConfig.sizeByHeight(12),
                         ),
                         weekendStyle: TextStyle(
-                          fontSize: 12,
+                          fontSize: SizeConfig.sizeByHeight(12),
                         ),
                       ),
                       locale: 'ko_KR',
@@ -395,11 +385,11 @@ class _CalendarState extends State<Calendar> {
                           ),
                           defaultTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                           ),
                           todayTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Colors.white),
                           todayDecoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -407,7 +397,7 @@ class _CalendarState extends State<Calendar> {
                           ),
                           selectedTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: _selectedDay.weekday == 7
                                   ? Color(0xFFff3030)
                                   : Color(0xff353b45)),
@@ -420,18 +410,18 @@ class _CalendarState extends State<Calendar> {
                           ),
                           holidayTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xffff3030)),
                           holidayDecoration:
                               BoxDecoration(shape: BoxShape.circle),
                           weekendTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xffff3030)),
                           outsideDaysVisible: true,
                           outsideTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xff353b45).withOpacity(0.5))),
                       onFormatChanged: (format) {
                         if (_calendarFormat != format) {
@@ -467,11 +457,11 @@ class _CalendarState extends State<Calendar> {
                         ),
                         defaultTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(0.5)),
                         selectedTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45)),
                         selectedDecoration: BoxDecoration(
                           border: Border.all(
@@ -482,13 +472,13 @@ class _CalendarState extends State<Calendar> {
                         ),
                         holidayTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(0.5)),
                         holidayDecoration:
                             BoxDecoration(shape: BoxShape.circle),
                         weekendTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(0.5)),
                         outsideDaysVisible: false,
                       ),
@@ -523,7 +513,7 @@ class _CalendarState extends State<Calendar> {
                         rightChevronVisible: false,
                         titleTextStyle: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(1)),
                         titleCentered: true,
                         titleTextFormatter: (date, locale) =>
@@ -533,10 +523,10 @@ class _CalendarState extends State<Calendar> {
                       daysOfWeekHeight: 30.0,
                       daysOfWeekStyle: DaysOfWeekStyle(
                         weekdayStyle: TextStyle(
-                          fontSize: 12,
+                          fontSize: SizeConfig.sizeByHeight(12),
                         ),
                         weekendStyle: TextStyle(
-                          fontSize: 12,
+                          fontSize: SizeConfig.sizeByHeight(12),
                         ),
                       ),
                       locale: 'ko_KR',
@@ -559,11 +549,11 @@ class _CalendarState extends State<Calendar> {
                           ),
                           defaultTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                           ),
                           todayTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Colors.white),
                           todayDecoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -571,7 +561,7 @@ class _CalendarState extends State<Calendar> {
                           ),
                           selectedTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: _selectedDay.weekday == 7
                                   ? Color(0xFFff3030)
                                   : Color(0xff353b45)),
@@ -584,18 +574,18 @@ class _CalendarState extends State<Calendar> {
                           ),
                           holidayTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xffff3030)),
                           holidayDecoration:
                               BoxDecoration(shape: BoxShape.circle),
                           weekendTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xffff3030)),
                           outsideDaysVisible: true,
                           outsideTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xff353b45).withOpacity(0.5))),
                       onFormatChanged: (format) {
                         if (_calendarFormat != format) {
@@ -631,11 +621,11 @@ class _CalendarState extends State<Calendar> {
                         ),
                         defaultTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(0.5)),
                         selectedTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45)),
                         selectedDecoration: BoxDecoration(
                           border: Border.all(
@@ -646,13 +636,13 @@ class _CalendarState extends State<Calendar> {
                         ),
                         holidayTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(0.5)),
                         holidayDecoration:
                             BoxDecoration(shape: BoxShape.circle),
                         weekendTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(0.5)),
                         outsideDaysVisible: false,
                       ),
@@ -687,7 +677,7 @@ class _CalendarState extends State<Calendar> {
                         rightChevronVisible: false,
                         titleTextStyle: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(1)),
                         titleCentered: true,
                         titleTextFormatter: (date, locale) =>
@@ -697,10 +687,10 @@ class _CalendarState extends State<Calendar> {
                       daysOfWeekHeight: 30.0,
                       daysOfWeekStyle: DaysOfWeekStyle(
                         weekdayStyle: TextStyle(
-                          fontSize: 12,
+                          fontSize: SizeConfig.sizeByHeight(12),
                         ),
                         weekendStyle: TextStyle(
-                          fontSize: 12,
+                          fontSize: SizeConfig.sizeByHeight(12),
                         ),
                       ),
                       locale: 'ko_KR',
@@ -723,11 +713,11 @@ class _CalendarState extends State<Calendar> {
                           ),
                           defaultTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                           ),
                           todayTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Colors.white),
                           todayDecoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -735,7 +725,7 @@ class _CalendarState extends State<Calendar> {
                           ),
                           selectedTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: _selectedDay.weekday == 7
                                   ? Color(0xFFff3030)
                                   : Color(0xff353b45)),
@@ -748,18 +738,18 @@ class _CalendarState extends State<Calendar> {
                           ),
                           holidayTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xffff3030)),
                           holidayDecoration:
                               BoxDecoration(shape: BoxShape.circle),
                           weekendTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xffff3030)),
                           outsideDaysVisible: true,
                           outsideTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xff353b45).withOpacity(0.5))),
                       onFormatChanged: (format) {
                         if (_calendarFormat != format) {
@@ -795,11 +785,11 @@ class _CalendarState extends State<Calendar> {
                         ),
                         defaultTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(0.5)),
                         selectedTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45)),
                         selectedDecoration: BoxDecoration(
                           border: Border.all(
@@ -810,13 +800,13 @@ class _CalendarState extends State<Calendar> {
                         ),
                         holidayTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(0.5)),
                         holidayDecoration:
                             BoxDecoration(shape: BoxShape.circle),
                         weekendTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(0.5)),
                         outsideDaysVisible: false,
                       ),
@@ -851,7 +841,7 @@ class _CalendarState extends State<Calendar> {
                         rightChevronVisible: false,
                         titleTextStyle: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(1)),
                         titleCentered: true,
                         titleTextFormatter: (date, locale) =>
@@ -861,10 +851,10 @@ class _CalendarState extends State<Calendar> {
                       daysOfWeekHeight: 30.0,
                       daysOfWeekStyle: DaysOfWeekStyle(
                         weekdayStyle: TextStyle(
-                          fontSize: 12,
+                          fontSize: SizeConfig.sizeByHeight(12),
                         ),
                         weekendStyle: TextStyle(
-                          fontSize: 12,
+                          fontSize: SizeConfig.sizeByHeight(12),
                         ),
                       ),
                       locale: 'ko_KR',
@@ -887,11 +877,11 @@ class _CalendarState extends State<Calendar> {
                           ),
                           defaultTextStyle: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                           ),
                           todayTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Colors.white),
                           todayDecoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -899,7 +889,7 @@ class _CalendarState extends State<Calendar> {
                           ),
                           selectedTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: _selectedDay.weekday == 7
                                   ? Color(0xFFff3030)
                                   : Color(0xff353b45)),
@@ -912,18 +902,18 @@ class _CalendarState extends State<Calendar> {
                           ),
                           holidayTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xffff3030)),
                           holidayDecoration:
                               BoxDecoration(shape: BoxShape.circle),
                           weekendTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xffff3030)),
                           outsideDaysVisible: true,
                           outsideTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 18,
+                              fontSize: SizeConfig.sizeByHeight(18),
                               color: Color(0xff353b45).withOpacity(0.5))),
                       onFormatChanged: (format) {
                         if (_calendarFormat != format) {
@@ -956,7 +946,7 @@ class _CalendarState extends State<Calendar> {
                         rightChevronVisible: false,
                         titleTextStyle: TextStyle(
                             fontWeight: FontWeight.w700,
-                            fontSize: 18,
+                            fontSize: SizeConfig.sizeByHeight(18),
                             color: Color(0xff353b45).withOpacity(1)),
                         titleCentered: true,
                         titleTextFormatter: (date, locale) =>
@@ -2307,9 +2297,8 @@ class _CalendarState extends State<Calendar> {
                 itemCount: value.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 28.0,
-                      vertical: 4.0,
+                    margin: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.sizeByWidth(50),
                     ),
                     child: ListTile(
                       onTap: () => print('${value[index]}'),
@@ -2325,7 +2314,7 @@ class _CalendarState extends State<Calendar> {
                         child: Text(
                           '${value[index]}',
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
+                              fontSize: SizeConfig.sizeByHeight(16), fontWeight: FontWeight.w500),
                         ),
                       ),
                     ),
@@ -2335,6 +2324,32 @@ class _CalendarState extends State<Calendar> {
             },
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0,0,10,30),
+          child: TextButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  '전체일정 보기',
+                  style: TextStyle(
+                      fontSize: SizeConfig.sizeByWidth(12),
+                      fontWeight: FontWeight.w300,
+                      color: Color(0xff353B45)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: SizeConfig.sizeByWidth(10),
+                    color: Color(0xff353B45),
+                  ),
+                ),
+              ],
+            ),
+            onPressed: _launchURL,
+          ),
+        )
       ],
     );
   }
@@ -2356,3 +2371,13 @@ int getHashCode(DateTime key) {
 final kToday = DateTime.now();
 final kFirstDay = DateTime(2021, 1, 1);
 final kLastDay = DateTime(2022, 3, 31);
+
+_launchURL() async {
+  const url =
+      'https://www.kmou.ac.kr/onestop/cm/cntnts/cntntsView.do?mi=74&cntntsId=1755';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
