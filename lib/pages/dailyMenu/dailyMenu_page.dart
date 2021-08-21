@@ -11,23 +11,25 @@ import 'dailyMenu_header.dart';
 import 'dailyMenu_menu.dart';
 
 var time = ["11:30 ~ 13:30", "17:00 ~ 18:30", ""];
-var timeCafeteria = [];
-var timeEmployer = [];
-var timeDorm = [];
-var timeDormWeekend = [];
+var timeCafeteria = ["08:00 ~ 09:30", "09:30 ~ 15:00", "16:00 ~ 18:30"];
+var timeEmployer = ["", "11:30 ~ 13:30", ""];
+var timeDorm = ["08:00 ~ 09:00", "11:40 ~ 13:30", "17:00 ~ 18:30"];
+var timeDormWeekend = ["08:00 ~ 09:00", "12:00 ~ 13:00", "17:00 ~ 18:00"];
+var timeMariDorm = ["", "", ""];
+
 int _current = 0;
 final CarouselController _controller = CarouselController();
 final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
 final List<dynamic> testPageList = [
-  MealCard(),
-  MealCard(),
-  MealCard(),
-  MealCard(),
-  MealCard(),
+  MealCard(type: 0, time: time),
+  MealCard(type: 1, time: time),
+  MealCard(type: 2, time: time),
+  MealCard(type: 3, time: time),
+  MealCard(type: 4, time: time),
 ];
 
 class DailyMenuPage extends GetView<DailyMenuController> {
-  final name = '식단', subname = '0층 식단', stat = '운영중', more = '이번주 식단 보기';
+  final name = '식단', subname = '0층 식단', stat = '운영종료', more = '이번주 식단 보기';
   var index = 0;
 
   @override
@@ -52,13 +54,13 @@ class DailyMenuPage extends GetView<DailyMenuController> {
                   padding: EdgeInsets.only(
                     left: SizeConfig.sizeByWidth(22),
                     right: SizeConfig.sizeByWidth(25),
-                    top: SizeConfig.sizeByHeight(65),
+                    top: SizeConfig.sizeByHeight(25),
                   ),
                   child: BottomTitle(
                     subname: titleList[index] + " 식단",
                     stat: stat,
                     more: more,
-                    fontsize2: SizeConfig.sizeByHeight(20),
+                    fontsize2: SizeConfig.sizeByHeight(18),
                     fontsize3: SizeConfig.sizeByHeight(12),
                     fontweight2: FontWeight.w500,
                     fontweight3: FontWeight.w400,
@@ -180,7 +182,7 @@ class _MenuState extends State<MenuCarousel> {
           children: [
             Container(
               child: CarouselSlider(
-                items: testPageList!
+                items: testPageList
                     .map((item) => Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
                   child: Column(

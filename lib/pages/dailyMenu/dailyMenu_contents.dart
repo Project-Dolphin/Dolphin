@@ -64,7 +64,7 @@ class MealContentColumn extends StatelessWidget {
                     child: Text(
                       mealMenu[0],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
+                        fontSize: SizeConfig.sizeByHeight(14.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -74,7 +74,7 @@ class MealContentColumn extends StatelessWidget {
                     child: Text(
                       mealMenu[1],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
+                        fontSize: SizeConfig.sizeByHeight(14.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -95,7 +95,7 @@ class MealContentColumn extends StatelessWidget {
                     child: Text(
                       mealMenu[2],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
+                        fontSize: SizeConfig.sizeByHeight(14.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -105,7 +105,7 @@ class MealContentColumn extends StatelessWidget {
                     child: Text(
                       mealMenu[3],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
+                        fontSize: SizeConfig.sizeByHeight(14.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -126,7 +126,7 @@ class MealContentColumn extends StatelessWidget {
                     child: Text(
                       mealMenu[4],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
+                        fontSize: SizeConfig.sizeByHeight(14.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -136,7 +136,7 @@ class MealContentColumn extends StatelessWidget {
                     child: Text(
                       mealMenu[5],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
+                        fontSize: SizeConfig.sizeByHeight(14.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -157,7 +157,7 @@ class MealContentColumn extends StatelessWidget {
                     child: Text(
                       mealMenu[6],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
+                        fontSize: SizeConfig.sizeByHeight(14.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -167,7 +167,7 @@ class MealContentColumn extends StatelessWidget {
                     child: Text(
                       mealMenu[7],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(16.0),
+                        fontSize: SizeConfig.sizeByHeight(14.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
