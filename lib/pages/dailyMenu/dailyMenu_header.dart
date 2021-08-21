@@ -57,22 +57,24 @@ class Header extends StatelessWidget {
   Align _buildTitle(Animation<double> animation) {
     return Align(
       alignment:
-      AlignmentTween(begin: Alignment.center, end: Alignment.bottomLeft)
-          .evaluate(animation),
+          AlignmentTween(begin: Alignment.center, end: Alignment.bottomLeft)
+              .evaluate(animation),
       child: Container(
           margin: EdgeInsets.only(
-            bottom: SizeConfig.sizeByHeight(14),
+            bottom: Tween<double>(
+                    begin: SizeConfig.sizeByHeight(14),
+                    end: SizeConfig.sizeByHeight(28))
+                .evaluate(animation),
             left: SizeConfig.sizeByHeight(14),
           ),
           child: TextBox(
               '식단',
               Tween<double>(
-                  begin: SizeConfig.sizeByHeight(18),
-                  end: SizeConfig.sizeByHeight(24))
+                      begin: SizeConfig.sizeByHeight(15),
+                      end: SizeConfig.sizeByHeight(18))
                   .evaluate(animation),
               FontWeight.w800,
-              Color(0xFF353B45))
-      ),
+              Color(0xFF353B45))),
     );
   }
 }

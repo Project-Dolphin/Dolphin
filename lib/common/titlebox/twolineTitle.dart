@@ -171,24 +171,24 @@ class StatusContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(7)),
       child: Center(
-        child: Text(
-          stat,
-          style: TextStyle(
-            fontSize: fontsize,
-            fontWeight: fontweight,
-            color: Color(0xFF0078D4),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            stat,
+            style: TextStyle(
+              fontSize: fontsize,
+              fontWeight: fontweight,
+              color: Color(0xFF0078D4),
+            ),
           ),
         ),
       ),
-      height: 22,
-      width: 60,
+      height: SizeConfig.sizeByHeight(22),
+      // width: SizeConfig.sizeByWidth(60),
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(
-          color: Color(0xFF0078D4),
-          width: 1,
-        ),
         borderRadius: BorderRadius.circular(5),
       ),
     );
@@ -220,7 +220,7 @@ class MoreText extends StatelessWidget {
           Icon(
             Icons.arrow_forward_ios,
             color: Color(0xFF939393),
-            size: 15.0,
+            size: SizeConfig.sizeByHeight(10.0),
           ),
         ],
       ),
