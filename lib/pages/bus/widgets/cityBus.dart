@@ -8,6 +8,7 @@ import 'package:oceanview/common/loading/loading.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
+import 'package:oceanview/pages/bus/bus_controller.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusListPage.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
@@ -108,89 +109,120 @@ class CityBus extends GetView<CityBusController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: _.selectedStation == '해양대구본관'
-                                            ? [
-                                                FirstArrive(
-                                                    _.nextDepartCityBus!
-                                                                .length >
-                                                            0
-                                                        ? departRemainTime[0]
-                                                        : '없음',
-                                                    _.nextDepartCityBus!
-                                                                .length >
-                                                            0
-                                                        ? departArriveTime[0]
-                                                        : ' '),
-                                                SecondArrive(
-                                                    _.nextDepartCityBus!
-                                                                .length >
-                                                            1
-                                                        ? departRemainTime[1]
-                                                        : '없음',
-                                                    _.nextDepartCityBus!
-                                                                .length >
-                                                            1
-                                                        ? departArriveTime[1]
-                                                        : ' '),
-                                                ThirdArrive(
-                                                    _.nextDepartCityBus!
-                                                                .length >
-                                                            2
-                                                        ? departRemainTime[2]
-                                                        : '없음',
-                                                    _.nextDepartCityBus!
-                                                                .length >
-                                                            2
-                                                        ? departArriveTime[2]
-                                                        : ' ')
-                                              ]
-                                            : [
-                                                FirstArrive(
-                                                    cityBusArriveTime != [] &&
-                                                            cityBusArriveTime[
-                                                                    0] !=
-                                                                9999
-                                                        ? cityBusArriveTime[0]
-                                                            .toString()
-                                                        : '없음',
-                                                    cityBusArriveTime != [] &&
-                                                            cityBusArriveTime[
-                                                                    0] !=
-                                                                9999
-                                                        ? DateFormat('HH:mm')
-                                                            .format(DateTime
-                                                                    .now()
-                                                                .add(Duration(
-                                                                    minutes:
-                                                                        cityBusArriveTime[
-                                                                            0])))
-                                                        : ' '),
-                                                SecondArrive(
-                                                    cityBusArriveTime != [] &&
-                                                            cityBusArriveTime[
-                                                                    1] !=
-                                                                9999
-                                                        ? cityBusArriveTime[1]
-                                                            .toString()
-                                                        : '없음',
-                                                    cityBusArriveTime != [] &&
-                                                            cityBusArriveTime[
-                                                                    1] !=
-                                                                9999
-                                                        ? DateFormat('HH:mm')
-                                                            .format(DateTime
-                                                                    .now()
-                                                                .add(Duration(
-                                                                    minutes:
-                                                                        cityBusArriveTime[
-                                                                            1])))
-                                                        : ' '),
-                                                Container(),
-                                              ],
-                                      ),
+                                      child: GetBuilder<BusController>(
+                                          init: BusController(),
+                                          builder: (busController) {
+                                            return Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children:
+                                                  _.selectedStation == '해양대구본관'
+                                                      ? [
+                                                          FirstArrive(
+                                                              _.nextDepartCityBus!
+                                                                          .length >
+                                                                      0
+                                                                  ? departRemainTime[
+                                                                      0]
+                                                                  : '없음',
+                                                              _.nextDepartCityBus!
+                                                                          .length >
+                                                                      0
+                                                                  ? departArriveTime[
+                                                                      0]
+                                                                  : ' '),
+                                                          SecondArrive(
+                                                              _.nextDepartCityBus!
+                                                                          .length >
+                                                                      1
+                                                                  ? departRemainTime[
+                                                                      1]
+                                                                  : '없음',
+                                                              _.nextDepartCityBus!
+                                                                          .length >
+                                                                      1
+                                                                  ? departArriveTime[
+                                                                      1]
+                                                                  : ' ',
+                                                              _.stationList
+                                                                  .indexOf(_
+                                                                      .selectedStation),
+                                                              busController.getIsNotiOn(_
+                                                                      .stationList
+                                                                      .indexOf(_
+                                                                          .selectedStation) +
+                                                                  10)),
+                                                          ThirdArrive(
+                                                            _.nextDepartCityBus!
+                                                                        .length >
+                                                                    2
+                                                                ? departRemainTime[
+                                                                    2]
+                                                                : '없음',
+                                                            _.nextDepartCityBus!
+                                                                        .length >
+                                                                    2
+                                                                ? departArriveTime[
+                                                                    2]
+                                                                : ' ',
+                                                            _.stationList.indexOf(
+                                                                _.selectedStation),
+                                                            busController.getIsNotiOn(_
+                                                                    .stationList
+                                                                    .indexOf(_
+                                                                        .selectedStation) +
+                                                                20),
+                                                          )
+                                                        ]
+                                                      : [
+                                                          FirstArrive(
+                                                              cityBusArriveTime !=
+                                                                          [] &&
+                                                                      cityBusArriveTime[
+                                                                              0] !=
+                                                                          9999
+                                                                  ? cityBusArriveTime[
+                                                                          0]
+                                                                      .toString()
+                                                                  : '없음',
+                                                              cityBusArriveTime !=
+                                                                          [] &&
+                                                                      cityBusArriveTime[
+                                                                              0] !=
+                                                                          9999
+                                                                  ? DateFormat('HH:mm').format(DateTime
+                                                                          .now()
+                                                                      .add(Duration(
+                                                                          minutes:
+                                                                              cityBusArriveTime[0])))
+                                                                  : ' '),
+                                                          SecondArrive(
+                                                              cityBusArriveTime !=
+                                                                          [] &&
+                                                                      cityBusArriveTime[1] !=
+                                                                          9999
+                                                                  ? cityBusArriveTime[1]
+                                                                      .toString()
+                                                                  : '없음',
+                                                              cityBusArriveTime !=
+                                                                          [] &&
+                                                                      cityBusArriveTime[1] !=
+                                                                          9999
+                                                                  ? DateFormat('HH:mm').format(
+                                                                      DateTime.now().add(Duration(
+                                                                          minutes: cityBusArriveTime[
+                                                                              1])))
+                                                                  : ' ',
+                                                              _.stationList
+                                                                  .indexOf(_
+                                                                      .selectedStation),
+                                                              busController.getIsNotiOn(
+                                                                  _.stationList.indexOf(_.selectedStation) + 10)),
+                                                          Container(),
+                                                        ],
+                                            );
+                                          }),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -250,7 +282,7 @@ class CityBus extends GetView<CityBusController> {
                             init: CityBusController(),
                             builder: (_) {
                               return Dropdown(
-                                controller.stationList,
+                                _.stationList,
                                 _.selectedStation,
                                 (value) {
                                   value == '주변정류장'
@@ -261,7 +293,7 @@ class CityBus extends GetView<CityBusController> {
                                               ? fetchStation('167850202')
                                               : CityBusRepository()
                                                   .getNextDepartCityBus();
-                                  controller.setSelectedStation(value);
+                                  _.setSelectedStation(value);
                                 },
                                 findTitle: findCityBusTitle,
                                 findSubTitle: findCityBusSubTitle,
@@ -280,18 +312,21 @@ class CityBus extends GetView<CityBusController> {
   }
 }
 
-handleBusNotification(remainTime) async {
+handleBusNotification(id, remainTime, isNotiOn) async {
   if (remainTime != null && remainTime != '없음') {
     await dailyAtTimeNotification(
-        '버스 도착 알림', '버스 도착 3분 후 전이에요.', (int.parse(remainTime) - 3));
-    Get.dialog(
-        AlertDialog(
-          contentPadding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(20),
-              SizeConfig.sizeByHeight(20), SizeConfig.sizeByHeight(20), 0),
-          content: dialog,
-        ),
-        transitionDuration: Duration(milliseconds: 200),
-        name: '190버스알림');
+        id, '버스 도착 알림', '버스 도착 3분 후 전이에요.', (int.parse(remainTime) - 3));
+    if(!isNotiOn){
+
+        Get.dialog(
+            AlertDialog(
+              contentPadding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(20),
+                  SizeConfig.sizeByHeight(20), SizeConfig.sizeByHeight(20), 0),
+              content: dialog
+            ),
+            transitionDuration: Duration(milliseconds: 200),
+            name: '190버스알림');
+    }
   }
 }
 
@@ -354,10 +389,14 @@ class FirstArrive extends StatelessWidget {
 }
 
 class SecondArrive extends StatelessWidget {
-  const SecondArrive(this.remainTime, this.arriveTime, {Key? key})
+  const SecondArrive(this.remainTime, this.arriveTime, this.stationIndex,
+      this.isNotificationOn,
+      {Key? key})
       : super(key: key);
   final String arriveTime;
   final String? remainTime;
+  final int? stationIndex;
+  final bool? isNotificationOn;
 
   @override
   Widget build(BuildContext context) {
@@ -367,13 +406,15 @@ class SecondArrive extends StatelessWidget {
           children: [
             Container(
               width: SizeConfig.sizeByHeight(90),
+              color: isNotificationOn! ? Colors.red : Colors.transparent,
               child: Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.transparent,
                     shadowColor: Colors.transparent,
                   ),
-                  onPressed: () => handleBusNotification(remainTime),
+                  onPressed: () => handleBusNotification(
+                      10 + stationIndex!, remainTime, isNotificationOn),
                   child: Image.asset(
                     'assets/images/busPage/notiIcon_next.png',
                     width: SizeConfig.sizeByHeight(70),
@@ -414,10 +455,14 @@ class SecondArrive extends StatelessWidget {
 }
 
 class ThirdArrive extends StatelessWidget {
-  const ThirdArrive(this.remainTime, this.arriveTime, {Key? key})
+  const ThirdArrive(this.remainTime, this.arriveTime, this.stationIndex,
+      this.isNotificationOn,
+      {Key? key})
       : super(key: key);
   final String? arriveTime;
   final String? remainTime;
+  final int? stationIndex;
+  final bool? isNotificationOn;
 
   @override
   Widget build(BuildContext context) {
@@ -426,6 +471,7 @@ class ThirdArrive extends StatelessWidget {
         Row(
           children: [
             Container(
+              color: isNotificationOn! ? Colors.red : Colors.transparent,
               width: SizeConfig.sizeByHeight(90),
               child: Center(
                 child: ElevatedButton(
@@ -433,7 +479,8 @@ class ThirdArrive extends StatelessWidget {
                     primary: Colors.transparent,
                     shadowColor: Colors.transparent,
                   ),
-                  onPressed: () => handleBusNotification(remainTime),
+                  onPressed: () => handleBusNotification(
+                      20 + stationIndex!, remainTime, isNotificationOn),
                   child: Image.asset(
                     'assets/images/busPage/notiIcon_later.png',
                     width: SizeConfig.sizeByHeight(40),
