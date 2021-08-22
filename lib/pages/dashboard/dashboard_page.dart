@@ -182,11 +182,15 @@ class _DashboardPageState extends State<DashboardPage> {
   _bottomNavigationBarItem({Widget? icon, String? label}) {
     return BottomNavigationBarItem(
       icon: Container(
-        margin: EdgeInsets.only(top: 8, bottom: 8),
+        margin: EdgeInsets.only(
+            top: SizeConfig.sizeByHeight(8),
+            bottom: SizeConfig.sizeByHeight(8)),
         child: Center(child: icon),
       ),
       activeIcon: Container(
-          margin: EdgeInsets.only(top: 8, bottom: 8),
+          margin: EdgeInsets.only(
+              top: SizeConfig.sizeByHeight(8),
+              bottom: SizeConfig.sizeByHeight(8)),
           child: Center(
             child: Stack(
               children: <Widget>[
@@ -242,54 +246,58 @@ class _DashboardPageState extends State<DashboardPage> {
           sigmaX: 10,
           sigmaY: 10,
         ),
-        child: BottomNavigationBar(
-          unselectedItemColor: Color(0xFF939393),
-          selectedItemColor: Color(0xFF0081FF),
-          onTap: controller.changeTabIndex,
-          currentIndex: controller.tabIndex,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          selectedFontSize: SizeConfig.sizeByHeight(10),
-          unselectedFontSize: SizeConfig.sizeByHeight(10),
-          selectedLabelStyle: TextStyle(color: Color(0xFF0081FF)),
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white.withOpacity(0.8),
-          elevation: 0,
-          items: [
-            _bottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.house_fill),
-              label: '홈',
-            ),
-            _bottomNavigationBarItem(
-              icon: Container(
-                  padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(4)),
-                  child: ImageIcon(
-                      AssetImage('assets/images/bottomNavigationIcon/bus.png'),
-                      size: 24)),
-              label: '버스',
-            ),
-            _bottomNavigationBarItem(
-              icon: Container(
-                  padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(3)),
-                  child: ImageIcon(AssetImage(
-                      'assets/images/bottomNavigationIcon/fork.knife.png'))),
-              label: '식단',
-            ),
-            _bottomNavigationBarItem(
-              icon: Container(
-                  padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(3)),
-                  child: ImageIcon(AssetImage(
-                      'assets/images/bottomNavigationIcon/calendar.png'))),
-              label: '학사일정',
-            ),
-            _bottomNavigationBarItem(
-              icon: Container(
-                  padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(2)),
-                  child: ImageIcon(AssetImage(
-                      'assets/images/bottomNavigationIcon/ellipsis.png'))),
-              label: '더보기',
-            ),
-          ],
+        child: Container(
+          height: SizeConfig.blockSizeVertical * 12,
+          child: BottomNavigationBar(
+            unselectedItemColor: Color(0xFF939393),
+            selectedItemColor: Color(0xFF0081FF),
+            onTap: controller.changeTabIndex,
+            currentIndex: controller.tabIndex,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            selectedFontSize: SizeConfig.sizeByHeight(10),
+            unselectedFontSize: SizeConfig.sizeByHeight(10),
+            selectedLabelStyle: TextStyle(color: Color(0xFF0081FF)),
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white.withOpacity(0.8),
+            elevation: 0,
+            items: [
+              _bottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.house_fill),
+                label: '홈',
+              ),
+              _bottomNavigationBarItem(
+                icon: Container(
+                    padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(4)),
+                    child: ImageIcon(
+                        AssetImage(
+                            'assets/images/bottomNavigationIcon/bus.png'),
+                        size: 24)),
+                label: '버스',
+              ),
+              _bottomNavigationBarItem(
+                icon: Container(
+                    padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(3)),
+                    child: ImageIcon(AssetImage(
+                        'assets/images/bottomNavigationIcon/fork.knife.png'))),
+                label: '식단',
+              ),
+              _bottomNavigationBarItem(
+                icon: Container(
+                    padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(3)),
+                    child: ImageIcon(AssetImage(
+                        'assets/images/bottomNavigationIcon/calendar.png'))),
+                label: '학사일정',
+              ),
+              _bottomNavigationBarItem(
+                icon: Container(
+                    padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(2)),
+                    child: ImageIcon(AssetImage(
+                        'assets/images/bottomNavigationIcon/ellipsis.png'))),
+                label: '더보기',
+              ),
+            ],
+          ),
         ),
       ),
     );

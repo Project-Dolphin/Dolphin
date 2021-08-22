@@ -16,7 +16,7 @@ class ShuttleBusRepository {
       return [previousShuttle, nextShuttle];
     } else {
       print('error ${response.statusCode}');
-      return [];
+      return [[], []];
     }
   }
 

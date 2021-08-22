@@ -42,7 +42,8 @@ class ShuttleBusController extends GetxController {
                 .add(DateTime(now.year, now.month, now.day, hour, minute));
       }
     }
-    if (response[0] != null && response[0]['type'] != 'none') {
+    print(response[0]);
+    if (response[0].length > 0 && response[0]['type'] != 'none') {
       var hour = int.parse(response[0]['time'].substring(0, 2));
       var minute = int.parse(response[0]['time'].substring(2, 4));
       newPreviousShuttle

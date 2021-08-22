@@ -61,29 +61,29 @@ class CityBus extends GetView<CityBusController> {
               }
             }
 
-            return _.isLoading
-                ? Loading()
-                : Stack(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              '정류장 선택',
-                              style: TextStyle(
-                                color: Color(0xFF0081FF),
-                                fontSize: SizeConfig.sizeByHeight(10),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.sizeByHeight(93),
-                          ),
-                          Container(
-                            height: SizeConfig.sizeByHeight(350),
-                            child: Stack(
+            return Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        '정류장 선택',
+                        style: TextStyle(
+                          color: Color(0xFF0081FF),
+                          fontSize: SizeConfig.sizeByHeight(10),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.sizeByHeight(93),
+                    ),
+                    Container(
+                      height: SizeConfig.sizeByHeight(350),
+                      child: _.isLoading
+                          ? Loading()
+                          : Stack(
                               children: [
                                 Container(
                                   width: 1,
@@ -188,6 +188,7 @@ class CityBus extends GetView<CityBusController> {
                                                                         cityBusArriveTime[
                                                                             1])))
                                                         : ' '),
+                                                Container(),
                                               ],
                                       ),
                                     ),
@@ -235,43 +236,43 @@ class CityBus extends GetView<CityBusController> {
                                 )
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      Positioned(
-                        top: SizeConfig.sizeByHeight(24),
-                        child: Container(
-                          width: SizeConfig.sizeByWidth(268),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GetBuilder<CityBusController>(
-                                  init: CityBusController(),
-                                  builder: (_) {
-                                    return Dropdown(
-                                      controller.stationList,
-                                      _.selectedStation,
-                                      (value) {
-                                        value == '주변정류장'
-                                            ? findNearStation()
-                                            : value == '부산역'
-                                                ? fetchStation('169100201')
-                                                : value == '영도대교'
-                                                    ? fetchStation('167850202')
-                                                    : CityBusRepository()
-                                                        .getNextDepartCityBus();
-                                        controller.setSelectedStation(value);
-                                      },
-                                      findTitle: findCityBusTitle,
-                                      findSubTitle: findCityBusSubTitle,
-                                    );
-                                  }),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
+                    ),
+                  ],
+                ),
+                Positioned(
+                  top: SizeConfig.sizeByHeight(24),
+                  child: Container(
+                    width: SizeConfig.sizeByWidth(268),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GetBuilder<CityBusController>(
+                            init: CityBusController(),
+                            builder: (_) {
+                              return Dropdown(
+                                controller.stationList,
+                                _.selectedStation,
+                                (value) {
+                                  value == '주변정류장'
+                                      ? findNearStation()
+                                      : value == '부산역'
+                                          ? fetchStation('169100201')
+                                          : value == '영도대교'
+                                              ? fetchStation('167850202')
+                                              : CityBusRepository()
+                                                  .getNextDepartCityBus();
+                                  controller.setSelectedStation(value);
+                                },
+                                findTitle: findCityBusTitle,
+                                findSubTitle: findCityBusSubTitle,
+                              );
+                            }),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
           },
         ),
       ),
@@ -282,7 +283,7 @@ class CityBus extends GetView<CityBusController> {
 handleBusNotification(remainTime) async {
   if (remainTime != null && remainTime != '없음') {
     await dailyAtTimeNotification(
-        '버스 도착 알림', '버스 도착 3분 전이에요.', (int.parse(remainTime) - 3));
+        '버스 도착 알림', '버스 도착 3분 후 전이에요.', (int.parse(remainTime) - 3));
     Get.dialog(
         AlertDialog(
           contentPadding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(20),
@@ -332,10 +333,7 @@ class FirstArrive extends StatelessWidget {
                       remainTime == '없음'
                           ? TextBox('운행 정보가 없어요', 18, FontWeight.w500,
                               Color(0xFF353B45))
-                          : TextBox(
-                              '약 ${remainTime != null ? remainTime : '300'}분',
-                              30,
-                              FontWeight.w700,
+                          : TextBox('$remainTime분 후', 30, FontWeight.w700,
                               Color(0xFF353B45)),
                       TextBox(
                         '$arriveTime',
@@ -394,8 +392,8 @@ class SecondArrive extends StatelessWidget {
                 remainTime == '없음'
                     ? TextBox(
                         '운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                    : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
-                        22, FontWeight.w700, Color(0xFF353B45)),
+                    : TextBox('$remainTime분 후', 22, FontWeight.w700,
+                        Color(0xFF353B45)),
                 arriveTime != ' '
                     ? TextBox(
                         '$arriveTime',
@@ -454,8 +452,8 @@ class ThirdArrive extends StatelessWidget {
                 remainTime == '없음'
                     ? TextBox(
                         '운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                    : TextBox('약 ${remainTime != null ? remainTime : '300'}분',
-                        18, FontWeight.w500, Color(0xFF353B45)),
+                    : TextBox('$remainTime분 후', 18, FontWeight.w500,
+                        Color(0xFF353B45)),
                 arriveTime != ' '
                     ? Column(
                         children: [
