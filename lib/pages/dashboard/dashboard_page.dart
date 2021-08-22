@@ -151,6 +151,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    init();
     SizeConfig().init(context);
     return Container(
         decoration: BoxDecoration(
