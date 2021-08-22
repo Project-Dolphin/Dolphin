@@ -13,6 +13,9 @@ class CityBusController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    print(nearStation);
+    print(selectedStation);
+    setStation(nearStation);
   }
 
   void setSelectedStation(station) {

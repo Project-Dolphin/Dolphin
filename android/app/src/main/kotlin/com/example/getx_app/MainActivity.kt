@@ -1,4 +1,4 @@
-package com.dolphin.OceanView
+package com.kmouin.dscios
 
 import io.flutter.embedding.android.FlutterActivity
 

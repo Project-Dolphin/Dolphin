@@ -31,10 +31,46 @@
               "client_type": 3
             },
             {
-              "client_id": "238762269352-ikv9mmo0pojpr6bvuechl59t8earn89k.apps.googleusercontent.com",
+              "client_id": "238762269352-be7i9oi4cipvlad1010fnuglhvn7pr91.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.dolphin.OceanView"
+                "bundle_id": "com.oceanview.oceanview"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238762269352:android:2b66cd1951d0f91e96c09d",
+        "android_client_info": {
+          "package_name": "com.kmouin.dscios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238762269352-fao456enjpjuu7e9omu1jhq2jkcg0dj1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUAHLNAqHEmkx9M7jOlxYhO6ZFoX83PlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238762269352-fao456enjpjuu7e9omu1jhq2jkcg0dj1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "238762269352-be7i9oi4cipvlad1010fnuglhvn7pr91.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.oceanview.oceanview"
               }
             }
           ]

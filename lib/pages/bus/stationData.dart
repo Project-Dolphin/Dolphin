@@ -15,16 +15,23 @@ Future<void> findNearStation() async {
   Get.put(CityBusController());
   Get.find<CityBusController>().setIsLoading(true);
   Position? _currentLocation = await _determinePosition();
+  var changeStation = false;
   station_190.forEach((element) {
     var _distance =
         pow((element['gpsX'].toDouble() - _currentLocation.longitude), 2) +
             pow((element['gpsY'].toDouble() - _currentLocation.latitude), 2);
     if (_distance < stationDistance) {
+      changeStation = true;
       stationDistance = _distance;
       nearStation = element['nodeName'];
       nodeId = element['nodeId'].toString();
     }
   });
+
+  if (!changeStation) {
+    nearStation = '부산역';
+    nodeId = '169100201';
+  }
   print(_currentLocation);
   print(nearStation);
 
