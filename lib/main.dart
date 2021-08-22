@@ -114,7 +114,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     findNearStation();
     return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 1)),
+      future: Firebase.initializeApp(),
       builder: (context, AsyncSnapshot snapshot) {
         // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {
