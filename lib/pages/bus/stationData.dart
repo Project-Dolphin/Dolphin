@@ -32,9 +32,6 @@ Future<void> findNearStation() async {
     nearStation = '부산역';
     nodeId = '169100201';
   }
-  print(_currentLocation);
-  print(nearStation);
-
   Get.find<CityBusController>().setStation(nearStation);
   // FetchAPI().fetchBusInfo(167720201);
   //직접 api 호출하는 메소드
