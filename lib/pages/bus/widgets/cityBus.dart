@@ -316,16 +316,14 @@ handleBusNotification(id, remainTime, isNotiOn) async {
   if (remainTime != null && remainTime != '없음') {
     await dailyAtTimeNotification(
         id, '버스 도착 알림', '버스 도착 3분 후 전이에요.', (int.parse(remainTime) - 3));
-    if(!isNotiOn){
-
-        Get.dialog(
-            AlertDialog(
+    if (!isNotiOn) {
+      Get.dialog(
+          AlertDialog(
               contentPadding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(20),
                   SizeConfig.sizeByHeight(20), SizeConfig.sizeByHeight(20), 0),
-              content: dialog
-            ),
-            transitionDuration: Duration(milliseconds: 200),
-            name: '190버스알림');
+              content: dialog),
+          transitionDuration: Duration(milliseconds: 200),
+          name: '190버스알림');
     }
   }
 }
@@ -406,7 +404,6 @@ class SecondArrive extends StatelessWidget {
           children: [
             Container(
               width: SizeConfig.sizeByHeight(90),
-              color: isNotificationOn! ? Colors.red : Colors.transparent,
               child: Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -416,7 +413,9 @@ class SecondArrive extends StatelessWidget {
                   onPressed: () => handleBusNotification(
                       10 + stationIndex!, remainTime, isNotificationOn),
                   child: Image.asset(
-                    'assets/images/busPage/notiIcon_next.png',
+                    isNotificationOn!
+                        ? 'assets/images/busPage/notiIcon_next_on.png'
+                        : 'assets/images/busPage/notiIcon_next_off.png',
                     width: SizeConfig.sizeByHeight(70),
                     height: SizeConfig.sizeByHeight(70),
                   ),
@@ -482,7 +481,9 @@ class ThirdArrive extends StatelessWidget {
                   onPressed: () => handleBusNotification(
                       20 + stationIndex!, remainTime, isNotificationOn),
                   child: Image.asset(
-                    'assets/images/busPage/notiIcon_later.png',
+                    isNotificationOn!
+                        ? 'assets/images/busPage/notiIcon_later_on.png'
+                        : 'assets/images/busPage/notiIcon_later_off.png',
                     width: SizeConfig.sizeByHeight(40),
                     height: SizeConfig.sizeByHeight(40),
                   ),

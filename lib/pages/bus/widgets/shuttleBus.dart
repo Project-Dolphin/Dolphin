@@ -390,7 +390,9 @@ class SecondArrive extends StatelessWidget {
               onPressed: () => handleBusNotification(
                   30 + stationIndex!, remainTime, isNotificationOn),
               child: Image.asset(
-                'assets/images/busPage/notiIcon_next.png',
+                isNotificationOn!
+                    ? 'assets/images/busPage/notiIcon_next_on.png'
+                    : 'assets/images/busPage/notiIcon_next_off.png',
                 width: SizeConfig.sizeByHeight(60),
                 height: SizeConfig.sizeByHeight(60),
               ),
@@ -452,7 +454,9 @@ class ThirdArrive extends StatelessWidget {
               onPressed: () => handleBusNotification(
                   40 + stationIndex!, remainTime, isNotificationOn),
               child: Image.asset(
-                'assets/images/busPage/notiIcon_later.png',
+                isNotificationOn!
+                    ? 'assets/images/busPage/notiIcon_later_on.png'
+                    : 'assets/images/busPage/notiIcon_later_off.png',
                 width: SizeConfig.sizeByHeight(40),
                 height: SizeConfig.sizeByHeight(40),
               ),
