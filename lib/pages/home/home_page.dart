@@ -23,13 +23,6 @@ Future<Null> onRefresh() async {
   await WeatherRepository().getCurrentWeather();
 }
 
-Future<Null> init() async {
-  await CityBusRepository().getNextDepartCityBus();
-  await NoticeRepository().getNotice();
-  await EventRespository().getLatestEventList();
-  await WeatherRepository().getCurrentWeather();
-}
-
 class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
