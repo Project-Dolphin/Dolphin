@@ -25,14 +25,14 @@ class Header extends StatelessWidget {
               child: ClipRect(
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
-                    sigmaX: Tween(begin: 10.0, end: 0.0).evaluate(animation),
-                    sigmaY: Tween(begin: 10.0, end: 0.0).evaluate(animation),
+                    sigmaX: Tween(begin: SizeConfig.sizeByWidth(10.0), end: 0.0).evaluate(animation),
+                    sigmaY: Tween(begin: SizeConfig.sizeByHeight(10.0), end: 0.0).evaluate(animation),
                   ),
                   child: Container(
                     color: Colors.transparent, //test
                     alignment: Alignment.center,
                     width: SizeConfig.screenWidth,
-                    height: 50,
+                    height: SizeConfig.sizeByHeight(50),
                   ),
                 ),
               ), // to clip the container
@@ -65,7 +65,7 @@ class Header extends StatelessWidget {
                     begin: SizeConfig.sizeByHeight(14),
                     end: SizeConfig.sizeByHeight(28))
                 .evaluate(animation),
-            left: SizeConfig.sizeByHeight(14),
+            left: SizeConfig.sizeByWidth(14),
           ),
           child: TextBox(
               '식단',

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oceanview/common/sizeConfig.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TwolineTitle extends StatelessWidget {
   const TwolineTitle({
@@ -14,11 +15,13 @@ class TwolineTitle extends StatelessWidget {
     @required this.fontweight1,
     @required this.fontweight2,
     @required this.fontweight3,
+    required this.url,
   });
 
   final String? name, subname, stat, more;
   final double? fontsize1, fontsize2, fontsize3;
   final FontWeight? fontweight1, fontweight2, fontweight3;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +40,15 @@ class TwolineTitle extends StatelessWidget {
             fontweight1: fontweight1,
           ),
           BottomTitle(
-              subname: subname,
-              fontsize2: fontsize2,
-              fontweight2: fontweight2,
-              stat: stat,
-              fontsize3: fontsize3,
-              fontweight3: fontweight3,
-              more: more),
+            subname: subname,
+            fontsize2: fontsize2,
+            fontweight2: fontweight2,
+            stat: stat,
+            fontsize3: fontsize3,
+            fontweight3: fontweight3,
+            more: more,
+            url: url,
+          ),
         ],
       ),
     );
@@ -60,6 +65,7 @@ class BottomTitle extends StatelessWidget {
     required this.fontsize3,
     required this.fontweight3,
     required this.more,
+    required this.url,
   }) : super(key: key);
 
   final String? subname;
@@ -69,6 +75,7 @@ class BottomTitle extends StatelessWidget {
   final double? fontsize3;
   final FontWeight? fontweight3;
   final String? more;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +105,7 @@ class BottomTitle extends StatelessWidget {
           description: more,
           fontsize: fontsize3,
           fontweight: fontweight2,
+          urlName: url,
         ),
       ],
     );
@@ -200,30 +208,60 @@ class MoreText extends StatelessWidget {
     @required this.description,
     @required this.fontsize,
     @required this.fontweight,
+    required this.urlName,
   });
 
   final description, fontsize, fontweight;
+  var urlName;
+  var _url = "";
 
   @override
   Widget build(BuildContext context) {
+    _url = urlName;
     return FittedBox(
       fit: BoxFit.scaleDown,
-      child: Row(
-        children: [
-          Text(
-            description,
-            style: TextStyle(
-              fontSize: fontsize,
-              fontWeight: fontweight,
+      child: _url != ""
+          ? TextButton(
+              style: TextButton.styleFrom(
+                primary: Color(0xFF353B45),
+              ),
+              onPressed: _launchURL,
+              child: Row(
+                children: [
+                  Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: fontsize,
+                      fontWeight: fontweight,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Color(0xFF353B45),
+                    size: SizeConfig.sizeByHeight(10.0),
+                  ),
+                ],
+              ),
+            )
+          : Row(
+              children: [
+                Text(
+                  description,
+                  style: TextStyle(
+                    fontSize: fontsize,
+                    fontWeight: fontweight,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Color(0xFF939393),
+                  size: SizeConfig.sizeByHeight(10.0),
+                ),
+              ],
             ),
-          ),
-          Icon(
-            Icons.arrow_forward_ios,
-            color: Color(0xFF939393),
-            size: SizeConfig.sizeByHeight(10.0),
-          ),
-        ],
-      ),
     );
   }
+
+  void _launchURL() async =>
+      await canLaunch(_url) ? await launch(_url) : throw '$_url 열 수 없음';
 }
