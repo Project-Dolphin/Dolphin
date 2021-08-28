@@ -77,7 +77,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[0],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -87,7 +87,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[1],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -108,7 +108,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[2],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -118,7 +118,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[3],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -139,7 +139,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[4],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -149,7 +149,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[5],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -170,7 +170,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[6],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -180,7 +180,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[7],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -201,7 +201,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[8],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -211,7 +211,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[9],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -232,7 +232,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[10],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -242,7 +242,7 @@ class _MealContentColumn extends State<MealContentColumn>{
                     child: Text(
                       widget.mealMenu[11],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),

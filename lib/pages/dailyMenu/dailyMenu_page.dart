@@ -8,6 +8,7 @@ import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'dailyMenu_header.dart';
 import 'dailyMenu_menu.dart';
+import 'dailyMenu_menu_snack.dart';
 import 'infoMenu/menu_information.dart';
 
 class DailyMenuPage extends GetView<DailyMenuController> {
@@ -30,19 +31,97 @@ class _DailyMenuMain extends State<DailyMenuMain> {
   final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
   final List testPageList = [
     MealCard(menu1: cafeteriaMenu, menu2: cafeteriaMenu, menu3: cafeteriaSpecialMenu, type: 0, time: time, name: timeName1),
-    MealCard(menu1: snackMenu, menu2: snackMenu, menu3: snackMenu, type: 1, time: timeCafeteria, name: timeName2),
+    SnackCard(type: 1, time: timeCafeteria, name: timeName2),
     MealCard(menu1: employerMenu, menu2: employerSpecialMenu, menu3: emptyMenu, type: 2, time: timeEmployer, name: timeName3),
     MealCard(menu1: dormMenuB, menu2: dormMenuL, menu3: dormMenuD, type: 3, time: timeDorm, name: timeName2),
     MealCard(menu1: mariDormMenuB, menu2: mariDormMenuL, menu3: mariDormMenuD, type: 4, time: timeMariDorm, name: timeName2),
   ];
-  final name = '식단', subname = '0층 식단', stat = '운영중', more = '이번주 식단 보기';
+  final name = '식단', subname = '0층 식단', more = '이번주 식단 보기';
+  var _stat = '운영중';
   int _current = 0;
   final CarouselController _controller = CarouselController();
+
+  var studentStat = statStudent1 || statStudent2;
+  var cafeteriaStat = statCafeteria1 || statCafeteria2 || statCafeteria3;
+  var employerStat = statEmployer1;
+  var dormStat = statDorm1 || statDorm2 || statDorm3;
+  var dormWeekendStat = statWeekend1 || statWeekend2 || statWeekend3;
 
   @override
   void initState(){
     super.initState();
     mealParse();
+    if(DateTime.now().weekday == (6|7)){
+      switch(_current) {
+        case 0:
+          {
+            _stat = "운영종료";
+            return null;
+          }
+        case 1:
+          {
+            _stat = "운영종료";
+            return null;
+          }
+        case 2:
+          {
+            _stat = "운영종료";
+            return null;
+          }
+        case 3:
+          {
+            dormWeekendStat == true ? _stat = "운영중" : _stat =
+            "운영종료";
+            return null;
+          }
+        case 4:
+          {
+            _stat = "운영종료";
+            return null;
+          }
+        default:
+          {
+            return null;
+          }
+      }
+    }
+    else{
+      switch(_current) {
+        case 0:
+          {
+            studentStat == true ? _stat = "운영중" : _stat =
+            "운영종료";
+            return null;
+          }
+        case 1:
+          {
+            cafeteriaStat == true ? _stat = "운영중" : _stat =
+            "운영종료";
+            return null;
+          }
+        case 2:
+          {
+            employerStat == true ? _stat = "운영중" : _stat =
+            "운영종료";
+            return null;
+          }
+        case 3:
+          {
+            dormStat == true ? _stat = "운영중" : _stat =
+            "운영종료";
+            return null;
+          }
+        case 4:
+          {
+            _stat = "운영종료";
+            return null;
+          }
+        default:
+          {
+            return null;
+          }
+      }
+    }
   }
 
   @override
@@ -71,7 +150,7 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                   ),
                   child: BottomTitle(
                     subname: titleList[_current] + " 식단",
-                    stat: stat,
+                    stat: _stat,
                     more: more,
                     fontsize2: SizeConfig.sizeByHeight(18),
                     fontsize3: SizeConfig.sizeByHeight(12),
@@ -105,6 +184,77 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                       setState(
                             () {
                           _current = index;
+                          if(DateTime.now().weekday == (6|7)){
+                            switch(_current) {
+                              case 0:
+                                {
+                                  _stat = "운영종료";
+                                  return null;
+                                }
+                              case 1:
+                                {
+                                  _stat = "운영종료";
+                                  return null;
+                                }
+                              case 2:
+                                {
+                                  _stat = "운영종료";
+                                  return null;
+                                }
+                              case 3:
+                                {
+                                  dormWeekendStat == true ? _stat = "운영중" : _stat =
+                                  "운영종료";
+                                  return null;
+                                }
+                              case 4:
+                                {
+                                  _stat = "운영종료";
+                                  return null;
+                                }
+                              default:
+                                {
+                                  return null;
+                                }
+                            }
+                          }
+                          else{
+                          switch(_current) {
+                            case 0:
+                              {
+                                studentStat == true ? _stat = "운영중" : _stat =
+                                "운영종료";
+                                return null;
+                              }
+                            case 1:
+                              {
+                                cafeteriaStat == true ? _stat = "운영중" : _stat =
+                                "운영종료";
+                                return null;
+                              }
+                            case 2:
+                              {
+                                employerStat == true ? _stat = "운영중" : _stat =
+                                "운영종료";
+                                return null;
+                              }
+                            case 3:
+                              {
+                                dormStat == true ? _stat = "운영중" : _stat =
+                                "운영종료";
+                                return null;
+                              }
+                            case 4:
+                              {
+                                _stat = "운영종료";
+                                return null;
+                              }
+                            default:
+                              {
+                                return null;
+                              }
+                          }
+                          }
                         },
                       );
                     },
