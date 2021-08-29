@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/common/icon/gradientIcon.dart';
 import 'package:oceanview/common/sizeConfig.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:oceanview/pages/bus/bus_page.dart';
 import 'package:oceanview/pages/calendar/calendar_page.dart';
@@ -89,6 +87,20 @@ class _DashboardPageState extends State<DashboardPage> {
       print('A new onMessageOpenedApp event was published!');
       Get.find<DashboardController>().changeTabIndex(3);
     });
+    // () async {
+    //   print('FlutterFire Messaging Example: Getting APNs token...');
+    //   String? token = await FirebaseMessaging.instance.getAPNSToken();
+    //   print('FlutterFire Messaging Example: Got APNs token: $token');
+    // }();
+    // FirebaseMessaging.instance
+    //     .getToken(
+    //         // vapidKey:
+    //         //     'BGpdLRsMJKvFDD9odfPk92uBg-JbQbyoiZdah0XlUyrjG4SDgUsE1iC_kdRgt4Kn0CO7K3RTswPZt61NNuO0XoA')
+    //         )
+    //     .then((token) {
+    //   print(token);
+    // });
+    onRefresh();
   }
 
   // Future<void> sendPushMessage() async {
@@ -151,7 +163,6 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    init();
     SizeConfig().init(context);
     return Container(
         decoration: BoxDecoration(

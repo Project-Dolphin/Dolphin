@@ -1,9 +1,11 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:oceanview/pages/bus/bus_controller.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 Future dailyAtTimeNotification(
-    String title, String description, int minute) async {
+    int id, String title, String description, int minute) async {
   final notiTitle = title;
   final notiDesc = description;
 
@@ -22,24 +24,40 @@ Future dailyAtTimeNotification(
       importance: Importance.max, priority: Priority.max);
   var ios = IOSNotificationDetails();
   var detail = NotificationDetails(android: android, iOS: ios);
+  final List<PendingNotificationRequest> pendingNotificationRequests =
+      await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+  var isExist = false;
+  Get.put(BusController());
 
-  if (result) {
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.deleteNotificationChannelGroup('id');
+  pendingNotificationRequests.forEach((element) {
+    if (element.id == id) {
+      isExist = true;
+    }
+  });
 
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      0,
-      notiTitle,
-      notiDesc,
-      _setNotiTime(minute),
-      detail,
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      // matchDateTimeComponents: DateTimeComponents.time,
-    );
+  if (isExist) {
+    await flutterLocalNotificationsPlugin.cancel(id);
+    Get.find<BusController>().setNotificationEach(id, false);
+  } else {
+    if (result) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.deleteNotificationChannelGroup('id');
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        id,
+        notiTitle,
+        notiDesc,
+        _setNotiTime(minute),
+        detail,
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        // matchDateTimeComponents: DateTimeComponents.time,
+      );
+      Get.find<BusController>().setNotificationEach(id, true);
+    }
   }
 }
 

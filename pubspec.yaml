@@ -67,6 +67,7 @@ flutter:
         - assets/json/190_bus_departSchool.json
         - assets/images/mealPage/
         - assets/images/CalendarPage/
+        - assets/images/morePage/
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware.
