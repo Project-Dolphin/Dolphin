@@ -6,6 +6,12 @@ import 'package:oceanview/common/titlebox/onelineTitle.dart';
 import 'package:oceanview/pages/more/appDeveloperInfo.dart';
 
 import 'package:oceanview/pages/more/more_controller.dart';
+import 'package:oceanview/services/urlUtils.dart';
+
+const String SITE_MAP =
+    'https://www.kmou.ac.kr/kmou/ad/site/view.do?mi=3513#sideContent';
+const String SITE_PHONE =
+    'https://www.kmou.ac.kr/kmou/cm/cntnts/cntntsView.do?mi=1435&cntntsId=329#sideContent';
 
 class MorePage extends GetView<MoreController> {
   @override
@@ -30,10 +36,16 @@ class MorePage extends GetView<MoreController> {
             renderContent('assets/images/morePage/moreIcon_home.png', '홈 화면 설정')
           ]),
           renderContentsBlock('학교', [
-            renderContent(
-                'assets/images/morePage/moreIcon_web.png', '학교 주요 홈페이지'),
-            renderContent(
-                'assets/images/morePage/moreIcon_phone.png', '학교 사무실 전화번호'),
+            GestureDetector(
+              onTap: () => UrlUtils.launchURL(SITE_MAP),
+              child: renderContent(
+                  'assets/images/morePage/moreIcon_web.png', '학교 주요 홈페이지'),
+            ),
+            GestureDetector(
+              onTap: () => UrlUtils.launchURL(SITE_PHONE),
+              child: renderContent(
+                  'assets/images/morePage/moreIcon_phone.png', '학교 사무실 전화번호'),
+            ),
           ]),
           renderContentsBlock('앱', [
             GestureDetector(

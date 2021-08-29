@@ -90,12 +90,24 @@ class SchoolBus extends StatelessWidget {
           Padding(
             padding:
                 EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(3)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
               children: [
-                TextBox('09:00', 14, FontWeight.w700, Color(0xFF353B45)),
-                TextBox('09:25', 14, FontWeight.w700, Color(0xFF353B45)),
-                TextBox('09:50', 14, FontWeight.w700, Color(0xFF353B45)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextBox('09:00', 14, FontWeight.w700, Color(0xFF353B45)),
+                    TextBox('09:25', 14, FontWeight.w700, Color(0xFF353B45)),
+                    TextBox('09:50', 14, FontWeight.w700, Color(0xFF353B45)),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextBox('14:00', 14, FontWeight.w700, Color(0xFF353B45)),
+                    TextBox('14:25', 14, FontWeight.w700, Color(0xFF353B45)),
+                    TextBox('14:50', 14, FontWeight.w700, Color(0xFF353B45)),
+                  ],
+                ),
               ],
             ),
           ),
