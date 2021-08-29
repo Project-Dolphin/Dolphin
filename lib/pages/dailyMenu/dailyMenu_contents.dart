@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 
-class MealContentColumn extends StatelessWidget {
+class MealContentColumn extends StatefulWidget {
   const MealContentColumn({
     Key? key,
     @required this.mealName,
@@ -17,6 +18,18 @@ class MealContentColumn extends StatelessWidget {
   final imageName;
 
   @override
+  _MealContentColumn createState() => _MealContentColumn();
+}
+
+class _MealContentColumn extends State<MealContentColumn>{
+  @override
+  void initState(){
+    super.initState();
+    mealParse();
+    mariDormParse();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -28,10 +41,10 @@ class MealContentColumn extends StatelessWidget {
               children: [
                 Image(
                   width: SizeConfig.sizeByHeight(30.0),
-                  image: AssetImage('assets/images/mealPage/' + imageName),
+                  image: AssetImage('assets/images/mealPage/' + widget.imageName),
                 ),
                 Text(
-                  mealName,
+                  widget.mealName,
                   style: TextStyle(
                     fontSize: SizeConfig.sizeByHeight(16.0),
                   ),
@@ -39,7 +52,7 @@ class MealContentColumn extends StatelessWidget {
               ],
             ),
             Text(
-              mealTime,
+              widget.mealTime,
               style: TextStyle(
                 fontSize: SizeConfig.sizeByHeight(12.0),
               ),
@@ -60,21 +73,21 @@ class MealContentColumn extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
-                    width: SizeConfig.sizeByWidth(98.0),
+                    width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
-                      mealMenu[0],
+                      widget.mealMenu[0],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
                   Container(
-                    width: SizeConfig.sizeByWidth(100.0),
+                    width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
-                      mealMenu[1],
+                      widget.mealMenu[1],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -91,21 +104,21 @@ class MealContentColumn extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
-                    width: SizeConfig.sizeByWidth(98.0),
+                    width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
-                      mealMenu[2],
+                      widget.mealMenu[2],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
                   Container(
-                    width: SizeConfig.sizeByWidth(100.0),
+                    width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
-                      mealMenu[3],
+                      widget.mealMenu[3],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -122,21 +135,21 @@ class MealContentColumn extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
-                    width: SizeConfig.sizeByWidth(98.0),
+                    width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
-                      mealMenu[4],
+                      widget.mealMenu[4],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
                   Container(
-                    width: SizeConfig.sizeByWidth(100.0),
+                    width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
-                      mealMenu[5],
+                      widget.mealMenu[5],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -153,21 +166,21 @@ class MealContentColumn extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
-                    width: SizeConfig.sizeByWidth(98.0),
+                    width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
-                      mealMenu[6],
+                      widget.mealMenu[6],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
                   Container(
-                    width: SizeConfig.sizeByWidth(100.0),
+                    width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
-                      mealMenu[7],
+                      widget.mealMenu[7],
                       style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(14.0),
+                        fontSize: SizeConfig.sizeByHeight(15.0),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -175,6 +188,68 @@ class MealContentColumn extends StatelessWidget {
                 ],
               ),
             ),
+            widget.mealMenu.length > 9 ? Padding(
+              padding: EdgeInsets.only(
+                bottom: SizeConfig.sizeByWidth(7.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
+                    width: SizeConfig.sizeByWidth(110.0),
+                    child: Text(
+                      widget.mealMenu[8],
+                      style: TextStyle(
+                        fontSize: SizeConfig.sizeByHeight(15.0),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: SizeConfig.sizeByWidth(110.0),
+                    child: Text(
+                      widget.mealMenu[9],
+                      style: TextStyle(
+                        fontSize: SizeConfig.sizeByHeight(15.0),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ): Container(),
+            widget.mealMenu.length > 11 ? Padding(
+              padding: EdgeInsets.only(
+                bottom: SizeConfig.sizeByWidth(7.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
+                    width: SizeConfig.sizeByWidth(110.0),
+                    child: Text(
+                      widget.mealMenu[10],
+                      style: TextStyle(
+                        fontSize: SizeConfig.sizeByHeight(15.0),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: SizeConfig.sizeByWidth(110.0),
+                    child: Text(
+                      widget.mealMenu[11],
+                      style: TextStyle(
+                        fontSize: SizeConfig.sizeByHeight(15.0),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ): Container(),
           ],
         ),
       ],
