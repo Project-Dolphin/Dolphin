@@ -1,15 +1,13 @@
-import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:get/get.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/common/titlebox/twolineTitle.dart';
-import 'package:oceanview/pages/calendar/CalendarData.dart';
+import 'package:oceanview/pages/calendar/Calendar_repository.dart';
 import 'package:oceanview/common/titlebox/iconSet.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
@@ -17,7 +15,7 @@ import 'package:oceanview/common/sizeConfig.dart';
 
 int _current = kToday.month - 2;
 
-class CalendarPage extends GetView<CalendarController1> {
+class CalendarPage extends GetView<CalendarController> {
   final name = '학사일정';
 
   @override
@@ -31,7 +29,11 @@ class CalendarPage extends GetView<CalendarController1> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(24.0, 24.0, 14.0, 24.0),
+                padding: EdgeInsets.only(
+                    left: SizeConfig.sizeByHeight(24),
+                    top: 24.0,
+                    right: 14.0,
+                    bottom: 24.0),
                 child: oneLine.MainTitle(
                   title: name,
                   fontsize: SizeConfig.sizeByHeight(26),
@@ -41,24 +43,29 @@ class CalendarPage extends GetView<CalendarController1> {
               ),
             ],
           ),
-          Calendar(),
+          CarouselSlider(
+              options: CarouselOptions(
+                height: SizeConfig.sizeByHeight(367),
+                autoPlay: false,
+                enableInfiniteScroll: false,
+                enlargeCenterPage: false,
+                initialPage: kToday.month - 2,
+                onPageChanged: (index, reason) {},
+              ),
+              items: [
+                Calendar(),
+              ]),
         ],
       ),
     );
   }
 }
 
-class Calendar extends StatefulWidget {
-  const Calendar({Key? key}) : super(key: key);
-
-  @override
-  _CalendarState createState() => _CalendarState();
-}
-
-class _CalendarState extends State<Calendar> {
+// ignore: must_be_immutable
+class Calendar extends GetView<CalendarController> {
   late final ValueNotifier<List<Event>> _selectedEvents;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _selectedDay = DateTime.now();
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
+  final controller = Get.put(CalendarController());
   bool isFirst = true;
   LinkedHashMap<DateTime, List<Event>> kEvents =
       LinkedHashMap<DateTime, List<Event>>();
@@ -76,95 +83,13 @@ class _CalendarState extends State<Calendar> {
   List<dynamic> calendar = [];
   List<dynamic> holiday = [];
 
-  @override
-  Future<CalendarData> getCalendarDetails() async {
-    try {
-      print("future 실행!");
-      final response = await http.get(Uri.parse(
-          'https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/calendar'));
-      final responseJson = json.decode(utf8.decode(response.bodyBytes));
-
-      if (response.statusCode == 200) {
-        calendar = responseJson['data'];
-        makeEvent();
-        return CalendarData.fromJson(responseJson);
-      } else {
-        throw Exception("Failed to load data");
-      }
-    } catch (err) {
-      print("error!");
-      return CalendarData.fromJson({
-        "data": [
-          {
-            "term": {"startedAt": "1900-1-1", "endedAt": "1900-1-1"},
-            "mainPlan": true,
-            "content": "일정 정보 없음"
-          }
-        ],
-        "path": "/calendar"
-      });
-    }
-  }
-
-  Future<CalendarData> getHoliday() async {
-    try {
-      print("future 실행!");
-      final response = await http.get(Uri.parse(
-          'https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/holiday'));
-      final responseJson = json.decode(utf8.decode(response.bodyBytes));
-
-      if (response.statusCode == 200) {
-        holiday = responseJson['data'];
-        makeHoliday();
-        return CalendarData.fromJson(responseJson);
-      } else {
-        throw Exception("Failed to load data");
-      }
-    } catch (err) {
-      print("error!");
-      return CalendarData.fromJson({
-        "data": [
-          {
-            "term": {"startedAt": "1900-1-1", "endedAt": "1900-1-1"},
-            "content": "일정 정보 없음"
-          }
-        ],
-        "path": "/holiday"
-      });
-    }
-  }
-
-  @override
-  makeHoliday() {
-    for (int i = 0; i < holiday.length; i++) {
-      _holidayContent = holiday[i]['content'];
-      DateTime _holidayStart =
-          DateTime.parse(holiday[i]['term']['startedAt'].toString());
-      DateTime _holidayEnd =
-          DateTime.parse(holiday[i]['term']['endedAt'].toString());
-
-      if (_holidayStart == _holidayEnd) {
-        _holiday[_holidayStart] = _holiday[_holidayStart] ?? [];
-        _holiday[_holidayStart]!.add(Event(_holidayContent));
-      } else if (_holidayStart != _holidayEnd) {
-        for (int j = _holidayStart.day; j < _holidayEnd.day + 1; j++) {
-          _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] =
-              _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] ??
-                  [];
-          _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)]!
-              .add(Event(_holidayContent));
-        }
-      }
-    }
-  }
-
   makeEvent() {
     for (int i = 0; i < calendar.length; i++) {
-      _calendarContent = calendar[i]['content'];
+      _calendarContent = controller.calendarData![i].content!;
       DateTime _calendarStart = DateFormat("yyyy-M-dd")
-          .parse(calendar[i]['term']['startedAt'].toString());
+          .parse(controller.calendarData![i].startedAt!.toString());
       DateTime _calendarEnd = DateFormat("yyyy-M-dd")
-          .parse(calendar[i]['term']['endedAt'].toString());
+          .parse(controller.calendarData![i].endedAt!.toString());
       if (_calendarStart == _calendarEnd) {
         kEvents[_calendarStart] = kEvents[_calendarStart] ?? [];
         kEvents[_calendarStart]!.add(Event(_calendarContent));
@@ -263,22 +188,41 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
+  makeHoliday() {
+    for (int i = 0; i < holiday.length; i++) {
+      _holidayContent = controller.holidayData![i].content!;
+      DateTime _holidayStart =
+          DateTime.parse(controller.holidayData![i].startedAt!.toString());
+      DateTime _holidayEnd =
+          DateTime.parse(controller.holidayData![i].endedAt!.toString());
+
+      if (_holidayStart == _holidayEnd) {
+        _holiday[_holidayStart] = _holiday[_holidayStart] ?? [];
+        _holiday[_holidayStart]!.add(Event(_holidayContent));
+      } else if (_holidayStart != _holidayEnd) {
+        for (int j = _holidayStart.day; j < _holidayEnd.day + 1; j++) {
+          _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] =
+              _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] ??
+                  [];
+          _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)]!
+              .add(Event(_holidayContent));
+        }
+      }
+    }
+  }
+
+  Future<void> initState() async {
     kEvents = LinkedHashMap<DateTime, List<Event>>(
       equals: isSameDay,
       hashCode: getHashCode,
     );
-    getCalendarDetails();
-    getHoliday();
+    await CalendarReposiory().fetchCalendar();
+    await CalendarReposiory().fetchHoliday();
     _selectedEvents = ValueNotifier(_getEventsForDay(kToday));
   }
 
-  @override
   void dispose() {
     _selectedEvents.dispose();
-    super.dispose();
   }
 
   List<Event> _getEventsForDay(DateTime day) {
@@ -286,10 +230,8 @@ class _CalendarState extends State<Calendar> {
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    if (!isSameDay(_selectedDay, selectedDay)) {
-      setState(() {
-        _selectedDay = selectedDay;
-      });
+    if (!isSameDay(controller.selectedDay, selectedDay)) {
+      Get.find<CalendarController>().setDay(selectedDay);
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
@@ -316,1979 +258,156 @@ class _CalendarState extends State<Calendar> {
             ],
           ),
         ),
-        CarouselSlider(
-          options: CarouselOptions(
-            height: SizeConfig.sizeByHeight(367),
-            autoPlay: false,
-            enableInfiniteScroll: false,
-            enlargeCenterPage: false,
-            initialPage: kToday.month - 2,
-            onPageChanged: (index, reason) {
-              setState(
-                () {
-                  _current = index;
-                },
-              );
-            },
+
+        //2
+
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: SizeConfig.sizeByWidth(7)),
+          child: GlassMorphism(
+            width: SizeConfig.sizeByWidth(330),
+            widget: Column(
+              children: [
+                TableCalendar<Event>(
+                  onDaySelected: _onDaySelected,
+                  availableGestures: AvailableGestures.none,
+                  headerStyle: HeaderStyle(
+                    formatButtonVisible: false,
+                    leftChevronVisible: false,
+                    rightChevronVisible: false,
+                    titleTextStyle: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        color: Color(0xff353b45).withOpacity(1)),
+                    titleCentered: true,
+                    titleTextFormatter: (date, locale) =>
+                        DateFormat.M(locale).format(date),
+                    headerPadding: EdgeInsets.all(8),
+                  ),
+                  daysOfWeekHeight: 30.0,
+                  daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle: TextStyle(
+                      fontSize: 12,
+                    ),
+                    weekendStyle: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  locale: 'ko_KR',
+                  firstDay: kFirstDay,
+                  lastDay: kLastDay,
+                  focusedDay: DateTime.now(),
+                  selectedDayPredicate: (day) =>
+                      isSameDay(controller.selectedDay, day),
+                  calendarFormat: _calendarFormat,
+                  startingDayOfWeek: StartingDayOfWeek.sunday,
+                  weekendDays: [DateTime.sunday],
+                  calendarStyle: CalendarStyle(
+                      markersAutoAligned: false,
+                      markersOffset: PositionedOffset(bottom: 10),
+                      canMarkersOverflow: true,
+                      markerSize: SizeConfig.sizeByHeight(4),
+                      markerDecoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xff353B45).withOpacity(0.5),
+                      ),
+                      defaultTextStyle: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 18,
+                      ),
+                      todayTextStyle: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 18,
+                          color: Colors.white),
+                      todayDecoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFF0081FF),
+                      ),
+                      selectedTextStyle: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 18,
+                          color: controller.selectedDay.weekday == 7
+                              ? Color(0xFFff3030)
+                              : Color(0xff353b45)),
+                      selectedDecoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0xFF0081FF),
+                        ),
+                        shape: BoxShape.circle,
+                        color: Color(0xffffffff),
+                      ),
+                      holidayTextStyle: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 18,
+                          color: Color(0xffff3030)),
+                      holidayDecoration: BoxDecoration(shape: BoxShape.circle),
+                      weekendTextStyle: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 18,
+                          color: Color(0xffff3030)),
+                      outsideDaysVisible: true,
+                      outsideTextStyle: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 18,
+                          color: Color(0xff353b45).withOpacity(0.5))),
+                  eventLoader: _getEventsForDay,
+                  holidayPredicate: isHoliday,
+                ),
+                TableCalendar<Event>(
+                  onDaySelected: _onDaySelected,
+                  availableGestures: AvailableGestures.none,
+                  headerVisible: false,
+                  daysOfWeekVisible: false,
+                  locale: 'ko_KR',
+                  firstDay: kFirstDay,
+                  lastDay: kLastDay,
+                  focusedDay: DateTime(kToday.year + 1, 3, 7),
+                  selectedDayPredicate: (day) =>
+                      isSameDay(controller.selectedDay, day),
+                  calendarFormat: CalendarFormat.week,
+                  startingDayOfWeek: StartingDayOfWeek.sunday,
+                  calendarStyle: CalendarStyle(
+                    markersAutoAligned: false,
+                    markersOffset: PositionedOffset(bottom: 10),
+                    canMarkersOverflow: true,
+                    markerSize: SizeConfig.sizeByHeight(4),
+                    markerDecoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xff353B45).withOpacity(0.5),
+                    ),
+                    defaultTextStyle: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 18,
+                        color: Color(0xff353b45).withOpacity(0.5)),
+                    selectedTextStyle: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 18,
+                        color: Color(0xff353b45)),
+                    selectedDecoration: BoxDecoration(
+                      border: Border.all(
+                        color: Color(0xFF0081FF),
+                      ),
+                      shape: BoxShape.circle,
+                      color: Color(0xffffffff),
+                    ),
+                    holidayTextStyle: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 18,
+                        color: Color(0xff353b45).withOpacity(0.5)),
+                    holidayDecoration: BoxDecoration(shape: BoxShape.circle),
+                    weekendTextStyle: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 18,
+                        color: Color(0xff353b45).withOpacity(0.5)),
+                    outsideDaysVisible: false,
+                  ),
+                  eventLoader: _getEventsForDay,
+                  holidayPredicate: isHoliday,
+                ),
+              ],
+            ),
           ),
-          items: [
-            //2
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: SizeConfig.sizeByHeight(12),
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: SizeConfig.sizeByHeight(12),
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 2, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 3, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //3
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: SizeConfig.sizeByHeight(12),
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: SizeConfig.sizeByHeight(12),
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 3, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 4, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //4
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: SizeConfig.sizeByHeight(12),
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: SizeConfig.sizeByHeight(12),
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 4, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 5, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //5
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: SizeConfig.sizeByHeight(12),
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: SizeConfig.sizeByHeight(12),
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 5, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(18),
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //6
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: SizeConfig.sizeByHeight(18),
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 6, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 7, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //7
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 7, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 8, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //8
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 8, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 9, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //9
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 9, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 10, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //10
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 10, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //11
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 11, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 12, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //12
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year, 12, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year + 1, 1, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //1
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year + 1, 1, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //2
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  SizeConfig.sizeByWidth(7), 0, SizeConfig.sizeByWidth(7), 0),
-              child: GlassMorphism(
-                width: SizeConfig.sizeByWidth(330),
-                widget: Column(
-                  children: [
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerStyle: HeaderStyle(
-                        formatButtonVisible: false,
-                        leftChevronVisible: false,
-                        rightChevronVisible: false,
-                        titleTextStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(1)),
-                        titleCentered: true,
-                        titleTextFormatter: (date, locale) =>
-                            DateFormat.M(locale).format(date),
-                        headerPadding: EdgeInsets.all(8),
-                      ),
-                      daysOfWeekHeight: 30.0,
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                        weekdayStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                        weekendStyle: TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year + 1, 2, 1),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: _calendarFormat,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      weekendDays: [DateTime.sunday],
-                      calendarStyle: CalendarStyle(
-                          markersAutoAligned: false,
-                          markersOffset: PositionedOffset(bottom: 10),
-                          canMarkersOverflow: true,
-                          markerSize: SizeConfig.sizeByHeight(4),
-                          markerDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff353B45).withOpacity(0.5),
-                          ),
-                          defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                          ),
-                          todayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Colors.white),
-                          todayDecoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF0081FF),
-                          ),
-                          selectedTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: _selectedDay.weekday == 7
-                                  ? Color(0xFFff3030)
-                                  : Color(0xff353b45)),
-                          selectedDecoration: BoxDecoration(
-                            border: Border.all(
-                              color: Color(0xFF0081FF),
-                            ),
-                            shape: BoxShape.circle,
-                            color: Color(0xffffffff),
-                          ),
-                          holidayTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          holidayDecoration:
-                              BoxDecoration(shape: BoxShape.circle),
-                          weekendTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xffff3030)),
-                          outsideDaysVisible: true,
-                          outsideTextStyle: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 18,
-                              color: Color(0xff353b45).withOpacity(0.5))),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                    TableCalendar<Event>(
-                      onDaySelected: _onDaySelected,
-                      availableGestures: AvailableGestures.none,
-                      headerVisible: false,
-                      daysOfWeekVisible: false,
-                      locale: 'ko_KR',
-                      firstDay: kFirstDay,
-                      lastDay: kLastDay,
-                      focusedDay: DateTime(kToday.year + 1, 3, 7),
-                      selectedDayPredicate: (day) =>
-                          isSameDay(_selectedDay, day),
-                      calendarFormat: CalendarFormat.week,
-                      startingDayOfWeek: StartingDayOfWeek.sunday,
-                      calendarStyle: CalendarStyle(
-                        markersAutoAligned: false,
-                        markersOffset: PositionedOffset(bottom: 10),
-                        canMarkersOverflow: true,
-                        markerSize: SizeConfig.sizeByHeight(4),
-                        markerDecoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xff353B45).withOpacity(0.5),
-                        ),
-                        defaultTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        selectedTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45)),
-                        selectedDecoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF0081FF),
-                          ),
-                          shape: BoxShape.circle,
-                          color: Color(0xffffffff),
-                        ),
-                        holidayTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        holidayDecoration:
-                            BoxDecoration(shape: BoxShape.circle),
-                        weekendTextStyle: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 18,
-                            color: Color(0xff353b45).withOpacity(0.5)),
-                        outsideDaysVisible: false,
-                      ),
-                      onFormatChanged: (format) {
-                        if (_calendarFormat != format) {
-                          setState(() {
-                            _calendarFormat = format;
-                          });
-                        }
-                      },
-                      eventLoader: _getEventsForDay,
-                      holidayPredicate: isHoliday,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
+
         Expanded(
           child: ValueListenableBuilder<List<Event>>(
             valueListenable: _selectedEvents,
@@ -2314,7 +433,8 @@ class _CalendarState extends State<Calendar> {
                         child: Text(
                           '${value[index]}',
                           style: TextStyle(
-                              fontSize: SizeConfig.sizeByHeight(16), fontWeight: FontWeight.w500),
+                              fontSize: SizeConfig.sizeByHeight(16),
+                              fontWeight: FontWeight.w500),
                         ),
                       ),
                     ),
@@ -2325,7 +445,7 @@ class _CalendarState extends State<Calendar> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(0,0,10,30),
+          padding: const EdgeInsets.fromLTRB(0, 0, 10, 30),
           child: TextButton(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,

@@ -18,7 +18,7 @@ import 'themes/app_theme.dart';
 /// call.
 ///
 /// To verify things are working, check out the native platform logs.
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
@@ -54,7 +54,7 @@ void main() async {
   await Firebase.initializeApp();
 
   // Set the background messaging handler early on, as a named top-level function
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
     channel = const AndroidNotificationChannel(
@@ -114,7 +114,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     findNearStation();
     return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 1)),
+      future: Firebase.initializeApp(),
       builder: (context, AsyncSnapshot snapshot) {
         // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {

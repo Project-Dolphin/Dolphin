@@ -5,6 +5,7 @@ const PATH = const {
   'CALENDAR': '/calendar',
   'LATEST_CALENDAR': '/calendar/latest',
   'NOTICES': '/notices',
+  'HOLIDAY': '/holiday',
   'BUS_190': '/businfo',
   'SHUTTLE_NEXT': '/shuttle/next',
   'SHUTTLE_LIST': '/shuttle/today',
@@ -47,6 +48,11 @@ class FetchAPI {
 
   Future fetchSchoolNotice() async {
     var response = await fetchData(PATH['NOTICES']);
+    return response;
+  }
+
+  Future fetchHoliday() async {
+    var response = await fetchData(PATH['HOLIDAY']);
     return response;
   }
 

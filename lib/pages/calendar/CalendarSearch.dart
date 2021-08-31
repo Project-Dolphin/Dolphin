@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:oceanview/common/sizeConfig.dart';
-import 'package:oceanview/pages/calendar/CalendarData.dart';
+import 'package:oceanview/pages/calendar/Calendar_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -22,43 +22,10 @@ class _CalendarSearchState extends State<CalendarSearch> {
   TextEditingController controller = new TextEditingController();
   FocusNode _focusNode = FocusNode();
 
-  Future<CalendarData> getCalendarDetails() async {
-    try {
-      print("future 실행!");
-      final response = await http.get(Uri.parse(
-          'https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/calendar'));
-      final responseJson = json.decode(utf8.decode(response.bodyBytes));
-
-      if (response.statusCode == 200) {
-        setState(() {
-          for (int i = 0; i < responseJson['data'].length; i++) {
-            Map<String, dynamic> calendar = responseJson['data'][i];
-            _calendarDetails.add(calendar);
-          }
-        });
-        return CalendarData.fromJson(
-            json.decode(utf8.decode(response.bodyBytes)));
-      } else {
-        throw Exception("Failed to load data");
-      }
-    } catch (err) {
-      print("error!");
-      return CalendarData.fromJson({
-        "data": [
-          {
-            "term": {"startedAt": "1900-1-1", "endedAt": "1900-1-1"},
-            "content": "일정 정보 없음"
-          }
-        ],
-        "path": "/calendar"
-      });
-    }
-  }
-
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-    getCalendarDetails();
+    await CalendarReposiory().getCalendar();
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         FocusScope.of(context).requestFocus(_focusNode);
