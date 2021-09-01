@@ -8,6 +8,7 @@ import 'package:oceanview/common/loading/loading.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/bus/api/shuttleBusRepository.dart';
+import 'package:oceanview/pages/bus/bus_controller.dart';
 import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
 import 'package:oceanview/services/dailyAtTimeNotification.dart';
 import 'package:oceanview/services/urlUtils.dart';
@@ -119,71 +120,102 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Expanded(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: _.selectedStation ==
-                                                        '학교종점 (아치나루터)'
-                                                    ? [
-                                                        FirstArrive(
-                                                            _.nextShuttle
-                                                                        .length >
-                                                                    0
-                                                                ? '${remainTime[0]}분 후'
-                                                                : '없음',
-                                                            _.nextShuttle
-                                                                        .length >
-                                                                    0
-                                                                ? arriveTime[0]
-                                                                : ' '),
-                                                        SecondArrive(
-                                                            _.nextShuttle
-                                                                        .length >
-                                                                    1
-                                                                ? '${remainTime[1]}분 후'
-                                                                : '없음',
-                                                            _.nextShuttle
-                                                                        .length >
-                                                                    1
-                                                                ? arriveTime[1]
-                                                                : ' '),
-                                                        ThirdArrive(
-                                                            _.nextShuttle
-                                                                        .length >
-                                                                    2
-                                                                ? '${remainTime[2]}분 후'
-                                                                : '없음',
-                                                            _.nextShuttle
-                                                                        .length >
-                                                                    2
-                                                                ? arriveTime[2]
-                                                                : ' ')
-                                                      ]
-                                                    : [
-                                                        FirstArrive(
-                                                            _.nextShuttle
-                                                                        .length >
-                                                                    0
-                                                                ? '${hariRemainTime[0]}분 후'
-                                                                : '없음',
-                                                            ' '),
-                                                        SecondArrive(
-                                                            _.nextShuttle
-                                                                        .length >
-                                                                    1
-                                                                ? '${hariRemainTime[1]}분 후'
-                                                                : '없음',
-                                                            ' '),
-                                                        ThirdArrive(
-                                                            _.nextShuttle
-                                                                        .length >
-                                                                    2
-                                                                ? '${hariRemainTime[2]}분 후'
-                                                                : '없음',
-                                                            ' ')
-                                                      ],
-                                              ),
+                                              child: GetBuilder<BusController>(
+                                                  init: BusController(),
+                                                  builder: (busController) {
+                                                    return Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children:
+                                                          _.selectedStation ==
+                                                                  '학교종점 (아치나루터)'
+                                                              ? [
+                                                                  FirstArrive(
+                                                                      _.nextShuttle.length >
+                                                                              0
+                                                                          ? remainTime[
+                                                                              0]
+                                                                          : '없음',
+                                                                      _.nextShuttle.length >
+                                                                              0
+                                                                          ? arriveTime[
+                                                                              0]
+                                                                          : ' '),
+                                                                  SecondArrive(
+                                                                      _.nextShuttle.length >
+                                                                              1
+                                                                          ? remainTime[
+                                                                              1]
+                                                                          : '없음',
+                                                                      _.nextShuttle.length >
+                                                                              1
+                                                                          ? arriveTime[
+                                                                              1]
+                                                                          : ' ',
+                                                                      _.stationList
+                                                                          .indexOf(_
+                                                                              .selectedStation),
+                                                                      busController.getIsNotiOn(_
+                                                                              .stationList
+                                                                              .indexOf(_.selectedStation) +
+                                                                          30)),
+                                                                  ThirdArrive(
+                                                                      _.nextShuttle.length >
+                                                                              2
+                                                                          ? remainTime[
+                                                                              2]
+                                                                          : '없음',
+                                                                      _.nextShuttle.length >
+                                                                              2
+                                                                          ? arriveTime[
+                                                                              2]
+                                                                          : ' ',
+                                                                      _.stationList
+                                                                          .indexOf(_
+                                                                              .selectedStation),
+                                                                      busController
+                                                                          .getIsNotiOn(_.stationList.indexOf(_.selectedStation) +
+                                                                              40))
+                                                                ]
+                                                              : [
+                                                                  FirstArrive(
+                                                                      _.nextShuttle.length >
+                                                                              0
+                                                                          ? hariRemainTime[
+                                                                              0]
+                                                                          : '없음',
+                                                                      ' '),
+                                                                  SecondArrive(
+                                                                      _.nextShuttle.length >
+                                                                              1
+                                                                          ? hariRemainTime[
+                                                                              1]
+                                                                          : '없음',
+                                                                      ' ',
+                                                                      _.stationList
+                                                                          .indexOf(_
+                                                                              .selectedStation),
+                                                                      busController.getIsNotiOn(_
+                                                                              .stationList
+                                                                              .indexOf(_.selectedStation) +
+                                                                          30)),
+                                                                  ThirdArrive(
+                                                                      _.nextShuttle.length >
+                                                                              2
+                                                                          ? hariRemainTime[
+                                                                              2]
+                                                                          : '없음',
+                                                                      ' ',
+                                                                      _.stationList
+                                                                          .indexOf(_
+                                                                              .selectedStation),
+                                                                      busController
+                                                                          .getIsNotiOn(_.stationList.indexOf(_.selectedStation) +
+                                                                              40))
+                                                                ],
+                                                    );
+                                                  }),
                                             ),
                                             Row(
                                               mainAxisAlignment:
@@ -262,38 +294,20 @@ class ShuttleBus extends GetView<ShuttleBusController> {
   }
 }
 
-// class BeforeArrive extends StatelessWidget {
-//   const BeforeArrive({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         Container(
-//             margin: EdgeInsets.symmetric(vertical: SizeConfig.sizeByHeight(5)),
-//             width: SizeConfig.sizeByWidth(90),
-//             child: TextBox('학교에서', 14, FontWeight.w500, Color(0xFF717171))),
-//         SizedBox(
-//           width: SizeConfig.sizeByHeight(15),
-//         ),
-//         TextBox('약 3분전 출발', 12, FontWeight.w500, Color(0xFF353B45))
-//       ],
-//     );
-//   }
-// }
-
-handleBusNotification(remainTime) async {
+handleBusNotification(id, remainTime, isNotiOn) async {
   if (remainTime != null && remainTime != '없음') {
     await dailyAtTimeNotification(
-        '버스 도착 알림', '버스 도착 3분 전이에요.', (int.parse(remainTime) - 3));
-    Get.dialog(
-        AlertDialog(
-          contentPadding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(20),
-              SizeConfig.sizeByHeight(20), SizeConfig.sizeByHeight(20), 0),
-          content: dialog,
-        ),
-        transitionDuration: Duration(milliseconds: 200),
-        name: '셔틀버스알림');
+        id, '버스 도착 알림', '버스 도착 3분 전이에요.', (int.parse(remainTime) - 3));
+    if (!isNotiOn) {
+      Get.dialog(
+          AlertDialog(
+            contentPadding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(20),
+                SizeConfig.sizeByHeight(20), SizeConfig.sizeByHeight(20), 0),
+            content: dialog,
+          ),
+          transitionDuration: Duration(milliseconds: 200),
+          name: '셔틀버스알림');
+    }
   }
 }
 
@@ -327,7 +341,8 @@ class FirstArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox(remainTime!, 30, FontWeight.w700, Color(0xFF353B45)),
+                : TextBox(
+                    '$remainTime분 후', 30, FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [
@@ -350,11 +365,15 @@ class FirstArrive extends StatelessWidget {
 }
 
 class SecondArrive extends StatelessWidget {
-  const SecondArrive(this.remainTime, this.arriveTime, {Key? key})
+  const SecondArrive(this.remainTime, this.arriveTime, this.stationIndex,
+      this.isNotificationOn,
+      {Key? key})
       : super(key: key);
 
   final String? remainTime;
   final String? arriveTime;
+  final int? stationIndex;
+  final bool? isNotificationOn;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -368,9 +387,12 @@ class SecondArrive extends StatelessWidget {
                 primary: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
-              onPressed: () => handleBusNotification(remainTime),
+              onPressed: () => handleBusNotification(
+                  30 + stationIndex!, remainTime, isNotificationOn),
               child: Image.asset(
-                'assets/images/busPage/notiIcon_next.png',
+                isNotificationOn!
+                    ? 'assets/images/busPage/notiIcon_next_on.png'
+                    : 'assets/images/busPage/notiIcon_next_off.png',
                 width: SizeConfig.sizeByHeight(60),
                 height: SizeConfig.sizeByHeight(60),
               ),
@@ -386,7 +408,8 @@ class SecondArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox(remainTime!, 24, FontWeight.w700, Color(0xFF353B45)),
+                : TextBox(
+                    '$remainTime분 후', 24, FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? TextBox(
                     '$arriveTime',
@@ -405,11 +428,16 @@ class SecondArrive extends StatelessWidget {
 }
 
 class ThirdArrive extends StatelessWidget {
-  const ThirdArrive(this.remainTime, this.arriveTime, {Key? key})
+  const ThirdArrive(this.remainTime, this.arriveTime, this.stationIndex,
+      this.isNotificationOn,
+      {Key? key})
       : super(key: key);
 
   final String? remainTime;
   final String? arriveTime;
+  final int? stationIndex;
+  final bool? isNotificationOn;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -423,9 +451,12 @@ class ThirdArrive extends StatelessWidget {
                 primary: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
-              onPressed: () => handleBusNotification(remainTime),
+              onPressed: () => handleBusNotification(
+                  40 + stationIndex!, remainTime, isNotificationOn),
               child: Image.asset(
-                'assets/images/busPage/notiIcon_later.png',
+                isNotificationOn!
+                    ? 'assets/images/busPage/notiIcon_later_on.png'
+                    : 'assets/images/busPage/notiIcon_later_off.png',
                 width: SizeConfig.sizeByHeight(40),
                 height: SizeConfig.sizeByHeight(40),
               ),
@@ -441,7 +472,8 @@ class ThirdArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox(remainTime!, 18, FontWeight.w500, Color(0xFF353B45)),
+                : TextBox(
+                    '$remainTime분 후', 18, FontWeight.w500, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [

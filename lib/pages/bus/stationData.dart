@@ -1,12 +1,9 @@
 import 'dart:math';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-
 import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
 import 'package:oceanview/pages/home/home_page.dart';
-
-import 'package:oceanview/pages/home/notice/noticeRepository.dart';
 
 Future<void> findNearStation() async {
   String? nearStation;
@@ -15,7 +12,7 @@ Future<void> findNearStation() async {
   Get.put(CityBusController());
   Get.find<CityBusController>().setIsLoading(true);
   Position? _currentLocation = await _determinePosition();
-  var changeStation = false;
+  bool changeStation = false;
   station_190.forEach((element) {
     var _distance =
         pow((element['gpsX'].toDouble() - _currentLocation.longitude), 2) +
@@ -33,8 +30,6 @@ Future<void> findNearStation() async {
     nodeId = '169100201';
   }
   Get.find<CityBusController>().setStation(nearStation);
-  // FetchAPI().fetchBusInfo(167720201);
-  //직접 api 호출하는 메소드
 
   await CityBusRepository().getNextCityBus(nodeId);
   await onRefresh();

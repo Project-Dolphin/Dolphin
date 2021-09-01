@@ -39,7 +39,12 @@ class WeatherContainer extends StatelessWidget {
                                   Expanded(
                                       flex: 1,
                                       child: Image.asset(
-                                        'assets/images/homePage/weatherIcon.png',
+                                        _.currentWeather!.status!.contains('맑')
+                                            ? 'assets/images/homePage/weatherIcon_sunny.png'
+                                            : _.currentWeather!.status!
+                                                    .contains('비')
+                                                ? 'assets/images/homePage/weatherIcon_rainy.png'
+                                                : 'assets/images/homePage/weatherIcon_cloudy.png',
                                         height: SizeConfig.sizeByHeight(48),
                                       )),
                                   Expanded(

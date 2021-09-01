@@ -1,58 +1,34 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/sizeConfig.dart';
-import 'package:oceanview/pages/dailyMenu/dailyMenu_data.dart';
-import 'package:http/http.dart' as http;
+import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 import 'dailyMenu_contents.dart';
-import 'dailyMenu_page.dart';
 
-class MealCard extends StatefulWidget {
+class MealCard extends StatelessWidget {
   MealCard({
+    required this.menu1,
+    required this.menu2,
+    required this.menu3,
     required this.type,
+    required this.name,
     required this.time,
   });
 
+  List menu1, menu2, menu3;
   final int type;
+  final List name;
   final List time;
 
   @override
-  _MealCard createState() => _MealCard();
-}
-
-class _MealCard extends State<MealCard> {
-  var mealTime = time;
-
-  List<dynamic> menu = [];
-
-  List<String>mealMenu1 = List.filled(8, "", growable: false);
-  List<String>mealMenu2 = List.filled(8, "", growable: false);
-  List<String>mealMenu3 = List.filled(8, "", growable: false);
-
-  void mealParse() async {
-    var response = await http.get(Uri.parse(
-        'https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/society/today'));
-    var statusCode = response.statusCode;
-    var responseHeaders = response.headers;
-    final responseJson = json.decode(utf8.decode(response.bodyBytes));
-
-    List<dynamic> list = MenuData.fromJson(responseJson) as List;
-    print(list);
-    print(list[0]['type']);
-    print(list[0]['value']);
-
-    //runApp(MyApp());
-  }
-
-  @override
   Widget build(BuildContext context) {
-    mealMenu1[0] = "식단이 없어요";
-    mealMenu2[0] = "식단이 없어요";
-    mealMenu3[0] = "식단이 없어요";
+    var emptyMenuText = List.filled(8, "", growable: true);
+    emptyMenuText[0] = "식단이 없어요";
+    menu1.isEmpty? menu1 = emptyMenuText : menu1 = menu1;
+    menu2.isEmpty? menu2 = emptyMenuText : menu2 = menu2;
+    menu3.isEmpty? menu3 = emptyMenuText : menu3 = menu3;
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-      height: (SizeConfig.screenHeight * 0.8),
+      height: (SizeConfig.screenHeight*0.9),
       widget: Container(
         margin: EdgeInsets.all(
           SizeConfig.sizeByWidth(12.0),
@@ -64,9 +40,9 @@ class _MealCard extends State<MealCard> {
                 bottom: SizeConfig.sizeByWidth(29.0),
               ),
               child: MealContentColumn(
-                mealName: "점심",
-                mealTime: mealTime[0],
-                mealMenu: mealMenu1,
+                mealName: name[0],
+                mealTime: time[0],
+                mealMenu: menu1,
                 imageName: "cutlery_orange.png",
               ),
             ),
@@ -75,23 +51,25 @@ class _MealCard extends State<MealCard> {
                 bottom: SizeConfig.sizeByWidth(29.0),
               ),
               child: MealContentColumn(
-                mealName: "저녁",
-                mealTime: mealTime[1],
-                mealMenu: mealMenu2,
+                mealName: name[1],
+                mealTime: time[1],
+                mealMenu: menu2,
                 imageName: "cutlery_red.png",
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(29.0),
-              ),
-              child: MealContentColumn(
-                mealName: "일품식",
-                mealTime: mealTime[2],
-                mealMenu: mealMenu3,
-                imageName: "cutlery_purple.png",
-              ),
-            ),
+            name[2] != ""
+                ? Padding(
+                    padding: EdgeInsets.only(
+                      bottom: SizeConfig.sizeByWidth(29.0),
+                    ),
+                    child: MealContentColumn(
+                      mealName: name[2],
+                      mealTime: time[2],
+                      mealMenu: menu3,
+                      imageName: "cutlery_purple.png",
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),

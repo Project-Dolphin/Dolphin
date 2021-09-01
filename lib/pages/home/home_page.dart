@@ -1,7 +1,6 @@
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart';
 import 'package:oceanview/pages/bus/api/cityBusRepository.dart';
-import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
 import 'package:oceanview/pages/dashboard/dashboard_controller.dart';
 import 'package:oceanview/pages/home/home_controller.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +16,6 @@ import 'package:oceanview/pages/home/widgets/noticeContainer.dart';
 import 'package:oceanview/pages/home/widgets/weatherContainer.dart';
 
 Future<Null> onRefresh() async {
-  await CityBusRepository().getNextDepartCityBus();
-  await NoticeRepository().getNotice();
-  await EventRespository().getLatestEventList();
-  await WeatherRepository().getCurrentWeather();
-}
-
-Future<Null> init() async {
   await CityBusRepository().getNextDepartCityBus();
   await NoticeRepository().getNotice();
   await EventRespository().getLatestEventList();
