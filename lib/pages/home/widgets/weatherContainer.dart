@@ -59,7 +59,12 @@ class WeatherContainer extends StatelessWidget {
                                               FontWeight.w700,
                                               Colors.white),
                                           TextBox(
-                                            _.currentWeather!.status!,
+                                            _.currentWeather!.status! == '맑은'
+                                                ? '맑음'
+                                                : _.currentWeather!.status! ==
+                                                        '아주 미세한 방울로 내리는 가벼운 비'
+                                                    ? '가벼운 비'
+                                                    : _.currentWeather!.status!,
                                             16,
                                             FontWeight.w400,
                                             Colors.white,

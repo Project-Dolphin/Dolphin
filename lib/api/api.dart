@@ -15,9 +15,13 @@ const PATH = const {
 
 class FetchAPI {
   Future fetchData(path, {queryParameters}) async {
-    var url = Uri.https(BASE_URL, '/dev$path', queryParameters);
-    var response = await http.get(url);
-    return response;
+    try {
+      var url = Uri.https(BASE_URL, '/dev$path', queryParameters);
+      var response = await http.get(url);
+      return response;
+    } catch (error) {
+      print('$error');
+    }
   }
 
   Future fetchCityBusInfo(bstopid) async {
