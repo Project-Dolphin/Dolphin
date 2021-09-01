@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -138,14 +139,35 @@ class MyApp extends StatelessWidget {
 class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-          child: SpinKitWave(
-            color: Colors.lightBlue,
-            size: 50,
-          ),
-        ),
+    final Shader linearGradient = LinearGradient(
+      colors: <Color>[Color(0xFF3199FF), Color(0xFF0081FF)],
+    ).createShader(Rect.fromLTWH(0.0, 0.0, 100.0, 50.0));
+
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/background.png"),
+              fit: BoxFit.cover)),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/app_logo.png',
+              height: 75,
+            ),
+            Text(
+              'Oceanview',
+              style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                  foreground: Paint()..shader = linearGradient),
+            )
+          ],
+        )),
       ),
     );
   }
