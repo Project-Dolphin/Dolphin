@@ -7,14 +7,30 @@ class CalendarController extends GetxController {
   String stat = '';
   bool isLoading = false;
   DateTime selectedDay = DateTime.now();
+  DateTime calendarCenter =
+      DateTime(DateTime.now().year, DateTime.now().month, 1);
   List<CalendarData>? calendarData = [CalendarData()];
   List<HolidayData>? holidayData = [HolidayData()];
+
+  final List monthArray = [
+    DateTime(DateTime.now().year, DateTime.now().month - 3, 1),
+    DateTime(DateTime.now().year, DateTime.now().month - 2, 1),
+    DateTime(DateTime.now().year, DateTime.now().month - 1, 1),
+    DateTime.now(),
+    DateTime(DateTime.now().year, DateTime.now().month + 1, 1),
+    DateTime(DateTime.now().year, DateTime.now().month + 2, 1),
+    DateTime(DateTime.now().year, DateTime.now().month + 3, 1),
+  ];
 
   @override
   void onInit() {
     super.onInit();
     setDate(getDate());
     setStat(getWeekDay());
+    /*for (var i = -3; i <= 3; i++) {
+      monthArray
+          .add(DateTime(calendarCenter.year, calendarCenter.month + i, 1));
+    }*/ // late로 수정중
   }
 
   void setIsLoading(loading) {
@@ -75,25 +91,24 @@ class CalendarController extends GetxController {
 }
 
 class CalendarData {
+  Term? term;
   String? content;
-  String? startedAt;
-  String? endedAt;
   bool? mainPlan;
 
-  CalendarData({this.content, this.startedAt, this.endedAt, this.mainPlan});
+  CalendarData({this.term, this.content, this.mainPlan});
 
   CalendarData.fromJson(Map<String, dynamic> json) {
     content = json['content'];
-    startedAt = json['term']['startedAt'];
-    endedAt = json['term']['endedAt'];
+    term = json['term'] != null ? new Term.fromJson(json['term']) : null;
     mainPlan = json['mainPlan'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['content'] = this.content;
-    data['term']['startedAt'] = this.startedAt;
-    data['term']['endedAt'] = this.endedAt;
+    if (this.term != null) {
+      data['term'] = this.term!.toJson();
+    }
     data['mainPlan'] = this.mainPlan;
 
     return data;
@@ -101,24 +116,41 @@ class CalendarData {
 }
 
 class HolidayData {
+  Term? term;
   String? content;
-  String? startedAt;
-  String? endedAt;
 
-  HolidayData({this.content, this.startedAt, this.endedAt});
+  HolidayData({this.term, this.content});
 
   HolidayData.fromJson(Map<String, dynamic> json) {
     content = json['content'];
-    startedAt = json['term']['startedAt'];
-    endedAt = json['term']['endedAt'];
+    term = json['term'] != null ? new Term.fromJson(json['term']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['content'] = this.content;
-    data['term']['startedAt'] = this.startedAt;
-    data['term']['endedAt'] = this.endedAt;
+    if (this.term != null) {
+      data['term'] = this.term!.toJson();
+    }
+    return data;
+  }
+}
 
+class Term {
+  String? startedAt;
+  String? endedAt;
+
+  Term({this.startedAt, this.endedAt});
+
+  Term.fromJson(Map<String, dynamic> json) {
+    startedAt = json['startedAt'];
+    endedAt = json['endedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['startedAt'] = this.startedAt;
+    data['endedAt'] = this.endedAt;
     return data;
   }
 }

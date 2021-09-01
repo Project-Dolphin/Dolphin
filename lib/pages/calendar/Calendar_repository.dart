@@ -4,20 +4,23 @@ import 'package:get/get.dart';
 import 'package:oceanview/api/api.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
 
+import 'dart:convert' as convert;
+
 class CalendarReposiory {
   List<CalendarData> calendarToJson(response) {
     try {
       final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
       if (response.statusCode == 200) {
-        final result =
-            responseJson.map((e) => CalendarData.fromJson(e['data']));
+        final List<CalendarData> result = [
+          ...responseJson['data'].map((e) => CalendarData.fromJson(e))
+        ];
         return result;
       } else {
         throw Exception("Failed to load data");
       }
     } catch (err) {
-      print("error!");
+      print("calendar error!");
       return [
         CalendarData.fromJson({
           "startedAt": "1900-1-1",
@@ -34,29 +37,31 @@ class CalendarReposiory {
       final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
       if (response.statusCode == 200) {
-        final result = responseJson.map((e) => HolidayData.fromJson(e['data']));
+        final List<HolidayData> result = [
+          ...responseJson['data'].map((e) => HolidayData.fromJson(e))
+        ];
         return result;
       } else {
         throw Exception("Failed to load data");
       }
     } catch (err) {
-      print("error!");
+      print("holiday error!");
       return [
         HolidayData.fromJson({
           "startedAt": "1900-1-1",
           "endedAt": "1900-1-1",
-          "content": "일정 정보 없음"
+          "content": "휴일 정보 없음"
         })
       ];
     }
   }
 
-  Future<List<HolidayData>> fetchHoliday() async {
+  Future fetchHoliday() async {
     return holidayToJson(await FetchAPI().fetchHoliday());
   }
 
-  Future<List<CalendarData>> fetchCalendar() async {
-    return calendarToJson(await FetchAPI().fetchLatestCaelndar());
+  Future fetchCalendar() async {
+    return calendarToJson(await FetchAPI().fetchCalendar());
   }
 
   getCalendar() async {

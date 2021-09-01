@@ -56,7 +56,12 @@ class FetchAPI {
     return response;
   }
 
-  Future fetchLatestCaelndar() async {
+  Future fetchCalendar() async {
+    var response = await fetchData(PATH['CALENDAR']);
+    return response;
+  }
+
+  Future fetchLatestCalendar() async {
     var response = await fetchData(PATH['LATEST_CALENDAR']);
     return response;
   }
