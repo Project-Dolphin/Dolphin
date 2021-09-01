@@ -176,6 +176,7 @@ class _CalendarIconState extends State<CalendarIcon> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(SizeConfig.sizeByHeight(30)),
       child: Padding(
         padding: EdgeInsets.all(SizeConfig.sizeByHeight(19)),
         child: Row(

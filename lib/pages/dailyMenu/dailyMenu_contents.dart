@@ -21,9 +21,9 @@ class MealContentColumn extends StatefulWidget {
   _MealContentColumn createState() => _MealContentColumn();
 }
 
-class _MealContentColumn extends State<MealContentColumn>{
+class _MealContentColumn extends State<MealContentColumn> {
   @override
-  void initState(){
+  void initState() {
     super.initState();
     mealParse();
     mariDormParse();
@@ -41,7 +41,8 @@ class _MealContentColumn extends State<MealContentColumn>{
               children: [
                 Image(
                   width: SizeConfig.sizeByHeight(30.0),
-                  image: AssetImage('assets/images/mealPage/' + widget.imageName),
+                  image:
+                      AssetImage('assets/images/mealPage/' + widget.imageName),
                 ),
                 Text(
                   widget.mealName,
@@ -72,7 +73,9 @@ class _MealContentColumn extends State<MealContentColumn>{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
+                    margin: EdgeInsets.only(
+                      left: SizeConfig.sizeByWidth(5.0),
+                    ),
                     width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
                       widget.mealMenu[0],
@@ -103,7 +106,9 @@ class _MealContentColumn extends State<MealContentColumn>{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
+                    margin: EdgeInsets.only(
+                      left: SizeConfig.sizeByWidth(5.0),
+                    ),
                     width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
                       widget.mealMenu[2],
@@ -134,7 +139,9 @@ class _MealContentColumn extends State<MealContentColumn>{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
+                    margin: EdgeInsets.only(
+                      left: SizeConfig.sizeByWidth(5.0),
+                    ),
                     width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
                       widget.mealMenu[4],
@@ -165,7 +172,9 @@ class _MealContentColumn extends State<MealContentColumn>{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
+                    margin: EdgeInsets.only(
+                      left: SizeConfig.sizeByWidth(5.0),
+                    ),
                     width: SizeConfig.sizeByWidth(110.0),
                     child: Text(
                       widget.mealMenu[6],
@@ -188,68 +197,76 @@ class _MealContentColumn extends State<MealContentColumn>{
                 ],
               ),
             ),
-            widget.mealMenu.length > 9 ? Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
-                    width: SizeConfig.sizeByWidth(110.0),
-                    child: Text(
-                      widget.mealMenu[8],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(15.0),
-                        fontWeight: FontWeight.w700,
-                      ),
+            widget.mealMenu.length > 9
+                ? Padding(
+                    padding: EdgeInsets.only(
+                      bottom: SizeConfig.sizeByWidth(7.0),
                     ),
-                  ),
-                  Container(
-                    width: SizeConfig.sizeByWidth(110.0),
-                    child: Text(
-                      widget.mealMenu[9],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(15.0),
-                        fontWeight: FontWeight.w700,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: SizeConfig.sizeByWidth(5.0),
+                          ),
+                          width: SizeConfig.sizeByWidth(110.0),
+                          child: Text(
+                            widget.mealMenu[8],
+                            style: TextStyle(
+                              fontSize: SizeConfig.sizeByHeight(15.0),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: SizeConfig.sizeByWidth(110.0),
+                          child: Text(
+                            widget.mealMenu[9],
+                            style: TextStyle(
+                              fontSize: SizeConfig.sizeByHeight(15.0),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ): Container(),
-            widget.mealMenu.length > 11 ? Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
-                    width: SizeConfig.sizeByWidth(110.0),
-                    child: Text(
-                      widget.mealMenu[10],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(15.0),
-                        fontWeight: FontWeight.w700,
-                      ),
+                  )
+                : Container(),
+            widget.mealMenu.length > 11
+                ? Padding(
+                    padding: EdgeInsets.only(
+                      bottom: SizeConfig.sizeByWidth(7.0),
                     ),
-                  ),
-                  Container(
-                    width: SizeConfig.sizeByWidth(110.0),
-                    child: Text(
-                      widget.mealMenu[11],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(15.0),
-                        fontWeight: FontWeight.w700,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: SizeConfig.sizeByWidth(5.0),
+                          ),
+                          width: SizeConfig.sizeByWidth(110.0),
+                          child: Text(
+                            widget.mealMenu[10],
+                            style: TextStyle(
+                              fontSize: SizeConfig.sizeByHeight(15.0),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: SizeConfig.sizeByWidth(110.0),
+                          child: Text(
+                            widget.mealMenu[11],
+                            style: TextStyle(
+                              fontSize: SizeConfig.sizeByHeight(15.0),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ): Container(),
+                  )
+                : Container(),
           ],
         ),
       ],
