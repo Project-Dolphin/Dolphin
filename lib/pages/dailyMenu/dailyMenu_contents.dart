@@ -25,8 +25,6 @@ class _MealContentColumn extends State<MealContentColumn> {
   @override
   void initState() {
     super.initState();
-    mealParse();
-    mariDormParse();
   }
 
   @override
@@ -67,7 +65,7 @@ class _MealContentColumn extends State<MealContentColumn> {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
+                bottom: SizeConfig.sizeByHeight(7.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +98,7 @@ class _MealContentColumn extends State<MealContentColumn> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
+                bottom: SizeConfig.sizeByHeight(7.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,7 +131,7 @@ class _MealContentColumn extends State<MealContentColumn> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
+                bottom: SizeConfig.sizeByHeight(7.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,7 +164,7 @@ class _MealContentColumn extends State<MealContentColumn> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
+                bottom: SizeConfig.sizeByHeight(7.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,10 +195,29 @@ class _MealContentColumn extends State<MealContentColumn> {
                 ],
               ),
             ),
+<<<<<<< Updated upstream
             widget.mealMenu.length > 9
                 ? Padding(
                     padding: EdgeInsets.only(
                       bottom: SizeConfig.sizeByWidth(7.0),
+=======
+            widget.mealMenu.length > 9 ? Padding(
+              padding: EdgeInsets.only(
+                bottom: SizeConfig.sizeByHeight(7.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
+                    width: SizeConfig.sizeByWidth(110.0),
+                    child: Text(
+                      widget.mealMenu[8],
+                      style: TextStyle(
+                        fontSize: SizeConfig.sizeByHeight(15.0),
+                        fontWeight: FontWeight.w700,
+                      ),
+>>>>>>> Stashed changes
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,12 +247,35 @@ class _MealContentColumn extends State<MealContentColumn> {
                         ),
                       ],
                     ),
+<<<<<<< Updated upstream
                   )
                 : Container(),
             widget.mealMenu.length > 11
                 ? Padding(
                     padding: EdgeInsets.only(
                       bottom: SizeConfig.sizeByWidth(7.0),
+=======
+                  ),
+                ],
+              ),
+            ): Container(),
+            widget.mealMenu.length > 11 ? Padding(
+              padding: EdgeInsets.only(
+                bottom: SizeConfig.sizeByHeight(7.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
+                    width: SizeConfig.sizeByWidth(110.0),
+                    child: Text(
+                      widget.mealMenu[10],
+                      style: TextStyle(
+                        fontSize: SizeConfig.sizeByHeight(15.0),
+                        fontWeight: FontWeight.w700,
+                      ),
+>>>>>>> Stashed changes
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

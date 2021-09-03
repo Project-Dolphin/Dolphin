@@ -113,23 +113,27 @@ const menuSites = [cafeteria, cafeteria, cafeteria, dorm, mariDorm];
 
 //식단 메뉴 파싱
 var emptyMenu = ['식단이 없어요'];
+
 var snackMenu = [];
 var cafeteriaMenu = [];
 var cafeteriaSpecialMenu = [];
+
 var employerMenu = [];
 var employerSpecialMenu = [];
-var dormMenuB = [];
-var dormMenuL = [];
-var dormMenuD = [];
-var mariDormMenuB = [];
-var mariDormMenuL = [];
-var mariDormMenuD = [];
 
 var americanMenu = [];
 var breakfastMenu = [];
 var bunsikMenu = [];
 var ramenMenu = [];
 var riceMenu = [];
+
+var mariDormMenuB = [];
+var mariDormMenuL = [];
+var mariDormMenuD = [];
+
+var dormMenuB = [];
+var dormMenuL = [];
+var dormMenuD = [];
 
 class Data {
   int type;
@@ -150,11 +154,16 @@ class Data {
 var _text = "Http Example";
 List<Data> _datas = [];
 
+<<<<<<< Updated upstream
 void mealParse() async {
+=======
+Future<void> mealParse() async {
+>>>>>>> Stashed changes
   try {
     final response = await http.get(Uri.parse(
         "https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/society/today"));
     _text = utf8.decode(response.bodyBytes);
+<<<<<<< Updated upstream
     print(jsonDecode(_text)['data']);
     var dataObjsJson = jsonDecode(_text)['data'] as List;
     final List<Data> parsedResponse =
@@ -179,6 +188,14 @@ void mealParse() async {
         "\n";
     snackMenu = snack.split("\n");
     menuFill(snackMenu, 8);
+=======
+    var dataObjsJson = jsonDecode(_text)['data'] as List;
+    final List<Data> parsedResponse =
+    dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
+    _datas.clear();
+    _datas.addAll(parsedResponse);
+
+>>>>>>> Stashed changes
     americanMenu = (_datas[0].value + "\n").split("\n");
     menuFill(americanMenu, 2);
     breakfastMenu = (_datas[1].value + "\n").split("\n");
@@ -193,6 +210,7 @@ void mealParse() async {
     menuFill(employerMenu, 8);
     employerSpecialMenu = (_datas[6].value + "\n").split("\n");
     menuFill(employerSpecialMenu, 8);
+<<<<<<< Updated upstream
   } catch (e) {
     print(e);
   }
@@ -213,6 +231,50 @@ void mariDormParse() async {
   } catch (e) {
     print(e);
   }
+=======
+  }
+  catch (err) {
+    throw Exception("Failed to load data");
+  }
+}
+
+// Future<List> american() async {
+//   var americanMenu2 = [];
+//   try {
+//     final response = await http.get(Uri.parse(
+//         "https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/society/today"));
+//     _text = utf8.decode(response.bodyBytes);
+//     var dataObjsJson = jsonDecode(_text)['data'] as List;
+//     final List<Data> parsedResponse =
+//     dataObjsJson.map((dataJson) => new Data.fromJson(dataJson)).toList();
+//     _datas.clear();
+//     _datas.addAll(parsedResponse);
+//
+//     americanMenu2 = (_datas[0].value + "\n").split("\n");
+//     menuFill(americanMenu2, 2);
+//
+//     return americanMenu2;
+//   }
+//   catch (err) {
+//     throw Exception("Failed to load data");
+//   }
+// }
+
+List breakfast() {
+  Future.delayed(Duration(seconds: 0)).then((_)=> mealParse());
+  return breakfastMenu;
+}
+
+Future<void> mariDormParse() async {
+  final response = await http.get(Uri.parse(
+      "https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/naval/today"));
+  _text = utf8.decode(response.bodyBytes);
+  var dataObjsJson = jsonDecode(_text)['data'] as List;
+  final List<Data> parsedResponse =
+      dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
+  _datas.clear();
+  _datas.addAll(parsedResponse);
+>>>>>>> Stashed changes
 }
 
 void menuFill(List listItem, int size) {
@@ -220,3 +282,10 @@ void menuFill(List listItem, int size) {
     listItem.add("");
   }
 }
+
+// class MealMenu extends StatelessWidget {
+//   MealMenu({Key ? key}) : super(key:key);
+//
+//   @override
+//   return
+// }

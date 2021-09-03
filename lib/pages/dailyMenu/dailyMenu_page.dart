@@ -14,6 +14,8 @@ import 'infoMenu/menu_information.dart';
 class DailyMenuPage extends GetView<DailyMenuController> {
   @override
   Widget build(BuildContext context) {
+    mealParse();
+    mariDormParse();
     return DailyMenuMain();
   }
 }
@@ -30,11 +32,35 @@ class DailyMenuMain extends StatefulWidget {
 class _DailyMenuMain extends State<DailyMenuMain> {
   final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
   final List testPageList = [
-    MealCard(menu1: cafeteriaMenu, menu2: cafeteriaMenu, menu3: cafeteriaSpecialMenu, type: 0, time: time, name: timeName1),
+    MealCard(
+        menu1: cafeteriaMenu,
+        menu2: cafeteriaMenu,
+        menu3: cafeteriaSpecialMenu,
+        type: 0,
+        time: time,
+        name: timeName1),
     SnackCard(type: 1, time: timeCafeteria, name: timeName2),
-    MealCard(menu1: employerMenu, menu2: employerSpecialMenu, menu3: emptyMenu, type: 2, time: timeEmployer, name: timeName3),
-    MealCard(menu1: dormMenuB, menu2: dormMenuL, menu3: dormMenuD, type: 3, time: timeDorm, name: timeName2),
-    MealCard(menu1: mariDormMenuB, menu2: mariDormMenuL, menu3: mariDormMenuD, type: 4, time: timeMariDorm, name: timeName2),
+    MealCard(
+        menu1: employerMenu,
+        menu2: employerSpecialMenu,
+        menu3: emptyMenu,
+        type: 2,
+        time: timeEmployer,
+        name: timeName3),
+    MealCard(
+        menu1: dormMenuB,
+        menu2: dormMenuL,
+        menu3: dormMenuD,
+        type: 3,
+        time: timeDorm,
+        name: timeName2),
+    MealCard(
+        menu1: mariDormMenuB,
+        menu2: mariDormMenuL,
+        menu3: mariDormMenuD,
+        type: 4,
+        time: timeMariDorm,
+        name: timeName2),
   ];
   final name = '식단', subname = '0층 식단', more = '이번주 식단 보기';
   var _stat = '운영중';
@@ -48,11 +74,12 @@ class _DailyMenuMain extends State<DailyMenuMain> {
   var dormWeekendStat = statWeekend1 || statWeekend2 || statWeekend3;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     mealParse();
-    if(DateTime.now().weekday == (6|7)){
-      switch(_current) {
+    mariDormParse();
+    if (DateTime.now().weekday == (6 | 7)) {
+      switch (_current) {
         case 0:
           {
             _stat = "운영종료";
@@ -70,8 +97,7 @@ class _DailyMenuMain extends State<DailyMenuMain> {
           }
         case 3:
           {
-            dormWeekendStat == true ? _stat = "운영중" : _stat =
-            "운영종료";
+            dormWeekendStat == true ? _stat = "운영중" : _stat = "운영종료";
             return null;
           }
         case 4:
@@ -84,31 +110,26 @@ class _DailyMenuMain extends State<DailyMenuMain> {
             return null;
           }
       }
-    }
-    else{
-      switch(_current) {
+    } else {
+      switch (_current) {
         case 0:
           {
-            studentStat == true ? _stat = "운영중" : _stat =
-            "운영종료";
+            studentStat == true ? _stat = "운영중" : _stat = "운영종료";
             return null;
           }
         case 1:
           {
-            cafeteriaStat == true ? _stat = "운영중" : _stat =
-            "운영종료";
+            cafeteriaStat == true ? _stat = "운영중" : _stat = "운영종료";
             return null;
           }
         case 2:
           {
-            employerStat == true ? _stat = "운영중" : _stat =
-            "운영종료";
+            employerStat == true ? _stat = "운영중" : _stat = "운영종료";
             return null;
           }
         case 3:
           {
-            dormStat == true ? _stat = "운영중" : _stat =
-            "운영종료";
+            dormStat == true ? _stat = "운영중" : _stat = "운영종료";
             return null;
           }
         case 4:
@@ -126,6 +147,8 @@ class _DailyMenuMain extends State<DailyMenuMain> {
 
   @override
   Widget build(BuildContext context) {
+    mealParse();
+    print(americanMenu);
     return Stack(
       children: [
         CustomScrollView(
@@ -168,11 +191,11 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                 child: CarouselSlider(
                   items: testPageList
                       .map((item) => Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
-                    child: Column(
-                      children: [item],
-                    ),
-                  ))
+                            margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
+                            child: Column(
+                              children: [item],
+                            ),
+                          ))
                       .toList(),
                   carouselController: _controller,
                   options: CarouselOptions(
@@ -182,10 +205,12 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                     height: SizeConfig.blockSizeVertical * 100,
                     onPageChanged: (index, reason) {
                       setState(
-                            () {
+                        () {
+                          mealParse();
+                          mariDormParse();
                           _current = index;
-                          if(DateTime.now().weekday == (6|7)){
-                            switch(_current) {
+                          if (DateTime.now().weekday == (6 | 7)) {
+                            switch (_current) {
                               case 0:
                                 {
                                   _stat = "운영종료";
@@ -203,8 +228,9 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                                 }
                               case 3:
                                 {
-                                  dormWeekendStat == true ? _stat = "운영중" : _stat =
-                                  "운영종료";
+                                  dormWeekendStat == true
+                                      ? _stat = "운영중"
+                                      : _stat = "운영종료";
                                   return null;
                                 }
                               case 4:
@@ -217,43 +243,46 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                                   return null;
                                 }
                             }
-                          }
-                          else{
-                          switch(_current) {
-                            case 0:
-                              {
-                                studentStat == true ? _stat = "운영중" : _stat =
-                                "운영종료";
-                                return null;
-                              }
-                            case 1:
-                              {
-                                cafeteriaStat == true ? _stat = "운영중" : _stat =
-                                "운영종료";
-                                return null;
-                              }
-                            case 2:
-                              {
-                                employerStat == true ? _stat = "운영중" : _stat =
-                                "운영종료";
-                                return null;
-                              }
-                            case 3:
-                              {
-                                dormStat == true ? _stat = "운영중" : _stat =
-                                "운영종료";
-                                return null;
-                              }
-                            case 4:
-                              {
-                                _stat = "운영종료";
-                                return null;
-                              }
-                            default:
-                              {
-                                return null;
-                              }
-                          }
+                          } else {
+                            switch (_current) {
+                              case 0:
+                                {
+                                  studentStat == true
+                                      ? _stat = "운영중"
+                                      : _stat = "운영종료";
+                                  return null;
+                                }
+                              case 1:
+                                {
+                                  cafeteriaStat == true
+                                      ? _stat = "운영중"
+                                      : _stat = "운영종료";
+                                  return null;
+                                }
+                              case 2:
+                                {
+                                  employerStat == true
+                                      ? _stat = "운영중"
+                                      : _stat = "운영종료";
+                                  return null;
+                                }
+                              case 3:
+                                {
+                                  dormStat == true
+                                      ? _stat = "운영중"
+                                      : _stat = "운영종료";
+                                  return null;
+                                }
+                              case 4:
+                                {
+                                  _stat = "운영종료";
+                                  return null;
+                                }
+                              default:
+                                {
+                                  return null;
+                                }
+                            }
                           }
                         },
                       );
@@ -271,14 +300,14 @@ class _DailyMenuMain extends State<DailyMenuMain> {
             height: SizeConfig.sizeByHeight(46),
             margin: EdgeInsets.all(SizeConfig.sizeByWidth(20)),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                    SizeConfig.sizeByHeight(46)),
+                borderRadius:
+                    BorderRadius.circular(SizeConfig.sizeByHeight(46)),
                 color: Colors.white),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
               children: testPageList.asMap().entries.map(
-                    (entry) {
+                (entry) {
                   return GestureDetector(
                     onTap: () => _controller.animateToPage(entry.key),
                     child: Container(
@@ -287,23 +316,23 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                       decoration: BoxDecoration(
                           gradient: _current == entry.key
                               ? LinearGradient(
-                              colors: <Color>[
-                                Color(0xFF3199FF),
-                                Color(0xFF0081FF),
-                              ],
-                              begin: Alignment.bottomLeft,
-                              end: Alignment.topRight,
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp)
+                                  colors: <Color>[
+                                    Color(0xFF3199FF),
+                                    Color(0xFF0081FF),
+                                  ],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  stops: [0.0, 1.0],
+                                  tileMode: TileMode.clamp)
                               : null,
                           boxShadow: _current == entry.key
-                          ? [
-                          BoxShadow(
-                              color: Color(0xFFB4D5F1),
-                              offset: Offset(0, 3),
-                              blurRadius: 5,
-                              spreadRadius: 2)
-                          ]
+                              ? [
+                                  BoxShadow(
+                                      color: Color(0xFFB4D5F1),
+                                      offset: Offset(0, 3),
+                                      blurRadius: 5,
+                                      spreadRadius: 2)
+                                ]
                               : null,
                           borderRadius: BorderRadius.circular(
                               _current == entry.key
@@ -311,17 +340,17 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                                   : 0)),
                       child: Center(
                         child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              titleList[entry.key],
-                              style: TextStyle(
-                                  color: _current == entry.key
-                                      ? Colors.white
-                                      : Color(0xFF919191),
-                                  fontSize:
-                                  SizeConfig.sizeByWidth(16),
-                                  fontWeight: FontWeight.w700),
-                            ),),
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            titleList[entry.key],
+                            style: TextStyle(
+                                color: _current == entry.key
+                                    ? Colors.white
+                                    : Color(0xFF919191),
+                                fontSize: SizeConfig.sizeByWidth(16),
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
                       ),
                     ),
                   );
