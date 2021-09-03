@@ -25,8 +25,6 @@ class _MealContentColumn extends State<MealContentColumn> {
   @override
   void initState() {
     super.initState();
-    mealParse();
-    mariDormParse();
   }
 
   @override
@@ -60,14 +58,19 @@ class _MealContentColumn extends State<MealContentColumn> {
             ),
           ],
         ),
-        Divider(
-          color: Color(0xffE0E0E0),
+        Padding(
+          padding: EdgeInsets.only(bottom:SizeConfig.sizeByHeight(5.0),),
+          child: Image(
+            height: SizeConfig.blockSizeHorizontal,
+            image:
+            AssetImage('assets/images/mealPage/divider.png'),
+          ),
         ),
         Column(
           children: [
             Padding(
               padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
+                bottom: SizeConfig.sizeByHeight(7.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +103,7 @@ class _MealContentColumn extends State<MealContentColumn> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
+                bottom: SizeConfig.sizeByHeight(7.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,7 +136,7 @@ class _MealContentColumn extends State<MealContentColumn> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
+                bottom: SizeConfig.sizeByHeight(7.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,7 +169,7 @@ class _MealContentColumn extends State<MealContentColumn> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(7.0),
+                bottom: SizeConfig.sizeByHeight(7.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,7 +203,7 @@ class _MealContentColumn extends State<MealContentColumn> {
             widget.mealMenu.length > 9
                 ? Padding(
                     padding: EdgeInsets.only(
-                      bottom: SizeConfig.sizeByWidth(7.0),
+                      bottom: SizeConfig.sizeByHeight(7.0),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,7 +238,7 @@ class _MealContentColumn extends State<MealContentColumn> {
             widget.mealMenu.length > 11
                 ? Padding(
                     padding: EdgeInsets.only(
-                      bottom: SizeConfig.sizeByWidth(7.0),
+                      bottom: SizeConfig.sizeByHeight(7.0),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
