@@ -43,7 +43,7 @@ dependencies:
 dev_dependencies:
     flutter_test:
         sdk: flutter
-    flutter_native_splash: ^1.2.0
+    flutter_native_splash: ^1.2.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -59,6 +59,7 @@ flutter:
     assets:
         - assets/images/
         - assets/images/background.png
+        - assets/images/app_logo.png
         - assets/images/bottomNavigationIcon/
         - assets/images/dropdown/
         - assets/images/busPage/
