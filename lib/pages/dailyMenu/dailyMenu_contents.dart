@@ -58,8 +58,13 @@ class _MealContentColumn extends State<MealContentColumn> {
             ),
           ],
         ),
-        Divider(
-          color: Color(0xffE0E0E0),
+        Padding(
+          padding: EdgeInsets.only(bottom:SizeConfig.sizeByHeight(5.0),),
+          child: Image(
+            height: SizeConfig.blockSizeHorizontal,
+            image:
+            AssetImage('assets/images/mealPage/divider.png'),
+          ),
         ),
         Column(
           children: [
@@ -195,29 +200,10 @@ class _MealContentColumn extends State<MealContentColumn> {
                 ],
               ),
             ),
-<<<<<<< Updated upstream
             widget.mealMenu.length > 9
                 ? Padding(
                     padding: EdgeInsets.only(
-                      bottom: SizeConfig.sizeByWidth(7.0),
-=======
-            widget.mealMenu.length > 9 ? Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByHeight(7.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
-                    width: SizeConfig.sizeByWidth(110.0),
-                    child: Text(
-                      widget.mealMenu[8],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(15.0),
-                        fontWeight: FontWeight.w700,
-                      ),
->>>>>>> Stashed changes
+                      bottom: SizeConfig.sizeByHeight(7.0),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -247,35 +233,12 @@ class _MealContentColumn extends State<MealContentColumn> {
                         ),
                       ],
                     ),
-<<<<<<< Updated upstream
                   )
                 : Container(),
             widget.mealMenu.length > 11
                 ? Padding(
                     padding: EdgeInsets.only(
-                      bottom: SizeConfig.sizeByWidth(7.0),
-=======
-                  ),
-                ],
-              ),
-            ): Container(),
-            widget.mealMenu.length > 11 ? Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByHeight(7.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left:SizeConfig.sizeByWidth(5.0),),
-                    width: SizeConfig.sizeByWidth(110.0),
-                    child: Text(
-                      widget.mealMenu[10],
-                      style: TextStyle(
-                        fontSize: SizeConfig.sizeByHeight(15.0),
-                        fontWeight: FontWeight.w700,
-                      ),
->>>>>>> Stashed changes
+                      bottom: SizeConfig.sizeByHeight(7.0),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

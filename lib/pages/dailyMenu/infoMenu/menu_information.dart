@@ -68,9 +68,10 @@ bool status(TimeOfDay start, TimeOfDay end) {
         (now.hour <= end.hour)) {
       if ((now.hour == end.hour && now.minute <= end.minute)) {
         return true;
-      } else if (now.hour < end.hour) {
+      } else if (now.hour < end.hour){
         return true;
-      } else {
+      }
+      else {
         return false;
       }
     } else {
@@ -154,48 +155,17 @@ class Data {
 var _text = "Http Example";
 List<Data> _datas = [];
 
-<<<<<<< Updated upstream
-void mealParse() async {
-=======
 Future<void> mealParse() async {
->>>>>>> Stashed changes
   try {
     final response = await http.get(Uri.parse(
         "https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/society/today"));
     _text = utf8.decode(response.bodyBytes);
-<<<<<<< Updated upstream
-    print(jsonDecode(_text)['data']);
-    var dataObjsJson = jsonDecode(_text)['data'] as List;
-    final List<Data> parsedResponse =
-        dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
-    _datas.clear();
-    _datas.addAll(parsedResponse);
-
-    final data0 = _datas[0];
-    final data1 = _datas[1];
-    final data2 = _datas[2];
-    final data3 = _datas[3];
-    final data4 = _datas[4];
-    final snack = data0.value +
-        "\n" +
-        data1.value +
-        "\n" +
-        data2.value +
-        "\n" +
-        data3.value +
-        "\n" +
-        data4.value +
-        "\n";
-    snackMenu = snack.split("\n");
-    menuFill(snackMenu, 8);
-=======
     var dataObjsJson = jsonDecode(_text)['data'] as List;
     final List<Data> parsedResponse =
     dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
     _datas.clear();
     _datas.addAll(parsedResponse);
 
->>>>>>> Stashed changes
     americanMenu = (_datas[0].value + "\n").split("\n");
     menuFill(americanMenu, 2);
     breakfastMenu = (_datas[1].value + "\n").split("\n");
@@ -210,28 +180,6 @@ Future<void> mealParse() async {
     menuFill(employerMenu, 8);
     employerSpecialMenu = (_datas[6].value + "\n").split("\n");
     menuFill(employerSpecialMenu, 8);
-<<<<<<< Updated upstream
-  } catch (e) {
-    print(e);
-  }
-}
-
-void mariDormParse() async {
-  try {
-    final response = await http.get(Uri.parse(
-        "https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/naval/today"));
-    _text = utf8.decode(response.bodyBytes);
-    print(jsonDecode(_text)['data']);
-    var dataObjsJson = jsonDecode(_text)['data'] as List;
-    final List<Data> parsedResponse =
-        dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
-    _datas.clear();
-    _datas.addAll(parsedResponse);
-    print("되는거니 뭐니 알려주렴" + parsedResponse.toString());
-  } catch (e) {
-    print(e);
-  }
-=======
   }
   catch (err) {
     throw Exception("Failed to load data");
@@ -274,7 +222,6 @@ Future<void> mariDormParse() async {
       dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
   _datas.clear();
   _datas.addAll(parsedResponse);
->>>>>>> Stashed changes
 }
 
 void menuFill(List listItem, int size) {

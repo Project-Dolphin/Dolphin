@@ -132,8 +132,13 @@ class SnackCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Divider(
-                    color: Color(0xffE0E0E0),
+                  Padding(
+                    padding: EdgeInsets.only(bottom:SizeConfig.sizeByHeight(5.0),),
+                    child: Image(
+                      height: SizeConfig.blockSizeHorizontal,
+                      image:
+                      AssetImage('assets/images/mealPage/divider.png'),
+                    ),
                   ),
                   Row(
                     children: [
@@ -215,8 +220,13 @@ class SnackCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Divider(
-                    color: Color(0xffE0E0E0),
+                  Padding(
+                    padding: EdgeInsets.only(bottom:SizeConfig.sizeByHeight(5.0),),
+                    child: Image(
+                      height: SizeConfig.blockSizeHorizontal,
+                      image:
+                      AssetImage('assets/images/mealPage/divider.png'),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
