@@ -220,6 +220,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        height: SizeConfig.sizeByHeight(600),
         width: SizeConfig.sizeByWidth(375),
         margin: EdgeInsets.symmetric(vertical: SizeConfig.sizeByWidth(16)),
         child: Column(
