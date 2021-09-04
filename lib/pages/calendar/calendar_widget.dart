@@ -222,7 +222,7 @@ class _CalendarState extends State<Calendar> {
     return Container(
         height: SizeConfig.sizeByHeight(600),
         width: SizeConfig.sizeByWidth(375),
-        margin: EdgeInsets.symmetric(vertical: SizeConfig.sizeByWidth(16)),
+        margin: EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(16)),
         child: Stack(
           children: [
             Container(
