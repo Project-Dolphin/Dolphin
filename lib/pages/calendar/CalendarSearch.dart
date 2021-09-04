@@ -3,15 +3,12 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/pages/calendar/Calendar_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-
-List<dynamic> _searchResult = [];
-List<dynamic> _calendarDetails = [];
-List<DateTime> _searchResultStart = [];
-List<DateTime> _searchResultEnd = [];
+import 'package:oceanview/pages/calendar/calendar_controller.dart';
 
 class CalendarSearch extends StatefulWidget {
   @override
@@ -22,10 +19,18 @@ class _CalendarSearchState extends State<CalendarSearch> {
   TextEditingController controller = new TextEditingController();
   FocusNode _focusNode = FocusNode();
 
+  final calendarController = Get.put(CalendarController());
+
+  List<dynamic> _searchResult = [];
+  List<dynamic> _calendarDetails = [];
+  List<DateTime> _searchResultStart = [];
+  List<DateTime> _searchResultEnd = [];
+
   @override
   Future<void> initState() async {
     super.initState();
     await CalendarReposiory().getCalendar();
+    _calendarDetails = calendarController.calendarData!;
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         FocusScope.of(context).requestFocus(_focusNode);
