@@ -13,6 +13,7 @@ class CalendarController extends GetxController {
   List<HolidayData>? holidayData = [HolidayData()];
 
   final List monthArray = [
+    DateTime(DateTime.now().year, DateTime.now().month - 5, 1),
     DateTime(DateTime.now().year, DateTime.now().month - 4, 1),
     DateTime(DateTime.now().year, DateTime.now().month - 3, 1),
     DateTime(DateTime.now().year, DateTime.now().month - 2, 1),
@@ -22,6 +23,7 @@ class CalendarController extends GetxController {
     DateTime(DateTime.now().year, DateTime.now().month + 2, 1),
     DateTime(DateTime.now().year, DateTime.now().month + 3, 1),
     DateTime(DateTime.now().year, DateTime.now().month + 4, 1),
+    DateTime(DateTime.now().year, DateTime.now().month + 5, 1),
   ];
 
   @override

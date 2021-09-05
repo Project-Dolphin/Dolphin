@@ -47,7 +47,7 @@ class CalendarPage extends GetView<CalendarController> {
                           autoPlay: false,
                           enableInfiniteScroll: false,
                           enlargeCenterPage: false,
-                          initialPage: 4,
+                          initialPage: 5,
                           aspectRatio: 2.0,
                           onPageChanged: (index, reason) {},
                         ),

@@ -32,7 +32,13 @@ class DailyMenuMain extends StatefulWidget {
 
 class _DailyMenuMain extends State<DailyMenuMain> {
   final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
-  final List<String> subtitleList = ['2층 학생식당', '3층 스낵코너', '교직원식당', '학생생활관', '승선생활관'];
+  final List<String> subtitleList = [
+    '2층 학생식당',
+    '3층 스낵코너',
+    '교직원식당',
+    '학생생활관',
+    '승선생활관'
+  ];
   final List testPageList = [
     MealCard(
         menu1: cafeteriaMenu,
@@ -150,10 +156,9 @@ class _DailyMenuMain extends State<DailyMenuMain> {
   @override
   Widget build(BuildContext context) {
     mealParse();
-    print(americanMenu);
     return Stack(
       children: [
-         CustomScrollView(
+        CustomScrollView(
           slivers: <Widget>[
             new SliverAppBar(
               backgroundColor: Colors.transparent,
@@ -163,8 +168,7 @@ class _DailyMenuMain extends State<DailyMenuMain> {
               pinned: true,
               expandedHeight: SizeConfig.sizeByHeight(110),
               flexibleSpace: FlexibleSpaceBar(
-                title:
-                Header(
+                title: Header(
                   maxHeight: SizeConfig.sizeByHeight(90),
                   minHeight: SizeConfig.sizeByHeight(60),
                 ),
@@ -295,7 +299,7 @@ class _DailyMenuMain extends State<DailyMenuMain> {
               ),
             ),
           ],
-         ),
+        ),
         // OnelineTitle(name: '식단', description: '', stat: '', fontsize1: 20),
         Positioned(
           bottom: 0,

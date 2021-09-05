@@ -47,7 +47,6 @@ class CityBusRepository {
   }
 
   Future<dynamic> fetchNextCityBus(bstopid) async {
-    print(await FetchAPI().fetchCityBusInfo(bstopid));
     return cityBusApiToJson(await FetchAPI().fetchCityBusInfo(bstopid));
   }
 

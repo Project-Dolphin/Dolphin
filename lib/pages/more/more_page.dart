@@ -16,7 +16,6 @@ const String SITE_PHONE =
     'https://www.kmou.ac.kr/kmou/cm/cntnts/cntntsView.do?mi=1435&cntntsId=329#sideContent';
 const String ERROR_REPORT =
     'https://docs.google.com/forms/d/e/1FAIpQLSd6QuiGmk7h0Lx9v4hXjIfP0BQqufGL4HVygsGpEXBg_282Mw/viewform';
-
 handleUpdateNotification() async {
   Get.dialog(
       AlertDialog(
