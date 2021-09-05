@@ -246,7 +246,7 @@ class CityBus extends GetView<CityBusController> {
                                             ),
                                             child: Row(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 TextBox(
                                                     '버스위치보기',
@@ -470,7 +470,6 @@ class ThirdArrive extends StatelessWidget {
         Row(
           children: [
             Container(
-              color: isNotificationOn! ? Colors.red : Colors.transparent,
               width: SizeConfig.sizeByHeight(90),
               child: Center(
                 child: ElevatedButton(

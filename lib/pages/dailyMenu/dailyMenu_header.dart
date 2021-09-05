@@ -13,38 +13,7 @@ class Header extends StatelessWidget {
       : super(key: key);
 
   Widget build(BuildContext context) {
-     return OnelineTitle(name: '식단', description: '', stat: '', fontsize1: 20);
-//    return LayoutBuilder(
-//      builder: (context, constraints) {
-//        final expandRatio = _calculateExpandRatio(constraints);
-//        final animation = AlwaysStoppedAnimation(expandRatio);
-
-//        return Stack(
-//          fit: StackFit.expand,
-//          children: [
-//            Positioned(
-//              top: 0,
-//              left: 0,
-//              child: ClipRect(
-//                child: BackdropFilter(
-//                  filter: ImageFilter.blur(
-//                    sigmaX: Tween(begin: SizeConfig.sizeByWidth(10.0), end: 0.0).evaluate(animation),
-//                    sigmaY: Tween(begin: SizeConfig.sizeByHeight(10.0), end: 0.0).evaluate(animation),
-//                  ),
-//                  child: Container(
-//                    color: Colors.transparent, //test
-//                    alignment: Alignment.center,
-//                    width: SizeConfig.screenWidth,
-//                    height: SizeConfig.sizeByHeight(50),
-//                  ),
-//                ),
-//              ), // to clip the container
-//            ),
-//            _buildTitle(animation),
-//          ],
-//        );
-//      },
-//    );
+    return OnelineTitle(name: '식단', description: '', stat: '', fontsize1: 20);
   }
 
   double _calculateExpandRatio(BoxConstraints constraints) {

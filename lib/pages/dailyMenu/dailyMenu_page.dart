@@ -196,107 +196,105 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                 SliverFillRemaining(
                   hasScrollBody: false,
                   fillOverscroll: true,
-                  child: Expanded(
-                    child: CarouselSlider(
-                      items: testPageList
-                          .map((item) => Container(
-                                margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
-                                child: Column(
-                                  children: [item],
-                                ),
-                              ))
-                          .toList(),
-                      carouselController: _controller,
-                      options: CarouselOptions(
-                        autoPlay: false,
-                        enableInfiniteScroll: false,
-                        enlargeCenterPage: false,
-                        height: SizeConfig.blockSizeVertical * 100,
-                        onPageChanged: (index, reason) {
-                          setState(
-                            () {
-                              mealParse();
-                              mariDormParse();
-                              _current = index;
-                              if (DateTime.now().weekday == (6 | 7)) {
-                                switch (_current) {
-                                  case 0:
-                                    {
-                                      _stat = "운영종료";
-                                      return null;
-                                    }
-                                  case 1:
-                                    {
-                                      _stat = "운영종료";
-                                      return null;
-                                    }
-                                  case 2:
-                                    {
-                                      _stat = "운영종료";
-                                      return null;
-                                    }
-                                  case 3:
-                                    {
-                                      dormWeekendStat == true
-                                          ? _stat = "운영중"
-                                          : _stat = "운영종료";
-                                      return null;
-                                    }
-                                  case 4:
-                                    {
-                                      _stat = "운영종료";
-                                      return null;
-                                    }
-                                  default:
-                                    {
-                                      return null;
-                                    }
-                                }
-                              } else {
-                                switch (_current) {
-                                  case 0:
-                                    {
-                                      studentStat == true
-                                          ? _stat = "운영중"
-                                          : _stat = "운영종료";
-                                      return null;
-                                    }
-                                  case 1:
-                                    {
-                                      cafeteriaStat == true
-                                          ? _stat = "운영중"
-                                          : _stat = "운영종료";
-                                      return null;
-                                    }
-                                  case 2:
-                                    {
-                                      employerStat == true
-                                          ? _stat = "운영중"
-                                          : _stat = "운영종료";
-                                      return null;
-                                    }
-                                  case 3:
-                                    {
-                                      dormStat == true
-                                          ? _stat = "운영중"
-                                          : _stat = "운영종료";
-                                      return null;
-                                    }
-                                  case 4:
-                                    {
-                                      _stat = "운영종료";
-                                      return null;
-                                    }
-                                  default:
-                                    {
-                                      return null;
-                                    }
-                                }
+                  child: CarouselSlider(
+                    items: testPageList
+                        .map((item) => Container(
+                              margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
+                              child: Column(
+                                children: [item],
+                              ),
+                            ))
+                        .toList(),
+                    carouselController: _controller,
+                    options: CarouselOptions(
+                      autoPlay: false,
+                      enableInfiniteScroll: false,
+                      enlargeCenterPage: false,
+                      height: SizeConfig.blockSizeVertical * 100,
+                      onPageChanged: (index, reason) {
+                        setState(
+                          () {
+                            mealParse();
+                            mariDormParse();
+                            _current = index;
+                            if (DateTime.now().weekday == (6 | 7)) {
+                              switch (_current) {
+                                case 0:
+                                  {
+                                    _stat = "운영종료";
+                                    return null;
+                                  }
+                                case 1:
+                                  {
+                                    _stat = "운영종료";
+                                    return null;
+                                  }
+                                case 2:
+                                  {
+                                    _stat = "운영종료";
+                                    return null;
+                                  }
+                                case 3:
+                                  {
+                                    dormWeekendStat == true
+                                        ? _stat = "운영중"
+                                        : _stat = "운영종료";
+                                    return null;
+                                  }
+                                case 4:
+                                  {
+                                    _stat = "운영종료";
+                                    return null;
+                                  }
+                                default:
+                                  {
+                                    return null;
+                                  }
                               }
-                            },
-                          );
-                        },
-                      ),
+                            } else {
+                              switch (_current) {
+                                case 0:
+                                  {
+                                    studentStat == true
+                                        ? _stat = "운영중"
+                                        : _stat = "운영종료";
+                                    return null;
+                                  }
+                                case 1:
+                                  {
+                                    cafeteriaStat == true
+                                        ? _stat = "운영중"
+                                        : _stat = "운영종료";
+                                    return null;
+                                  }
+                                case 2:
+                                  {
+                                    employerStat == true
+                                        ? _stat = "운영중"
+                                        : _stat = "운영종료";
+                                    return null;
+                                  }
+                                case 3:
+                                  {
+                                    dormStat == true
+                                        ? _stat = "운영중"
+                                        : _stat = "운영종료";
+                                    return null;
+                                  }
+                                case 4:
+                                  {
+                                    _stat = "운영종료";
+                                    return null;
+                                  }
+                                default:
+                                  {
+                                    return null;
+                                  }
+                              }
+                            }
+                          },
+                        );
+                      },
                     ),
                   ),
                 ),

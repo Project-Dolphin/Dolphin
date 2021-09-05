@@ -26,7 +26,7 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final dashboardController = Get.put(DashboardController());
-
+    print(SizeConfig.blockSizeVertical);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: RefreshIndicator(

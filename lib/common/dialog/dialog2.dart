@@ -6,7 +6,9 @@ import 'package:oceanview/common/text/textBox.dart';
 
 Widget dialog = Container(
   width: SizeConfig.sizeByWidth(300),
-  height: SizeConfig.sizeByHeight(154),
+  height: SizeConfig.blockSizeVertical > 7
+      ? SizeConfig.sizeByHeight(154)
+      : SizeConfig.sizeByHeight(168),
   child: Center(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,8 +31,7 @@ Widget dialog = Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextBox('준비중이에요...', 22, FontWeight.w800,
-                      Color(0xFF353B45)),
+                  TextBox('준비중이에요...', 22, FontWeight.w800, Color(0xFF353B45)),
                   SizedBox(
                     height: SizeConfig.sizeByHeight(8),
                   ),
@@ -38,7 +39,7 @@ Widget dialog = Container(
                     width: SizeConfig.sizeByHeight(165),
                     child: Text.rich(
                       TextSpan(
-                        text: '최대한 빠른시간안에 업데이트 할께요!',
+                        text: '최대한 빠른시간안에 업데이트 할게요!',
                         style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
@@ -66,8 +67,7 @@ Widget dialog = Container(
                 shadowColor: Colors.transparent,
                 minimumSize: Size(300, 30)),
             onPressed: () => Get.back(),
-            child:
-            TextBox('확인', 18, FontWeight.w400, Color(0xFF353B45)))
+            child: TextBox('확인', 18, FontWeight.w400, Color(0xFF353B45)))
       ],
     ),
   ),

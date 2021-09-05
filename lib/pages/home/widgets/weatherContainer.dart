@@ -75,7 +75,8 @@ class WeatherContainer extends StatelessWidget {
                                         ],
                                       )),
                                 ],
-                              )
+                              ),
+                              Container()
                             ],
                           )),
                       Expanded(flex: 20, child: Container()),

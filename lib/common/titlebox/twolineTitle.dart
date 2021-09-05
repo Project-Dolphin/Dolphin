@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/text/textBox.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TwolineTitle extends StatelessWidget {
@@ -223,45 +224,26 @@ class MoreText extends StatelessWidget {
     _url = urlName;
     return FittedBox(
       fit: BoxFit.scaleDown,
-      child: _url != ""
-          ? TextButton(
-              style: TextButton.styleFrom(
-                primary: Color(0xFF353B45),
-              ),
-              onPressed: _launchURL,
-              child: Row(
-                children: [
-                  Text(
-                    description,
-                    style: TextStyle(
-                      fontSize: fontsize,
-                      fontWeight: fontweight,
-                    ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Color(0xFF353B45),
-                    size: SizeConfig.sizeByHeight(10.0),
-                  ),
-                ],
-              ),
-            )
-          : Row(
-              children: [
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: fontsize,
-                    fontWeight: fontweight,
-                  ),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Color(0xFF939393),
-                  size: SizeConfig.sizeByHeight(10.0),
-                ),
-              ],
-            ),
+      child: ElevatedButton(
+          onPressed: () {
+            _launchURL();
+          },
+          style: ElevatedButton.styleFrom(
+            primary: Colors.transparent,
+            shadowColor: Colors.transparent,
+            padding: EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextBox(description, 12, FontWeight.w500, Color(0xFF353B45)),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: SizeConfig.sizeByHeight(12),
+                color: Color(0xFF353B45),
+              )
+            ],
+          )),
     );
   }
 

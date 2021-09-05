@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/pages/calendar/Calendar_repository.dart';
 import 'package:oceanview/common/titlebox/iconSet.dart';
@@ -51,39 +52,37 @@ class CalendarPage extends GetView<CalendarController> {
                           aspectRatio: 2.0,
                           onPageChanged: (index, reason) {},
                         ),
-                        items: [
-                          ..._.monthArray.map((e) => Calendar(
-                                calendarData: _.calendarData,
-                                holidayData: _.holidayData,
-                                kFirstDay: e,
-                              ))
-                        ])),
+                        items: _.monthArray
+                            .map((e) => Calendar(
+                                  calendarData: _.calendarData,
+                                  holidayData: _.holidayData,
+                                  kFirstDay: e,
+                                ))
+                            .toList())),
                 Positioned(
                     bottom: SizeConfig.sizeByHeight(35),
                     right: SizeConfig.sizeByWidth(29),
-                    child: TextButton(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            '전체일정 보기',
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xff353B45)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 1),
-                            child: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 12,
-                              color: Color(0xff353B45),
-                            ),
-                          ),
-                        ],
-                      ),
-                      onPressed: _launchURL,
-                    )),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          _launchURL();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          padding: EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            TextBox('전체일정 보기', 12, FontWeight.w500,
+                                Color(0xFF353B45)),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: SizeConfig.sizeByHeight(12),
+                              color: Color(0xFF353B45),
+                            )
+                          ],
+                        ))),
               ],
             ),
           );
