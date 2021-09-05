@@ -14,20 +14,14 @@ Widget dialog = Container(
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GradientIcon(
-              ImageIcon(
-                  AssetImage('assets/images/bottomNavigationIcon/bus.png'),
-                  size: SizeConfig.sizeByHeight(30)),
-              LinearGradient(
-                  colors: <Color>[
-                    Color(0xFF3199FF),
-                    Color(0xFF0081FF),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
-            ),
+            Container(
+                child: Center(
+                  child: Image(
+                      image: AssetImage(
+                          'assets/images/morePage/moreIcon_dialogIcon.png')),
+                ),
+                width: 30,
+                height: 30),
             SizedBox(
               width: SizeConfig.sizeByHeight(22),
             ),
@@ -35,7 +29,8 @@ Widget dialog = Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextBox('준비중이에요..', 22, FontWeight.w800, Color(0xFF353B45)),
+                  TextBox('준비중이에요...', 22, FontWeight.w800,
+                      Color(0xFF353B45)),
                   SizedBox(
                     height: SizeConfig.sizeByHeight(8),
                   ),
@@ -43,15 +38,9 @@ Widget dialog = Container(
                     width: SizeConfig.sizeByHeight(165),
                     child: Text.rich(
                       TextSpan(
-                        text: '최대한 빠른 시간 안에 ',
-                        children: [
-                          TextSpan(
-                              text: '업데이트',
-                              style: TextStyle(fontWeight: FontWeight.w700)),
-                          TextSpan(text: '할게요!'),
-                        ],
+                        text: '최대한 빠른시간안에 업데이트 할께요!',
                         style: TextStyle(
-                            fontSize: SizeConfig.sizeByHeight(12),
+                            fontSize: 13,
                             fontWeight: FontWeight.w400,
                             color: Color(0xFF353B45)),
                       ),
@@ -70,14 +59,15 @@ Widget dialog = Container(
           height: 0.5,
           color: Color(0xffC4C4C4),
         ),
-        SizedBox(height: SizeConfig.sizeByHeight(7)),
+//        SizedBox(height: SizeConfig.sizeByHeight(7)),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.transparent,
-              shadowColor: Colors.transparent,
-            ),
+                primary: Colors.transparent,
+                shadowColor: Colors.transparent,
+                minimumSize: Size(300, 30)),
             onPressed: () => Get.back(),
-            child: TextBox('확인', 18, FontWeight.w400, Color(0xFF353B45)))
+            child:
+            TextBox('확인', 18, FontWeight.w400, Color(0xFF353B45)))
       ],
     ),
   ),
