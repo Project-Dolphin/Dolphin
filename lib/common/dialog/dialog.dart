@@ -32,6 +32,7 @@ Widget dialog = Container(
               width: SizeConfig.sizeByHeight(22),
             ),
             Container(
+
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -39,24 +40,25 @@ Widget dialog = Container(
                   SizedBox(
                     height: SizeConfig.sizeByHeight(8),
                   ),
-                  Container(
-                    width: SizeConfig.sizeByHeight(165),
-                    child: Text.rich(
-                      TextSpan(
-                        text: '버스가 도착하기 ',
-                        children: [
-                          TextSpan(
-                              text: '3분전',
-                              style: TextStyle(fontWeight: FontWeight.w700)),
-                          TextSpan(text: '에 푸시 알림을 보내드려요'),
-                        ],
-                        style: TextStyle(
-                            fontSize: SizeConfig.sizeByHeight(12),
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xFF353B45)),
+                 Container(
+                      width: SizeConfig.sizeByHeight(165),
+                      child: Text.rich(
+                        TextSpan(
+                          text: '버스가 도착하기 ',
+                          children: [
+                            TextSpan(
+                                text: '3분전',
+                                style: TextStyle(fontWeight: FontWeight.w700)),
+                            TextSpan(text: '에 푸시 알림을 보내드려요'),
+                          ],
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF353B45)),
+                        ),
                       ),
                     ),
-                  ),
+
                 ],
               ),
             ),
@@ -70,12 +72,13 @@ Widget dialog = Container(
           height: 0.5,
           color: Color(0xffC4C4C4),
         ),
-        SizedBox(height: SizeConfig.sizeByHeight(7)),
+//        SizedBox(height: SizeConfig.sizeByHeight(7)),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.transparent,
               shadowColor: Colors.transparent,
-            ),
+              minimumSize: Size(300, 30)
+        ),
             onPressed: () => Get.back(),
             child: TextBox('확인', 18, FontWeight.w400, Color(0xFF353B45)))
       ],
