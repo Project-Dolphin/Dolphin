@@ -68,10 +68,9 @@ bool status(TimeOfDay start, TimeOfDay end) {
         (now.hour <= end.hour)) {
       if ((now.hour == end.hour && now.minute <= end.minute)) {
         return true;
-      } else if (now.hour < end.hour){
+      } else if (now.hour < end.hour) {
         return true;
-      }
-      else {
+      } else {
         return false;
       }
     } else {
@@ -158,11 +157,11 @@ List<Data> _datas = [];
 Future<void> mealParse() async {
   try {
     final response = await http.get(Uri.parse(
-        "https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/society/today"));
+        "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/society/today"));
     _text = utf8.decode(response.bodyBytes);
     var dataObjsJson = jsonDecode(_text)['data'] as List;
     final List<Data> parsedResponse =
-    dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
+        dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
     _datas.clear();
     _datas.addAll(parsedResponse);
 
@@ -180,8 +179,7 @@ Future<void> mealParse() async {
     menuFill(employerMenu, 8);
     employerSpecialMenu = (_datas[6].value + "\n").split("\n");
     menuFill(employerSpecialMenu, 8);
-  }
-  catch (err) {
+  } catch (err) {
     throw Exception("Failed to load data");
   }
 }
@@ -209,13 +207,13 @@ Future<void> mealParse() async {
 // }
 
 List breakfast() {
-  Future.delayed(Duration(seconds: 0)).then((_)=> mealParse());
+  Future.delayed(Duration(seconds: 0)).then((_) => mealParse());
   return breakfastMenu;
 }
 
 Future<void> mariDormParse() async {
   final response = await http.get(Uri.parse(
-      "https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/naval/today"));
+      "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/naval/today"));
   _text = utf8.decode(response.bodyBytes);
   var dataObjsJson = jsonDecode(_text)['data'] as List;
   final List<Data> parsedResponse =

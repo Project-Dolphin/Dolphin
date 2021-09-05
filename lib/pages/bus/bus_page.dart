@@ -50,7 +50,7 @@ class BusPage extends GetView<BusController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextBox('학교 출발시간은 실시간 위치가 아닌 홈페이지 기준 고정값입니다.', 10,
+                  TextBox('학교 출발시간은 실시간 위치가 아닌 홈페이지 기준 고정값이에요', 12,
                       FontWeight.w300, Color(0xFF353B45)),
                 ],
               ),
