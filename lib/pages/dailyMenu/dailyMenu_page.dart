@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/common/titlebox/onelineTitle.dart';
 import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
@@ -152,7 +153,7 @@ class _DailyMenuMain extends State<DailyMenuMain> {
     print(americanMenu);
     return Stack(
       children: [
-        CustomScrollView(
+         CustomScrollView(
           slivers: <Widget>[
             new SliverAppBar(
               backgroundColor: Colors.transparent,
@@ -162,7 +163,8 @@ class _DailyMenuMain extends State<DailyMenuMain> {
               pinned: true,
               expandedHeight: SizeConfig.sizeByHeight(110),
               flexibleSpace: FlexibleSpaceBar(
-                title: Header(
+                title:
+                Header(
                   maxHeight: SizeConfig.sizeByHeight(90),
                   minHeight: SizeConfig.sizeByHeight(60),
                 ),
@@ -176,8 +178,8 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                     subname: subtitleList[_current] + " 식단",
                     stat: _stat,
                     more: more,
-                    fontsize2: SizeConfig.sizeByHeight(18),
-                    fontsize3: SizeConfig.sizeByHeight(12),
+                    fontsize2: 18,
+                    fontsize3: 12,
                     fontweight2: FontWeight.w500,
                     fontweight3: FontWeight.w400,
                     url: menuSites[_current],
@@ -293,7 +295,8 @@ class _DailyMenuMain extends State<DailyMenuMain> {
               ),
             ),
           ],
-        ),
+         ),
+        // OnelineTitle(name: '식단', description: '', stat: '', fontsize1: 20),
         Positioned(
           bottom: 0,
           child: Container(
@@ -348,7 +351,7 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                                 color: _current == entry.key
                                     ? Colors.white
                                     : Color(0xFF919191),
-                                fontSize: SizeConfig.sizeByWidth(16),
+                                fontSize: 16,
                                 fontWeight: FontWeight.w700),
                           ),
                         ),

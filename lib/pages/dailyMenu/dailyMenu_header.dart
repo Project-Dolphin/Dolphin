@@ -3,6 +3,7 @@ import 'package:oceanview/common/text/textBox.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/titlebox/onelineTitle.dart';
 
 class Header extends StatelessWidget {
   final double maxHeight;
@@ -12,36 +13,38 @@ class Header extends StatelessWidget {
       : super(key: key);
 
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final expandRatio = _calculateExpandRatio(constraints);
-        final animation = AlwaysStoppedAnimation(expandRatio);
+     return OnelineTitle(name: '식단', description: '', stat: '', fontsize1: 20);
+//    return LayoutBuilder(
+//      builder: (context, constraints) {
+//        final expandRatio = _calculateExpandRatio(constraints);
+//        final animation = AlwaysStoppedAnimation(expandRatio);
 
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            Positioned(
-              top: 0,
-              child: ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: Tween(begin: SizeConfig.sizeByWidth(10.0), end: 0.0).evaluate(animation),
-                    sigmaY: Tween(begin: SizeConfig.sizeByHeight(10.0), end: 0.0).evaluate(animation),
-                  ),
-                  child: Container(
-                    color: Colors.transparent, //test
-                    alignment: Alignment.center,
-                    width: SizeConfig.screenWidth,
-                    height: SizeConfig.sizeByHeight(50),
-                  ),
-                ),
-              ), // to clip the container
-            ),
-            _buildTitle(animation),
-          ],
-        );
-      },
-    );
+//        return Stack(
+//          fit: StackFit.expand,
+//          children: [
+//            Positioned(
+//              top: 0,
+//              left: 0,
+//              child: ClipRect(
+//                child: BackdropFilter(
+//                  filter: ImageFilter.blur(
+//                    sigmaX: Tween(begin: SizeConfig.sizeByWidth(10.0), end: 0.0).evaluate(animation),
+//                    sigmaY: Tween(begin: SizeConfig.sizeByHeight(10.0), end: 0.0).evaluate(animation),
+//                  ),
+//                  child: Container(
+//                    color: Colors.transparent, //test
+//                    alignment: Alignment.center,
+//                    width: SizeConfig.screenWidth,
+//                    height: SizeConfig.sizeByHeight(50),
+//                  ),
+//                ),
+//              ), // to clip the container
+//            ),
+//            _buildTitle(animation),
+//          ],
+//        );
+//      },
+//    );
   }
 
   double _calculateExpandRatio(BoxConstraints constraints) {
@@ -68,7 +71,7 @@ class Header extends StatelessWidget {
             left: SizeConfig.sizeByWidth(14),
           ),
           child: TextBox(
-              '식단',
+              '식단 ',
               Tween<double>(
                       begin: SizeConfig.sizeByHeight(15),
                       end: SizeConfig.sizeByHeight(18))

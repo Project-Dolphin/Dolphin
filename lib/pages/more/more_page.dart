@@ -26,7 +26,7 @@ class MorePage extends GetView<MoreController> {
         children: [
           MainTitle(
               title: '더보기',
-              fontsize: SizeConfig.sizeByHeight(26),
+              fontsize: 26.0,
               fontweight: FontWeight.w700,
               isGradient: false),
           SizedBox(

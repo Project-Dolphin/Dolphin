@@ -22,7 +22,7 @@ class TextBox extends StatelessWidget {
           style: TextStyle(
             color: color,
             fontWeight: fontWeight,
-            fontSize: SizeConfig.sizeByHeight(fontSize),
+            fontSize: fontSize * 0.9,
           ),
           textAlign: textAlign != null ? textAlign : TextAlign.start,
         ));
