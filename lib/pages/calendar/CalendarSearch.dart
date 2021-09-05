@@ -59,17 +59,15 @@ class _CalendarSearchState extends State<CalendarSearch> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           leadingWidth: SizeConfig.sizeByWidth(20),
-          leading: Padding(
-            padding: EdgeInsets.only(left: 10.0, right: 12.0),
-            child: IconButton(
+          leading:IconButton(
                 color: Color(0xff009DF5),
                 onPressed: () {
                   Navigator.pop(context);
                 },
                 icon: Icon(Icons.arrow_back_ios)),
-          ),
+
           title: new Container(
-            height: 40,
+            height: 45,
             margin:
                 EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(20)),
             padding: EdgeInsets.only(
