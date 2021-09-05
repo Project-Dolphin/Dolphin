@@ -27,10 +27,8 @@ class _CalendarSearchState extends State<CalendarSearch> {
   List<DateTime> _searchResultEnd = [];
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    await CalendarReposiory().getCalendar();
-    _calendarDetails = calendarController.calendarData!;
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         FocusScope.of(context).requestFocus(_focusNode);
@@ -46,6 +44,8 @@ class _CalendarSearchState extends State<CalendarSearch> {
 
   @override
   Widget build(BuildContext context) {
+    _calendarDetails = calendarController.calendarData!;
+
     double fullwidth = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
@@ -70,30 +70,41 @@ class _CalendarSearchState extends State<CalendarSearch> {
           ),
           title: new Container(
             height: SizeConfig.sizeByHeight(40),
-            margin: EdgeInsets.all(20),
+            margin:
+                EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(20)),
+            padding: EdgeInsets.only(
+                bottom: SizeConfig.sizeByHeight(8),
+                left: SizeConfig.sizeByWidth(10)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100.0),
               color: Color.fromRGBO(255, 255, 255, 0.6),
             ),
-            child: new ListTile(
-              title: new TextFormField(
-                style: TextStyle(fontSize: SizeConfig.sizeByHeight(16)),
-                autofocus: true,
-                controller: controller,
-                focusNode: _focusNode,
-                decoration: new InputDecoration(
-                    hintText: '학사일정을 검색하기 ex.수강신청', border: InputBorder.none),
-                onChanged: onSearchTextChanged,
-              ),
-              trailing: IconButton(
-                padding: EdgeInsets.zero,
-                icon: Icon(Icons.cancel),
-                color: Color(0xff4ba6ff),
-                onPressed: () {
-                  controller.clear();
-                  onSearchTextChanged('');
-                },
-              ),
+            child: Stack(
+              children: [
+                TextFormField(
+                  style: TextStyle(fontSize: SizeConfig.sizeByHeight(16)),
+                  autofocus: true,
+                  controller: controller,
+                  focusNode: _focusNode,
+                  decoration: new InputDecoration(
+                      contentPadding: EdgeInsets.all(10.0),
+                      hintText: '학사일정을 검색하기 ex.수강신청',
+                      border: InputBorder.none),
+                  onChanged: onSearchTextChanged,
+                ),
+                Positioned(
+                    top: -SizeConfig.sizeByHeight(5),
+                    right: 0,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.cancel),
+                      color: Color(0xff4ba6ff),
+                      onPressed: () {
+                        controller.clear();
+                        onSearchTextChanged('');
+                      },
+                    )),
+              ],
             ),
           ),
         ),
@@ -128,9 +139,8 @@ class _CalendarSearchState extends State<CalendarSearch> {
                                   width: fullwidth * 0.5,
                                   child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
-                                      child: new Text(_searchResult[i]
-                                              ['content']
-                                          .toString())),
+                                      child: new Text(
+                                          _searchResult[i].toString())),
                                 ),
                               ],
                             ),
@@ -158,6 +168,7 @@ class _CalendarSearchState extends State<CalendarSearch> {
   }
 
   onSearchTextChanged(String text) async {
+    print(text);
     _searchResult.clear();
     if (text.isEmpty) {
       setState(() {});
@@ -165,12 +176,12 @@ class _CalendarSearchState extends State<CalendarSearch> {
     }
 
     _calendarDetails.forEach((calendarDetail) {
-      if (calendarDetail['content'].contains(text)) {
-        _searchResult.add(calendarDetail);
+      if (calendarDetail.content.contains(text)) {
+        _searchResult.add(calendarDetail.content);
         _searchResultStart.add(DateFormat("yyyy-M-dd")
-            .parse(calendarDetail['term']['startedAt'].toString()));
+            .parse(calendarDetail.term.startedAt.toString()));
         _searchResultEnd.add(DateFormat("yyyy-M-dd")
-            .parse(calendarDetail['term']['endedAt'].toString()));
+            .parse(calendarDetail.term.endedAt.toString()));
       }
     });
 

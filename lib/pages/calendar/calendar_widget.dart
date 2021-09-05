@@ -222,8 +222,9 @@ class _CalendarState extends State<Calendar> {
     return Container(
         height: SizeConfig.sizeByHeight(600),
         width: SizeConfig.sizeByWidth(375),
-        margin: EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(16)),
-        child: Stack(
+        padding: EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(5)),
+        child: Container(
+            child: Stack(
           children: [
             Container(
                 alignment: Alignment.center,
@@ -233,7 +234,7 @@ class _CalendarState extends State<Calendar> {
             Positioned(
                 top: SizeConfig.sizeByHeight(30),
                 child: GlassMorphism(
-                  width: SizeConfig.sizeByWidth(300),
+                  width: SizeConfig.sizeByWidth(290),
                   height: SizeConfig.sizeByHeight(367),
                   widget: Container(
                       child: Column(
@@ -256,7 +257,7 @@ class _CalendarState extends State<Calendar> {
                           rightChevronVisible: false,
                           titleTextStyle: TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontSize: SizeConfig.sizeByHeight(18),
+                              fontSize: SizeConfig.sizeByHeight(15),
                               color: Color(0xff353b45).withOpacity(1)),
                           titleCentered: true,
                           headerPadding:
@@ -282,41 +283,56 @@ class _CalendarState extends State<Calendar> {
                         weekendDays: [DateTime.sunday],
                         calendarStyle: CalendarStyle(
                             markersAutoAligned: false,
-                            markersOffset: PositionedOffset(bottom: 0),
+                            markersOffset: PositionedOffset(bottom: 1),
                             canMarkersOverflow: true,
-                            markerSize: SizeConfig.sizeByHeight(10),
+                            markerSize: SizeConfig.sizeByHeight(4),
                             markerMargin: EdgeInsets.only(
-                                top: SizeConfig.sizeByHeight(40)),
+                              top: SizeConfig.sizeByHeight(2),
+                              left: SizeConfig.sizeByHeight(1),
+                              right: SizeConfig.sizeByHeight(1),
+                            ),
                             markerDecoration: BoxDecoration(
-                              color: Colors.red.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(59),
+                              color: Color(0xFF353B45).withOpacity(0.5),
                             ),
                             defaultTextStyle: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: SizeConfig.sizeByHeight(14),
+                              fontSize: 18,
+                              //fontSize: SizeConfig.sizeByHeight(16),
                             ),
                             todayTextStyle: TextStyle(
                                 fontWeight: FontWeight.w300,
-                                fontSize: SizeConfig.sizeByHeight(14),
-                                color: Colors.black),
-                            /*todayDecoration:
-                                      BoxDecoration(color: Colors.yellow),*/
+                                fontSize: 18,
+                                //fontSize: SizeConfig.sizeByHeight(16),
+                                color: Colors.white),
+                            todayDecoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF0081FF),
+                                border: Border.all(
+                                    width: 1,
+                                    color: Colors.white.withOpacity(0.8))),
                             selectedTextStyle: TextStyle(
                                 fontWeight: FontWeight.w300,
-                                fontSize: SizeConfig.sizeByHeight(18),
+                                fontSize: 18,
+                                //fontSize: SizeConfig.sizeByHeight(16),
                                 color: Colors.black),
                             selectedDecoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                                border: Border.all(
+                                    width: 1,
+                                    color: Color(0xFF0081FF).withOpacity(0.8))),
                             holidayTextStyle: TextStyle(
                                 fontWeight: FontWeight.w300,
-                                fontSize: SizeConfig.sizeByHeight(18),
+                                fontSize: 18,
+                                //fontSize: SizeConfig.sizeByHeight(16),
                                 color: Color(0xffff3030)),
                             holidayDecoration:
                                 BoxDecoration(shape: BoxShape.circle),
                             weekendTextStyle: TextStyle(
                                 fontWeight: FontWeight.w300,
-                                fontSize: SizeConfig.sizeByHeight(18),
+                                fontSize: 18,
+                                //fontSize: SizeConfig.sizeByHeight(16),
                                 color: Color(0xffff3030)),
                             outsideDaysVisible: true,
                             outsideTextStyle: TextStyle(
@@ -339,6 +355,8 @@ class _CalendarState extends State<Calendar> {
                     itemBuilder: (context, index) {
                       return Container(
                         child: ListTile(
+                          visualDensity:
+                              VisualDensity(horizontal: 0, vertical: -4),
                           onTap: () => print('${value[index]}'),
                           leading: Container(
                             width: 4,
@@ -352,8 +370,7 @@ class _CalendarState extends State<Calendar> {
                             child: Text(
                               '${value[index]}',
                               style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(16),
-                                  fontWeight: FontWeight.w500),
+                                  fontSize: 16, fontWeight: FontWeight.w700),
                             ),
                           ),
                         ),
@@ -363,37 +380,8 @@ class _CalendarState extends State<Calendar> {
                 },
               ),
             ),
-            Positioned(
-                bottom: 0,
-                right: 0,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 10, 20),
-                  child: TextButton(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          '전체일정 보기',
-                          style: TextStyle(
-                              fontSize: SizeConfig.sizeByWidth(12),
-                              fontWeight: FontWeight.w300,
-                              color: Color(0xff353B45)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: SizeConfig.sizeByWidth(10),
-                            color: Color(0xff353B45),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onPressed: _launchURL,
-                  ),
-                ))
           ],
-        ));
+        )));
   }
 }
 
@@ -408,14 +396,4 @@ class Event {
 
 int getHashCode(DateTime key) {
   return key.day * 1000000 + key.month * 10000 + key.year;
-}
-
-_launchURL() async {
-  const url =
-      'https://www.kmou.ac.kr/onestop/cm/cntnts/cntntsView.do?mi=74&cntntsId=1755';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
 }

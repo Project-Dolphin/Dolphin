@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:oceanview/common/dialog/dialog2.dart';
 import 'package:oceanview/pages/calendar/CalendarSearch.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 
@@ -13,6 +15,17 @@ class _CalendarIconState extends State<CalendarIcon> {
   var iconColor = Color(0xFF000000);
   bool isSwitched = false;
   int val = 1;
+
+  tmpNoti() {
+    Get.dialog(
+        AlertDialog(
+          contentPadding: EdgeInsets.fromLTRB(SizeConfig.sizeByHeight(20),
+              SizeConfig.sizeByHeight(20), SizeConfig.sizeByHeight(20), 0),
+          content: dialog,
+        ),
+        transitionDuration: Duration(milliseconds: 200),
+        name: '미완성알림');
+  }
 
   showAlertDialog(BuildContext context) {
     showDialog(
@@ -176,54 +189,77 @@ class _CalendarIconState extends State<CalendarIcon> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(SizeConfig.sizeByHeight(30)),
-      child: Padding(
-        padding: EdgeInsets.all(SizeConfig.sizeByHeight(19)),
+        padding: EdgeInsets.only(
+            top: SizeConfig.sizeByHeight(7), right: SizeConfig.sizeByWidth(14)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFFFFFFF),
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
-                ),
-                child: Icon(
-                  Icons.search,
-                  size: SizeConfig.sizeByHeight(27.5),
-                  color: iconColor,
-                ),
-                onPressed: () {
+            GestureDetector(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => CalendarSearch()),
                   );
                 },
-              ),
+                child: Container(
+                    height: SizeConfig.sizeByHeight(40),
+                    width: SizeConfig.sizeByHeight(40),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0xFFFFFFFF).withOpacity(0.5),
+                            Color(0xFFFFFFFF).withOpacity(0.3)
+                          ],
+                        )),
+                    child: Container(
+                      margin: EdgeInsets.only(right: SizeConfig.sizeByWidth(2)),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Image.asset(
+                          'assets/images/CalendarPage/CalendarSearch.png',
+                          width: SizeConfig.sizeByWidth(14),
+                          height: SizeConfig.sizeByWidth(14),
+                        ),
+                      ),
+                    ))),
+            SizedBox(
+              width: SizeConfig.sizeByWidth(20),
             ),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFFFFFFF),
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
-                ),
-                child: Icon(
-                  isSwitched ? Icons.notifications : Icons.notifications_none,
-                  size: SizeConfig.sizeByHeight(27.5),
-                  color: iconColor,
-                ),
-                onPressed: () {
-                  showAlertDialog(context);
+            GestureDetector(
+                onTap: () {
+                  tmpNoti();
+                  //showAlertDialog(context);
                 },
-              ),
-            ),
+                child: Container(
+                    height: SizeConfig.sizeByHeight(40),
+                    width: SizeConfig.sizeByHeight(40),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0xFFFFFFFF).withOpacity(0.5),
+                            Color(0xFFFFFFFF).withOpacity(0.3)
+                          ],
+                        )),
+                    child: Container(
+                      margin: EdgeInsets.only(right: SizeConfig.sizeByWidth(2)),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Image.asset(
+                          isSwitched
+                              ? 'assets/images/CalendarPage/CalendarNotiOn.png'
+                              : 'assets/images/CalendarPage/CalendarNotiOff.png',
+                          width: SizeConfig.sizeByWidth(14),
+                          height: SizeConfig.sizeByWidth(14),
+                        ),
+                      ),
+                    ))),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }
