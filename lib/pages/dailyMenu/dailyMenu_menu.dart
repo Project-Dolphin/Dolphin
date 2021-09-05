@@ -23,12 +23,15 @@ class MealCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var emptyMenuText = List.filled(8, "", growable: true);
     emptyMenuText[0] = "식단이 없어요";
-    menu1.isEmpty? menu1 = emptyMenuText : menu1 = menu1;
-    menu2.isEmpty? menu2 = emptyMenuText : menu2 = menu2;
-    menu3.isEmpty? menu3 = emptyMenuText : menu3 = menu3;
+    menu1.isEmpty ? menu1 = emptyMenuText : menu1 = menu1;
+    menu2.isEmpty ? menu2 = emptyMenuText : menu2 = menu2;
+    menu3.isEmpty ? menu3 = emptyMenuText : menu3 = menu3;
+    //메뉴갯수 리턴 받아서 minHeight와 비교 후 최소 높이 리턴 받아야함
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-      height: (SizeConfig.screenHeight*0.9),
+      //height: (SizeConfig.screenHeight*0.9),
+      height: (SizeConfig.screenHeight * 0.7),
+
       widget: Container(
         margin: EdgeInsets.all(
           SizeConfig.sizeByWidth(12.0),

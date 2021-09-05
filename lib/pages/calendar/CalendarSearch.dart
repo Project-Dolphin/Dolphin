@@ -27,10 +27,8 @@ class _CalendarSearchState extends State<CalendarSearch> {
   List<DateTime> _searchResultEnd = [];
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    await CalendarReposiory().getCalendar();
-    _calendarDetails = calendarController.calendarData!;
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         FocusScope.of(context).requestFocus(_focusNode);
@@ -46,6 +44,8 @@ class _CalendarSearchState extends State<CalendarSearch> {
 
   @override
   Widget build(BuildContext context) {
+    _calendarDetails = calendarController.calendarData!;
+
     double fullwidth = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(
@@ -128,9 +128,8 @@ class _CalendarSearchState extends State<CalendarSearch> {
                                   width: fullwidth * 0.5,
                                   child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
-                                      child: new Text(_searchResult[i]
-                                              ['content']
-                                          .toString())),
+                                      child: new Text(
+                                          _searchResult[i].toString())),
                                 ),
                               ],
                             ),
@@ -158,6 +157,7 @@ class _CalendarSearchState extends State<CalendarSearch> {
   }
 
   onSearchTextChanged(String text) async {
+    print(text);
     _searchResult.clear();
     if (text.isEmpty) {
       setState(() {});
@@ -165,12 +165,12 @@ class _CalendarSearchState extends State<CalendarSearch> {
     }
 
     _calendarDetails.forEach((calendarDetail) {
-      if (calendarDetail['content'].contains(text)) {
-        _searchResult.add(calendarDetail);
+      if (calendarDetail.content.contains(text)) {
+        _searchResult.add(calendarDetail.content);
         _searchResultStart.add(DateFormat("yyyy-M-dd")
-            .parse(calendarDetail['term']['startedAt'].toString()));
+            .parse(calendarDetail.term.startedAt.toString()));
         _searchResultEnd.add(DateFormat("yyyy-M-dd")
-            .parse(calendarDetail['term']['endedAt'].toString()));
+            .parse(calendarDetail.term.endedAt.toString()));
       }
     });
 

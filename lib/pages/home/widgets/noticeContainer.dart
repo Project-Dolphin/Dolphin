@@ -58,9 +58,9 @@ class NoticeContainer extends StatelessWidget {
                                           child: Text(e['title'] ?? '',
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
-                                                  fontSize:
-                                                      SizeConfig.sizeByHeight(
-                                                          14),
+                                                  fontSize: 14,
+                                                  // SizeConfig.sizeByHeight(
+                                                  //     14),
                                                   fontWeight: FontWeight.w400,
                                                   color: Color(0xFF353B45),
                                                   fontFamily: 'Pretendard')),
