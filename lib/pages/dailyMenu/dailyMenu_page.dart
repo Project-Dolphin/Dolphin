@@ -7,6 +7,8 @@ import 'package:oceanview/common/titlebox/onelineTitle.dart';
 import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
+
 import 'dailyMenu_header.dart';
 import 'dailyMenu_menu.dart';
 import 'dailyMenu_menu_snack.dart';
@@ -158,148 +160,146 @@ class _DailyMenuMain extends State<DailyMenuMain> {
     mealParse();
     return Stack(
       children: [
-        CustomScrollView(
-          slivers: <Widget>[
-            new SliverAppBar(
-              backgroundColor: Colors.transparent,
-              forceElevated: true,
-              floating: true,
-              elevation: 0.0,
-              pinned: true,
-              expandedHeight: SizeConfig.sizeByHeight(110),
-              flexibleSpace: FlexibleSpaceBar(
-                title: Header(
-                  maxHeight: SizeConfig.sizeByHeight(90),
-                  minHeight: SizeConfig.sizeByHeight(60),
-                ),
-                background: Padding(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.sizeByWidth(22),
-                    right: SizeConfig.sizeByWidth(25),
-                    top: SizeConfig.sizeByHeight(25),
-                  ),
-                  child: BottomTitle(
-                    subname: subtitleList[_current] + " 식단",
-                    stat: _stat,
-                    more: more,
-                    fontsize2: 18,
-                    fontsize3: 12,
-                    fontweight2: FontWeight.w500,
-                    fontweight3: FontWeight.w400,
-                    url: menuSites[_current],
-                  ),
-                ),
-              ),
-            ),
-            SliverFillRemaining(
-              hasScrollBody: false,
-              fillOverscroll: true,
-              child: Expanded(
-                child: CarouselSlider(
-                  items: testPageList
-                      .map((item) => Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
-                            child: Column(
-                              children: [item],
-                            ),
-                          ))
-                      .toList(),
-                  carouselController: _controller,
-                  options: CarouselOptions(
-                    autoPlay: false,
-                    enableInfiniteScroll: false,
-                    enlargeCenterPage: false,
-                    height: SizeConfig.blockSizeVertical * 100,
-                    onPageChanged: (index, reason) {
-                      setState(
-                        () {
-                          mealParse();
-                          mariDormParse();
-                          _current = index;
-                          if (DateTime.now().weekday == (6 | 7)) {
-                            switch (_current) {
-                              case 0:
-                                {
-                                  _stat = "운영종료";
-                                  return null;
-                                }
-                              case 1:
-                                {
-                                  _stat = "운영종료";
-                                  return null;
-                                }
-                              case 2:
-                                {
-                                  _stat = "운영종료";
-                                  return null;
-                                }
-                              case 3:
-                                {
-                                  dormWeekendStat == true
-                                      ? _stat = "운영중"
-                                      : _stat = "운영종료";
-                                  return null;
-                                }
-                              case 4:
-                                {
-                                  _stat = "운영종료";
-                                  return null;
-                                }
-                              default:
-                                {
-                                  return null;
-                                }
-                            }
-                          } else {
-                            switch (_current) {
-                              case 0:
-                                {
-                                  studentStat == true
-                                      ? _stat = "운영중"
-                                      : _stat = "운영종료";
-                                  return null;
-                                }
-                              case 1:
-                                {
-                                  cafeteriaStat == true
-                                      ? _stat = "운영중"
-                                      : _stat = "운영종료";
-                                  return null;
-                                }
-                              case 2:
-                                {
-                                  employerStat == true
-                                      ? _stat = "운영중"
-                                      : _stat = "운영종료";
-                                  return null;
-                                }
-                              case 3:
-                                {
-                                  dormStat == true
-                                      ? _stat = "운영중"
-                                      : _stat = "운영종료";
-                                  return null;
-                                }
-                              case 4:
-                                {
-                                  _stat = "운영종료";
-                                  return null;
-                                }
-                              default:
-                                {
-                                  return null;
-                                }
-                            }
-                          }
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
+        Container(
+            margin: EdgeInsets.only(
+                top: SizeConfig.sizeByHeight(14),
+                left: SizeConfig.sizeByWidth(17)),
+            child: oneLine.MainTitle(
+              title: '식단',
+              fontsize: SizeConfig.sizeByHeight(26),
+              fontweight: FontWeight.w700,
+              isGradient: false,
+            )),
+        Container(
+          margin: EdgeInsets.only(
+              top: SizeConfig.sizeByHeight(50),
+              left: SizeConfig.sizeByWidth(20)),
+          height: SizeConfig.sizeByHeight(40),
+          child: BottomTitle(
+            subname: subtitleList[_current] + " 식단",
+            stat: _stat,
+            more: more,
+            fontsize2: 18,
+            fontsize3: 12,
+            fontweight2: FontWeight.w500,
+            fontweight3: FontWeight.w400,
+            url: menuSites[_current],
+          ),
         ),
+        Container(
+            margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(100)),
+            height: SizeConfig.sizeByHeight(800),
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  fillOverscroll: true,
+                  child: Expanded(
+                    child: CarouselSlider(
+                      items: testPageList
+                          .map((item) => Container(
+                                margin: EdgeInsets.fromLTRB(0, 0, 15, 60),
+                                child: Column(
+                                  children: [item],
+                                ),
+                              ))
+                          .toList(),
+                      carouselController: _controller,
+                      options: CarouselOptions(
+                        autoPlay: false,
+                        enableInfiniteScroll: false,
+                        enlargeCenterPage: false,
+                        height: SizeConfig.blockSizeVertical * 100,
+                        onPageChanged: (index, reason) {
+                          setState(
+                            () {
+                              mealParse();
+                              mariDormParse();
+                              _current = index;
+                              if (DateTime.now().weekday == (6 | 7)) {
+                                switch (_current) {
+                                  case 0:
+                                    {
+                                      _stat = "운영종료";
+                                      return null;
+                                    }
+                                  case 1:
+                                    {
+                                      _stat = "운영종료";
+                                      return null;
+                                    }
+                                  case 2:
+                                    {
+                                      _stat = "운영종료";
+                                      return null;
+                                    }
+                                  case 3:
+                                    {
+                                      dormWeekendStat == true
+                                          ? _stat = "운영중"
+                                          : _stat = "운영종료";
+                                      return null;
+                                    }
+                                  case 4:
+                                    {
+                                      _stat = "운영종료";
+                                      return null;
+                                    }
+                                  default:
+                                    {
+                                      return null;
+                                    }
+                                }
+                              } else {
+                                switch (_current) {
+                                  case 0:
+                                    {
+                                      studentStat == true
+                                          ? _stat = "운영중"
+                                          : _stat = "운영종료";
+                                      return null;
+                                    }
+                                  case 1:
+                                    {
+                                      cafeteriaStat == true
+                                          ? _stat = "운영중"
+                                          : _stat = "운영종료";
+                                      return null;
+                                    }
+                                  case 2:
+                                    {
+                                      employerStat == true
+                                          ? _stat = "운영중"
+                                          : _stat = "운영종료";
+                                      return null;
+                                    }
+                                  case 3:
+                                    {
+                                      dormStat == true
+                                          ? _stat = "운영중"
+                                          : _stat = "운영종료";
+                                      return null;
+                                    }
+                                  case 4:
+                                    {
+                                      _stat = "운영종료";
+                                      return null;
+                                    }
+                                  default:
+                                    {
+                                      return null;
+                                    }
+                                }
+                              }
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )),
         // OnelineTitle(name: '식단', description: '', stat: '', fontsize1: 20),
         Positioned(
           bottom: 0,

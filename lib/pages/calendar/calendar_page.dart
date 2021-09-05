@@ -29,7 +29,7 @@ class CalendarPage extends GetView<CalendarController> {
               children: [
                 CalendarIcon(),
                 Positioned(
-                    left: SizeConfig.sizeByWidth(20),
+                    left: SizeConfig.sizeByWidth(17),
                     top: SizeConfig.sizeByHeight(14),
                     child: oneLine.MainTitle(
                       title: name,
