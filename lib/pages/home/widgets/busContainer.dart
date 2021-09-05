@@ -44,7 +44,7 @@ class BusContainer extends GetView<CityBusController> {
                                       -1
                                   ? '곧 도착'
                                   : '${(_.nextDepartCityBus![0].difference(DateTime.now()).inMinutes * -1).toString()}분 전 출발'
-                          : '다음 차가 없습니다',
+                          : '다음 차가 없어요',
                       SizeConfig.sizeByHeight(16),
                       FontWeight.w700,
                       Color(0xFF0081FF),
