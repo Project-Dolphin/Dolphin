@@ -60,7 +60,7 @@ class _CalendarSearchState extends State<CalendarSearch> {
           elevation: 0.0,
           leadingWidth: SizeConfig.sizeByWidth(20),
           leading: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: EdgeInsets.only(left: 10.0, right: 12.0),
             child: IconButton(
                 color: Color(0xff009DF5),
                 onPressed: () {
@@ -69,7 +69,7 @@ class _CalendarSearchState extends State<CalendarSearch> {
                 icon: Icon(Icons.arrow_back_ios)),
           ),
           title: new Container(
-            height: SizeConfig.sizeByHeight(40),
+            height: 40,
             margin:
                 EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(20)),
             padding: EdgeInsets.only(
@@ -82,13 +82,13 @@ class _CalendarSearchState extends State<CalendarSearch> {
             child: Stack(
               children: [
                 TextFormField(
-                  style: TextStyle(fontSize: SizeConfig.sizeByHeight(16)),
+                  style: TextStyle(fontSize: 16),
                   autofocus: true,
                   controller: controller,
                   focusNode: _focusNode,
                   decoration: new InputDecoration(
                       contentPadding: EdgeInsets.all(10.0),
-                      hintText: '학사일정을 검색하기 ex.수강신청',
+                      hintText: '학사일정 검색하기 ex.수강신청',
                       border: InputBorder.none),
                   onChanged: onSearchTextChanged,
                 ),
@@ -96,6 +96,7 @@ class _CalendarSearchState extends State<CalendarSearch> {
                     top: -SizeConfig.sizeByHeight(5),
                     right: 0,
                     child: IconButton(
+                      iconSize: (20),
                       padding: EdgeInsets.zero,
                       icon: Icon(Icons.cancel),
                       color: Color(0xff4ba6ff),
@@ -168,7 +169,6 @@ class _CalendarSearchState extends State<CalendarSearch> {
   }
 
   onSearchTextChanged(String text) async {
-    print(text);
     _searchResult.clear();
     if (text.isEmpty) {
       setState(() {});

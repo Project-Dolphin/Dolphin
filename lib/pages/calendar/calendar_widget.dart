@@ -190,8 +190,6 @@ class _CalendarState extends State<Calendar> {
       equals: isSameDay,
       hashCode: getHashCode,
     );
-    print(widget.calendarData![0].content);
-    print(widget.holidayData![0].content);
 
     makeEvent();
   }
@@ -232,7 +230,7 @@ class _CalendarState extends State<Calendar> {
                 child: TextBox('${DateFormat('yyyy').format(widget.kFirstDay)}',
                     22, FontWeight.w400, Color(0xFF353B45))),
             Positioned(
-                top: SizeConfig.sizeByHeight(30),
+                top: SizeConfig.sizeByHeight(40),
                 child: GlassMorphism(
                   width: SizeConfig.sizeByWidth(290),
                   height: SizeConfig.sizeByHeight(367),
@@ -346,7 +344,7 @@ class _CalendarState extends State<Calendar> {
                   )),
                 )),
             Container(
-              margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(400)),
+              margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(420)),
               child: ValueListenableBuilder<List<Event>>(
                 valueListenable: _selectedEvents,
                 builder: (context, value, _) {

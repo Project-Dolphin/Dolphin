@@ -60,9 +60,9 @@ const dinnerClose = [
 
 bool status(TimeOfDay start, TimeOfDay end) {
   TimeOfDay now = TimeOfDay.now();
-  print(now.toString());
-  print(start.toString());
-  print(end.toString());
+  // print(now.toString());
+  // print(start.toString());
+  // print(end.toString());
   if (now.hour >= start.hour && now.hour <= end.hour) {
     if ((now.hour >= start.hour && now.minute >= start.minute) &&
         (now.hour <= end.hour)) {
@@ -158,27 +158,30 @@ Future<void> mealParse() async {
   try {
     final response = await http.get(Uri.parse(
         "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/society/today"));
-    _text = utf8.decode(response.bodyBytes);
-    var dataObjsJson = jsonDecode(_text)['data'] as List;
-    final List<Data> parsedResponse =
-        dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
-    _datas.clear();
-    _datas.addAll(parsedResponse);
+    final _text = json.decode(utf8.decode(response.bodyBytes));
 
-    americanMenu = (_datas[0].value + "\n").split("\n");
-    menuFill(americanMenu, 2);
-    breakfastMenu = (_datas[1].value + "\n").split("\n");
-    menuFill(breakfastMenu, 2);
-    ramenMenu = (_datas[2].value + "\n").split("\n");
-    menuFill(ramenMenu, 2);
-    bunsikMenu = (_datas[3].value + "\n").split("\n");
-    menuFill(bunsikMenu, 2);
-    riceMenu = (_datas[4].value + "\n").split("\n");
-    menuFill(riceMenu, 2);
-    employerMenu = (_datas[5].value + "\n").split("\n");
-    menuFill(employerMenu, 8);
-    employerSpecialMenu = (_datas[6].value + "\n").split("\n");
-    menuFill(employerSpecialMenu, 8);
+    if (!_text['data'].contains('diet')) {
+      var dataObjsJson = jsonDecode(_text)['data'] as List;
+      final List<Data> parsedResponse =
+          dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
+      _datas.clear();
+      _datas.addAll(parsedResponse);
+
+      americanMenu = (_datas[0].value + "\n").split("\n");
+      menuFill(americanMenu, 2);
+      breakfastMenu = (_datas[1].value + "\n").split("\n");
+      menuFill(breakfastMenu, 2);
+      ramenMenu = (_datas[2].value + "\n").split("\n");
+      menuFill(ramenMenu, 2);
+      bunsikMenu = (_datas[3].value + "\n").split("\n");
+      menuFill(bunsikMenu, 2);
+      riceMenu = (_datas[4].value + "\n").split("\n");
+      menuFill(riceMenu, 2);
+      employerMenu = (_datas[5].value + "\n").split("\n");
+      menuFill(employerMenu, 8);
+      employerSpecialMenu = (_datas[6].value + "\n").split("\n");
+      menuFill(employerSpecialMenu, 8);
+    }
   } catch (err) {
     throw Exception("Failed to load data");
   }
@@ -215,11 +218,15 @@ Future<void> mariDormParse() async {
   final response = await http.get(Uri.parse(
       "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/naval/today"));
   _text = utf8.decode(response.bodyBytes);
-  var dataObjsJson = jsonDecode(_text)['data'] as List;
-  final List<Data> parsedResponse =
-      dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
-  _datas.clear();
-  _datas.addAll(parsedResponse);
+  if (_text.contains('no any diet')) {
+    _datas.clear();
+  } else {
+    var dataObjsJson = jsonDecode(_text)['data'] as List;
+    final List<Data> parsedResponse =
+        dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
+    _datas.clear();
+    _datas.addAll(parsedResponse);
+  }
 }
 
 void menuFill(List listItem, int size) {

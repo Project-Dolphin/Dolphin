@@ -13,8 +13,6 @@ class CityBusController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    print(nearStation);
-    print(selectedStation);
     setStation(nearStation);
   }
 
@@ -70,8 +68,8 @@ class CityBusData {
   int? min2;
   int? station1;
   int? station2;
-  int? lowplate1;
-  int? lowplate2;
+  bool? lowplate1; // bool to int 에러 발생으로 타입 bool 로 변경
+  bool? lowplate2; // bool to int 에러 발생으로 타입 bool 로 변경
 
   CityBusData(
       {this.carNo1,
