@@ -370,7 +370,7 @@ class _CalendarState extends State<Calendar> {
                             child: Text(
                               '${value[index]}',
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w700),
+                              fontSize: 16, fontWeight: FontWeight.w700),
                             ),
                           ),
                         ),
