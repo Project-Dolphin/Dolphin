@@ -46,6 +46,7 @@ class TwolineTitle extends StatelessWidget {
             stat: stat,
             fontsize3: fontsize3,
             fontweight3: fontweight3,
+            fontsize4: fontsize3,
             more: more,
             url: url,
           ),
@@ -63,6 +64,7 @@ class BottomTitle extends StatelessWidget {
     required this.fontweight2,
     required this.stat,
     required this.fontsize3,
+    required this.fontsize4,
     required this.fontweight3,
     required this.more,
     required this.url,
@@ -73,6 +75,7 @@ class BottomTitle extends StatelessWidget {
   final FontWeight? fontweight2;
   final String? stat;
   final double? fontsize3;
+  final double? fontsize4;
   final FontWeight? fontweight3;
   final String? more;
   final String url;
@@ -103,7 +106,7 @@ class BottomTitle extends StatelessWidget {
         ),
         MoreText(
           description: more,
-          fontsize: fontsize3,
+          fontsize: fontsize4,
           fontweight: fontweight2,
           urlName: url,
         ),
