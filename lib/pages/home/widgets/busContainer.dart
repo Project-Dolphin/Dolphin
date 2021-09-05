@@ -25,7 +25,7 @@ class BusContainer extends GetView<CityBusController> {
           Color(0xFF353B45),
         ),
         SizedBox(
-          height: SizeConfig.sizeByHeight(10),
+          height: SizeConfig.sizeByHeight(6),
         ),
         GetBuilder<CityBusController>(
             init: CityBusController(),
