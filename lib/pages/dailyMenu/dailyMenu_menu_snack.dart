@@ -34,36 +34,35 @@ class SnackCard extends StatelessWidget {
   List<Data> _datas = [];
 
   Future<void> mealParse() async {
-  try {
-  final response = await http.get(Uri.parse(
-  "https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/society/today"));
-  _text = utf8.decode(response.bodyBytes);
-  var dataObjsJson = jsonDecode(_text)['data'] as List;
-  final List<Data> parsedResponse =
-  dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
-  _datas.clear();
-  _datas.addAll(parsedResponse);
+    try {
+      final response = await http.get(Uri.parse(
+          "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/society/today"));
+      _text = utf8.decode(response.bodyBytes);
+      var dataObjsJson = jsonDecode(_text)['data'] as List;
+      final List<Data> parsedResponse =
+          dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
+      _datas.clear();
+      _datas.addAll(parsedResponse);
 
-  americanMenu = (_datas[0].value + "\n").split("\n");
-  menuFill(americanMenu, 2);
-  breakfastMenu = (_datas[1].value + "\n").split("\n");
-  menuFill(breakfastMenu, 2);
-  ramenMenu = (_datas[2].value + "\n").split("\n");
-  menuFill(ramenMenu, 2);
-  bunsikMenu = (_datas[3].value + "\n").split("\n");
-  menuFill(bunsikMenu, 2);
-  riceMenu = (_datas[4].value + "\n").split("\n");
-  menuFill(riceMenu, 2);
-  }
-  catch (err) {
-  throw Exception("Failed to load data");
-  }
+      americanMenu = (_datas[0].value + "\n").split("\n");
+      menuFill(americanMenu, 2);
+      breakfastMenu = (_datas[1].value + "\n").split("\n");
+      menuFill(breakfastMenu, 2);
+      ramenMenu = (_datas[2].value + "\n").split("\n");
+      menuFill(ramenMenu, 2);
+      bunsikMenu = (_datas[3].value + "\n").split("\n");
+      menuFill(bunsikMenu, 2);
+      riceMenu = (_datas[4].value + "\n").split("\n");
+      menuFill(riceMenu, 2);
+    } catch (err) {
+      throw Exception("Failed to load data");
+    }
   }
 
   void menuFill(List listItem, int size) {
-  while (listItem.length < size) {
-  listItem.add("");
-  }
+    while (listItem.length < size) {
+      listItem.add("");
+    }
   }
 
   var type, name, time;
@@ -133,11 +132,12 @@ class SnackCard extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom:SizeConfig.sizeByHeight(5.0),),
+                    padding: EdgeInsets.only(
+                      bottom: SizeConfig.sizeByHeight(5.0),
+                    ),
                     child: Image(
                       height: SizeConfig.blockSizeHorizontal,
-                      image:
-                      AssetImage('assets/images/mealPage/divider.png'),
+                      image: AssetImage('assets/images/mealPage/divider.png'),
                     ),
                   ),
                   Row(
@@ -221,11 +221,12 @@ class SnackCard extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom:SizeConfig.sizeByHeight(5.0),),
+                    padding: EdgeInsets.only(
+                      bottom: SizeConfig.sizeByHeight(5.0),
+                    ),
                     child: Image(
                       height: SizeConfig.blockSizeHorizontal,
-                      image:
-                      AssetImage('assets/images/mealPage/divider.png'),
+                      image: AssetImage('assets/images/mealPage/divider.png'),
                     ),
                   ),
                   Row(
@@ -237,21 +238,34 @@ class SnackCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
+                            padding: EdgeInsets.only(
+                                bottom: SizeConfig.sizeByHeight(10.0)),
                             child: RichText(
                               text: TextSpan(
                                 text: '| ',
-                                style: TextStyle(color: Color(0xff0081FF),
+                                style: TextStyle(
+                                  color: Color(0xff0081FF),
                                 ),
                                 children: <TextSpan>[
-                                  TextSpan(text: '양식', style: TextStyle(fontSize: SizeConfig.sizeByHeight(14.0),color: Color(0xff3F3F3F),),),
-                                  TextSpan(text: ' |', style: TextStyle(color: Color(0xff0081FF),)),
+                                  TextSpan(
+                                    text: '양식',
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(14.0),
+                                      color: Color(0xff3F3F3F),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                      text: ' |',
+                                      style: TextStyle(
+                                        color: Color(0xff0081FF),
+                                      )),
                                 ],
                               ),
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
+                            margin: EdgeInsets.only(
+                                bottom: SizeConfig.sizeByHeight(10.0)),
                             width: SizeConfig.sizeByWidth(120.0),
                             child: Text(
                               menu2[0],
@@ -261,50 +275,62 @@ class SnackCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                          menu2.length > 2? Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                            width: SizeConfig.sizeByWidth(120.0),
-                            child: Text(
-                              menu2[1],
-                              style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ): Container(),
-                          menu2.length > 3? Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                            width: SizeConfig.sizeByWidth(120.0),
-                            child: Text(
-                              menu2[2],
-                              style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ): Container(),
-                          menu2.length > 4? Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                            width: SizeConfig.sizeByWidth(120.0),
-                            child: Text(
-                              menu2[3],
-                              style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ): Container(),
-                          menu2.length > 5? Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                            width: SizeConfig.sizeByWidth(120.0),
-                            child: Text(
-                              menu2[4],
-                              style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ): Container(),
+                          menu2.length > 2
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: SizeConfig.sizeByHeight(10.0)),
+                                  width: SizeConfig.sizeByWidth(120.0),
+                                  child: Text(
+                                    menu2[1],
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          menu2.length > 3
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: SizeConfig.sizeByHeight(10.0)),
+                                  width: SizeConfig.sizeByWidth(120.0),
+                                  child: Text(
+                                    menu2[2],
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          menu2.length > 4
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: SizeConfig.sizeByHeight(10.0)),
+                                  width: SizeConfig.sizeByWidth(120.0),
+                                  child: Text(
+                                    menu2[3],
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          menu2.length > 5
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: SizeConfig.sizeByHeight(10.0)),
+                                  width: SizeConfig.sizeByWidth(120.0),
+                                  child: Text(
+                                    menu2[4],
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                       Column(
@@ -312,21 +338,34 @@ class SnackCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
+                            padding: EdgeInsets.only(
+                                bottom: SizeConfig.sizeByHeight(10.0)),
                             child: RichText(
                               text: TextSpan(
                                 text: '| ',
-                                style: TextStyle(color: Color(0xff0081FF),
+                                style: TextStyle(
+                                  color: Color(0xff0081FF),
                                 ),
                                 children: <TextSpan>[
-                                  TextSpan(text: '라면', style: TextStyle(fontSize: SizeConfig.sizeByHeight(14.0),color: Color(0xff3F3F3F),),),
-                                  TextSpan(text: ' |', style: TextStyle(color: Color(0xff0081FF),)),
+                                  TextSpan(
+                                    text: '라면',
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(14.0),
+                                      color: Color(0xff3F3F3F),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                      text: ' |',
+                                      style: TextStyle(
+                                        color: Color(0xff0081FF),
+                                      )),
                                 ],
                               ),
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
+                            margin: EdgeInsets.only(
+                                bottom: SizeConfig.sizeByHeight(10.0)),
                             width: SizeConfig.sizeByWidth(120.0),
                             child: Text(
                               menu3[0],
@@ -336,56 +375,69 @@ class SnackCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                          menu3.length > 2? Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                            width: SizeConfig.sizeByWidth(120.0),
-                            child: Text(
-                              menu3[1],
-                              style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ): Container(),
-                          menu3.length > 3? Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                            width: SizeConfig.sizeByWidth(120.0),
-                            child: Text(
-                              menu3[2],
-                              style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ): Container(),
-                          menu3.length > 4? Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                            width: SizeConfig.sizeByWidth(120.0),
-                            child: Text(
-                              menu3[3],
-                              style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ): Container(),
-                          menu3.length > 5? Container(
-                            margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                            width: SizeConfig.sizeByWidth(120.0),
-                            child: Text(
-                              menu3[4],
-                              style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ): Container(),
+                          menu3.length > 2
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: SizeConfig.sizeByHeight(10.0)),
+                                  width: SizeConfig.sizeByWidth(120.0),
+                                  child: Text(
+                                    menu3[1],
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          menu3.length > 3
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: SizeConfig.sizeByHeight(10.0)),
+                                  width: SizeConfig.sizeByWidth(120.0),
+                                  child: Text(
+                                    menu3[2],
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          menu3.length > 4
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: SizeConfig.sizeByHeight(10.0)),
+                                  width: SizeConfig.sizeByWidth(120.0),
+                                  child: Text(
+                                    menu3[3],
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          menu3.length > 5
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      bottom: SizeConfig.sizeByHeight(10.0)),
+                                  width: SizeConfig.sizeByWidth(120.0),
+                                  child: Text(
+                                    menu3[4],
+                                    style: TextStyle(
+                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
                         ],
                       ),
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top:SizeConfig.sizeByHeight(25.0)),
+                    padding:
+                        EdgeInsets.only(top: SizeConfig.sizeByHeight(25.0)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -395,21 +447,34 @@ class SnackCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
+                              padding: EdgeInsets.only(
+                                  bottom: SizeConfig.sizeByHeight(10.0)),
                               child: RichText(
                                 text: TextSpan(
                                   text: '| ',
-                                  style: TextStyle(color: Color(0xff0081FF),
+                                  style: TextStyle(
+                                    color: Color(0xff0081FF),
                                   ),
                                   children: <TextSpan>[
-                                    TextSpan(text: '분식', style: TextStyle(fontSize: SizeConfig.sizeByHeight(14.0),color: Color(0xff3F3F3F),),),
-                                    TextSpan(text: ' |', style: TextStyle(color: Color(0xff0081FF),)),
+                                    TextSpan(
+                                      text: '분식',
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(14.0),
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                        text: ' |',
+                                        style: TextStyle(
+                                          color: Color(0xff0081FF),
+                                        )),
                                   ],
                                 ),
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
+                              margin: EdgeInsets.only(
+                                  bottom: SizeConfig.sizeByHeight(10.0)),
                               width: SizeConfig.sizeByWidth(120.0),
                               child: Text(
                                 menu4[0],
@@ -419,50 +484,62 @@ class SnackCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            menu4.length > 2? Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                              width: SizeConfig.sizeByWidth(120.0),
-                              child: Text(
-                                menu4[1],
-                                style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ): Container(),
-                            menu4.length > 3? Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                              width: SizeConfig.sizeByWidth(120.0),
-                              child: Text(
-                                menu4[2],
-                                style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ): Container(),
-                            menu4.length > 4? Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                              width: SizeConfig.sizeByWidth(120.0),
-                              child: Text(
-                                menu4[3],
-                                style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ): Container(),
-                            menu4.length > 5? Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                              width: SizeConfig.sizeByWidth(120.0),
-                              child: Text(
-                                menu4[4],
-                                style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ): Container(),
+                            menu4.length > 2
+                                ? Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      menu4[1],
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            menu4.length > 3
+                                ? Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      menu4[2],
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            menu4.length > 4
+                                ? Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      menu4[3],
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            menu4.length > 5
+                                ? Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      menu4[4],
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
                           ],
                         ),
                         Column(
@@ -470,21 +547,34 @@ class SnackCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
+                              padding: EdgeInsets.only(
+                                  bottom: SizeConfig.sizeByHeight(10.0)),
                               child: RichText(
                                 text: TextSpan(
                                   text: '| ',
-                                  style: TextStyle(color: Color(0xff0081FF),
+                                  style: TextStyle(
+                                    color: Color(0xff0081FF),
                                   ),
                                   children: <TextSpan>[
-                                    TextSpan(text: '덮밥', style: TextStyle(fontSize: SizeConfig.sizeByHeight(14.0),color: Color(0xff3F3F3F),),),
-                                    TextSpan(text: ' |', style: TextStyle(color: Color(0xff0081FF),)),
+                                    TextSpan(
+                                      text: '덮밥',
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(14.0),
+                                        color: Color(0xff3F3F3F),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                        text: ' |',
+                                        style: TextStyle(
+                                          color: Color(0xff0081FF),
+                                        )),
                                   ],
                                 ),
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
+                              margin: EdgeInsets.only(
+                                  bottom: SizeConfig.sizeByHeight(10.0)),
                               width: SizeConfig.sizeByWidth(120.0),
                               child: Text(
                                 menu5[0],
@@ -494,50 +584,62 @@ class SnackCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            menu5.length > 2? Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                              width: SizeConfig.sizeByWidth(120.0),
-                              child: Text(
-                                menu5[1],
-                                style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ): Container(),
-                            menu5.length > 3? Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                              width: SizeConfig.sizeByWidth(120.0),
-                              child: Text(
-                                menu5[2],
-                                style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ): Container(),
-                            menu5.length > 4? Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                              width: SizeConfig.sizeByWidth(120.0),
-                              child: Text(
-                                menu5[3],
-                                style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ): Container(),
-                            menu5.length > 5? Container(
-                              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(10.0)),
-                              width: SizeConfig.sizeByWidth(120.0),
-                              child: Text(
-                                menu5[4],
-                                style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ): Container(),
+                            menu5.length > 2
+                                ? Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      menu5[1],
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            menu5.length > 3
+                                ? Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      menu5[2],
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            menu5.length > 4
+                                ? Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      menu5[3],
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            menu5.length > 5
+                                ? Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      menu5[4],
+                                      style: TextStyle(
+                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
                           ],
                         ),
                       ],
