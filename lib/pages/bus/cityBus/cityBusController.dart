@@ -70,8 +70,8 @@ class CityBusData {
   int? min2;
   int? station1;
   int? station2;
-  int? lowplate1;
-  int? lowplate2;
+  bool? lowplate1;
+  bool? lowplate2;
 
   CityBusData(
       {this.carNo1,

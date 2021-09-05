@@ -70,30 +70,41 @@ class _CalendarSearchState extends State<CalendarSearch> {
           ),
           title: new Container(
             height: SizeConfig.sizeByHeight(40),
-            margin: EdgeInsets.all(20),
+            margin:
+                EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(20)),
+            padding: EdgeInsets.only(
+                bottom: SizeConfig.sizeByHeight(8),
+                left: SizeConfig.sizeByWidth(10)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100.0),
               color: Color.fromRGBO(255, 255, 255, 0.6),
             ),
-            child: new ListTile(
-              title: new TextFormField(
-                style: TextStyle(fontSize: SizeConfig.sizeByHeight(16)),
-                autofocus: true,
-                controller: controller,
-                focusNode: _focusNode,
-                decoration: new InputDecoration(
-                    hintText: '학사일정을 검색하기 ex.수강신청', border: InputBorder.none),
-                onChanged: onSearchTextChanged,
-              ),
-              trailing: IconButton(
-                padding: EdgeInsets.zero,
-                icon: Icon(Icons.cancel),
-                color: Color(0xff4ba6ff),
-                onPressed: () {
-                  controller.clear();
-                  onSearchTextChanged('');
-                },
-              ),
+            child: Stack(
+              children: [
+                TextFormField(
+                  style: TextStyle(fontSize: SizeConfig.sizeByHeight(16)),
+                  autofocus: true,
+                  controller: controller,
+                  focusNode: _focusNode,
+                  decoration: new InputDecoration(
+                      contentPadding: EdgeInsets.all(10.0),
+                      hintText: '학사일정을 검색하기 ex.수강신청',
+                      border: InputBorder.none),
+                  onChanged: onSearchTextChanged,
+                ),
+                Positioned(
+                    top: -SizeConfig.sizeByHeight(5),
+                    right: 0,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      icon: Icon(Icons.cancel),
+                      color: Color(0xff4ba6ff),
+                      onPressed: () {
+                        controller.clear();
+                        onSearchTextChanged('');
+                      },
+                    )),
+              ],
             ),
           ),
         ),

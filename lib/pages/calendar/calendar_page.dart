@@ -7,6 +7,7 @@ import 'package:oceanview/common/titlebox/iconSet.dart';
 import 'package:oceanview/pages/calendar/calendar_widget.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CalendarPage extends GetView<CalendarController> {
   final name = '학사일정';
@@ -29,7 +30,7 @@ class CalendarPage extends GetView<CalendarController> {
                 CalendarIcon(),
                 Positioned(
                     left: SizeConfig.sizeByWidth(20),
-                    top: SizeConfig.sizeByHeight(51),
+                    top: SizeConfig.sizeByHeight(14),
                     child: oneLine.MainTitle(
                       title: name,
                       fontsize: SizeConfig.sizeByHeight(26),
@@ -38,15 +39,16 @@ class CalendarPage extends GetView<CalendarController> {
                     )),
                 Container(
                     margin: EdgeInsets.only(
-                      top: SizeConfig.sizeByHeight(98),
+                      top: SizeConfig.sizeByHeight(68),
                     ),
                     child: CarouselSlider(
                         options: CarouselOptions(
-                          height: SizeConfig.sizeByHeight(700),
+                          height: SizeConfig.sizeByHeight(600),
                           autoPlay: false,
                           enableInfiniteScroll: false,
                           enlargeCenterPage: false,
                           initialPage: 4,
+                          aspectRatio: 2.0,
                           onPageChanged: (index, reason) {},
                         ),
                         items: [
@@ -55,10 +57,46 @@ class CalendarPage extends GetView<CalendarController> {
                                 holidayData: _.holidayData,
                                 kFirstDay: e,
                               ))
-                        ]))
+                        ])),
+                Positioned(
+                    bottom: SizeConfig.sizeByHeight(35),
+                    right: SizeConfig.sizeByWidth(29),
+                    child: TextButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            '전체일정 보기',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff353B45)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 1),
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              size: 12,
+                              color: Color(0xff353B45),
+                            ),
+                          ),
+                        ],
+                      ),
+                      onPressed: _launchURL,
+                    )),
               ],
             ),
           );
         });
+  }
+}
+
+_launchURL() async {
+  const url =
+      'https://www.kmou.ac.kr/onestop/cm/cntnts/cntntsView.do?mi=74&cntntsId=1755';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
