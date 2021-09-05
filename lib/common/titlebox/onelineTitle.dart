@@ -72,7 +72,7 @@ class MainTitle extends StatelessWidget {
             colors: <Color>[Color(0xFF3199FF), Color(0xFF0081FF)],
           ).createShader(Rect.fromLTWH(0.0, 0.0, 100.0, 50.0))
         : LinearGradient(
-            colors: <Color>[Color(0xff000000), Color(0xff000000)],
+            colors: <Color>[Color(0xff353B45), Color(0xff353B45)],
           ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
     return Padding(
       padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(15.0)),

@@ -118,7 +118,7 @@ class SnackCard extends StatelessWidget {
                           Text(
                             '천원의 아침',
                             style: TextStyle(
-                              fontSize: SizeConfig.sizeByHeight(16.0),
+                              fontSize: 16.0,
                             ),
                           ),
                         ],
@@ -126,7 +126,7 @@ class SnackCard extends StatelessWidget {
                       Text(
                         timeCafeteria[0].toString(),
                         style: TextStyle(
-                          fontSize: SizeConfig.sizeByHeight(12.0),
+                          fontSize: 12.0,
                         ),
                       ),
                     ],
@@ -153,7 +153,7 @@ class SnackCard extends StatelessWidget {
                               child: Text(
                                 menu1[0],
                                 style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
+                                  fontSize: 15.0,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
@@ -163,7 +163,7 @@ class SnackCard extends StatelessWidget {
                               child: Text(
                                 menu1[1],
                                 style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
+                                  fontSize: 15.0,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
@@ -197,7 +197,7 @@ class SnackCard extends StatelessWidget {
                           Text(
                             '스낵코너',
                             style: TextStyle(
-                              fontSize: SizeConfig.sizeByHeight(16.0),
+                              fontSize: 16.0,
                             ),
                           ),
                         ],
@@ -207,13 +207,13 @@ class SnackCard extends StatelessWidget {
                           Text(
                             timeCafeteria[1].toString(),
                             style: TextStyle(
-                              fontSize: SizeConfig.sizeByHeight(12.0),
+                              fontSize: 12.0,
                             ),
                           ),
                           Text(
                             timeCafeteria[2].toString(),
                             style: TextStyle(
-                              fontSize: SizeConfig.sizeByHeight(12.0),
+                              fontSize: 12.0,
                             ),
                           ),
                         ],
@@ -250,7 +250,7 @@ class SnackCard extends StatelessWidget {
                                   TextSpan(
                                     text: '양식',
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(14.0),
+                                      fontSize: 14.0,
                                       color: Color(0xff3F3F3F),
                                     ),
                                   ),
@@ -270,7 +270,7 @@ class SnackCard extends StatelessWidget {
                             child: Text(
                               menu2[0],
                               style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
+                                fontSize: 15.0,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -283,7 +283,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     menu2[1],
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontSize: 15.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -297,7 +297,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     menu2[2],
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontSize: 15.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -311,7 +311,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     menu2[3],
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontSize: 15.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -325,7 +325,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     menu2[4],
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontSize: 15.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -350,7 +350,7 @@ class SnackCard extends StatelessWidget {
                                   TextSpan(
                                     text: '라면',
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(14.0),
+                                      fontSize: 14.0,
                                       color: Color(0xff3F3F3F),
                                     ),
                                   ),
@@ -370,7 +370,7 @@ class SnackCard extends StatelessWidget {
                             child: Text(
                               menu3[0],
                               style: TextStyle(
-                                fontSize: SizeConfig.sizeByHeight(15.0),
+                                fontSize: 15.0,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -383,7 +383,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     menu3[1],
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontSize: 15.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -397,7 +397,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     menu3[2],
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontSize: 15.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -411,7 +411,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     menu3[3],
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontSize: 15.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -425,7 +425,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     menu3[4],
                                     style: TextStyle(
-                                      fontSize: SizeConfig.sizeByHeight(15.0),
+                                      fontSize: 15.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -459,7 +459,7 @@ class SnackCard extends StatelessWidget {
                                     TextSpan(
                                       text: '분식',
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(14.0),
+                                        fontSize: 14.0,
                                         color: Color(0xff3F3F3F),
                                       ),
                                     ),
@@ -479,7 +479,7 @@ class SnackCard extends StatelessWidget {
                               child: Text(
                                 menu4[0],
                                 style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
+                                  fontSize: 15.0,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
@@ -492,7 +492,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       menu4[1],
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -506,7 +506,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       menu4[2],
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -520,7 +520,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       menu4[3],
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -534,7 +534,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       menu4[4],
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -559,7 +559,7 @@ class SnackCard extends StatelessWidget {
                                     TextSpan(
                                       text: '덮밥',
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(14.0),
+                                        fontSize: 14.0,
                                         color: Color(0xff3F3F3F),
                                       ),
                                     ),
@@ -579,7 +579,7 @@ class SnackCard extends StatelessWidget {
                               child: Text(
                                 menu5[0],
                                 style: TextStyle(
-                                  fontSize: SizeConfig.sizeByHeight(15.0),
+                                  fontSize: 15.0,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
@@ -592,7 +592,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       menu5[1],
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -606,7 +606,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       menu5[2],
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -620,7 +620,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       menu5[3],
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -634,7 +634,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       menu5[4],
                                       style: TextStyle(
-                                        fontSize: SizeConfig.sizeByHeight(15.0),
+                                        fontSize: 15.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
