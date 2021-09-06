@@ -26,116 +26,117 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final dashboardController = Get.put(DashboardController());
-    print(SizeConfig.blockSizeVertical);
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: RefreshIndicator(
-        onRefresh: onRefresh,
-        child: SingleChildScrollView(
-          child: Container(
-            height: SizeConfig.blockSizeVertical > 7
-                ? SizeConfig.blockSizeVertical * 83
-                : SizeConfig.blockSizeVertical * 86,
-            margin:
-                EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(20)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GetBuilder<HomeController>(
-                    builder: (_) => Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: SizeConfig.sizeByHeight(14)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              MainTitle(
-                                title: 'OceanView',
-                                fontsize: SizeConfig.sizeByHeight(26),
-                                fontweight: FontWeight.w700,
-                                isGradient: true,
-                              ),
-                              Row(
-                                children: [
-                                  SubText(
-                                    description: _.formattedDate,
-                                    fontsize: SizeConfig.sizeByHeight(14),
-                                    fontweight: FontWeight.w400,
-                                  ),
-                                  StatusContainer(
-                                    stat: _.stat,
-                                    fontsize: SizeConfig.sizeByHeight(12),
-                                    fontweight: FontWeight.w400,
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        )),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Expanded(
-                          flex: 134,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              gradient: LinearGradient(
-                                  colors: <Color>[
-                                    Color(0xCC1E7AFF),
-                                    Color(0xCC009DF5),
-                                  ],
-                                  begin: Alignment.centerRight,
-                                  end: Alignment.centerLeft,
-                                  stops: [0.0, 1.0],
-                                  tileMode: TileMode.clamp),
-                            ),
-                            child: WeatherContainer(),
-                          )),
-                      Expanded(flex: 12, child: Container()),
-                      Expanded(
-                          flex: 154,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  flex: 163,
-                                  child: GestureDetector(
-                                    onTap: () =>
-                                        dashboardController.changeTabIndex(1),
-                                    child: GlassMorphism(
-                                      widget: BusContainer(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: RefreshIndicator(
+          onRefresh: onRefresh,
+          child: SingleChildScrollView(
+            child: Container(
+              height: SizeConfig.blockSizeVertical > 7
+                  ? SizeConfig.blockSizeVertical * 83
+                  : SizeConfig.blockSizeVertical * 86,
+              margin:
+                  EdgeInsets.symmetric(horizontal: SizeConfig.sizeByHeight(20)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GetBuilder<HomeController>(
+                      builder: (_) => Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: SizeConfig.sizeByHeight(14)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                MainTitle(
+                                  title: 'OceanView',
+                                  fontsize: SizeConfig.sizeByHeight(26),
+                                  fontweight: FontWeight.w700,
+                                  isGradient: true,
+                                ),
+                                Row(
+                                  children: [
+                                    SubText(
+                                      description: _.formattedDate,
+                                      fontsize: SizeConfig.sizeByHeight(14),
+                                      fontweight: FontWeight.w400,
                                     ),
-                                  )),
-                              Expanded(flex: 14, child: Container()),
-                              Expanded(
-                                  flex: 163,
-                                  child: GestureDetector(
+                                    StatusContainer(
+                                      stat: _.stat,
+                                      fontsize: SizeConfig.sizeByHeight(12),
+                                      fontweight: FontWeight.w400,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          )),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Expanded(
+                            flex: 134,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                gradient: LinearGradient(
+                                    colors: <Color>[
+                                      Color(0xCC1E7AFF),
+                                      Color(0xCC009DF5),
+                                    ],
+                                    begin: Alignment.centerRight,
+                                    end: Alignment.centerLeft,
+                                    stops: [0.0, 1.0],
+                                    tileMode: TileMode.clamp),
+                              ),
+                              child: WeatherContainer(),
+                            )),
+                        Expanded(flex: 12, child: Container()),
+                        Expanded(
+                            flex: 154,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    flex: 163,
+                                    child: GestureDetector(
                                       onTap: () =>
-                                          dashboardController.changeTabIndex(2),
+                                          dashboardController.changeTabIndex(1),
                                       child: GlassMorphism(
-                                        widget: DietContainer(),
-                                      )))
-                            ],
-                          )),
-                      Expanded(flex: 12, child: Container()),
-                      Expanded(
-                          flex: 80,
-                          child: GestureDetector(
-                              onTap: () =>
-                                  dashboardController.changeTabIndex(3),
-                              child: GlassMorphism(
-                                widget: EventsContainer(),
-                              ))),
-                      Expanded(flex: 12, child: Container()),
-                      Expanded(
-                          flex: 190,
-                          child: GlassMorphism(
-                            widget: NoticeContainer(),
-                          )),
-                      Expanded(flex: 25, child: Container()),
-                    ],
-                  ),
-                )
-              ],
+                                        widget: BusContainer(),
+                                      ),
+                                    )),
+                                Expanded(flex: 14, child: Container()),
+                                Expanded(
+                                    flex: 163,
+                                    child: GestureDetector(
+                                        onTap: () => dashboardController
+                                            .changeTabIndex(2),
+                                        child: GlassMorphism(
+                                          widget: DietContainer(),
+                                        )))
+                              ],
+                            )),
+                        Expanded(flex: 12, child: Container()),
+                        Expanded(
+                            flex: 80,
+                            child: GestureDetector(
+                                onTap: () =>
+                                    dashboardController.changeTabIndex(3),
+                                child: GlassMorphism(
+                                  widget: EventsContainer(),
+                                ))),
+                        Expanded(flex: 12, child: Container()),
+                        Expanded(
+                            flex: 190,
+                            child: GlassMorphism(
+                              widget: NoticeContainer(),
+                            )),
+                        Expanded(flex: 25, child: Container()),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

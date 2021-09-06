@@ -21,72 +21,75 @@ class CalendarPage extends GetView<CalendarController> {
   @override
   Widget build(BuildContext context) {
     init();
-    return GetBuilder<CalendarController>(
-        init: CalendarController(),
-        builder: (_) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            body: Stack(
-              children: [
-                CalendarIcon(),
-                Positioned(
-                    left: SizeConfig.sizeByWidth(17),
-                    top: SizeConfig.sizeByHeight(14),
-                    child: oneLine.MainTitle(
-                      title: name,
-                      fontsize: SizeConfig.sizeByHeight(26),
-                      fontweight: FontWeight.w700,
-                      isGradient: false,
-                    )),
-                Container(
-                    margin: EdgeInsets.only(
-                      top: SizeConfig.sizeByHeight(68),
-                    ),
-                    child: CarouselSlider(
-                        options: CarouselOptions(
-                          height: SizeConfig.sizeByHeight(600),
-                          autoPlay: false,
-                          enableInfiniteScroll: false,
-                          enlargeCenterPage: false,
-                          initialPage: 5,
-                          aspectRatio: 2.0,
-                          onPageChanged: (index, reason) {},
-                        ),
-                        items: _.monthArray
-                            .map((e) => Calendar(
-                                  calendarData: _.calendarData,
-                                  holidayData: _.holidayData,
-                                  kFirstDay: e,
-                                ))
-                            .toList())),
-                Positioned(
-                    bottom: SizeConfig.sizeByHeight(35),
-                    right: SizeConfig.sizeByWidth(29),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          _launchURL();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.transparent,
-                          shadowColor: Colors.transparent,
-                          padding: EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            TextBox('전체일정 보기', 12, FontWeight.w500,
-                                Color(0xFF353B45)),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: SizeConfig.sizeByHeight(12),
-                              color: Color(0xFF353B45),
-                            )
-                          ],
-                        ))),
-              ],
-            ),
-          );
-        });
+    return SafeArea(
+      child: GetBuilder<CalendarController>(
+          init: CalendarController(),
+          builder: (_) {
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Stack(
+                children: [
+                  CalendarIcon(),
+                  Positioned(
+                      left: SizeConfig.sizeByWidth(17),
+                      top: SizeConfig.sizeByHeight(14),
+                      child: oneLine.MainTitle(
+                        title: name,
+                        fontsize: SizeConfig.sizeByHeight(26),
+                        fontweight: FontWeight.w700,
+                        isGradient: false,
+                      )),
+                  Container(
+                      margin: EdgeInsets.only(
+                        top: SizeConfig.sizeByHeight(68),
+                      ),
+                      child: CarouselSlider(
+                          options: CarouselOptions(
+                            height: SizeConfig.sizeByHeight(600),
+                            autoPlay: false,
+                            enableInfiniteScroll: false,
+                            enlargeCenterPage: false,
+                            initialPage: 5,
+                            aspectRatio: 2.0,
+                            onPageChanged: (index, reason) {},
+                          ),
+                          items: _.monthArray
+                              .map((e) => Calendar(
+                                    calendarData: _.calendarData,
+                                    holidayData: _.holidayData,
+                                    kFirstDay: e,
+                                  ))
+                              .toList())),
+                  Positioned(
+                      bottom: SizeConfig.sizeByHeight(35),
+                      right: SizeConfig.sizeByWidth(29),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            _launchURL();
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            padding:
+                                EdgeInsets.all(SizeConfig.sizeByHeight(8.5)),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextBox('전체일정 보기', 12, FontWeight.w500,
+                                  Color(0xFF353B45)),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: SizeConfig.sizeByHeight(12),
+                                color: Color(0xFF353B45),
+                              )
+                            ],
+                          ))),
+                ],
+              ),
+            );
+          }),
+    );
   }
 }
 

@@ -173,17 +173,15 @@ class _DashboardPageState extends State<DashboardPage> {
           builder: (controller) {
             return Scaffold(
               backgroundColor: Colors.transparent,
-              body: SafeArea(
-                child: IndexedStack(
-                  index: controller.tabIndex,
-                  children: [
-                    HomePage(),
-                    BusPage(),
-                    DailyMenuPage(),
-                    CalendarPage(),
-                    MorePage(),
-                  ],
-                ),
+              body: IndexedStack(
+                index: controller.tabIndex,
+                children: [
+                  HomePage(),
+                  BusPage(),
+                  DailyMenuPage(),
+                  CalendarPage(),
+                  MorePage(),
+                ],
               ),
               bottomNavigationBar: _getBtmNavBar(controller),
             );
