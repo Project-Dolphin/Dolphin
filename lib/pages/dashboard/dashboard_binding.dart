@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import 'package:oceanview/pages/bus/bus_controller.dart';
+import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
 import 'package:oceanview/pages/home/home_controller.dart';
 
@@ -13,5 +14,6 @@ class DashboardBinding extends Bindings {
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<BusController>(() => BusController());
     Get.lazyPut<CalendarController>(() => CalendarController());
+    Get.lazyPut<ShuttleBusController>(() => ShuttleBusController());
   }
 }

@@ -183,7 +183,7 @@ Future<void> mealParse() async {
       menuFill(employerSpecialMenu, 8);
     }
   } catch (err) {
-    throw Exception("Failed to load data");
+    print(err);
   }
 }
 

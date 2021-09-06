@@ -55,7 +55,7 @@ handleUpdateNotification() async {
                             width: SizeConfig.sizeByHeight(165),
                             child: Text.rich(
                               TextSpan(
-                                text: '최대한 빠른시간안에 업데이트 할께요!',
+                                text: '최대한 빠른시간안에 업데이트 할게요!',
                                 style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w400,
@@ -97,53 +97,55 @@ handleUpdateNotification() async {
 class MorePage extends GetView<MoreController> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: SizeConfig.sizeByHeight(20),
-        vertical: SizeConfig.sizeByHeight(14),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          MainTitle(
-              title: '더보기',
-              fontsize: 26.0,
-              fontweight: FontWeight.w700,
-              isGradient: false),
-          SizedBox(
-            height: SizeConfig.sizeByHeight(30),
-          ),
-          renderContentsBlock('내 설정', [
-            GestureDetector(
-                onTap: () => handleUpdateNotification(),
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.sizeByHeight(20),
+          vertical: SizeConfig.sizeByHeight(14),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MainTitle(
+                title: '더보기',
+                fontsize: 26.0,
+                fontweight: FontWeight.w700,
+                isGradient: false),
+            SizedBox(
+              height: SizeConfig.sizeByHeight(30),
+            ),
+            renderContentsBlock('내 설정', [
+              GestureDetector(
+                  onTap: () => handleUpdateNotification(),
+                  child: renderContent(
+                      'assets/images/morePage/moreIcon_home.png', '홈 화면 설정')),
+            ]),
+            renderContentsBlock('학교', [
+              GestureDetector(
+                onTap: () => UrlUtils.launchURL(SITE_MAP),
                 child: renderContent(
-                    'assets/images/morePage/moreIcon_home.png', '홈 화면 설정')),
-          ]),
-          renderContentsBlock('학교', [
-            GestureDetector(
-              onTap: () => UrlUtils.launchURL(SITE_MAP),
-              child: renderContent(
-                  'assets/images/morePage/moreIcon_web.png', '학교 주요 홈페이지'),
-            ),
-            GestureDetector(
-              onTap: () => UrlUtils.launchURL(SITE_PHONE),
-              child: renderContent(
-                  'assets/images/morePage/moreIcon_phone.png', '학교 사무실 전화번호'),
-            ),
-          ]),
-          renderContentsBlock('앱', [
-            GestureDetector(
-              onTap: () => Get.to(() => AppDeveloperInfo()),
-              child: renderContent(
-                  'assets/images/morePage/moreIcon_info.png', '앱 및 개발자 정보'),
-            ),
-            GestureDetector(
-              onTap: () => UrlUtils.launchURL(ERROR_REPORT),
-              child: renderContent(
-                  'assets/images/morePage/moreIcon_suggestion.png', '오류 제보'),
-            )
-          ]),
-        ],
+                    'assets/images/morePage/moreIcon_web.png', '학교 주요 홈페이지'),
+              ),
+              GestureDetector(
+                onTap: () => UrlUtils.launchURL(SITE_PHONE),
+                child: renderContent(
+                    'assets/images/morePage/moreIcon_phone.png', '학교 사무실 전화번호'),
+              ),
+            ]),
+            renderContentsBlock('앱', [
+              GestureDetector(
+                onTap: () => Get.to(() => AppDeveloperInfo()),
+                child: renderContent(
+                    'assets/images/morePage/moreIcon_info.png', '앱 및 개발자 정보'),
+              ),
+              GestureDetector(
+                onTap: () => UrlUtils.launchURL(ERROR_REPORT),
+                child: renderContent(
+                    'assets/images/morePage/moreIcon_suggestion.png', '오류 제보'),
+              )
+            ]),
+          ],
+        ),
       ),
     );
   }

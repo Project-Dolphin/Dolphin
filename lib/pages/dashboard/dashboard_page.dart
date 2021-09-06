@@ -173,17 +173,15 @@ class _DashboardPageState extends State<DashboardPage> {
           builder: (controller) {
             return Scaffold(
               backgroundColor: Colors.transparent,
-              body: SafeArea(
-                child: IndexedStack(
-                  index: controller.tabIndex,
-                  children: [
-                    HomePage(),
-                    BusPage(),
-                    DailyMenuPage(),
-                    CalendarPage(),
-                    MorePage(),
-                  ],
-                ),
+              body: IndexedStack(
+                index: controller.tabIndex,
+                children: [
+                  HomePage(),
+                  BusPage(),
+                  DailyMenuPage(),
+                  CalendarPage(),
+                  MorePage(),
+                ],
               ),
               bottomNavigationBar: _getBtmNavBar(controller),
             );
@@ -194,55 +192,56 @@ class _DashboardPageState extends State<DashboardPage> {
   _bottomNavigationBarItem({Widget? icon, String? label}) {
     return BottomNavigationBarItem(
       icon: Container(
-        margin: EdgeInsets.only(
-            top: SizeConfig.sizeByHeight(8),
-            bottom: SizeConfig.sizeByHeight(8)),
-        child: Center(child: icon),
+        child: Center(
+          child: Container(
+              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(5)),
+              child: icon!),
+        ),
       ),
       activeIcon: Container(
-          margin: EdgeInsets.only(
-              top: SizeConfig.sizeByHeight(8),
-              bottom: SizeConfig.sizeByHeight(8)),
-          child: Center(
-            child: Stack(
-              children: <Widget>[
-                Transform.translate(
-                  offset: Offset(0, 3),
-                  child: ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.transparent,
-                          width: 0,
+        child: Center(
+          child: Container(
+              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(5)),
+              child: Stack(
+                children: <Widget>[
+                  Transform.translate(
+                    offset: Offset(0, 3),
+                    child: ImageFiltered(
+                      imageFilter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.transparent,
+                            width: 0,
+                          ),
                         ),
-                      ),
-                      child: Opacity(
-                        opacity: 0.5,
-                        child: ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                              Color(0xFFB4D5F1), BlendMode.srcATop),
-                          child: icon,
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                                Color(0xFFB4D5F1), BlendMode.srcATop),
+                            child: icon,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                GradientIcon(
-                  icon!,
-                  LinearGradient(
-                      colors: <Color>[
-                        Color(0xFF3199FF),
-                        Color(0xFF0081FF),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
-                ),
-              ],
-            ),
-          )),
+                  GradientIcon(
+                    icon,
+                    LinearGradient(
+                        colors: <Color>[
+                          Color(0xFF3199FF),
+                          Color(0xFF0081FF),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: [0.0, 1.0],
+                        tileMode: TileMode.clamp),
+                  ),
+                ],
+              )),
+        ),
+      ),
       label: label,
     );
   }
@@ -267,45 +266,58 @@ class _DashboardPageState extends State<DashboardPage> {
             currentIndex: controller.tabIndex,
             showSelectedLabels: true,
             showUnselectedLabels: true,
-            selectedFontSize: SizeConfig.sizeByHeight(10),
-            unselectedFontSize: SizeConfig.sizeByHeight(10),
+            iconSize: SizeConfig.sizeByHeight(32),
+            selectedFontSize: SizeConfig.sizeByHeight(11),
+            unselectedFontSize: SizeConfig.sizeByHeight(11),
             selectedLabelStyle: TextStyle(color: Color(0xFF0081FF)),
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white.withOpacity(0.8),
             elevation: 0,
             items: [
               _bottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.house_fill),
+                icon: Image.asset(
+                  'assets/images/bottomNavigationIcon/house.fill.png',
+                  width: SizeConfig.sizeByHeight(32),
+                  height: SizeConfig.sizeByHeight(32),
+                ),
                 label: '홈',
               ),
               _bottomNavigationBarItem(
                 icon: Container(
-                    padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(4)),
-                    child: ImageIcon(
-                        AssetImage(
-                            'assets/images/bottomNavigationIcon/bus.png'),
-                        size: 24)),
+                  padding: EdgeInsets.only(right: SizeConfig.sizeByHeight(2)),
+                  child: Image.asset(
+                    'assets/images/bottomNavigationIcon/bus.png',
+                    width: SizeConfig.sizeByHeight(32),
+                    height: SizeConfig.sizeByHeight(32),
+                  ),
+                ),
                 label: '버스',
               ),
               _bottomNavigationBarItem(
                 icon: Container(
-                    padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(3)),
-                    child: ImageIcon(AssetImage(
-                        'assets/images/bottomNavigationIcon/fork.knife.png'))),
+                  padding: EdgeInsets.only(right: SizeConfig.sizeByHeight(2)),
+                  child: Image.asset(
+                    'assets/images/bottomNavigationIcon/fork.knife.png',
+                    width: SizeConfig.sizeByHeight(32),
+                    height: SizeConfig.sizeByHeight(32),
+                  ),
+                ),
                 label: '식단',
               ),
               _bottomNavigationBarItem(
-                icon: Container(
-                    padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(3)),
-                    child: ImageIcon(AssetImage(
-                        'assets/images/bottomNavigationIcon/calendar.png'))),
+                icon: Image.asset(
+                  'assets/images/bottomNavigationIcon/calendar.png',
+                  width: SizeConfig.sizeByHeight(32),
+                  height: SizeConfig.sizeByHeight(32),
+                ),
                 label: '학사일정',
               ),
               _bottomNavigationBarItem(
-                icon: Container(
-                    padding: EdgeInsets.only(right: SizeConfig.sizeByWidth(2)),
-                    child: ImageIcon(AssetImage(
-                        'assets/images/bottomNavigationIcon/ellipsis.png'))),
+                icon: Image.asset(
+                  'assets/images/bottomNavigationIcon/ellipsis.png',
+                  width: SizeConfig.sizeByHeight(32),
+                  height: SizeConfig.sizeByHeight(32),
+                ),
                 label: '더보기',
               ),
             ],

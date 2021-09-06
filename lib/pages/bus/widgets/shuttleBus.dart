@@ -239,7 +239,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                                     child: Row(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
-                                                              .end,
+                                                              .center,
                                                       children: [
                                                         TextBox(
                                                             '전체시간보기',

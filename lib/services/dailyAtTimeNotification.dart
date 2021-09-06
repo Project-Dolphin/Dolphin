@@ -75,7 +75,6 @@ tz.TZDateTime _setNotiTime(int minute) {
       scheduledDate.hour,
       scheduledDate.minute,
       0);
-  print(scheduledDate);
 
   return newScheduledDate;
 }

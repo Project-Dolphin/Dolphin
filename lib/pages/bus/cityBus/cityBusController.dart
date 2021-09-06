@@ -82,8 +82,8 @@ class CityBusData {
       this.lowplate2});
 
   CityBusData.fromJson(Map<String, dynamic> json) {
-    carNo1 = json['carNo1'];
-    carNo2 = json['carNo2'];
+    carNo1 = json['carNo1'] == '차량 없음' ? -1 : json['carNo1'];
+    carNo2 = json['carNo2'] == '차량 없음' ? -1 : json['carNo2'];
     min1 = json['min1'];
     min2 = json['min2'];
     station1 = json['station1'];
