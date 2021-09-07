@@ -3,7 +3,7 @@ import 'package:oceanview/common/sizeConfig.dart';
 
 class TextBox extends StatelessWidget {
   const TextBox(this.text, this.fontSize, this.fontWeight, this.color,
-      {this.textAlign, Key? key})
+      {this.textAlign, this.maxLines, Key? key})
       : super(key: key);
 
   final String text;
@@ -11,6 +11,7 @@ class TextBox extends StatelessWidget {
   final FontWeight fontWeight;
   final Color color;
   final TextAlign? textAlign;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class TextBox extends StatelessWidget {
             fontSize: fontSize * 0.9,
           ),
           textAlign: textAlign != null ? textAlign : TextAlign.start,
+          maxLines: maxLines,
         ));
   }
 }
