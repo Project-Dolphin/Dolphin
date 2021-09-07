@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/sizeConfig.dart';
+import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 import 'dailyMenu_contents.dart';
 
@@ -14,9 +15,9 @@ class MealCard extends StatelessWidget {
     this.menu3,
   });
 
-  List<String>? menu;
-  List<String>? menu2;
-  List<String>? menu3;
+  MealData? menu;
+  MealData? menu2;
+  MealData? menu3;
 
   final int type;
   final List name;
@@ -26,7 +27,7 @@ class MealCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var emptyMenuText = List.filled(8, "", growable: true);
     emptyMenuText[0] = "식단이 없어요";
-    menu!.length == 0 ? menu = emptyMenuText : menu = menu;
+    menu!.type == 99 ? menu!.value = emptyMenuText : menu = menu;
     return GlassMorphism(
         width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
         height: (SizeConfig.screenHeight * 0.9),
@@ -43,7 +44,7 @@ class MealCard extends StatelessWidget {
                   child: MealContentColumn(
                     mealName: name[0],
                     mealTime: time[0],
-                    mealMenu: menu,
+                    mealMenu: menu!.value,
                     imageName: "cutlery_orange.png",
                   ),
                 ),
@@ -55,7 +56,7 @@ class MealCard extends StatelessWidget {
                         child: MealContentColumn(
                           mealName: name[1],
                           mealTime: time[1],
-                          mealMenu: menu2,
+                          mealMenu: menu2!.value,
                           imageName: "cutlery_red.png",
                         ),
                       )
@@ -68,7 +69,7 @@ class MealCard extends StatelessWidget {
                         child: MealContentColumn(
                           mealName: name[2],
                           mealTime: time[2],
-                          mealMenu: menu3,
+                          mealMenu: menu3!.value,
                           imageName: "cutlery_purple.png",
                         ),
                       )
