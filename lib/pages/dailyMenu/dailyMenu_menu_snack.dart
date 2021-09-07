@@ -28,7 +28,6 @@ class SnackCard extends StatelessWidget {
     menu3 = data[2].value;
     menu4 = data[3].value;
     menu5 = data[4].value;
-    print(menu1);
 
     // var emptyMenuText = List.filled(2, "", growable: true);
     // emptyMenuText[0] = "식단이 없어요";
@@ -97,6 +96,8 @@ class SnackCard extends StatelessWidget {
                         child: Column(
                           children: [
                             ...menu1.map((e) => Container(
+                                  margin: EdgeInsets.only(
+                                      top: SizeConfig.sizeByHeight(13)),
                                   width: SizeConfig.sizeByWidth(180.0),
                                   child: Text(
                                     '$e',

@@ -355,7 +355,7 @@ class _CalendarState extends State<Calendar> {
                         child: ListTile(
                           visualDensity:
                               VisualDensity(horizontal: 0, vertical: -4),
-                          onTap: () => print('${value[index]}'),
+                          onTap: () => {},
                           leading: Container(
                             width: 4,
                             decoration: BoxDecoration(
@@ -368,7 +368,7 @@ class _CalendarState extends State<Calendar> {
                             child: Text(
                               '${value[index]}',
                               style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
+                                  fontSize: 16, fontWeight: FontWeight.w700),
                             ),
                           ),
                         ),

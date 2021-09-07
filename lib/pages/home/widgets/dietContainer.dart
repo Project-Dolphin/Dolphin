@@ -4,13 +4,10 @@ import 'package:oceanview/common/loading/loading.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
-import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 import 'package:oceanview/pages/home/home_controller.dart';
 
-class DietContainer extends StatelessWidget {
+class DietContainer extends GetView<DailyMenuController> {
   DietContainer({Key? key}) : super(key: key);
-
-  final controller = Get.put(DailyMenuController());
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +15,10 @@ class DietContainer extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             horizontal: SizeConfig.sizeByHeight(16),
             vertical: SizeConfig.sizeByHeight(10)),
-        child: GetBuilder<HomeController>(
-            init: HomeController(),
+        child: GetBuilder<DailyMenuController>(
+            init: DailyMenuController(),
             builder: (_) {
-              return controller.isLoading
+              return _.isLoading
                   ? Loading()
                   : Row(
                       children: [
@@ -53,10 +50,11 @@ class DietContainer extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            controller.societyData![1].value!.length == 0
+                            _.societyData![1].value!.length == 0
                                 ? TextBox('식단이 없어요', 14, FontWeight.w700,
                                     Color(0xFF353B45))
-                                : Text('${controller.societyData![1].value}',
+                                : Text(
+                                    '${_.societyData![1].value![0].trim().split('+').join('\n')}', //수정해야함
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         color: Color(0xFF353B45),

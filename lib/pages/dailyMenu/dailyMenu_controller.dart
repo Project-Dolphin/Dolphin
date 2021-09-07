@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 
 class DailyMenuController extends GetxController {
   final String title = '학사 일정';
@@ -6,10 +7,12 @@ class DailyMenuController extends GetxController {
   bool isLoading = false;
   List<MealData>? societyData = [MealData()];
   List<MealData>? navyData = [MealData()];
+  int current = 0;
 
   @override
   void onInit() {
     super.onInit();
+    setStat();
   }
 
   void setIsLoading(loading) {
@@ -27,8 +30,84 @@ class DailyMenuController extends GetxController {
     update();
   }
 
-  void setStat(newStat) {
-    stat = newStat;
+  void setStat() {
+    var studentStat = statStudent1 || statStudent2;
+    var cafeteriaStat = statCafeteria1 || statCafeteria2 || statCafeteria3;
+    var employerStat = statEmployer1;
+    var dormStat = statDorm1 || statDorm2 || statDorm3;
+    var dormWeekendStat = statWeekend1 || statWeekend2 || statWeekend3;
+
+    if (DateTime.now().weekday == (6 | 7)) {
+      switch (current) {
+        case 0:
+          {
+            stat = "운영종료";
+            break;
+          }
+        case 1:
+          {
+            stat = "운영종료";
+            break;
+          }
+        case 2:
+          {
+            stat = "운영종료";
+            break;
+          }
+        case 3:
+          {
+            dormWeekendStat == true ? stat = "운영중" : stat = "운영종료";
+            break;
+          }
+        case 4:
+          {
+            stat = "운영종료";
+            break;
+          }
+        default:
+          {
+            break;
+          }
+      }
+    } else {
+      switch (current) {
+        case 0:
+          {
+            studentStat == true ? stat = "운영중" : stat = "운영종료";
+            break;
+          }
+        case 1:
+          {
+            cafeteriaStat == true ? stat = "운영중" : stat = "운영종료";
+            break;
+          }
+        case 2:
+          {
+            employerStat == true ? stat = "운영중" : stat = "운영종료";
+            break;
+          }
+        case 3:
+          {
+            dormStat == true ? stat = "운영중" : stat = "운영종료";
+            break;
+          }
+        case 4:
+          {
+            stat = "운영종료";
+            break;
+          }
+        default:
+          {
+            break;
+          }
+      }
+    }
+    update();
+  }
+
+  void setSubTab(index) {
+    current = index;
+    print(current);
     update();
   }
 
@@ -57,7 +136,7 @@ class MealData {
   int? type;
   List<String>? value;
 
-  MealData({this.type = 0, this.value = const ["식단 없음"]});
+  MealData({this.type = 99, this.value = const ["식단 없음"]});
 
   MealData.fromJson(Map<String, dynamic> json) {
     type = json['type'];

@@ -71,10 +71,11 @@ class _MealContentColumn extends State<MealContentColumn> {
           children: [
             ...widget.mealMenu.map(
               (e) => Container(
+                width: SizeConfig.sizeByWidth(200),
                 margin: EdgeInsets.only(
-                  left: SizeConfig.sizeByWidth(5.0),
+                  left: SizeConfig.sizeByWidth(5),
+                  top: SizeConfig.sizeByHeight(13),
                 ),
-                width: SizeConfig.sizeByWidth(110.0),
                 child: Text(
                   '$e',
                   style: TextStyle(
