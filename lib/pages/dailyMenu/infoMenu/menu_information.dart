@@ -158,12 +158,14 @@ Future<void> mealParse() async {
   try {
     final response = await http.get(Uri.parse(
         "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/society/today"));
-    final _text = json.decode(utf8.decode(response.bodyBytes));
-
-    if (!_text['data'].contains('diet')) {
+    _text = utf8.decode(response.bodyBytes);
+    if (_text.contains('no any diet')) {
+      _datas.clear();
+    } else {
       var dataObjsJson = jsonDecode(_text)['data'] as List;
       final List<Data> parsedResponse =
           dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
+
       _datas.clear();
       _datas.addAll(parsedResponse);
 

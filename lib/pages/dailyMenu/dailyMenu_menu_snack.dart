@@ -24,17 +24,37 @@ class Data {
 }
 
 class SnackCard extends StatelessWidget {
-  var americanMenu = [];
-  var breakfastMenu = [];
-  var bunsikMenu = [];
-  var ramenMenu = [];
-  var riceMenu = [];
-
   var _text = "Http Example";
   List<Data> _datas = [];
 
   Future<void> mealParse() async {
     try {
+      print('Work1');
+      final response = await http.get(Uri.parse(
+          "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/society/today"));
+      _text = utf8.decode(response.bodyBytes);
+      if (_text.contains('no any diet')) {
+        _datas.clear();
+      } else {
+        var dataObjsJson = jsonDecode(_text)['data'] as List;
+        final List<Data> parsedResponse =
+            dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
+
+        _datas.clear();
+        _datas.addAll(parsedResponse);
+
+        americanMenu = (_datas[0].value + "\n").split("\n");
+        menuFill(americanMenu, 2);
+        breakfastMenu = (_datas[1].value + "\n").split("\n");
+        menuFill(breakfastMenu, 2);
+        ramenMenu = (_datas[2].value + "\n").split("\n");
+        menuFill(ramenMenu, 2);
+        bunsikMenu = (_datas[3].value + "\n").split("\n");
+        menuFill(bunsikMenu, 2);
+        riceMenu = (_datas[4].value + "\n").split("\n");
+        menuFill(riceMenu, 2);
+      }
+      /*
       final response = await http.get(Uri.parse(
           "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/society/today"));
       _text = utf8.decode(response.bodyBytes);
@@ -54,6 +74,7 @@ class SnackCard extends StatelessWidget {
       menuFill(bunsikMenu, 2);
       riceMenu = (_datas[4].value + "\n").split("\n");
       menuFill(riceMenu, 2);
+      */
     } catch (err) {
       throw Exception("Failed to load data");
     }
