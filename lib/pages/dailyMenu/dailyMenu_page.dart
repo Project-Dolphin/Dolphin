@@ -7,6 +7,7 @@ import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
+import 'package:oceanview/pages/dailyMenu/dailyMenu_repository.dart';
 import 'package:oceanview/pages/dailyMenu/widgets/dailyMenu_header.dart';
 
 import 'dailyMenu_menu.dart';
@@ -14,24 +15,6 @@ import 'dailyMenu_menu_snack.dart';
 import 'infoMenu/menu_information.dart';
 
 class DailyMenuPage extends GetView<DailyMenuController> {
-  @override
-  Widget build(BuildContext context) {
-    mealParse();
-    mariDormParse();
-    return DailyMenuMain();
-  }
-}
-
-class DailyMenuMain extends StatefulWidget {
-  DailyMenuMain({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  _DailyMenuMain createState() => _DailyMenuMain();
-}
-
-class _DailyMenuMain extends State<DailyMenuMain> {
   final List<String> titleList = ['2층', '3층', '5층', '생활관', '승생'];
   final List<String> subtitleList = [
     '2층 학생식당',
@@ -40,37 +23,48 @@ class _DailyMenuMain extends State<DailyMenuMain> {
     '학생생활관',
     '승선생활관'
   ];
-  final List testPageList = [
+
+  Future<void> init() async {
+    await DailyMenuRepository().getSociety();
+    await DailyMenuRepository().getNavy();
+  }
+
+  final controller = Get.put(DailyMenuController());
+
+  late final List testPageList = [
     MealCard(
-        menu1: cafeteriaMenu,
-        menu2: cafeteriaMenu,
-        menu3: cafeteriaSpecialMenu,
+        menu: controller.navyData![0].value,
+        menu2: controller.navyData![0].value,
+        menu3: controller.navyData![0].value,
         type: 0,
         time: time,
         name: timeName1),
-    SnackCard(type: 1, time: timeCafeteria, name: timeName2),
+    SnackCard(
+        type: 1,
+        time: timeCafeteria,
+        name: timeName2,
+        data: controller.societyData),
     MealCard(
-        menu1: employerMenu,
-        menu2: employerSpecialMenu,
-        menu3: emptyMenu,
+        menu: controller.societyData![5].value,
+        menu2: controller.societyData![6].value,
         type: 2,
         time: timeEmployer,
         name: timeName3),
     MealCard(
-        menu1: dormMenuB,
-        menu2: dormMenuL,
-        menu3: dormMenuD,
+        menu: controller.societyData![5].value,
+        menu2: controller.societyData![6].value,
         type: 3,
         time: timeDorm,
         name: timeName2),
     MealCard(
-        menu1: mariDormMenuB,
-        menu2: mariDormMenuL,
-        menu3: mariDormMenuD,
+        menu: controller.navyData![0].value,
+        menu2: controller.navyData![0].value,
+        menu3: controller.navyData![0].value,
         type: 4,
         time: timeMariDorm,
         name: timeName2),
   ];
+
   final name = '식단', subname = '0층 식단', more = '이번주 식단 보기';
   var _stat = '운영중';
   int _current = 0;
@@ -82,81 +76,75 @@ class _DailyMenuMain extends State<DailyMenuMain> {
   var dormStat = statDorm1 || statDorm2 || statDorm3;
   var dormWeekendStat = statWeekend1 || statWeekend2 || statWeekend3;
 
-  @override
-  void initState() {
-    super.initState();
-    mealParse();
-    mariDormParse();
-    if (DateTime.now().weekday == (6 | 7)) {
-      switch (_current) {
-        case 0:
-          {
-            _stat = "운영종료";
-            return null;
-          }
-        case 1:
-          {
-            _stat = "운영종료";
-            return null;
-          }
-        case 2:
-          {
-            _stat = "운영종료";
-            return null;
-          }
-        case 3:
-          {
-            dormWeekendStat == true ? _stat = "운영중" : _stat = "운영종료";
-            return null;
-          }
-        case 4:
-          {
-            _stat = "운영종료";
-            return null;
-          }
-        default:
-          {
-            return null;
-          }
-      }
-    } else {
-      switch (_current) {
-        case 0:
-          {
-            studentStat == true ? _stat = "운영중" : _stat = "운영종료";
-            return null;
-          }
-        case 1:
-          {
-            cafeteriaStat == true ? _stat = "운영중" : _stat = "운영종료";
-            return null;
-          }
-        case 2:
-          {
-            employerStat == true ? _stat = "운영중" : _stat = "운영종료";
-            return null;
-          }
-        case 3:
-          {
-            dormStat == true ? _stat = "운영중" : _stat = "운영종료";
-            return null;
-          }
-        case 4:
-          {
-            _stat = "운영종료";
-            return null;
-          }
-        default:
-          {
-            return null;
-          }
-      }
-    }
-  }
+  // if (DateTime.now().weekday == (6 | 7)) {
+  //     switch (_current) {
+  //       case 0:
+  //         {
+  //           _stat = "운영종료";
+  //           return null;
+  //         }
+  //       case 1:
+  //         {
+  //           _stat = "운영종료";
+  //           return null;
+  //         }
+  //       case 2:
+  //         {
+  //           _stat = "운영종료";
+  //           return null;
+  //         }
+  //       case 3:
+  //         {
+  //           dormWeekendStat == true ? _stat = "운영중" : _stat = "운영종료";
+  //           return null;
+  //         }
+  //       case 4:
+  //         {
+  //           _stat = "운영종료";
+  //           return null;
+  //         }
+  //       default:
+  //         {
+  //           return null;
+  //         }
+  //     }
+  //   } else {
+  //     switch (_current) {
+  //       case 0:
+  //         {
+  //           studentStat == true ? _stat = "운영중" : _stat = "운영종료";
+  //           return null;
+  //         }
+  //       case 1:
+  //         {
+  //           cafeteriaStat == true ? _stat = "운영중" : _stat = "운영종료";
+  //           return null;
+  //         }
+  //       case 2:
+  //         {
+  //           employerStat == true ? _stat = "운영중" : _stat = "운영종료";
+  //           return null;
+  //         }
+  //       case 3:
+  //         {
+  //           dormStat == true ? _stat = "운영중" : _stat = "운영종료";
+  //           return null;
+  //         }
+  //       case 4:
+  //         {
+  //           _stat = "운영종료";
+  //           return null;
+  //         }
+  //       default:
+  //         {
+  //           return null;
+  //         }
+  //     }
+  //   }
 
   @override
   Widget build(BuildContext context) {
-    mealParse();
+    init();
     return Scaffold(
       backgroundColor: Colors.transparent,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -288,88 +276,6 @@ class _DailyMenuMain extends State<DailyMenuMain> {
                 enableInfiniteScroll: false,
                 enlargeCenterPage: false,
                 height: SizeConfig.blockSizeVertical * 100,
-                onPageChanged: (index, reason) {
-                  setState(
-                    () {
-                      mealParse();
-                      mariDormParse();
-                      _current = index;
-                      if (DateTime.now().weekday == (6 | 7)) {
-                        switch (_current) {
-                          case 0:
-                            {
-                              _stat = "운영종료";
-                              return null;
-                            }
-                          case 1:
-                            {
-                              _stat = "운영종료";
-                              return null;
-                            }
-                          case 2:
-                            {
-                              _stat = "운영종료";
-                              return null;
-                            }
-                          case 3:
-                            {
-                              dormWeekendStat == true
-                                  ? _stat = "운영중"
-                                  : _stat = "운영종료";
-                              return null;
-                            }
-                          case 4:
-                            {
-                              _stat = "운영종료";
-                              return null;
-                            }
-                          default:
-                            {
-                              return null;
-                            }
-                        }
-                      } else {
-                        switch (_current) {
-                          case 0:
-                            {
-                              studentStat == true
-                                  ? _stat = "운영중"
-                                  : _stat = "운영종료";
-                              return null;
-                            }
-                          case 1:
-                            {
-                              cafeteriaStat == true
-                                  ? _stat = "운영중"
-                                  : _stat = "운영종료";
-                              return null;
-                            }
-                          case 2:
-                            {
-                              employerStat == true
-                                  ? _stat = "운영중"
-                                  : _stat = "운영종료";
-                              return null;
-                            }
-                          case 3:
-                            {
-                              dormStat == true ? _stat = "운영중" : _stat = "운영종료";
-                              return null;
-                            }
-                          case 4:
-                            {
-                              _stat = "운영종료";
-                              return null;
-                            }
-                          default:
-                            {
-                              return null;
-                            }
-                        }
-                      }
-                    },
-                  );
-                },
               ),
             ),
           ),
