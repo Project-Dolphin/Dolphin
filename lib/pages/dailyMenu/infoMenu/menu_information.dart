@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
+import 'package:oceanview/api/api.dart';
+import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 
 //식당 운영시간
 const time = [
@@ -114,132 +116,16 @@ const menuSites = [cafeteria, cafeteria, cafeteria, dorm, mariDorm];
 //식단 메뉴 파싱
 var emptyMenu = ['식단이 없어요'];
 
-var snackMenu = [];
-var cafeteriaMenu = [];
-var cafeteriaSpecialMenu = [];
+Future<List<MealData>> mealParse(response) async {
+  final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
-var employerMenu = [];
-var employerSpecialMenu = [];
-
-var americanMenu = [];
-var breakfastMenu = [];
-var bunsikMenu = [];
-var ramenMenu = [];
-var riceMenu = [];
-
-var mariDormMenuB = [];
-var mariDormMenuL = [];
-var mariDormMenuD = [];
-
-var dormMenuB = [];
-var dormMenuL = [];
-var dormMenuD = [];
-
-class Data {
-  int type;
-  String value;
-
-  Data(this.type, this.value);
-
-  factory Data.fromJson(dynamic json) {
-    return Data(json['type'] as int, json['value'] as String);
-  }
-
-  @override
-  String toString() {
-    return '{${this.type}, ${this.value}}';
-  }
-}
-
-var _text = "Http Example";
-List<Data> _datas = [];
-
-Future<void> mealParse() async {
-  try {
-    final response = await http.get(Uri.parse(
-        "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/society/today"));
-    _text = utf8.decode(response.bodyBytes);
-    if (_text.contains('no any diet')) {
-      _datas.clear();
-    } else {
-      var dataObjsJson = jsonDecode(_text)['data'] as List;
-      final List<Data> parsedResponse =
-          dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
-
-      _datas.clear();
-      _datas.addAll(parsedResponse);
-
-      americanMenu = (_datas[0].value + "\n").split("\n");
-      menuFill(americanMenu, 2);
-      breakfastMenu = (_datas[1].value + "\n").split("\n");
-      menuFill(breakfastMenu, 2);
-      ramenMenu = (_datas[2].value + "\n").split("\n");
-      menuFill(ramenMenu, 2);
-      bunsikMenu = (_datas[3].value + "\n").split("\n");
-      menuFill(bunsikMenu, 2);
-      riceMenu = (_datas[4].value + "\n").split("\n");
-      menuFill(riceMenu, 2);
-      employerMenu = (_datas[5].value + "\n").split("\n");
-      menuFill(employerMenu, 8);
-      employerSpecialMenu = (_datas[6].value + "\n").split("\n");
-      menuFill(employerSpecialMenu, 8);
-    }
-  } catch (err) {
-    print(err);
-  }
-}
-
-// Future<List> american() async {
-//   var americanMenu2 = [];
-//   try {
-//     final response = await http.get(Uri.parse(
-//         "https://pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com/dev/diet/society/today"));
-//     _text = utf8.decode(response.bodyBytes);
-//     var dataObjsJson = jsonDecode(_text)['data'] as List;
-//     final List<Data> parsedResponse =
-//     dataObjsJson.map((dataJson) => new Data.fromJson(dataJson)).toList();
-//     _datas.clear();
-//     _datas.addAll(parsedResponse);
-//
-//     americanMenu2 = (_datas[0].value + "\n").split("\n");
-//     menuFill(americanMenu2, 2);
-//
-//     return americanMenu2;
-//   }
-//   catch (err) {
-//     throw Exception("Failed to load data");
-//   }
-// }
-
-List breakfast() {
-  Future.delayed(Duration(seconds: 0)).then((_) => mealParse());
-  return breakfastMenu;
-}
-
-Future<void> mariDormParse() async {
-  final response = await http.get(Uri.parse(
-      "https://x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com/prod/diet/naval/today"));
-  _text = utf8.decode(response.bodyBytes);
-  if (_text.contains('no any diet')) {
-    _datas.clear();
+  if (responseJson['data'].length == 1) {
+    return [MealData()];
   } else {
-    var dataObjsJson = jsonDecode(_text)['data'] as List;
-    final List<Data> parsedResponse =
-        dataObjsJson.map((dataJson) => Data.fromJson(dataJson)).toList();
-    _datas.clear();
-    _datas.addAll(parsedResponse);
+    final List<MealData> result = [
+      ...responseJson['data'].map((e) => MealData.fromJson(e))
+    ];
+
+    return result;
   }
 }
-
-void menuFill(List listItem, int size) {
-  while (listItem.length < size) {
-    listItem.add("");
-  }
-}
-
-// class MealMenu extends StatelessWidget {
-//   MealMenu({Key ? key}) : super(key:key);
-//
-//   @override
-//   return
-// }
