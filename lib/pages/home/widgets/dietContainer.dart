@@ -41,16 +41,26 @@ class DietContainer extends StatelessWidget {
                   SizedBox(
                     width: SizeConfig.sizeByHeight(14),
                   ),
-                  Column(
+                  Expanded(
+                      child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      breakfastMenu.isEmpty?TextBox(
-                          '식단이 없어요', 14, FontWeight.w700, Color(0xFF353B45)):
-                      TextBox(
-                          breakfastMenu[0].toString(), 14, FontWeight.w400, Color(0xFF353B45)),
+                      breakfastMenu.isEmpty
+                          ? TextBox(
+                              '식단이 없어요', 14, FontWeight.w700, Color(0xFF353B45))
+                          : Text(
+                              breakfastMenu[0]
+                                  .toString()
+                                  .replaceAll('+ ', '+\n'),
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Color(0xFF353B45),
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 14 * 0.9),
+                              maxLines: 7)
                     ],
-                  )
+                  ))
                 ],
               );
             }));
