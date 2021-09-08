@@ -3,15 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
-import 'package:oceanview/pages/dailyMenu/dailyMenu_repository.dart';
 import 'package:oceanview/pages/dailyMenu/widgets/dailyMenu_header.dart';
 
-import 'dailyMenu_menu.dart';
-import 'dailyMenu_menu_snack.dart';
+import 'widgets/dailyMenu_menu.dart';
+import 'widgets/dailyMenu_menu_snack.dart';
 import 'infoMenu/menu_information.dart';
 
 class DailyMenuPage extends GetView<DailyMenuController> {
@@ -24,52 +24,52 @@ class DailyMenuPage extends GetView<DailyMenuController> {
     '승선생활관'
   ];
 
-  Future<void> init() async {
-    await DailyMenuRepository().getSociety();
-    await DailyMenuRepository().getNavy();
-  }
-
   final name = '식단', subname = '0층 식단', more = '이번주 식단 보기';
   final CarouselController _controller = CarouselController();
-  final controller = Get.put(DailyMenuController());
 
   @override
   Widget build(BuildContext context) {
-    final List pageList = [
-      MealCard(
-          menu: controller.navyData![0],
-          menu2: controller.navyData![0],
-          menu3: controller.navyData![0],
-          type: 0,
-          time: time,
-          name: timeName1),
-      SnackCard(
-          type: 1,
-          time: timeCafeteria,
-          name: timeName2,
-          data: controller.societyData),
-      MealCard(
-          menu: controller.societyData![5],
-          menu2: controller.societyData![6],
-          type: 2,
-          time: timeEmployer,
-          name: timeName3),
-      MealCard(
-          menu: controller.societyData![5],
-          menu2: controller.societyData![6],
-          type: 3,
-          time: timeDorm,
-          name: timeName2),
-      MealCard(
-          menu: controller.navyData![0],
-          menu2: controller.navyData![0],
-          menu3: controller.navyData![0],
-          type: 4,
-          time: timeMariDorm,
-          name: timeName2),
-    ];
-    init();
     return GetBuilder<DailyMenuController>(builder: (_) {
+      final List<Widget> pageList = _.isLoading
+          ? List.generate(
+              5,
+              (index) => GlassMorphism(
+                  width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
+                  height: SizeConfig.screenHeight * 0.9,
+                  widget: Container()))
+          : [
+              MealCard(
+                  menu: _.navyData![0],
+                  menu2: _.navyData![0],
+                  menu3: _.navyData![0],
+                  type: 0,
+                  time: time,
+                  name: timeName1),
+              SnackCard(
+                  type: 1,
+                  time: timeCafeteria,
+                  name: timeName2,
+                  data: _.societyData),
+              MealCard(
+                  menu: _.societyData![5],
+                  menu2: _.societyData![6],
+                  type: 2,
+                  time: timeEmployer,
+                  name: timeName3),
+              MealCard(
+                  menu: _.societyData![5],
+                  menu2: _.societyData![6],
+                  type: 3,
+                  time: timeDorm,
+                  name: timeName2),
+              MealCard(
+                  menu: _.navyData![0],
+                  menu2: _.navyData![0],
+                  menu3: _.navyData![0],
+                  type: 4,
+                  time: timeMariDorm,
+                  name: timeName2),
+            ];
       return Scaffold(
         backgroundColor: Colors.transparent,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -86,18 +86,11 @@ class DailyMenuPage extends GetView<DailyMenuController> {
             children: pageList.asMap().entries.map(
               (entry) {
                 return GestureDetector(
-                  onTap: () => {
-                    _controller.animateToPage(entry.key),
-                  },
+                  onTap: () => _controller.animateToPage(entry.key),
                   child: Container(
                     width:
                         (SizeConfig.blockSizeHorizontal * 90) / pageList.length,
                     decoration: BoxDecoration(
-                        // color:
-                        //     (Theme.of(context).brightness == Brightness.dark
-                        //             ? Colors.white
-                        //             : Colors.blue)
-                        //         .withOpacity(_current == entry.key ? 0.8 : 0),
                         gradient: controller.current == entry.key
                             ? LinearGradient(
                                 colors: <Color>[
@@ -151,14 +144,15 @@ class DailyMenuPage extends GetView<DailyMenuController> {
               backgroundColor: Colors.white.withOpacity(0),
               iconTheme: IconThemeData(color: Color(0xFF3199FF)),
               centerTitle: false,
-              expandedHeight: SizeConfig.sizeByHeight(90),
+              expandedHeight: SizeConfig.sizeByHeight(95),
               flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
+                  background: SafeArea(
+                    bottom: false,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: SizeConfig.sizeByHeight(20)),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
@@ -211,7 +205,7 @@ class DailyMenuPage extends GetView<DailyMenuController> {
                   autoPlay: false,
                   enableInfiniteScroll: false,
                   enlargeCenterPage: false,
-                  height: SizeConfig.blockSizeVertical * 100,
+                  height: SizeConfig.screenHeight,
                   onPageChanged: (index, reason) {
                     controller.setSubTab(index);
                   },

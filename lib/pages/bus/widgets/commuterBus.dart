@@ -57,21 +57,16 @@ class CommuterBus extends GetView<CommuterBusController> {
                         setStationStatus(_.selectedBus)
                       ],
                     ),
-                    Positioned(
+                    Positioned.fill(
                       top: SizeConfig.sizeByHeight(24),
-                      child: Container(
-                        width: SizeConfig.sizeByWidth(268),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Dropdown(
-                              controller.busList,
-                              _.selectedBus,
-                              (value) => _.setSelectedBus(value),
-                              findTitle: findCommuterBusTitle,
-                              findSubTitle: findCommuterBusSubTitle,
-                            ),
-                          ],
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Dropdown(
+                          controller.busList,
+                          _.selectedBus,
+                          (value) => _.setSelectedBus(value),
+                          findTitle: findCommuterBusTitle,
+                          findSubTitle: findCommuterBusSubTitle,
                         ),
                       ),
                     ),

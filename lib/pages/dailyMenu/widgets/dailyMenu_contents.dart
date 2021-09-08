@@ -28,7 +28,6 @@ class _MealContentColumn extends State<MealContentColumn> {
 
   @override
   Widget build(BuildContext context) {
-    //print('widget.mealMenu : ${widget.mealMenu}');
     return Column(
       children: [
         Row(
@@ -67,24 +66,49 @@ class _MealContentColumn extends State<MealContentColumn> {
             image: AssetImage('assets/images/mealPage/divider.png'),
           ),
         ),
-        Column(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ...widget.mealMenu.map(
-              (e) => Container(
-                width: SizeConfig.sizeByWidth(200),
-                margin: EdgeInsets.only(
-                  left: SizeConfig.sizeByWidth(5),
-                  top: SizeConfig.sizeByHeight(13),
-                ),
-                child: Text(
-                  '$e',
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            )
+            Column(
+              children: [
+                ...widget.mealMenu.sublist(0, widget.mealMenu.length ~/ 2).map(
+                      (e) => Container(
+                        width: SizeConfig.sizeByWidth(100),
+                        margin: EdgeInsets.only(
+                          left: SizeConfig.sizeByWidth(10),
+                          top: SizeConfig.sizeByHeight(13),
+                        ),
+                        child: Text(
+                          '$e',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    )
+              ],
+            ),
+            Column(
+              children: [
+                ...widget.mealMenu.sublist(widget.mealMenu.length ~/ 2).map(
+                      (e) => Container(
+                        width: SizeConfig.sizeByWidth(100),
+                        margin: EdgeInsets.only(
+                          right: SizeConfig.sizeByWidth(10),
+                          top: SizeConfig.sizeByHeight(13),
+                        ),
+                        child: Text(
+                          '$e',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    )
+              ],
+            ),
           ],
         ),
       ],

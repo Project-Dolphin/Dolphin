@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
+import 'package:oceanview/pages/dailyMenu/api/dailyMenu_data.dart';
+
 import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 
 class DailyMenuController extends GetxController {
   final String title = '학사 일정';
   String stat = '';
-  bool isLoading = false;
+  bool isLoading = true;
   List<MealData>? societyData = [MealData()];
   List<MealData>? navyData = [MealData()];
   int current = 0;
@@ -13,6 +15,7 @@ class DailyMenuController extends GetxController {
   void onInit() {
     super.onInit();
     setStat();
+    // DailyMenuRepository().getDailyMenu();
   }
 
   void setIsLoading(loading) {
@@ -129,27 +132,5 @@ class DailyMenuController extends GetxController {
         : [7, 8, 1, 2].contains(now.month)
             ? '방학'
             : '평일';
-  }
-}
-
-class MealData {
-  int? type;
-  List<String>? value;
-
-  MealData({this.type = 99, this.value = const ["식단 없음"]});
-
-  MealData.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    value = json['value'].split('\n');
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    if (this.value != null) {
-      data['value'] = this.value!.join('\n');
-    }
-
-    return data;
   }
 }
