@@ -10,28 +10,59 @@ class MealCard extends StatelessWidget {
     required this.type,
     required this.name,
     required this.time,
-    this.menu2,
-    this.menu3,
   });
 
-  MealData? menu;
-  MealData? menu2;
-  MealData? menu3;
+  List<MealData>? menu;
 
   final int type;
   final List name;
   final List time;
 
+  var menu1, menu2, menu3;
+
   @override
   Widget build(BuildContext context) {
     List<String> emptyMenuText = ["식단이 없어요"];
-    menu!.type == 99 ? menu!.value = emptyMenuText : menu = menu;
+    switch (type) {
+      case 0:
+        {
+          menu1 = menu![0];
+          menu2 = menu![0];
+          menu3 = menu![0];
+          break;
+        }
+      case 2:
+        {
+          menu1 = menu![5];
+          menu2 = menu![6];
+          break;
+        }
+      case 3:
+        {
+          menu1 = menu![5];
+          menu2 = menu![6];
+          menu3 = menu![0];
+          break;
+        }
+      case 4:
+        {
+          menu1 = menu![0];
+          menu2 = menu![0];
+          break;
+        }
+      default:
+        {
+          break;
+        }
+    }
+
+    menu1!.type == 99 ? menu1!.value = emptyMenuText : menu1 = menu1;
     menu2 == null ? menu2 = MealData() : menu2 = menu2;
     menu3 == null ? menu3 = MealData() : menu3 = menu3;
 
     return GlassMorphism(
         width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-        height: SizeConfig.sizeByHeight(calcHeight(menu!, menu2!, menu3!)),
+        height: SizeConfig.sizeByHeight(calcHeight(menu1!, menu2!, menu3!)),
         widget: Container(
             margin: EdgeInsets.all(
               SizeConfig.sizeByWidth(12.0),
@@ -45,7 +76,7 @@ class MealCard extends StatelessWidget {
                   child: MealContentColumn(
                     mealName: name[0],
                     mealTime: time[0],
-                    mealMenu: menu!.value,
+                    mealMenu: menu1!.value,
                     imageName: "cutlery_orange.png",
                   ),
                 ),

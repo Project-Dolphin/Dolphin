@@ -28,40 +28,31 @@ class DailyMenuPage extends GetView<DailyMenuController> {
 
   @override
   Widget build(BuildContext context) {
-    final List pageList = [
-      MealCard(
-          menu: controller.navyData![0],
-          menu2: controller.navyData![0],
-          menu3: controller.navyData![0],
-          type: 0,
-          time: time,
-          name: timeName1),
-      SnackCard(
-          type: 1,
-          time: timeCafeteria,
-          name: timeName2,
-          data: controller.societyData),
-      MealCard(
-          menu: controller.societyData![5],
-          menu2: controller.societyData![6],
-          type: 2,
-          time: timeEmployer,
-          name: timeName3),
-      MealCard(
-          menu: controller.societyData![5],
-          menu2: controller.societyData![6],
-          type: 3,
-          time: timeDorm,
-          name: timeName2),
-      MealCard(
-          menu: controller.navyData![0],
-          menu2: controller.navyData![0],
-          menu3: controller.navyData![0],
-          type: 4,
-          time: timeMariDorm,
-          name: timeName2),
-    ];
     return GetBuilder<DailyMenuController>(builder: (_) {
+      final List pageList = [
+        MealCard(
+            menu: controller.navyData, type: 0, time: time, name: timeName1),
+        SnackCard(
+            type: 1,
+            time: timeCafeteria,
+            name: timeName2,
+            data: controller.societyData),
+        MealCard(
+            menu: controller.societyData,
+            type: 2,
+            time: timeEmployer,
+            name: timeName3),
+        MealCard(
+            menu: controller.societyData,
+            type: 3,
+            time: timeDorm,
+            name: timeName2),
+        MealCard(
+            menu: controller.navyData!,
+            type: 4,
+            time: timeMariDorm,
+            name: timeName2),
+      ];
       return controller.isLoading
           ? Loading()
           : Scaffold(
