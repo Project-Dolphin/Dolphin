@@ -64,15 +64,15 @@ class CalendarReposiory {
 
   getCalendar() async {
     Get.put(CalendarController());
-    Get.find<CalendarController>().setIsLoading(true);
+    //Get.find<CalendarController>().setIsLoading(true);
     Get.find<CalendarController>().setCalendar(await fetchCalendar());
-    Get.find<CalendarController>().setIsLoading(false);
+    //Get.find<CalendarController>().setIsLoading(false);
   }
 
   getHoliday() async {
     Get.put(CalendarController());
-    Get.find<CalendarController>().setIsLoading(true);
+    //Get.find<CalendarController>().setIsLoading(true);
     Get.find<CalendarController>().setHoliday(await fetchHoliday());
-    Get.find<CalendarController>().setIsLoading(false);
+    //Get.find<CalendarController>().setIsLoading(false);
   }
 }

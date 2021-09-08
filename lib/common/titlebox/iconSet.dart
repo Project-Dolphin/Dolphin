@@ -189,77 +189,67 @@ class _CalendarIconState extends State<CalendarIcon> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(
-            top: SizeConfig.sizeByHeight(7), right: SizeConfig.sizeByWidth(14)),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CalendarSearch()),
-                  );
-                },
-                child: Container(
-                    height: SizeConfig.sizeByHeight(40),
-                    width: SizeConfig.sizeByHeight(40),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            Color(0xFFFFFFFF).withOpacity(0.5),
-                            Color(0xFFFFFFFF).withOpacity(0.3)
-                          ],
-                        )),
-                    child: Container(
-                      margin: EdgeInsets.only(right: SizeConfig.sizeByWidth(2)),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Image.asset(
-                          'assets/images/CalendarPage/CalendarSearch.png',
-                          width: SizeConfig.sizeByWidth(14),
-                          height: SizeConfig.sizeByWidth(14),
-                        ),
-                      ),
-                    ))),
-            SizedBox(
-              width: SizeConfig.sizeByWidth(20),
-            ),
-            GestureDetector(
-                onTap: () {
-                  tmpNoti();
-                  //showAlertDialog(context);
-                },
-                child: Container(
-                    height: SizeConfig.sizeByHeight(40),
-                    width: SizeConfig.sizeByHeight(40),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            Color(0xFFFFFFFF).withOpacity(0.5),
-                            Color(0xFFFFFFFF).withOpacity(0.3)
-                          ],
-                        )),
-                    child: Container(
-                      margin: EdgeInsets.only(right: SizeConfig.sizeByWidth(2)),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Image.asset(
-                          isSwitched
-                              ? 'assets/images/CalendarPage/CalendarNotiOn.png'
-                              : 'assets/images/CalendarPage/CalendarNotiOff.png',
-                          width: SizeConfig.sizeByWidth(14),
-                          height: SizeConfig.sizeByWidth(14),
-                        ),
-                      ),
-                    ))),
-          ],
-        ));
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CalendarSearch()),
+              );
+            },
+            child: Container(
+                height: SizeConfig.sizeByHeight(40),
+                width: SizeConfig.sizeByHeight(40),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Color(0xFFFFFFFF).withOpacity(0.5),
+                        Color(0xFFFFFFFF).withOpacity(0.3)
+                      ],
+                    )),
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/CalendarPage/CalendarSearch.png',
+                    width: SizeConfig.sizeByHeight(16),
+                    height: SizeConfig.sizeByHeight(16),
+                  ),
+                ))),
+        SizedBox(
+          width: SizeConfig.sizeByWidth(20),
+        ),
+        GestureDetector(
+            onTap: () {
+              tmpNoti();
+              //showAlertDialog(context);
+            },
+            child: Container(
+                height: SizeConfig.sizeByHeight(40),
+                width: SizeConfig.sizeByHeight(40),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Color(0xFFFFFFFF).withOpacity(0.5),
+                        Color(0xFFFFFFFF).withOpacity(0.3)
+                      ],
+                    )),
+                child: Center(
+                  child: Image.asset(
+                    isSwitched
+                        ? 'assets/images/CalendarPage/CalendarNotiOn.png'
+                        : 'assets/images/CalendarPage/CalendarNotiOff.png',
+                    width: SizeConfig.sizeByWidth(14),
+                    height: SizeConfig.sizeByWidth(14),
+                  ),
+                ))),
+      ],
+    ));
   }
 }

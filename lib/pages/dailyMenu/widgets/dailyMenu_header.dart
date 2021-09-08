@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:oceanview/common/sizeConfig.dart';
-
 class MyAppSpace extends StatelessWidget {
   const MyAppSpace({Key? key}) : super(key: key);
 
@@ -39,7 +37,7 @@ class MyAppSpace extends StatelessWidget {
                       '식단',
                       style: TextStyle(
                           color: Color(0xFF353B45),
-                          fontSize: SizeConfig.sizeByHeight(16),
+                          fontSize: 16,
                           fontWeight: FontWeight.w700),
                       textAlign: TextAlign.center,
                     ),

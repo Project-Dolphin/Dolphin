@@ -73,7 +73,7 @@ class CityBus extends GetView<CityBusController> {
                         '정류장 선택',
                         style: TextStyle(
                           color: Color(0xFF0081FF),
-                          fontSize: SizeConfig.sizeByHeight(10),
+                          fontSize: 10,
                         ),
                       ),
                     ),
@@ -271,14 +271,13 @@ class CityBus extends GetView<CityBusController> {
                     ),
                   ],
                 ),
-                Positioned(
+                Positioned.fill(
                   top: SizeConfig.sizeByHeight(24),
-                  child: Container(
-                    width: SizeConfig.sizeByWidth(268),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GetBuilder<CityBusController>(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      child: Center(
+                        child: GetBuilder<CityBusController>(
                             init: CityBusController(),
                             builder: (_) {
                               return Dropdown(
@@ -299,7 +298,7 @@ class CityBus extends GetView<CityBusController> {
                                 findSubTitle: findCityBusSubTitle,
                               );
                             }),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -315,7 +314,7 @@ class CityBus extends GetView<CityBusController> {
 handleBusNotification(id, remainTime, isNotiOn) async {
   if (remainTime != null && remainTime != '없음') {
     await dailyAtTimeNotification(
-        id, '버스 도착 알림', '버스 도착 3분 후 전이에요.', (int.parse(remainTime) - 3));
+        id, '버스 도착 알림', '190 버스 도착 3분 전이에요.', (int.parse(remainTime) - 3));
     if (!isNotiOn) {
       Get.dialog(
           AlertDialog(

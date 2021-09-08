@@ -132,7 +132,7 @@ class StatusContainer extends StatelessWidget {
             style: TextStyle(
               fontSize: fontsize,
               fontWeight: fontweight,
-              color: Color(0xFF353B45),
+              color: Color(0xFF3C95FD),
             ),
           ),
         ),

@@ -2,34 +2,25 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:oceanview/api/api.dart';
+import 'package:oceanview/pages/dailyMenu/api/dailyMenu_data.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 
 class DailyMenuRepository {
   Future<List<MealData>> mealParse(response) async {
-    final responseJson = json.decode(utf8.decode(response.bodyBytes));
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
-    if (responseJson['data'].length == 52) {
-      return [MealData()];
+      if (responseJson['data']?.length == 52) {
+        return [MealData()];
+      } else {
+        final List<MealData> result = [
+          ...responseJson['data'].map((e) => MealData.fromJson(e))
+        ];
+
+        return result;
+      }
     } else {
-      final List<MealData> result = [
-        ...responseJson['data'].map((e) => MealData.fromJson(e))
-      ];
-
-      return result;
-    }
-  }
-
-  Future<List<MealData>> mariNavParse(response) async {
-    final responseJson = json.decode(utf8.decode(response.bodyBytes));
-
-    if (responseJson['data'].length == 52) {
       return [MealData()];
-    } else {
-      final List<MealData> result = [
-        ...responseJson['data'].map((e) => MealData.fromJson(e))
-      ];
-
-      return result;
     }
   }
 
@@ -55,7 +46,7 @@ class DailyMenuRepository {
   }
 
   Future fetchNavy() async {
-    return mariNavParse(await FetchAPI().fetchNavyTable());
+    return mealParse(await FetchAPI().fetchNavyTable());
   }
 
   Future fetchSociety() async {
@@ -63,26 +54,25 @@ class DailyMenuRepository {
   }
 
   Future fetchDorm() async {
-    return mealDormParse(await FetchAPI().fetchDormTable());
+    return mealParse(await FetchAPI().fetchDormTable());
   }
 
-  // getDorm() async {
-  //   Get.put(DailyMenuController());
-  //   Get.find<DailyMenuController>().setIsLoading(true);
-  //   Get.find<DailyMenuController>().setDormMeal(await fetchDorm());
-  //   Get.find<DailyMenuController>().setIsLoading(false);
-  // }
+  Future<void> getDailyMenu() async {
+    Get.put(DailyMenuController());
+    Get.find<DailyMenuController>().setIsLoading(true);
+    Get.find<DailyMenuController>().setSocietyMeal(await fetchSociety());
+    Get.find<DailyMenuController>().setNavyMeal(await fetchNavy());
+    Get.find<DailyMenuController>().setIsLoading(false);
+  }
 
   getSociety() async {
     Get.put(DailyMenuController());
-    Get.find<DailyMenuController>().setIsLoading(true);
     Get.find<DailyMenuController>().setSocietyMeal(await fetchSociety());
     Get.find<DailyMenuController>().setIsLoading(false);
   }
 
   getNavy() async {
     Get.put(DailyMenuController());
-    Get.find<DailyMenuController>().setIsLoading(true);
     Get.find<DailyMenuController>().setNavyMeal(await fetchNavy());
     Get.find<DailyMenuController>().setIsLoading(false);
   }
