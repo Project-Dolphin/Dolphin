@@ -9,6 +9,8 @@ class DailyMenuController extends GetxController {
   bool isLoading = true;
   List<MealData>? societyData = [MealData()];
   List<MealData>? navyData = [MealData()];
+  List<MealData>? dormData = [MealData()];
+
   CarouselController carouselController = CarouselController();
 
   int current = 0;
@@ -33,6 +35,11 @@ class DailyMenuController extends GetxController {
 
   void setSocietyMeal(response) {
     societyData = response;
+    update();
+  }
+
+  void setDormMeal(response) {
+    dormData = response;
     update();
   }
 
@@ -191,6 +198,13 @@ class MealData {
     type = json['type'];
     value = json['value'].split('\n');
   }
+
+  // Map<String, dynamic> toMap() {
+  //   return {
+  //     'type': type,
+  //     'value': value,
+  //   };
+  // } 결과값을 Map으로 사용하기 위한
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

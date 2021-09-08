@@ -19,10 +19,25 @@ class DailyMenuRepository {
     }
   }
 
-  Future<List<MealData>> mariDormParse(response) async {
+  Future<List<MealData>> mariNavParse(response) async {
     final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
     if (responseJson['data'].length == 52) {
+      return [MealData()];
+    } else {
+      final List<MealData> result = [
+        ...responseJson['data'].map((e) => MealData.fromJson(e))
+      ];
+
+      return result;
+    }
+  }
+
+  Future<List<MealData>> mealDormParse(response) async {
+    final responseJson = json.decode(utf8.decode(response.bodyBytes));
+
+    if (responseJson['data'].length == 52 ||
+        responseJson['message'] == 'Missing Authentication Token') {
       return [MealData()];
     } else {
       final List<MealData> result = [
@@ -40,12 +55,23 @@ class DailyMenuRepository {
   }
 
   Future fetchNavy() async {
-    return mariDormParse(await FetchAPI().fetchNavyTable());
+    return mariNavParse(await FetchAPI().fetchNavyTable());
   }
 
   Future fetchSociety() async {
     return mealParse(await FetchAPI().fetchSocietyTable());
   }
+
+  Future fetchDorm() async {
+    return mealDormParse(await FetchAPI().fetchDormTable());
+  }
+
+  // getDorm() async {
+  //   Get.put(DailyMenuController());
+  //   Get.find<DailyMenuController>().setIsLoading(true);
+  //   Get.find<DailyMenuController>().setDormMeal(await fetchDorm());
+  //   Get.find<DailyMenuController>().setIsLoading(false);
+  // }
 
   getSociety() async {
     Get.put(DailyMenuController());
