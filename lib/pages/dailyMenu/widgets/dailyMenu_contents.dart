@@ -68,48 +68,69 @@ class _MealContentColumn extends State<MealContentColumn> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                ...widget.mealMenu.sublist(0, widget.mealMenu.length ~/ 2).map(
-                      (e) => Container(
-                        width: SizeConfig.sizeByWidth(100),
-                        margin: EdgeInsets.only(
-                          left: SizeConfig.sizeByWidth(10),
-                          top: SizeConfig.sizeByHeight(13),
-                        ),
-                        child: Text(
-                          '$e',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+          children: widget.mealMenu.length == 1
+              ? [
+                  Container(
+                    width: SizeConfig.sizeByWidth(100),
+                    margin: EdgeInsets.only(
+                      left: SizeConfig.sizeByWidth(10),
+                      top: SizeConfig.sizeByHeight(13),
+                    ),
+                    child: Text(
+                      '${widget.mealMenu[0]}',
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w700,
                       ),
-                    )
-              ],
-            ),
-            Column(
-              children: [
-                ...widget.mealMenu.sublist(widget.mealMenu.length ~/ 2).map(
-                      (e) => Container(
-                        width: SizeConfig.sizeByWidth(100),
-                        margin: EdgeInsets.only(
-                          right: SizeConfig.sizeByWidth(10),
-                          top: SizeConfig.sizeByHeight(13),
-                        ),
-                        child: Text(
-                          '$e',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    )
-              ],
-            ),
-          ],
+                    ),
+                  ),
+                ]
+              : [
+                  Column(
+                    children: [
+                      ...widget.mealMenu
+                          .sublist(0, widget.mealMenu.length ~/ 2)
+                          .map(
+                            (e) => Container(
+                              width: SizeConfig.sizeByWidth(100),
+                              margin: EdgeInsets.only(
+                                left: SizeConfig.sizeByWidth(10),
+                                top: SizeConfig.sizeByHeight(13),
+                              ),
+                              child: Text(
+                                '$e',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      ...widget.mealMenu
+                          .sublist(widget.mealMenu.length ~/ 2)
+                          .map(
+                            (e) => Container(
+                              width: SizeConfig.sizeByWidth(100),
+                              margin: EdgeInsets.only(
+                                right: SizeConfig.sizeByWidth(10),
+                                top: SizeConfig.sizeByHeight(13),
+                              ),
+                              child: Text(
+                                '$e',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          )
+                    ],
+                  ),
+                ],
         ),
       ],
     );

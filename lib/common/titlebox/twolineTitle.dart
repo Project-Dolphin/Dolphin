@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
+import 'package:oceanview/services/urlUtils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TwolineTitle extends StatelessWidget {
@@ -216,17 +217,16 @@ class MoreText extends StatelessWidget {
   });
 
   final description, fontsize, fontweight;
-  var urlName;
-  var _url = "";
+  final String urlName;
 
   @override
   Widget build(BuildContext context) {
-    _url = urlName;
+    var _url = urlName;
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: ElevatedButton(
           onPressed: () {
-            _launchURL();
+            UrlUtils.launchURL(_url);
           },
           style: ElevatedButton.styleFrom(
             primary: Colors.transparent,
@@ -246,7 +246,4 @@ class MoreText extends StatelessWidget {
           )),
     );
   }
-
-  void _launchURL() async =>
-      await canLaunch(_url) ? await launch(_url) : throw '$_url 열 수 없음';
 }

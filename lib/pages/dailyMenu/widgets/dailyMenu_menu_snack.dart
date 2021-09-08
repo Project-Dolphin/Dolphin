@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
@@ -23,19 +21,16 @@ class SnackCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    menu1 = data[0].value;
-    menu2 = data[1].value;
-    menu3 = data[2].value;
-    menu4 = data[3].value;
-    menu5 = data[4].value;
-
-    // var emptyMenuText = List.filled(2, "", growable: true);
-    // emptyMenuText[0] = "식단이 없어요";
-    // menu1.length == 0 ? menu1 = emptyMenuText : menu1 = menu1;
-    // menu2.length == 0 ? menu2 = emptyMenuText : menu2 = menu2;
-    // menu3.length == 0 ? menu3 = emptyMenuText : menu3 = menu3;
-    // menu4.length == 0 ? menu4 = emptyMenuText : menu4 = menu4;
-    // menu5.length == 0 ? menu5 = emptyMenuText : menu5 = menu5;
+    var idx = data!.length == 7 ? 0 : 3;
+    if (data.length == 1) {
+      menu1 = menu2 = menu3 = menu4 = menu5 = ['식단이 없어요'];
+    } else {
+      menu1 = data[0 + idx].value;
+      menu2 = data[1 + idx].value;
+      menu3 = data[2 + idx].value;
+      menu4 = data[3 + idx].value;
+      menu5 = data[4 + idx].value;
+    }
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
       height: (SizeConfig.screenHeight * 0.9),

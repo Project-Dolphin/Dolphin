@@ -14,17 +14,18 @@ class CalendarPage extends GetView<CalendarController> {
   final name = '학사일정';
 
   Future<Null> init() async {
+    Get.put(CalendarController());
     await CalendarReposiory().getCalendar();
     await CalendarReposiory().getHoliday();
   }
 
   @override
   Widget build(BuildContext context) {
-    init();
     return SafeArea(
       child: GetBuilder<CalendarController>(
           init: CalendarController(),
           builder: (_) {
+            init();
             return Scaffold(
               backgroundColor: Colors.transparent,
               body: Stack(
