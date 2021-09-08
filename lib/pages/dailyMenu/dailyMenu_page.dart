@@ -185,8 +185,11 @@ class DailyMenuPage extends GetView<DailyMenuController> {
                     child: CarouselSlider(
                       items: pageList
                           .map((item) => Container(
-                                margin: EdgeInsets.only(
-                                    right: SizeConfig.sizeByWidth(15)),
+                                margin: EdgeInsets.fromLTRB(
+                                    0,
+                                    0,
+                                    SizeConfig.sizeByWidth(15),
+                                    SizeConfig.sizeByHeight(60)),
                                 child: Column(
                                   children: [item],
                                 ),
@@ -197,7 +200,7 @@ class DailyMenuPage extends GetView<DailyMenuController> {
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         enlargeCenterPage: false,
-                        height: SizeConfig.sizeByHeight(580),
+                        height: SizeConfig.blockSizeVertical * 100,
                         onPageChanged: (index, reason) {
                           controller.setSubTab(index);
                         },
