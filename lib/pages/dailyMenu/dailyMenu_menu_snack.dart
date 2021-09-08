@@ -21,6 +21,31 @@ class SnackCard extends StatelessWidget {
 
   var menu1, menu2, menu3, menu4, menu5;
 
+  calcHeight(dynamic data) {
+    var len1 = data[0].value.length > 5 ? 5 : data[0].value!.length;
+    var len2 = (data[1].value.length > data[2].value.length
+                ? data[1].value.length
+                : data[2].value.length) >
+            5
+        ? 5
+        : (data[1].value.length > data[2].value.length
+            ? data[1].value.length
+            : data[2].value.length);
+    var len3 = (data[3].value.length > data[4].value.length
+                ? data[3].value.length
+                : data[4].value.length) >
+            5
+        ? 5
+        : (data[3].value.length > data[4].value.length
+            ? data[3].value.length
+            : data[4].value.length);
+
+    if ((len1 + len2 + len3) * 30.0 + 70 < 500)
+      return 500.0;
+    else
+      return (len1 + len2 + len3) * 30.0 + 70;
+  }
+
   @override
   Widget build(BuildContext context) {
     menu1 = data[0].value;
@@ -29,16 +54,9 @@ class SnackCard extends StatelessWidget {
     menu4 = data[3].value;
     menu5 = data[4].value;
 
-    // var emptyMenuText = List.filled(2, "", growable: true);
-    // emptyMenuText[0] = "식단이 없어요";
-    // menu1.length == 0 ? menu1 = emptyMenuText : menu1 = menu1;
-    // menu2.length == 0 ? menu2 = emptyMenuText : menu2 = menu2;
-    // menu3.length == 0 ? menu3 = emptyMenuText : menu3 = menu3;
-    // menu4.length == 0 ? menu4 = emptyMenuText : menu4 = menu4;
-    // menu5.length == 0 ? menu5 = emptyMenuText : menu5 = menu5;
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-      height: (SizeConfig.screenHeight * 0.9),
+      height: SizeConfig.sizeByHeight(calcHeight(data)),
       widget: Container(
         margin: EdgeInsets.all(
           SizeConfig.sizeByWidth(12.0),

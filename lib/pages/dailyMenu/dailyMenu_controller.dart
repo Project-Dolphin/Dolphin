@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 
@@ -7,12 +8,20 @@ class DailyMenuController extends GetxController {
   bool isLoading = false;
   List<MealData>? societyData = [MealData()];
   List<MealData>? navyData = [MealData()];
+  CarouselController carouselController = CarouselController();
+
   int current = 0;
 
   @override
   void onInit() {
     super.onInit();
+    setSubTab(0);
     setStat();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void setIsLoading(loading) {
