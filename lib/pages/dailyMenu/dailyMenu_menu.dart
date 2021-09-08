@@ -70,11 +70,9 @@ class MealCard extends StatelessWidget {
 
     return GlassMorphism(
         width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-        height: SizeConfig.sizeByHeight(580),
-        //height: SizeConfig.sizeByHeight(calcHeight(menu1!, menu2!, menu3!)),
-        widget: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            padding: EdgeInsets.all(
+        height: SizeConfig.sizeByHeight(calcHeight(menu1!, menu2!, menu3!)),
+        widget: Container(
+            margin: EdgeInsets.all(
               SizeConfig.sizeByWidth(12.0),
             ),
             child: Column(
@@ -129,8 +127,8 @@ class MealCard extends StatelessWidget {
 
     print('$len1 $len2 $len3');
 
-    if ((len1 + len2 + len3) * 50.0 + 140 < 600)
-      return 600.0;
+    if ((len1 + len2 + len3) * 30.0 + 140 < 650)
+      return 650.0;
     else
       return (len1 + len2 + len3) * 30.0 + 140;
   }
