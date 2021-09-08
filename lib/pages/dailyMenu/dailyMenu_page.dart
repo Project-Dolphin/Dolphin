@@ -129,7 +129,9 @@ class _DailyMenupageState extends State<DailyMenupage> {
                     backgroundColor: Colors.white.withOpacity(0),
                     iconTheme: IconThemeData(color: Color(0xFF3199FF)),
                     centerTitle: false,
-                    expandedHeight: SizeConfig.sizeByHeight(95),
+                    expandedHeight: SizeConfig.blockSizeVertical > 7
+                        ? SizeConfig.sizeByHeight(95)
+                        : SizeConfig.sizeByHeight(105),
                     flexibleSpace: FlexibleSpaceBar(
                         background: SafeArea(
                           bottom: false,
@@ -150,18 +152,16 @@ class _DailyMenupageState extends State<DailyMenupage> {
                                       fontweight: FontWeight.w700,
                                       isGradient: false,
                                     )),
-                                Container(
-                                  child: BottomTitle(
-                                    subname: subtitleList[_current],
-                                    stat: _.stat,
-                                    more: more,
-                                    fontsize2: 18,
-                                    fontsize3: 12,
-                                    fontsize4: 14,
-                                    fontweight2: FontWeight.w500,
-                                    fontweight3: FontWeight.w400,
-                                    url: menuSites[_current],
-                                  ),
+                                BottomTitle(
+                                  subname: subtitleList[_current],
+                                  stat: _.stat,
+                                  more: more,
+                                  fontsize2: 18,
+                                  fontsize3: 12,
+                                  fontsize4: 14,
+                                  fontweight2: FontWeight.w500,
+                                  fontweight3: FontWeight.w400,
+                                  url: menuSites[_current],
                                 ),
                               ],
                             ),

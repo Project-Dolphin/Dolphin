@@ -221,12 +221,11 @@ class MoreText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _url = urlName;
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: ElevatedButton(
           onPressed: () {
-            UrlUtils.launchURL(_url);
+            UrlUtils.launchURL(urlName);
           },
           style: ElevatedButton.styleFrom(
             primary: Colors.transparent,

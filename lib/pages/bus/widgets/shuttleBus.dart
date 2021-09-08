@@ -60,7 +60,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                             '정류장 선택',
                             style: TextStyle(
                               color: Color(0xFF0081FF),
-                              fontSize: SizeConfig.sizeByHeight(10),
+                              fontSize: 10,
                             ),
                           ),
                         ),
@@ -69,7 +69,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                         ),
                         Padding(
                           padding:
-                              EdgeInsets.only(top: SizeConfig.sizeByHeight(12)),
+                              EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
                           child: Column(children: [
                             _.isLoading || previousTime == ''
                                 ? SizedBox(
@@ -86,7 +86,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                             height: SizeConfig.sizeByHeight(14),
                                           ),
                             SizedBox(
-                              height: SizeConfig.sizeByHeight(12),
+                              height: SizeConfig.sizeByHeight(10),
                             ),
                             Container(
                               height: SizeConfig.sizeByHeight(350),

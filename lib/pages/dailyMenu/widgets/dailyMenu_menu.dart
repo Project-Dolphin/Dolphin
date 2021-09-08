@@ -73,40 +73,49 @@ class MealCard extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    bottom: SizeConfig.sizeByHeight(29),
-                  ),
-                  child: MealContentColumn(
-                    mealName: name[0],
-                    mealTime: time[0],
-                    mealMenu: menu1!.value,
-                    imageName: "cutlery_orange.png",
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      bottom: SizeConfig.sizeByHeight(29),
+                    ),
+                    child: MealContentColumn(
+                      mealName: name[0],
+                      mealTime: time[0],
+                      mealMenu: menu1!.value,
+                      imageName: "cutlery_orange.png",
+                    ),
                   ),
                 ),
                 menu2 != null
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                          bottom: SizeConfig.sizeByHeight(29.0),
-                        ),
-                        child: MealContentColumn(
-                          mealName: name[1],
-                          mealTime: time[1],
-                          mealMenu: menu2!.value,
-                          imageName: "cutlery_red.png",
+                    ? Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            bottom: SizeConfig.sizeByHeight(29.0),
+                          ),
+                          child: MealContentColumn(
+                            mealName: name[1],
+                            mealTime: time[1],
+                            mealMenu: menu2!.value,
+                            imageName: "cutlery_red.png",
+                          ),
                         ),
                       )
                     : Container(),
                 menu3 != null
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                          bottom: SizeConfig.sizeByHeight(29.0),
-                        ),
-                        child: MealContentColumn(
-                          mealName: name[2],
-                          mealTime: time[2],
-                          mealMenu: menu3!.value,
-                          imageName: "cutlery_purple.png",
+                    ? Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            bottom: SizeConfig.sizeByHeight(29.0),
+                          ),
+                          child: MealContentColumn(
+                            mealName: name[2],
+                            mealTime: time[2],
+                            mealMenu: menu3!.value,
+                            imageName: "cutlery_purple.png",
+                          ),
                         ),
                       )
                     : Container()
