@@ -200,7 +200,7 @@ class DailyMenuPage extends GetView<DailyMenuController> {
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         enlargeCenterPage: false,
-                        height: SizeConfig.blockSizeVertical * 100,
+                        height: SizeConfig.blockSizeVertical * 90,
                         onPageChanged: (index, reason) {
                           controller.setSubTab(index);
                         },
