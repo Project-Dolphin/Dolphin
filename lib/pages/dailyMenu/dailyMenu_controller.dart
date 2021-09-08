@@ -116,7 +116,7 @@ class DailyMenuController extends GetxController {
 
   void setSubTab(index) {
     current = index;
-    print(current);
+    setStat();
     update();
   }
 

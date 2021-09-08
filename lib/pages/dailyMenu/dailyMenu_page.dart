@@ -85,8 +85,7 @@ class DailyMenuPage extends GetView<DailyMenuController> {
                       return GestureDetector(
                         onTap: () {
                           controller.setSubTab(entry.key);
-                          controller.carouselController
-                              .animateToPage(entry.key);
+                          controller.carouselController.jumpToPage(entry.key);
                         },
                         child: Container(
                           width: (SizeConfig.blockSizeHorizontal * 90) /
@@ -212,7 +211,6 @@ class DailyMenuPage extends GetView<DailyMenuController> {
                         enlargeCenterPage: false,
                         height: SizeConfig.blockSizeVertical * 100,
                         onPageChanged: (index, reason) {
-                          print(index);
                           controller.setSubTab(index);
                         },
                         // onScrolled: (value) {
