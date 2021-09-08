@@ -31,7 +31,7 @@ class DailyMenuPage extends GetView<DailyMenuController> {
     return GetBuilder<DailyMenuController>(builder: (_) {
       final List pageList = [
         MealCard(
-            menu: controller.navyData, type: 0, time: time, name: timeName1),
+            menu: controller.societyData, type: 0, time: time, name: timeName1),
         SnackCard(
             type: 1,
             time: timeCafeteria,
@@ -43,12 +43,12 @@ class DailyMenuPage extends GetView<DailyMenuController> {
             time: timeEmployer,
             name: timeName3),
         MealCard(
-            menu: controller.societyData,
+            menu: controller.dormData,
             type: 3,
             time: timeDorm,
             name: timeName2),
         MealCard(
-            menu: controller.navyData!,
+            menu: controller.navyData,
             type: 4,
             time: timeMariDorm,
             name: timeName2),
@@ -185,11 +185,8 @@ class DailyMenuPage extends GetView<DailyMenuController> {
                     child: CarouselSlider(
                       items: pageList
                           .map((item) => Container(
-                                margin: EdgeInsets.fromLTRB(
-                                    0,
-                                    0,
-                                    SizeConfig.sizeByWidth(15),
-                                    SizeConfig.sizeByHeight(60)),
+                                margin: EdgeInsets.only(
+                                    right: SizeConfig.sizeByWidth(15)),
                                 child: Column(
                                   children: [item],
                                 ),
@@ -200,7 +197,7 @@ class DailyMenuPage extends GetView<DailyMenuController> {
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         enlargeCenterPage: false,
-                        height: SizeConfig.blockSizeVertical * 100,
+                        height: SizeConfig.sizeByHeight(580),
                         onPageChanged: (index, reason) {
                           controller.setSubTab(index);
                         },

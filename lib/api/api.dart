@@ -16,7 +16,8 @@ const PATH = const {
   'DEPART_190': '/timetable/190',
   'WEATHER': '/weather/now',
   'MEAL': '/diet/society/today',
-  'MEAL2': '/diet/naval/today'
+  'MEAL2': '/diet/naval/today',
+  'MEAL3': '/diet/dorm/today'
 };
 
 class FetchAPI {
@@ -87,6 +88,11 @@ class FetchAPI {
 
   Future fetchNavyTable() async {
     var response = await fetchData(PATH['MEAL2']);
+    return response;
+  }
+
+  Future fetchDormTable() async {
+    var response = await fetchData(PATH['MEAL3']);
     return response;
   }
 }
