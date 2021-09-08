@@ -46,8 +46,8 @@ class AppDeveloperInfo extends StatelessWidget {
                     SizedBox(
                       height: SizeConfig.sizeByHeight(30),
                     ),
-                    renderRole(
-                        '📡', 'Backend Developer', ['한채연', '김덕현', '이재왕']),
+                    renderRole('📡', 'Backend Developer',
+                        ['이시형', '김덕현', '한채연', '이재왕']),
                     SizedBox(
                       height: SizeConfig.sizeByHeight(20),
                     ),
