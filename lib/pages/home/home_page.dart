@@ -22,6 +22,7 @@ Future<Null> onRefresh() async {
   await EventRespository().getLatestEventList();
   await WeatherRepository().getCurrentWeather();
   await DailyMenuRepository().getSociety();
+  await DailyMenuRepository().getNavy();
 }
 
 class HomePage extends GetView<HomeController> {

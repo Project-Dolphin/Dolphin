@@ -24,6 +24,21 @@ class DailyMenuRepository {
     }
   }
 
+  Future<List<MealData>> mealDormParse(response) async {
+    final responseJson = json.decode(utf8.decode(response.bodyBytes));
+
+    if (responseJson['data'].length == 52 ||
+        responseJson['message'] == 'Missing Authentication Token') {
+      return [MealData()];
+    } else {
+      final List<MealData> result = [
+        ...responseJson['data'].map((e) => MealData.fromJson(e))
+      ];
+
+      return result;
+    }
+  }
+
   void menuFill(List listItem, int size) {
     while (listItem.length < size) {
       listItem.add("");

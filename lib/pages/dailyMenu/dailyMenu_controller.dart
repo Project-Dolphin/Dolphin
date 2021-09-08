@@ -17,6 +17,7 @@ class DailyMenuController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     setStat(0);
   }
 

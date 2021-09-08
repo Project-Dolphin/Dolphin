@@ -19,6 +19,33 @@ class SnackCard extends StatelessWidget {
 
   var menu1, menu2, menu3, menu4, menu5;
 
+  calcHeight(dynamic data) {
+    var idx = data!.length == 7 ? 0 : 3;
+
+    var len1 = data[0 + idx].value.length > 5 ? 5 : data[0 + idx].value!.length;
+    var len2 = (data[1 + idx].value.length > data[2 + idx].value.length
+                ? data[1 + idx].value.length
+                : data[2 + idx].value.length) >
+            5
+        ? 5
+        : (data[1 + idx].value.length > data[2 + idx].value.length
+            ? data[1 + idx].value.length
+            : data[2 + idx].value.length);
+    var len3 = (data[3 + idx].value.length > data[4 + idx].value.length
+                ? data[3 + idx].value.length
+                : data[4 + idx].value.length) >
+            5
+        ? 5
+        : (data[3 + idx].value.length > data[4 + idx].value.length
+            ? data[3 + idx].value.length
+            : data[4 + idx].value.length);
+
+    if ((len1 + len2 + len3) * 30.0 + 140 < 650)
+      return 650.0;
+    else
+      return (len1 + len2 + len3) * 30.0 + 140;
+  }
+
   @override
   Widget build(BuildContext context) {
     var idx = data!.length == 7 ? 0 : 3;
@@ -31,9 +58,10 @@ class SnackCard extends StatelessWidget {
       menu4 = data[3 + idx].value;
       menu5 = data[4 + idx].value;
     }
+
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-      height: (SizeConfig.screenHeight * 0.9),
+      height: SizeConfig.sizeByHeight(calcHeight(data)),
       widget: Container(
         margin: EdgeInsets.all(
           SizeConfig.sizeByWidth(12.0),

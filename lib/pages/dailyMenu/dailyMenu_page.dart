@@ -173,33 +173,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                     hasScrollBody: false,
                     fillOverscroll: true,
                     child: CarouselSlider(
-                      items: [
-                        MealCard(
-                            menu: _.societyData,
-                            type: 0,
-                            time: time,
-                            name: timeName1),
-                        SnackCard(
-                            type: 1,
-                            time: timeCafeteria,
-                            name: timeName2,
-                            data: _.societyData),
-                        MealCard(
-                            menu: _.societyData,
-                            type: 2,
-                            time: timeEmployer,
-                            name: timeName3),
-                        MealCard(
-                            menu: _.dormData,
-                            type: 3,
-                            time: timeDorm,
-                            name: timeName2),
-                        MealCard(
-                            menu: _.navyData,
-                            type: 4,
-                            time: timeMariDorm,
-                            name: timeName2),
-                      ]
+                      items: pageList
                           .map((item) => Container(
                                 margin: EdgeInsets.fromLTRB(
                                     0,
