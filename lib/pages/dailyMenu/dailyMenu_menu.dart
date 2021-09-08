@@ -23,24 +23,30 @@ class MealCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> emptyMenuText = ["식단이 없어요"];
+    print(menu3);
+    var idx = menu!.length == 7 ? 0 : 3;
+
     switch (type) {
+      //2층, 3층, 5층의 경우 추후 학생 생활관 데이터 추가로 인덱스가 3이 밀릴 것을 대비해 idx 변수 선언하였음
       case 0:
         {
-          menu1 = menu![0];
-          menu2 = menu![0];
-          menu3 = menu![0];
+          menu1 = idx == 0 ? MealData() : menu![0];
+          menu2 = idx == 0 ? MealData() : menu![1];
+          menu3 = idx == 0 ? MealData() : menu![2];
           break;
         }
       case 2:
         {
-          menu1 = menu![5];
-          menu2 = menu![6];
+          menu1 = menu![5 + idx];
+          menu2 = menu![6 + idx];
+          menu3 = menu![0];
+
           break;
         }
       case 3:
         {
-          menu1 = menu![5];
-          menu2 = menu![6];
+          menu1 = menu![0];
+          menu2 = menu![0];
           menu3 = menu![0];
           break;
         }
@@ -48,6 +54,8 @@ class MealCard extends StatelessWidget {
         {
           menu1 = menu![0];
           menu2 = menu![0];
+          menu3 = menu![0];
+
           break;
         }
       default:
@@ -57,33 +65,37 @@ class MealCard extends StatelessWidget {
     }
 
     menu1!.type == 99 ? menu1!.value = emptyMenuText : menu1 = menu1;
-    menu2 == null ? menu2 = MealData() : menu2 = menu2;
-    menu3 == null ? menu3 = MealData() : menu3 = menu3;
+
+    print(calcHeight(menu1!, menu2!, menu3!));
 
     return GlassMorphism(
         width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-        height: SizeConfig.sizeByHeight(calcHeight(menu1!, menu2!, menu3!)),
-        widget: Container(
-            margin: EdgeInsets.all(
+        height: SizeConfig.sizeByHeight(580),
+        //height: SizeConfig.sizeByHeight(calcHeight(menu1!, menu2!, menu3!)),
+        widget: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            padding: EdgeInsets.all(
               SizeConfig.sizeByWidth(12.0),
             ),
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    bottom: SizeConfig.sizeByWidth(29.0),
-                  ),
-                  child: MealContentColumn(
-                    mealName: name[0],
-                    mealTime: time[0],
-                    mealMenu: menu1!.value,
-                    imageName: "cutlery_orange.png",
-                  ),
-                ),
+                menu1 != null
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                          bottom: SizeConfig.sizeByHeight(42.0),
+                        ),
+                        child: MealContentColumn(
+                          mealName: name[0],
+                          mealTime: time[0],
+                          mealMenu: menu1!.value,
+                          imageName: "cutlery_orange.png",
+                        ),
+                      )
+                    : Container(),
                 menu2 != null
                     ? Padding(
                         padding: EdgeInsets.only(
-                          bottom: SizeConfig.sizeByWidth(29.0),
+                          bottom: SizeConfig.sizeByHeight(42.0),
                         ),
                         child: MealContentColumn(
                           mealName: name[1],
@@ -93,10 +105,10 @@ class MealCard extends StatelessWidget {
                         ),
                       )
                     : Container(),
-                menu3 != null
+                menu3 != null && type != 2
                     ? Padding(
                         padding: EdgeInsets.only(
-                          bottom: SizeConfig.sizeByWidth(29.0),
+                          bottom: SizeConfig.sizeByHeight(42.0),
                         ),
                         child: MealContentColumn(
                           mealName: name[2],
@@ -110,14 +122,16 @@ class MealCard extends StatelessWidget {
             )));
   }
 
-  calcHeight(MealData menu, MealData menu2, MealData menu3) {
-    var len1 = menu.value!.length > 5 ? 5 : menu.value!.length;
+  double calcHeight(MealData menu1, MealData menu2, MealData menu3) {
+    var len1 = menu1.value!.length > 5 ? 5 : menu1.value!.length;
     var len2 = menu2.value!.length > 5 ? 5 : menu2.value!.length;
     var len3 = menu3.value!.length > 5 ? 5 : menu3.value!.length;
 
-    if ((len1 + len2 + len3) * 30.0 + 105 < 600)
+    print('$len1 $len2 $len3');
+
+    if ((len1 + len2 + len3) * 50.0 + 140 < 600)
       return 600.0;
     else
-      return (len1 + len2 + len3) * 30.0 + 105;
+      return (len1 + len2 + len3) * 30.0 + 140;
   }
 }

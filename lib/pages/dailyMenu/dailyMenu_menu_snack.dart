@@ -22,23 +22,25 @@ class SnackCard extends StatelessWidget {
   var menu1, menu2, menu3, menu4, menu5;
 
   calcHeight(dynamic data) {
-    var len1 = data[0].value.length > 5 ? 5 : data[0].value!.length;
-    var len2 = (data[1].value.length > data[2].value.length
-                ? data[1].value.length
-                : data[2].value.length) >
+    var idx = data!.length == 7 ? 0 : 3;
+
+    var len1 = data[0 + idx].value.length > 5 ? 5 : data[0 + idx].value!.length;
+    var len2 = (data[1 + idx].value.length > data[2 + idx].value.length
+                ? data[1 + idx].value.length
+                : data[2 + idx].value.length) >
             5
         ? 5
-        : (data[1].value.length > data[2].value.length
-            ? data[1].value.length
-            : data[2].value.length);
-    var len3 = (data[3].value.length > data[4].value.length
-                ? data[3].value.length
-                : data[4].value.length) >
+        : (data[1 + idx].value.length > data[2 + idx].value.length
+            ? data[1 + idx].value.length
+            : data[2 + idx].value.length);
+    var len3 = (data[3 + idx].value.length > data[4 + idx].value.length
+                ? data[3 + idx].value.length
+                : data[4 + idx].value.length) >
             5
         ? 5
-        : (data[3].value.length > data[4].value.length
-            ? data[3].value.length
-            : data[4].value.length);
+        : (data[3 + idx].value.length > data[4 + idx].value.length
+            ? data[3 + idx].value.length
+            : data[4 + idx].value.length);
 
     if ((len1 + len2 + len3) * 30.0 + 70 < 500)
       return 500.0;
@@ -48,11 +50,13 @@ class SnackCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    menu1 = data[0].value;
-    menu2 = data[1].value;
-    menu3 = data[2].value;
-    menu4 = data[3].value;
-    menu5 = data[4].value;
+    var idx = data!.length == 7 ? 0 : 3;
+
+    menu1 = data[0 + idx].value;
+    menu2 = data[1 + idx].value;
+    menu3 = data[2 + idx].value;
+    menu4 = data[3 + idx].value;
+    menu5 = data[4 + idx].value;
 
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
