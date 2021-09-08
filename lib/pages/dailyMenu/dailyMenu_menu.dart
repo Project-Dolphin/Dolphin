@@ -84,8 +84,8 @@ class MealCard extends StatelessWidget {
     var len2 = menu2.value!.length > 5 ? 5 : menu2.value!.length;
     var len3 = menu3.value!.length > 5 ? 5 : menu3.value!.length;
 
-    if ((len1 + len2 + len3) * 30.0 + 105 < 500)
-      return 500.0;
+    if ((len1 + len2 + len3) * 30.0 + 105 < 600)
+      return 600.0;
     else
       return (len1 + len2 + len3) * 30.0 + 105;
   }
