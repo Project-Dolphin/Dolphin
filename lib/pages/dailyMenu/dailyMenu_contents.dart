@@ -28,7 +28,7 @@ class _MealContentColumn extends State<MealContentColumn> {
 
   @override
   Widget build(BuildContext context) {
-    //print('widget.mealMenu : ${widget.mealMenu}');
+    var parsedMeal = parseMeal(widget.mealMenu);
     return Column(
       children: [
         Row(
@@ -38,24 +38,13 @@ class _MealContentColumn extends State<MealContentColumn> {
             Row(
               children: [
                 Image(
-                  width: SizeConfig.sizeByHeight(30.0),
-                  image:
-                      AssetImage('assets/images/mealPage/' + widget.imageName),
-                ),
-                Text(
-                  widget.mealName,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                  ),
-                ),
+                    width: SizeConfig.sizeByHeight(30.0),
+                    image: AssetImage(
+                        'assets/images/mealPage/' + widget.imageName)),
+                Text(widget.mealName, style: TextStyle(fontSize: 16.0)),
               ],
             ),
-            Text(
-              widget.mealTime,
-              style: TextStyle(
-                fontSize: 12.0,
-              ),
-            ),
+            Text(widget.mealTime, style: TextStyle(fontSize: 12.0)),
           ],
         ),
         Padding(
@@ -67,27 +56,45 @@ class _MealContentColumn extends State<MealContentColumn> {
             image: AssetImage('assets/images/mealPage/divider.png'),
           ),
         ),
-        Column(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ...widget.mealMenu.map(
-              (e) => Container(
-                width: SizeConfig.sizeByWidth(200),
-                margin: EdgeInsets.only(
-                  left: SizeConfig.sizeByWidth(5),
-                  top: SizeConfig.sizeByHeight(13),
-                ),
-                child: Text(
-                  '$e',
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            )
+            ...parsedMeal.map((e) => Expanded(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    for (var i in e)
+                      Container(
+                        height: SizeConfig.sizeByHeight(20),
+                        width: SizeConfig.sizeByWidth(360),
+                        margin: EdgeInsets.only(
+                          top: SizeConfig.sizeByHeight(13),
+                        ),
+                        child: Text(
+                          '$i',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      )
+                  ],
+                ))),
           ],
         ),
       ],
     );
+  }
+
+  parseMeal(List<String> mealData) {
+    var len = mealData.length;
+    var size = 5;
+    var chunks = [];
+
+    for (var i = 0; i < len; i += size) {
+      var end = (i + size < len) ? i + size : len;
+      chunks.add(mealData.sublist(i, end));
+    }
+    return chunks;
   }
 }

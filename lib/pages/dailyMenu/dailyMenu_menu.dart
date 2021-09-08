@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
-import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 import 'dailyMenu_contents.dart';
 
 class MealCard extends StatelessWidget {
@@ -25,12 +24,14 @@ class MealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var emptyMenuText = List.filled(8, "", growable: true);
-    emptyMenuText[0] = "식단이 없어요";
+    List<String> emptyMenuText = ["식단이 없어요"];
     menu!.type == 99 ? menu!.value = emptyMenuText : menu = menu;
+    menu2 == null ? menu2 = MealData() : menu2 = menu2;
+    menu3 == null ? menu3 = MealData() : menu3 = menu3;
+
     return GlassMorphism(
         width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-        height: (SizeConfig.screenHeight * 0.9),
+        height: SizeConfig.sizeByHeight(calcHeight(menu!, menu2!, menu3!)),
         widget: Container(
             margin: EdgeInsets.all(
               SizeConfig.sizeByWidth(12.0),
@@ -76,5 +77,16 @@ class MealCard extends StatelessWidget {
                     : Container()
               ],
             )));
+  }
+
+  calcHeight(MealData menu, MealData menu2, MealData menu3) {
+    var len1 = menu.value!.length > 5 ? 5 : menu.value!.length;
+    var len2 = menu2.value!.length > 5 ? 5 : menu2.value!.length;
+    var len3 = menu3.value!.length > 5 ? 5 : menu3.value!.length;
+
+    if ((len1 + len2 + len3) * 30.0 + 105 < 500)
+      return 500.0;
+    else
+      return (len1 + len2 + len3) * 30.0 + 105;
   }
 }
