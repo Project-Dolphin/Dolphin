@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:oceanview/api/api.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 
 //식당 운영시간
@@ -60,46 +58,6 @@ const dinnerClose = [
   TimeOfDay(hour: 18, minute: 0),
 ];
 
-bool status(TimeOfDay start, TimeOfDay end) {
-  TimeOfDay now = TimeOfDay.now();
-  // print(now.toString());
-  // print(start.toString());
-  // print(end.toString());
-  if (now.hour >= start.hour && now.hour <= end.hour) {
-    if ((now.hour >= start.hour && now.minute >= start.minute) &&
-        (now.hour <= end.hour)) {
-      if ((now.hour == end.hour && now.minute <= end.minute)) {
-        return true;
-      } else if (now.hour < end.hour) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-}
-
-var statStudent1 = status(lunchOpen[0], lunchClose[0]);
-var statStudent2 = status(dinnerOpen[0], dinnerClose[0]);
-
-var statCafeteria1 = status(breakfastOpen[0], breakfastClose[0]);
-var statCafeteria2 = status(lunchOpen[1], lunchClose[1]);
-var statCafeteria3 = status(dinnerOpen[1], dinnerClose[0]);
-
-var statEmployer1 = status(lunchOpen[0], lunchClose[0]);
-
-var statDorm1 = status(breakfastOpen[0], breakfastClose[1]);
-var statDorm2 = status(lunchOpen[2], lunchClose[0]);
-var statDorm3 = status(dinnerOpen[0], dinnerClose[0]);
-
-var statWeekend1 = status(breakfastOpen[0], breakfastClose[1]);
-var statWeekend2 = status(lunchOpen[3], lunchClose[2]);
-var statWeekend3 = status(dinnerOpen[0], dinnerClose[1]);
-
 //식단 종류
 const timeName1 = ["중식", "석식", "일품식"]; //학생식당
 const timeName2 = ["조식", "중식", "석식"]; //스낵코너, 생활관(학생,승선)
@@ -115,17 +73,3 @@ const menuSites = [cafeteria, cafeteria, cafeteria, dorm, mariDorm];
 
 //식단 메뉴 파싱
 var emptyMenu = ['식단이 없어요'];
-
-Future<List<MealData>> mealParse(response) async {
-  final responseJson = json.decode(utf8.decode(response.bodyBytes));
-
-  if (responseJson['data'].length == 1) {
-    return [MealData()];
-  } else {
-    final List<MealData> result = [
-      ...responseJson['data'].map((e) => MealData.fromJson(e))
-    ];
-
-    return result;
-  }
-}

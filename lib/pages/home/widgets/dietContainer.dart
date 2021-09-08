@@ -53,7 +53,7 @@ class DietContainer extends GetView<DailyMenuController> {
                               ? TextBox('식단이 없어요', 14, FontWeight.w700,
                                   Color(0xFF353B45))
                               : Text(
-                                  '${_.societyData![1].value![0].trim().split('+').join('\n')}', //수정해야함
+                                  '${_.societyData![1].value![0].replaceAll(' ', '').split('+').join('\n\n')}', //수정해야함
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: Color(0xFF353B45),
