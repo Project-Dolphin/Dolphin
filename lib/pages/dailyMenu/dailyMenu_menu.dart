@@ -23,7 +23,6 @@ class MealCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> emptyMenuText = ["식단이 없어요"];
-    print(menu3);
     var idx = menu!.length == 7 ? 0 : 3;
 
     switch (type) {
@@ -65,8 +64,6 @@ class MealCard extends StatelessWidget {
     }
 
     menu1!.type == 99 ? menu1!.value = emptyMenuText : menu1 = menu1;
-
-    print(calcHeight(menu1!, menu2!, menu3!));
 
     return GlassMorphism(
         width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
@@ -124,8 +121,6 @@ class MealCard extends StatelessWidget {
     var len1 = menu1.value!.length > 5 ? 5 : menu1.value!.length;
     var len2 = menu2.value!.length > 5 ? 5 : menu2.value!.length;
     var len3 = menu3.value!.length > 5 ? 5 : menu3.value!.length;
-
-    print('$len1 $len2 $len3');
 
     if ((len1 + len2 + len3) * 30.0 + 140 < 650)
       return 650.0;
