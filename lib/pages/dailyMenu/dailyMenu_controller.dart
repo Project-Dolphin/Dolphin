@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 
 class DailyMenuController extends GetxController {
-  final String title = '학사 일정';
+  final String title = '식단';
   String stat = '';
-  bool isLoading = false;
+  bool isLoading = true;
   List<MealData>? societyData = [MealData()];
   List<MealData>? navyData = [MealData()];
   CarouselController carouselController = CarouselController();
@@ -15,6 +16,7 @@ class DailyMenuController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     setSubTab(0);
     setStat();
   }
@@ -39,7 +41,40 @@ class DailyMenuController extends GetxController {
     update();
   }
 
+  double toDouble(TimeOfDay time) {
+    return time.hour + time.minute / 60.0;
+  }
+
+  bool status(TimeOfDay start, TimeOfDay end) {
+    double now = toDouble(TimeOfDay.now());
+    double startT = toDouble(start);
+    double endT = toDouble(end);
+
+    if (now >= startT && now <= endT) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void setStat() {
+    var statStudent1 = status(lunchOpen[0], lunchClose[0]);
+    var statStudent2 = status(dinnerOpen[0], dinnerClose[0]);
+
+    var statCafeteria1 = status(breakfastOpen[0], breakfastClose[0]);
+    var statCafeteria2 = status(lunchOpen[1], lunchClose[1]);
+    var statCafeteria3 = status(dinnerOpen[1], dinnerClose[0]);
+
+    var statEmployer1 = status(lunchOpen[0], lunchClose[0]);
+
+    var statDorm1 = status(breakfastOpen[0], breakfastClose[1]);
+    var statDorm2 = status(lunchOpen[2], lunchClose[0]);
+    var statDorm3 = status(dinnerOpen[0], dinnerClose[0]);
+
+    var statWeekend1 = status(breakfastOpen[0], breakfastClose[1]);
+    var statWeekend2 = status(lunchOpen[3], lunchClose[2]);
+    var statWeekend3 = status(dinnerOpen[0], dinnerClose[1]);
+
     var studentStat = statStudent1 || statStudent2;
     var cafeteriaStat = statCafeteria1 || statCafeteria2 || statCafeteria3;
     var employerStat = statEmployer1;
@@ -47,6 +82,8 @@ class DailyMenuController extends GetxController {
     var dormWeekendStat = statWeekend1 || statWeekend2 || statWeekend3;
 
     if (DateTime.now().weekday == (6 | 7)) {
+      print('주말');
+
       switch (current) {
         case 0:
           {
@@ -79,6 +116,8 @@ class DailyMenuController extends GetxController {
           }
       }
     } else {
+      print('평일');
+
       switch (current) {
         case 0:
           {
@@ -116,7 +155,8 @@ class DailyMenuController extends GetxController {
 
   void setSubTab(index) {
     current = index;
-    print(current);
+
+    setStat();
     update();
   }
 
