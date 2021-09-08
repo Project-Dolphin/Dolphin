@@ -42,10 +42,10 @@ class SnackCard extends StatelessWidget {
             ? data[3 + idx].value.length
             : data[4 + idx].value.length);
 
-    if ((len1 + len2 + len3) * 30.0 + 70 < 500)
-      return 500.0;
+    if ((len1 + len2 + len3) * 30.0 + 140 < 650)
+      return 650.0;
     else
-      return (len1 + len2 + len3) * 30.0 + 70;
+      return (len1 + len2 + len3) * 30.0 + 140;
   }
 
   @override
