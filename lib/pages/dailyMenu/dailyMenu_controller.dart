@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/pages/dailyMenu/api/dailyMenu_data.dart';
 import 'package:oceanview/pages/dailyMenu/infoMenu/menu_information.dart';
 
 class DailyMenuController extends GetxController {
@@ -13,14 +14,11 @@ class DailyMenuController extends GetxController {
 
   CarouselController carouselController = CarouselController();
 
-  int current = 0;
-
   @override
   void onInit() {
     super.onInit();
 
-    setSubTab(0);
-    setStat();
+    setStat(0);
   }
 
   @override
@@ -64,7 +62,7 @@ class DailyMenuController extends GetxController {
     }
   }
 
-  void setStat() {
+  void setStat(current) {
     var statStudent1 = status(lunchOpen[0], lunchClose[0]);
     var statStudent2 = status(dinnerOpen[0], dinnerClose[0]);
 
@@ -156,13 +154,6 @@ class DailyMenuController extends GetxController {
     update();
   }
 
-  void setSubTab(index) {
-    current = index;
-
-    setStat();
-    update();
-  }
-
   String weekdayToKor(String date) {
     if (date.contains('Mon')) return date.replaceFirst('Mon', '월요일');
     if (date.contains('Tue')) return date.replaceFirst('Tue', '화요일');
@@ -181,34 +172,5 @@ class DailyMenuController extends GetxController {
         : [7, 8, 1, 2].contains(now.month)
             ? '방학'
             : '평일';
-  }
-}
-
-class MealData {
-  int? type;
-  List<String>? value;
-
-  MealData({this.type = 99, this.value = const ["식단 없음"]});
-
-  MealData.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    value = json['value'].split('\n');
-  }
-
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'type': type,
-  //     'value': value,
-  //   };
-  // } 결과값을 Map으로 사용하기 위한
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    if (this.value != null) {
-      data['value'] = this.value!.join('\n');
-    }
-
-    return data;
   }
 }

@@ -14,31 +14,44 @@ class CalendarPage extends GetView<CalendarController> {
   final name = '학사일정';
 
   Future<Null> init() async {
+    Get.put(CalendarController());
     await CalendarReposiory().getCalendar();
     await CalendarReposiory().getHoliday();
   }
 
   @override
   Widget build(BuildContext context) {
-    init();
     return SafeArea(
       child: GetBuilder<CalendarController>(
           init: CalendarController(),
           builder: (_) {
+            init();
             return Scaffold(
               backgroundColor: Colors.transparent,
               body: Stack(
                 children: [
-                  CalendarIcon(),
                   Positioned(
-                      left: SizeConfig.sizeByWidth(17),
-                      top: SizeConfig.sizeByHeight(14),
-                      child: oneLine.MainTitle(
-                        title: name,
-                        fontsize: SizeConfig.sizeByHeight(26),
-                        fontweight: FontWeight.w700,
-                        isGradient: false,
-                      )),
+                    top: 0,
+                    width: SizeConfig.safeBlockHorizontal * 100,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.sizeByHeight(20),
+                        vertical: SizeConfig.sizeByHeight(14),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          oneLine.MainTitle(
+                            title: name,
+                            fontsize: SizeConfig.sizeByHeight(26),
+                            fontweight: FontWeight.w700,
+                            isGradient: false,
+                          ),
+                          CalendarIcon(),
+                        ],
+                      ),
+                    ),
+                  ),
                   Container(
                       margin: EdgeInsets.only(
                         top: SizeConfig.sizeByHeight(68),
