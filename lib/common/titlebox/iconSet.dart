@@ -245,8 +245,8 @@ class _CalendarIconState extends State<CalendarIcon> {
                     isSwitched
                         ? 'assets/images/CalendarPage/CalendarNotiOn.png'
                         : 'assets/images/CalendarPage/CalendarNotiOff.png',
-                    width: SizeConfig.sizeByWidth(14),
-                    height: SizeConfig.sizeByWidth(14),
+                    width: SizeConfig.sizeByHeight(16),
+                    height: SizeConfig.sizeByHeight(16),
                   ),
                 ))),
       ],
