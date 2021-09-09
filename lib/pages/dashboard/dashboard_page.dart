@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oceanview/main.dart';
+import 'package:oceanview/pages/calendar/CalendarSearch.dart';
 import 'package:oceanview/pages/home/home_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -180,7 +181,6 @@ class _DashboardPageState extends State<DashboardPage> {
                   BusPage(),
                   DailyMenupage(),
                   CalendarPage(),
-                  // Container(),
                   MorePage(),
                 ],
               ),
