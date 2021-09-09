@@ -40,7 +40,7 @@ class CityBusListPage extends GetView<CityBusController> {
                       style: TextStyle(
                           color: Color(0xFF353B45),
                           fontWeight: FontWeight.w700,
-                          fontSize: SizeConfig.sizeByHeight(16)),
+                          fontSize: 16),
                     ),
                   ),
                   SliverList(

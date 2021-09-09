@@ -60,7 +60,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                             '정류장 선택',
                             style: TextStyle(
                               color: Color(0xFF0081FF),
-                              fontSize: SizeConfig.sizeByHeight(10),
+                              fontSize: 10,
                             ),
                           ),
                         ),
@@ -69,7 +69,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                         ),
                         Padding(
                           padding:
-                              EdgeInsets.only(top: SizeConfig.sizeByHeight(12)),
+                              EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
                           child: Column(children: [
                             _.isLoading || previousTime == ''
                                 ? SizedBox(
@@ -86,7 +86,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                             height: SizeConfig.sizeByHeight(14),
                                           ),
                             SizedBox(
-                              height: SizeConfig.sizeByHeight(12),
+                              height: SizeConfig.sizeByHeight(10),
                             ),
                             Container(
                               height: SizeConfig.sizeByHeight(350),
@@ -267,23 +267,18 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                         ),
                       ],
                     ),
-                    Positioned(
+                    Positioned.fill(
                       top: SizeConfig.sizeByHeight(24),
-                      child: Container(
-                        width: SizeConfig.sizeByWidth(268),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Dropdown(
-                              _.stationList,
-                              _.selectedStation,
-                              (value) {
-                                ShuttleBusRepository().getNextShuttle();
-                                _.setSelectedStation(value);
-                              },
-                              findSubTitle: findShuttleBusSubTitle,
-                            ),
-                          ],
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Dropdown(
+                          _.stationList,
+                          _.selectedStation,
+                          (value) {
+                            ShuttleBusRepository().getNextShuttle();
+                            _.setSelectedStation(value);
+                          },
+                          findSubTitle: findShuttleBusSubTitle,
                         ),
                       ),
                     ),
@@ -297,7 +292,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
 handleBusNotification(id, remainTime, isNotiOn) async {
   if (remainTime != null && remainTime != '없음') {
     await dailyAtTimeNotification(
-        id, '버스 도착 알림', '버스 도착 3분 전이에요.', (int.parse(remainTime) - 3));
+        id, '버스 도착 알림', '셔틀버스 도착 3분 전이에요.', (int.parse(remainTime) - 3));
     if (!isNotiOn) {
       Get.dialog(
           AlertDialog(

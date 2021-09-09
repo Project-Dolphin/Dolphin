@@ -178,8 +178,9 @@ class _DashboardPageState extends State<DashboardPage> {
                 children: [
                   HomePage(),
                   BusPage(),
-                  DailyMenuPage(),
+                  DailyMenupage(),
                   CalendarPage(),
+                  // Container(),
                   MorePage(),
                 ],
               ),
@@ -194,14 +195,20 @@ class _DashboardPageState extends State<DashboardPage> {
       icon: Container(
         child: Center(
           child: Container(
-              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(5)),
+              margin: EdgeInsets.only(
+                top: SizeConfig.sizeByHeight(5),
+                bottom: SizeConfig.sizeByHeight(2),
+              ),
               child: icon!),
         ),
       ),
       activeIcon: Container(
         child: Center(
           child: Container(
-              margin: EdgeInsets.only(bottom: SizeConfig.sizeByHeight(5)),
+              margin: EdgeInsets.only(
+                top: SizeConfig.sizeByHeight(5),
+                bottom: SizeConfig.sizeByHeight(2),
+              ),
               child: Stack(
                 children: <Widget>[
                   Transform.translate(
