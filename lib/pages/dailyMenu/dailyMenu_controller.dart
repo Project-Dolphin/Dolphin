@@ -11,6 +11,7 @@ class DailyMenuController extends GetxController {
   List<MealData>? societyData = [MealData()];
   List<MealData>? navyData = [MealData()];
   List<MealData>? dormData = [MealData()];
+  bool isMoreButtonVisible = true;
 
   CarouselController carouselController = CarouselController();
 
@@ -43,6 +44,11 @@ class DailyMenuController extends GetxController {
 
   void setNavyMeal(response) {
     navyData = response;
+    update();
+  }
+
+  void setIsMoreButtonVisible(response) {
+    isMoreButtonVisible = response;
     update();
   }
 
