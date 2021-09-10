@@ -108,8 +108,6 @@ class BottomTitle extends StatelessWidget {
         ),
         MoreText(
           description: more,
-          fontsize: fontsize4,
-          fontweight: fontweight2,
           urlName: url,
         ),
       ],
@@ -211,12 +209,10 @@ class StatusContainer extends StatelessWidget {
 class MoreText extends StatelessWidget {
   MoreText({
     @required this.description,
-    @required this.fontsize,
-    @required this.fontweight,
     required this.urlName,
   });
 
-  final description, fontsize, fontweight;
+  final description;
   final String urlName;
 
   @override

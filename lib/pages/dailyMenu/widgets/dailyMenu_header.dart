@@ -2,9 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 
 class MyAppSpace extends StatelessWidget {
-  const MyAppSpace({Key? key}) : super(key: key);
+  const MyAppSpace(this.controller, {Key? key}) : super(key: key);
+
+  final DailyMenuController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,13 @@ class MyAppSpace extends StatelessWidget {
         final fadeStart = math.max(0.0, 1.0 - kToolbarHeight / deltaExtent);
         const fadeEnd = 1.0;
         final opacity = Interval(fadeStart, fadeEnd).transform(t);
+        Future.delayed(Duration.zero, () async {
+          if (opacity > 0.5 && controller.isMoreButtonVisible) {
+            controller.setIsMoreButtonVisible(false);
+          } else if (opacity <= 0.5 && !controller.isMoreButtonVisible) {
+            controller.setIsMoreButtonVisible(true);
+          }
+        });
 
         return Opacity(
           opacity: opacity,
