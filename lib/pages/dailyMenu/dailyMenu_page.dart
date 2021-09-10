@@ -10,6 +10,7 @@ import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/pages/dailyMenu/widgets/dailyMenu_header.dart';
+import 'package:oceanview/pages/more/more_page.dart';
 
 import 'widgets/dailyMenu_menu.dart';
 import 'widgets/dailyMenu_menu_snack.dart';
@@ -125,7 +126,31 @@ class _DailyMenupageState extends State<DailyMenupage> {
               centerTitle: false,
               expandedHeight: SizeConfig.blockSizeVertical > 7
                   ? SizeConfig.sizeByHeight(95)
-                  : SizeConfig.sizeByHeight(105),
+                  : SizeConfig.sizeByHeight(110),
+              //bottom - flexibleSpace 내부 onTap 안되는 이슈 해결을 위해 가상의 투명 버튼 겹침
+              bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(0),
+                  child: _.isMoreButtonVisible
+                      ? Container(
+                          padding: EdgeInsets.only(
+                              right: SizeConfig.sizeByHeight(20),
+                              bottom: SizeConfig.blockSizeVertical > 7
+                                  ? SizeConfig.sizeByHeight(7)
+                                  : SizeConfig.sizeByHeight(5)),
+                          width: SizeConfig.safeBlockHorizontal * 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Opacity(
+                                opacity: 0,
+                                child: MoreText(
+                                    description: more,
+                                    urlName: menuSites[_current]),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container()),
               flexibleSpace: FlexibleSpaceBar(
                   background: SafeArea(
                     bottom: false,
@@ -161,7 +186,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                       ),
                     ),
                   ),
-                  title: MyAppSpace()),
+                  title: MyAppSpace(_)),
             ),
             SliverFillRemaining(
               hasScrollBody: false,
