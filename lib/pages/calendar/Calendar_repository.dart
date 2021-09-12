@@ -21,8 +21,7 @@ class CalendarReposiory {
       print("calendar error!");
       return [
         CalendarData.fromJson({
-          "startedAt": "1900-1-1",
-          "endedAt": "1900-1-1",
+          "term": {"startedAt": "1900-01-01", "endedAt": "1900-12-31"},
           "content": "일정 정보 없음",
           "mainPlan": false
         })

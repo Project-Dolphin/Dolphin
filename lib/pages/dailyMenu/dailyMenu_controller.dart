@@ -93,8 +93,6 @@ class DailyMenuController extends GetxController {
     var dormWeekendStat = statWeekend1 || statWeekend2 || statWeekend3;
 
     if (DateTime.now().weekday == 6 || DateTime.now().weekday == 7) {
-      print('주말');
-
       switch (current) {
         case 0:
           {
@@ -127,8 +125,6 @@ class DailyMenuController extends GetxController {
           }
       }
     } else {
-      print('평일');
-
       switch (current) {
         case 0:
           {
