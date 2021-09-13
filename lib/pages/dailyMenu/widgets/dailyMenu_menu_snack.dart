@@ -19,33 +19,6 @@ class SnackCard extends StatelessWidget {
 
   var menu1, menu2, menu3, menu4, menu5;
 
-  calcHeight(dynamic data) {
-    var idx = data!.length == 7 ? 0 : 3;
-
-    var len1 = data[0 + idx].value.length > 5 ? 5 : data[0 + idx].value!.length;
-    var len2 = (data[1 + idx].value.length > data[2 + idx].value.length
-                ? data[1 + idx].value.length
-                : data[2 + idx].value.length) >
-            5
-        ? 5
-        : (data[1 + idx].value.length > data[2 + idx].value.length
-            ? data[1 + idx].value.length
-            : data[2 + idx].value.length);
-    var len3 = (data[3 + idx].value.length > data[4 + idx].value.length
-                ? data[3 + idx].value.length
-                : data[4 + idx].value.length) >
-            5
-        ? 5
-        : (data[3 + idx].value.length > data[4 + idx].value.length
-            ? data[3 + idx].value.length
-            : data[4 + idx].value.length);
-
-    if ((len1 + len2 + len3) * 30.0 + 140 < 650)
-      return 650.0;
-    else
-      return (len1 + len2 + len3) * 30.0 + 140;
-  }
-
   @override
   Widget build(BuildContext context) {
     var idx = data!.length == 7 ? 0 : 3;
@@ -61,234 +34,142 @@ class SnackCard extends StatelessWidget {
 
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-      height: SizeConfig.sizeByHeight(calcHeight(data)),
+      height: SizeConfig.screenHeight * 0.9,
       widget: Container(
         margin: EdgeInsets.all(
           SizeConfig.sizeByWidth(12.0),
         ),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByWidth(29.0),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Image(
-                            width: SizeConfig.sizeByHeight(30.0),
-                            image: AssetImage(
-                                'assets/images/mealPage/cutlery_orange.png'),
-                          ),
-                          Text(
-                            '천원의 아침',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        timeCafeteria[0].toString(),
-                        style: TextStyle(
-                          fontSize: 12.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: SizeConfig.sizeByHeight(5.0),
-                    ),
-                    child: Image(
-                      height: SizeConfig.blockSizeHorizontal,
-                      image: AssetImage('assets/images/mealPage/divider.png'),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          bottom: SizeConfig.sizeByHeight(7.0),
-                        ),
-                        child: Column(
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: SizeConfig.sizeByWidth(29.0),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
                           children: [
-                            ...menu1.map((e) => Container(
-                                  margin: EdgeInsets.only(
-                                      top: SizeConfig.sizeByHeight(13)),
-                                  width: SizeConfig.sizeByWidth(180.0),
-                                  child: Text(
-                                    '$e',
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ))
+                            Image(
+                              width: SizeConfig.sizeByHeight(30.0),
+                              image: AssetImage(
+                                  'assets/images/mealPage/cutlery_orange.png'),
+                            ),
+                            Text(
+                              '천원의 아침',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                              ),
+                            ),
                           ],
                         ),
+                        Text(
+                          timeCafeteria[0].toString(),
+                          style: TextStyle(
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        bottom: SizeConfig.sizeByHeight(5.0),
                       ),
-                    ],
-                  ),
-                ],
+                      child: Image(
+                        height: SizeConfig.blockSizeHorizontal,
+                        image: AssetImage('assets/images/mealPage/divider.png'),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            bottom: SizeConfig.sizeByHeight(7.0),
+                          ),
+                          child: Column(
+                            children: [
+                              ...menu1.map((e) => Container(
+                                    margin: EdgeInsets.only(
+                                        top: SizeConfig.sizeByHeight(13)),
+                                    width: SizeConfig.sizeByWidth(180.0),
+                                    child: Text(
+                                      '$e',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByHeight(29.0),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Image(
-                            width: SizeConfig.sizeByHeight(30.0),
-                            image: AssetImage(
-                              'assets/images/mealPage/cutlery_red.png',
-                            ),
-                          ),
-                          Text(
-                            '스낵코너',
-                            style: TextStyle(
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            timeCafeteria[1].toString(),
-                            style: TextStyle(
-                              fontSize: 12.0,
-                            ),
-                          ),
-                          Text(
-                            timeCafeteria[2].toString(),
-                            style: TextStyle(
-                              fontSize: 12.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: SizeConfig.sizeByHeight(5.0),
-                    ),
-                    child: Image(
-                      height: SizeConfig.blockSizeHorizontal,
-                      image: AssetImage('assets/images/mealPage/divider.png'),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                bottom: SizeConfig.sizeByHeight(10.0)),
-                            child: RichText(
-                              text: TextSpan(
-                                text: '| ',
-                                style: TextStyle(
-                                  color: Color(0xff0081FF),
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '양식',
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: Color(0xff3F3F3F),
-                                    ),
-                                  ),
-                                  TextSpan(
-                                      text: ' |',
-                                      style: TextStyle(
-                                        color: Color(0xff0081FF),
-                                      )),
-                                ],
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: SizeConfig.sizeByHeight(29.0),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            Image(
+                              width: SizeConfig.sizeByHeight(30.0),
+                              image: AssetImage(
+                                'assets/images/mealPage/cutlery_red.png',
                               ),
                             ),
-                          ),
-                          ...menu2.map((e) => Container(
-                                margin: EdgeInsets.only(
-                                    bottom: SizeConfig.sizeByHeight(10.0)),
-                                width: SizeConfig.sizeByWidth(120.0),
-                                child: Text(
-                                  '$e',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ))
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                                bottom: SizeConfig.sizeByHeight(10.0)),
-                            child: RichText(
-                              text: TextSpan(
-                                text: '| ',
-                                style: TextStyle(
-                                  color: Color(0xff0081FF),
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '라면',
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: Color(0xff3F3F3F),
-                                    ),
-                                  ),
-                                  TextSpan(
-                                      text: ' |',
-                                      style: TextStyle(
-                                        color: Color(0xff0081FF),
-                                      )),
-                                ],
+                            Text(
+                              '스낵코너',
+                              style: TextStyle(
+                                fontSize: 16.0,
                               ),
                             ),
-                          ),
-                          ...menu3.map((e) => Container(
-                                margin: EdgeInsets.only(
-                                    bottom: SizeConfig.sizeByHeight(10.0)),
-                                width: SizeConfig.sizeByWidth(120.0),
-                                child: Text(
-                                  '$e',
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ))
-                        ],
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              timeCafeteria[1].toString(),
+                              style: TextStyle(
+                                fontSize: 12.0,
+                              ),
+                            ),
+                            Text(
+                              timeCafeteria[2].toString(),
+                              style: TextStyle(
+                                fontSize: 12.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        bottom: SizeConfig.sizeByHeight(5.0),
                       ),
-                    ],
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.only(top: SizeConfig.sizeByHeight(25.0)),
-                    child: Row(
+                      child: Image(
+                        height: SizeConfig.blockSizeHorizontal,
+                        image: AssetImage('assets/images/mealPage/divider.png'),
+                      ),
+                    ),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -307,7 +188,7 @@ class SnackCard extends StatelessWidget {
                                   ),
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text: '분식',
+                                      text: '양식',
                                       style: TextStyle(
                                         fontSize: 14.0,
                                         color: Color(0xff3F3F3F),
@@ -322,7 +203,7 @@ class SnackCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            ...menu4.map((e) => Container(
+                            ...menu2.map((e) => Container(
                                   margin: EdgeInsets.only(
                                       bottom: SizeConfig.sizeByHeight(10.0)),
                                   width: SizeConfig.sizeByWidth(120.0),
@@ -351,7 +232,7 @@ class SnackCard extends StatelessWidget {
                                   ),
                                   children: <TextSpan>[
                                     TextSpan(
-                                      text: '덮밥',
+                                      text: '라면',
                                       style: TextStyle(
                                         fontSize: 14.0,
                                         color: Color(0xff3F3F3F),
@@ -366,7 +247,7 @@ class SnackCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            ...menu5.map((e) => Container(
+                            ...menu3.map((e) => Container(
                                   margin: EdgeInsets.only(
                                       bottom: SizeConfig.sizeByHeight(10.0)),
                                   width: SizeConfig.sizeByWidth(120.0),
@@ -382,8 +263,106 @@ class SnackCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: SizeConfig.sizeByHeight(25.0)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: SizeConfig.sizeByHeight(10.0)),
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: '| ',
+                                    style: TextStyle(
+                                      color: Color(0xff0081FF),
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: '분식',
+                                        style: TextStyle(
+                                          fontSize: 14.0,
+                                          color: Color(0xff3F3F3F),
+                                        ),
+                                      ),
+                                      TextSpan(
+                                          text: ' |',
+                                          style: TextStyle(
+                                            color: Color(0xff0081FF),
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              ...menu4.map((e) => Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      '$e',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: SizeConfig.sizeByHeight(10.0)),
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: '| ',
+                                    style: TextStyle(
+                                      color: Color(0xff0081FF),
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: '덮밥',
+                                        style: TextStyle(
+                                          fontSize: 14.0,
+                                          color: Color(0xff3F3F3F),
+                                        ),
+                                      ),
+                                      TextSpan(
+                                          text: ' |',
+                                          style: TextStyle(
+                                            color: Color(0xff0081FF),
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              ...menu5.map((e) => Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: SizeConfig.sizeByHeight(10.0)),
+                                    width: SizeConfig.sizeByWidth(120.0),
+                                    child: Text(
+                                      '$e',
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:oceanview/common/shape/circle.dart';
 import 'package:oceanview/common/sizeConfig.dart';
@@ -35,6 +36,18 @@ class CityBusListPage extends GetView<CityBusController> {
                     shadowColor: Colors.transparent,
                     backgroundColor: Colors.white.withOpacity(0.4),
                     iconTheme: IconThemeData(color: Color(0xFF3199FF)),
+                    leadingWidth: 44,
+                    leading: GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 24,
+                          color: Color(0xFF3199FF),
+                        ),
+                      ),
+                    ),
                     title: Text(
                       '190번 버스',
                       style: TextStyle(

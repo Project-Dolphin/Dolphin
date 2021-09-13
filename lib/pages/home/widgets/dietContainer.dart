@@ -48,7 +48,8 @@ class DietContainer extends GetView<DailyMenuController> {
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: _.societyData![1].value!.length == 0
+                                children: _.societyData!.length <= 1 ||
+                                        _.societyData![1].value!.length == 0
                                     ? [
                                         TextBox('식단이 없어요', 14, FontWeight.w700,
                                             Color(0xFF353B45))

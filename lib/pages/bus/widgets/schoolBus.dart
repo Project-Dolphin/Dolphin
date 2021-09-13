@@ -22,10 +22,10 @@ class SchoolBus extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                renderSchoolBus('학교 - 남포동간 1회 운행', '영도대교 대궁한정식'),
+                renderSchoolBus('학교 - 남포동간 2회 운행', '영도대교 대궁한정식'),
                 Column(
                   children: [
-                    renderSchoolBus('학교 - 대연동간 1회 운행', '경성대부경대역 3번출구 눈사랑 안경점'),
+                    renderSchoolBus('학교 - 대연동간 2회 운행', '경성대부경대역 3번출구 눈사랑 안경점'),
                     SizedBox(
                       height: SizeConfig.sizeByHeight(54),
                     )

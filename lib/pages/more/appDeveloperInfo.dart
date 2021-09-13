@@ -18,14 +18,22 @@ class AppDeveloperInfo extends StatelessWidget {
             appBar: CupertinoNavigationBar(
               backgroundColor: CupertinoColors.white.withOpacity(0.4),
               border: null,
+              padding: EdgeInsetsDirectional.only(start: 0, end: 0),
               leading: GestureDetector(
                 onTap: () => Get.back(),
-                child: Icon(
-                  CupertinoIcons.chevron_back,
-                  color: Color(0xFF009DF5),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 24,
+                    color: Color(0xFF3199FF),
+                  ),
                 ),
               ),
-              middle: const Text('앱 및 개발자 정보'),
+              middle: const Text(
+                '앱 및 개발자 정보',
+                style: TextStyle(fontSize: 16),
+              ),
             ),
             backgroundColor: Colors.transparent,
             body: SafeArea(
@@ -46,8 +54,8 @@ class AppDeveloperInfo extends StatelessWidget {
                     SizedBox(
                       height: SizeConfig.sizeByHeight(30),
                     ),
-                    renderRole(
-                        '📡', 'Backend Developer', ['한채연', '김덕현', '이재왕']),
+                    renderRole('📡', 'Backend Developer',
+                        ['이시형', '김덕현', '한채연', '이재왕']),
                     SizedBox(
                       height: SizeConfig.sizeByHeight(20),
                     ),
@@ -70,7 +78,7 @@ class AppDeveloperInfo extends StatelessWidget {
                       height: SizeConfig.sizeByHeight(6),
                     ),
                     TextBox(
-                        '오션뷰 2.0.1', 14, FontWeight.w400, Color(0xFF353B45)),
+                        '오션뷰 2.0.3', 14, FontWeight.w400, Color(0xFF353B45)),
                   ],
                 ),
               ),

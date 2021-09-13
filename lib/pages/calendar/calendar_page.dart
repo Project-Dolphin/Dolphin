@@ -16,7 +16,7 @@ class CalendarPage extends GetView<CalendarController> {
   Future<Null> init() async {
     Get.put(CalendarController());
     await CalendarReposiory().getCalendar();
-    await CalendarReposiory().getHoliday();
+    //await CalendarReposiory().getHoliday();
   }
 
   @override
@@ -69,7 +69,7 @@ class CalendarPage extends GetView<CalendarController> {
                           items: _.monthArray
                               .map((e) => Calendar(
                                     calendarData: _.calendarData,
-                                    holidayData: _.holidayData,
+                                    //holidayData: _.holidayData,
                                     kFirstDay: e,
                                   ))
                               .toList())),

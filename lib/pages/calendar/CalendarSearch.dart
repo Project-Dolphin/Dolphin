@@ -54,114 +54,129 @@ class _CalendarSearchState extends State<CalendarSearch> {
               fit: BoxFit.cover)),
       child: new Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: new AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leadingWidth: SizeConfig.sizeByWidth(20),
-          leading: IconButton(
-              padding:
-                  EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(14)),
-              color: Color(0xff009DF5),
-              onPressed: () {
-                Get.back();
-              },
-              icon: Icon(Icons.arrow_back_ios)),
-          title: new Container(
-            height: 45,
-            margin:
-                EdgeInsets.symmetric(horizontal: SizeConfig.sizeByWidth(20)),
-            padding: EdgeInsets.only(
-                bottom: SizeConfig.sizeByHeight(8),
-                left: SizeConfig.sizeByWidth(10)),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100.0),
-              color: Color.fromRGBO(255, 255, 255, 0.6),
-            ),
-            child: Stack(
-              children: [
-                TextFormField(
-                  style: TextStyle(fontSize: 16),
-                  autofocus: true,
-                  controller: controller,
-                  focusNode: _focusNode,
-                  decoration: new InputDecoration(
-                      contentPadding: EdgeInsets.all(10.0),
-                      hintText: '학사일정 검색하기 ex.수강신청',
-                      border: InputBorder.none),
-                  onChanged: onSearchTextChanged,
-                ),
-                Positioned(
-                    top: -SizeConfig.sizeByHeight(5),
-                    right: 0,
-                    child: IconButton(
-                      iconSize: (20),
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.cancel),
-                      color: Color(0xff4ba6ff),
-                      onPressed: () {
-                        controller.clear();
-                        onSearchTextChanged('');
-                      },
-                    )),
-              ],
-            ),
-          ),
-        ),
-        body: new Column(
-          children: <Widget>[
-            new Expanded(
-              child: _searchResult.length != 0 || controller.text.isNotEmpty
-                  ? new ListView.builder(
-                      itemCount: _searchResult.length,
-                      itemBuilder: (context, i) {
-                        return new Card(
-                          color: Colors.transparent,
-                          elevation: 0,
-                          child: new ListTile(
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                _searchResultStart[i] != _searchResultEnd[i]
-                                    ? new Text(DateFormat('M.dd(E)', 'ko_KR')
-                                            .format(_searchResultStart[i])
-                                            .toString() +
-                                        ' ~ ' +
-                                        DateFormat('M.dd(E)', 'ko_KR')
-                                            .format(_searchResultEnd[i])
-                                            .toString())
-                                    : new Text(DateFormat('M.dd(E)', 'ko_KR')
-                                        .format(_searchResultStart[i])
-                                        .toString()),
-                                Container(
-                                  alignment: Alignment.centerRight,
-                                  padding: EdgeInsets.only(right: 8.0),
-                                  width: fullwidth * 0.5,
-                                  child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: new Text(
-                                          _searchResult[i].toString())),
-                                ),
-                              ],
-                            ),
-                          ),
-                          margin: const EdgeInsets.all(0.0),
-                        );
-                      },
-                    )
-                  : new ListView.builder(
-                      itemCount: 0,
-                      itemBuilder: (context, index) {
-                        return new Card(
-                          elevation: 0,
-                          color: Colors.transparent,
-                          child: new ListTile(),
-                          margin: const EdgeInsets.all(0.0),
-                        );
-                      },
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(vertical: SizeConfig.sizeByHeight(14)),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 24,
+                          color: Color(0xFF3199FF),
+                        ),
+                      ),
                     ),
-            ),
-          ],
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 45,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.sizeByWidth(20)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: SizeConfig.sizeByHeight(8),
+                            horizontal: SizeConfig.sizeByWidth(10)),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100.0),
+                          color: Color.fromRGBO(255, 255, 255, 0.6),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                child: TextFormField(
+                                  style: TextStyle(fontSize: 16),
+                                  autofocus: true,
+                                  controller: controller,
+                                  focusNode: _focusNode,
+                                  decoration: new InputDecoration(
+                                      contentPadding: EdgeInsets.all(10.0),
+                                      hintText: '학사일정 검색하기 ex.수강신청',
+                                      border: InputBorder.none),
+                                  onChanged: onSearchTextChanged,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 20,
+                              child: IconButton(
+                                iconSize: (20),
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.cancel),
+                                color: Color(0xff4ba6ff),
+                                onPressed: () {
+                                  controller.clear();
+                                  onSearchTextChanged('');
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              new Expanded(
+                child: _searchResult.length != 0 || controller.text.isNotEmpty
+                    ? new ListView.builder(
+                        itemCount: _searchResult.length,
+                        itemBuilder: (context, i) {
+                          return new Card(
+                            color: Colors.transparent,
+                            elevation: 0,
+                            child: new ListTile(
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  _searchResultStart[i] != _searchResultEnd[i]
+                                      ? new Text(DateFormat('M.dd(E)', 'ko_KR')
+                                              .format(_searchResultStart[i])
+                                              .toString() +
+                                          ' ~ ' +
+                                          DateFormat('M.dd(E)', 'ko_KR')
+                                              .format(_searchResultEnd[i])
+                                              .toString())
+                                      : new Text(DateFormat('M.dd(E)', 'ko_KR')
+                                          .format(_searchResultStart[i])
+                                          .toString()),
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    padding: EdgeInsets.only(right: 8.0),
+                                    width: fullwidth * 0.5,
+                                    child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: new Text(
+                                            _searchResult[i].toString())),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            margin: const EdgeInsets.all(0.0),
+                          );
+                        },
+                      )
+                    : new ListView.builder(
+                        itemCount: 0,
+                        itemBuilder: (context, index) {
+                          return new Card(
+                            elevation: 0,
+                            color: Colors.transparent,
+                            child: new ListTile(),
+                            margin: const EdgeInsets.all(0.0),
+                          );
+                        },
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );

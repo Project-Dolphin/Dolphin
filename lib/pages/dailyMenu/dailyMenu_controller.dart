@@ -11,6 +11,7 @@ class DailyMenuController extends GetxController {
   List<MealData>? societyData = [MealData()];
   List<MealData>? navyData = [MealData()];
   List<MealData>? dormData = [MealData()];
+  bool isMoreButtonVisible = true;
 
   CarouselController carouselController = CarouselController();
 
@@ -43,6 +44,11 @@ class DailyMenuController extends GetxController {
 
   void setNavyMeal(response) {
     navyData = response;
+    update();
+  }
+
+  void setIsMoreButtonVisible(response) {
+    isMoreButtonVisible = response;
     update();
   }
 
@@ -86,7 +92,7 @@ class DailyMenuController extends GetxController {
     var dormStat = statDorm1 || statDorm2 || statDorm3;
     var dormWeekendStat = statWeekend1 || statWeekend2 || statWeekend3;
 
-    if (DateTime.now().weekday == (6 | 7)) {
+    if (DateTime.now().weekday == 6 || DateTime.now().weekday == 7) {
       switch (current) {
         case 0:
           {

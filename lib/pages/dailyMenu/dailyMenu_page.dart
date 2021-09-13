@@ -10,6 +10,7 @@ import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/pages/dailyMenu/widgets/dailyMenu_header.dart';
+import 'package:oceanview/pages/more/more_page.dart';
 
 import 'widgets/dailyMenu_menu.dart';
 import 'widgets/dailyMenu_menu_snack.dart';
@@ -49,130 +50,150 @@ class _DailyMenupageState extends State<DailyMenupage> {
         MealCard(
             menu: _.navyData, type: 4, time: timeMariDorm, name: timeName2),
       ];
-      return _.isLoading
-          ? Loading()
-          : Scaffold(
-              backgroundColor: Colors.transparent,
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-              floatingActionButton: Container(
-                width: SizeConfig.blockSizeHorizontal * 90,
-                height: SizeConfig.sizeByHeight(46),
-                margin:
-                    EdgeInsets.symmetric(vertical: SizeConfig.sizeByHeight(20)),
-                decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(SizeConfig.sizeByHeight(46)),
-                    color: Colors.white),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: pageList.asMap().entries.map(
-                    (entry) {
-                      return GestureDetector(
-                        onTap: () =>
-                            carouselController.animateToPage(entry.key),
-                        child: Container(
-                          width: (SizeConfig.blockSizeHorizontal * 90) /
-                              pageList.length,
-                          decoration: BoxDecoration(
-                              gradient: _current == entry.key
-                                  ? LinearGradient(
-                                      colors: <Color>[
-                                        Color(0xFF3199FF),
-                                        Color(0xFF0081FF),
-                                      ],
-                                      begin: Alignment.bottomLeft,
-                                      end: Alignment.topRight,
-                                      stops: [0.0, 1.0],
-                                      tileMode: TileMode.clamp)
-                                  : null,
-                              boxShadow: _current == entry.key
-                                  ? [
-                                      BoxShadow(
-                                          color: Color(0xFFB4D5F1),
-                                          offset: Offset(0, 3),
-                                          blurRadius: 5,
-                                          spreadRadius: 2)
-                                    ]
-                                  : null,
-                              borderRadius: BorderRadius.circular(
-                                  _current == entry.key
-                                      ? SizeConfig.sizeByHeight(46)
-                                      : 0)),
-                          child: Center(
-                            child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  titleList[entry.key],
-                                  style: TextStyle(
-                                      color: _current == entry.key
-                                          ? Colors.white
-                                          : Color(0xFF919191),
-                                      fontSize: SizeConfig.sizeByWidth(16),
-                                      fontWeight: FontWeight.w700),
-                                )),
-                          ),
-                        ),
-                      );
-                    },
-                  ).toList(),
-                ),
-              ),
-              body: CustomScrollView(
-                slivers: <Widget>[
-                  SliverAppBar(
-                    pinned: true,
-                    floating: false,
-                    snap: false,
-                    shadowColor: Colors.transparent,
-                    backgroundColor: Colors.white.withOpacity(0),
-                    iconTheme: IconThemeData(color: Color(0xFF3199FF)),
-                    centerTitle: false,
-                    expandedHeight: SizeConfig.blockSizeVertical > 7
-                        ? SizeConfig.sizeByHeight(95)
-                        : SizeConfig.sizeByHeight(105),
-                    flexibleSpace: FlexibleSpaceBar(
-                        background: SafeArea(
-                          bottom: false,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.sizeByHeight(20)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                    margin: EdgeInsets.only(
-                                      top: SizeConfig.sizeByHeight(14),
-                                    ),
-                                    child: oneLine.MainTitle(
-                                      title: '식단',
-                                      fontsize: SizeConfig.sizeByHeight(26),
-                                      fontweight: FontWeight.w700,
-                                      isGradient: false,
-                                    )),
-                                BottomTitle(
-                                  subname: subtitleList[_current],
-                                  stat: _.stat,
-                                  more: more,
-                                  fontsize2: 18,
-                                  fontsize3: 12,
-                                  fontsize4: 14,
-                                  fontweight2: FontWeight.w500,
-                                  fontweight3: FontWeight.w400,
-                                  url: menuSites[_current],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        title: MyAppSpace()),
+      return Scaffold(
+        backgroundColor: Colors.transparent,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: Container(
+          width: SizeConfig.blockSizeHorizontal * 90,
+          height: SizeConfig.sizeByHeight(46),
+          margin: EdgeInsets.only(bottom: SizeConfig.sizeByWidth(20)),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(SizeConfig.sizeByHeight(46)),
+              color: Colors.white),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: pageList.asMap().entries.map(
+              (entry) {
+                return GestureDetector(
+                  onTap: () => carouselController.animateToPage(entry.key),
+                  child: Container(
+                    width:
+                        (SizeConfig.blockSizeHorizontal * 90) / pageList.length,
+                    decoration: BoxDecoration(
+                        gradient: _current == entry.key
+                            ? LinearGradient(
+                                colors: <Color>[
+                                  Color(0xFF3199FF),
+                                  Color(0xFF0081FF),
+                                ],
+                                begin: Alignment.bottomLeft,
+                                end: Alignment.topRight,
+                                stops: [0.0, 1.0],
+                                tileMode: TileMode.clamp)
+                            : null,
+                        boxShadow: _current == entry.key
+                            ? [
+                                BoxShadow(
+                                    color: Color(0xFFB4D5F1),
+                                    offset: Offset(0, 3),
+                                    blurRadius: 5,
+                                    spreadRadius: 2)
+                              ]
+                            : null,
+                        borderRadius: BorderRadius.circular(
+                            _current == entry.key
+                                ? SizeConfig.sizeByHeight(46)
+                                : 0)),
+                    child: Center(
+                      child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            titleList[entry.key],
+                            style: TextStyle(
+                                color: _current == entry.key
+                                    ? Colors.white
+                                    : Color(0xFF919191),
+                                fontSize: SizeConfig.sizeByWidth(16),
+                                fontWeight: FontWeight.w700),
+                          )),
+                    ),
                   ),
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    fillOverscroll: true,
-                    child: CarouselSlider(
+                );
+              },
+            ).toList(),
+          ),
+        ),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              pinned: true,
+              floating: false,
+              snap: false,
+              shadowColor: Colors.transparent,
+              backgroundColor: Colors.white.withOpacity(0),
+              iconTheme: IconThemeData(color: Color(0xFF3199FF)),
+              centerTitle: false,
+              expandedHeight: SizeConfig.blockSizeVertical > 7
+                  ? SizeConfig.sizeByHeight(95)
+                  : SizeConfig.sizeByHeight(110),
+              //bottom - flexibleSpace 내부 onTap 안되는 이슈 해결을 위해 가상의 투명 버튼 겹침
+              bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(0),
+                  child: _.isMoreButtonVisible
+                      ? Container(
+                          padding: EdgeInsets.only(
+                              right: SizeConfig.sizeByHeight(20),
+                              bottom: SizeConfig.blockSizeVertical > 7
+                                  ? SizeConfig.sizeByHeight(7)
+                                  : SizeConfig.sizeByHeight(5)),
+                          width: SizeConfig.safeBlockHorizontal * 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Opacity(
+                                opacity: 0,
+                                child: MoreText(
+                                    description: more,
+                                    urlName: menuSites[_current]),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container()),
+              flexibleSpace: FlexibleSpaceBar(
+                  background: SafeArea(
+                    bottom: false,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.sizeByHeight(20)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(
+                                top: SizeConfig.sizeByHeight(14),
+                              ),
+                              child: oneLine.MainTitle(
+                                title: '식단',
+                                fontsize: SizeConfig.sizeByHeight(26),
+                                fontweight: FontWeight.w700,
+                                isGradient: false,
+                              )),
+                          BottomTitle(
+                            subname: subtitleList[_current],
+                            stat: _.stat,
+                            more: more,
+                            fontsize2: 18,
+                            fontsize3: 12,
+                            fontsize4: 14,
+                            fontweight2: FontWeight.w500,
+                            fontweight3: FontWeight.w400,
+                            url: menuSites[_current],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  title: MyAppSpace(_)),
+            ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              fillOverscroll: true,
+              child: _.isLoading
+                  ? Loading()
+                  : CarouselSlider(
                       items: pageList
                           .map((item) => Container(
                                 margin: EdgeInsets.fromLTRB(
@@ -201,10 +222,10 @@ class _DailyMenupageState extends State<DailyMenupage> {
                         },
                       ),
                     ),
-                  ),
-                ],
-              ),
-            );
+            ),
+          ],
+        ),
+      );
     });
   }
 }

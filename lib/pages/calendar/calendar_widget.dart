@@ -12,11 +12,10 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Calendar extends StatefulWidget {
-  Calendar({this.calendarData, this.holidayData, this.kFirstDay, Key? key})
-      : super(key: key);
+  Calendar({this.calendarData, this.kFirstDay, Key? key}) : super(key: key);
 
   final List<CalendarData>? calendarData;
-  final List<HolidayData>? holidayData;
+  // final List<HolidayData>? holidayData;
 
   final kFirstDay;
   late final kLastDay =
@@ -154,28 +153,28 @@ class _CalendarState extends State<Calendar> {
         DateTime(widget.kFirstDay.year, widget.kFirstDay.month, 15)));
   }
 
-  makeHoliday() {
-    for (int i = 0; i < widget.holidayData!.length; i++) {
-      _holidayContent = widget.holidayData![i].content!;
-      DateTime _holidayStart =
-          DateTime.parse(widget.holidayData![i].term!.startedAt!.toString());
-      DateTime _holidayEnd =
-          DateTime.parse(widget.holidayData![i].term!.endedAt!.toString());
+  // makeHoliday() {
+  //   for (int i = 0; i < widget.holidayData!.length; i++) {
+  //     _holidayContent = widget.holidayData![i].content!;
+  //     DateTime _holidayStart =
+  //         DateTime.parse(widget.holidayData![i].term!.startedAt!.toString());
+  //     DateTime _holidayEnd =
+  //         DateTime.parse(widget.holidayData![i].term!.endedAt!.toString());
 
-      if (_holidayStart == _holidayEnd) {
-        _holiday[_holidayStart] = _holiday[_holidayStart] ?? [];
-        _holiday[_holidayStart]!.add(Event(_holidayContent));
-      } else if (_holidayStart != _holidayEnd) {
-        for (int j = _holidayStart.day; j < _holidayEnd.day + 1; j++) {
-          _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] =
-              _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] ??
-                  [];
-          _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)]!
-              .add(Event(_holidayContent));
-        }
-      }
-    }
-  }
+  //     if (_holidayStart == _holidayEnd) {
+  //       _holiday[_holidayStart] = _holiday[_holidayStart] ?? [];
+  //       _holiday[_holidayStart]!.add(Event(_holidayContent));
+  //     } else if (_holidayStart != _holidayEnd) {
+  //       for (int j = _holidayStart.day; j < _holidayEnd.day + 1; j++) {
+  //         _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] =
+  //             _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] ??
+  //                 [];
+  //         _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)]!
+  //             .add(Event(_holidayContent));
+  //       }
+  //     }
+  //   }
+  // }
 
   void initState() {
     super.initState();
