@@ -44,7 +44,6 @@ class _CalendarState extends State<Calendar> {
 
   final Map<DateTime, List<Event>> _holiday = ({});
 
-  String _calendarContent = '';
   String _holidayContent = '';
 
   makeEvent() {
@@ -74,7 +73,7 @@ class _CalendarState extends State<Calendar> {
   makeHoliday() {
     for (int i = 0; i < widget.holidayData!.length; i++) {
       _holidayContent = widget.holidayData![i].content!;
-      print(_holidayContent);
+
       DateTime _holidayStart =
           DateTime.parse(widget.holidayData![i].term!.startedAt!.toString());
       DateTime _holidayEnd =
@@ -110,6 +109,7 @@ class _CalendarState extends State<Calendar> {
     );
 
     makeEvent();
+    makeHoliday();
   }
 
   @override

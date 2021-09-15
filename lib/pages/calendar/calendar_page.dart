@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/common/loading/loading.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/pages/calendar/Calendar_repository.dart';
@@ -13,21 +14,15 @@ import 'package:url_launcher/url_launcher.dart';
 class CalendarPage extends GetView<CalendarController> {
   final name = '학사일정';
 
-  Future<Null> init() async {
-    Get.put(CalendarController());
-    await CalendarReposiory().getCalendar();
-    await CalendarReposiory().getHoliday();
-  }
-
   @override
   Widget build(BuildContext context) {
+    CalendarReposiory().getCalendarEvent();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: GetBuilder<CalendarController>(
             init: CalendarController(),
             builder: (_) {
-              init();
               return Stack(
                 children: [
                   Column(
@@ -50,24 +45,26 @@ class CalendarPage extends GetView<CalendarController> {
                           ],
                         ),
                       ),
-                      Container(
-                          child: CarouselSlider(
-                              options: CarouselOptions(
-                                height: SizeConfig.sizeByHeight(600),
-                                autoPlay: false,
-                                enableInfiniteScroll: false,
-                                enlargeCenterPage: false,
-                                initialPage: 5,
-                                aspectRatio: 2.0,
-                                onPageChanged: (index, reason) {},
-                              ),
-                              items: _.monthArray
-                                  .map((e) => Calendar(
-                                        calendarData: _.calendarData,
-                                        holidayData: _.holidayData,
-                                        kFirstDay: e,
-                                      ))
-                                  .toList())),
+                      _.isLoading
+                          ? Loading()
+                          : Container(
+                              child: CarouselSlider(
+                                  options: CarouselOptions(
+                                    height: SizeConfig.sizeByHeight(600),
+                                    autoPlay: false,
+                                    enableInfiniteScroll: false,
+                                    enlargeCenterPage: false,
+                                    initialPage: 5,
+                                    aspectRatio: 2.0,
+                                    onPageChanged: (index, reason) {},
+                                  ),
+                                  items: _.monthArray
+                                      .map((e) => Calendar(
+                                            calendarData: _.calendarData,
+                                            holidayData: _.holidayData,
+                                            kFirstDay: e,
+                                          ))
+                                      .toList())),
                     ],
                   ),
                   Positioned(
