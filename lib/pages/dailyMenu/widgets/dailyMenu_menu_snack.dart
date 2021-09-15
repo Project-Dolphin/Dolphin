@@ -115,7 +115,7 @@ class SnackCard extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Padding(
                 padding: EdgeInsets.only(
                   bottom: SizeConfig.sizeByHeight(29.0),

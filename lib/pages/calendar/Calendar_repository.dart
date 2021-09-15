@@ -61,6 +61,17 @@ class CalendarReposiory {
     return calendarToJson(await FetchAPI().fetchCalendar());
   }
 
+  getCalendarEvent() async {
+    Get.put(CalendarController());
+    Get.find<CalendarController>().setIsLoading(true);
+
+    Get.find<CalendarController>().setCalendar(await fetchCalendar());
+
+    Get.find<CalendarController>().setHoliday(await fetchHoliday());
+
+    Get.find<CalendarController>().setIsLoading(false);
+  }
+
   getCalendar() async {
     Get.put(CalendarController());
     //Get.find<CalendarController>().setIsLoading(true);
