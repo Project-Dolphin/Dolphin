@@ -10,7 +10,7 @@ class CalendarController extends GetxController {
   DateTime calendarCenter =
       DateTime(DateTime.now().year, DateTime.now().month, 1);
   List<CalendarData>? calendarData = [CalendarData()];
-  //List<HolidayData>? holidayData = [HolidayData()];
+  List<HolidayData>? holidayData = [HolidayData()];
 
   final List monthArray = DateTime.now().month == 1 || DateTime.now().month == 2
       ? [
@@ -51,10 +51,10 @@ class CalendarController extends GetxController {
     update();
   }
 
-  // void setHoliday(response) {
-  //   holidayData = response;
-  //   update();
-  // }
+  void setHoliday(response) {
+    holidayData = response;
+    update();
+  }
 
   void setDate(date) {
     formattedDate = date;

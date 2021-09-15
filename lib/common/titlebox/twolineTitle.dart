@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/services/urlUtils.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class TwolineTitle extends StatelessWidget {
   const TwolineTitle({

@@ -1,12 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/common/sizeConfig.dart';
-import 'package:oceanview/pages/calendar/Calendar_repository.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
 

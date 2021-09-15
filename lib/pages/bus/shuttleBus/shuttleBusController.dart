@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:oceanview/pages/bus/api/shuttleBusRepository.dart';
 
 class ShuttleBusController extends GetxController {
   bool isLoading = false;

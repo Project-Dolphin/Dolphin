@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oceanview/common/sizeConfig.dart';
 
 class TextBox extends StatelessWidget {
   const TextBox(this.text, this.fontSize, this.fontWeight, this.color,
