@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class CityBusController extends GetxController {
   List<String> stationList = ['주변정류장', '해양대구본관', '부산역', '영도대교'];
