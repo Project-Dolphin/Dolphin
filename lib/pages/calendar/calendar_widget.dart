@@ -48,108 +48,25 @@ class _CalendarState extends State<Calendar> {
   String _holidayContent = '';
 
   makeEvent() {
-    for (int i = 0; i < widget.calendarData!.length; i++) {
-      _calendarContent = widget.calendarData![i].content!;
-      DateTime _calendarStart = DateFormat("yyyy-M-dd")
-          .parse(widget.calendarData![i].term!.startedAt.toString());
-      DateTime _calendarEnd = DateFormat("yyyy-M-dd")
-          .parse(widget.calendarData![i].term!.endedAt.toString());
+    widget.calendarData!.forEach((element) {
+      DateTime _calendarStart =
+          DateFormat("yyyy-M-dd").parse(element.term!.startedAt.toString());
+      DateTime _calendarEnd =
+          DateFormat("yyyy-M-dd").parse(element.term!.endedAt.toString());
       if (_calendarStart == _calendarEnd) {
         kEvents[_calendarStart] = kEvents[_calendarStart] ?? [];
-        kEvents[_calendarStart]!.add(Event(_calendarContent));
-      } else if (_calendarStart.month != _calendarEnd.month) {
-        if (_calendarStart.month == 1 ||
-            _calendarStart.month == 3 ||
-            _calendarStart.month == 5 ||
-            _calendarStart.month == 7 ||
-            _calendarStart.month == 8 ||
-            _calendarStart.month == 10 ||
-            _calendarStart.month == 12) {
-          for (int j = _calendarStart.day; j < 32; j++) {
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                kEvents[DateTime(
-                        _calendarStart.year, _calendarStart.month, j)] ??
-                    [];
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-                .add(Event(_calendarContent));
-          }
-          if (_calendarStart.month == 12) {
-            for (int j = 1; j < _calendarEnd.day + 1; j++) {
-              kEvents[DateTime(_calendarStart.year + 1, 1, j)] =
-                  kEvents[DateTime(_calendarStart.year + 1, 1, j)] ?? [];
-              kEvents[DateTime(_calendarStart.year + 1, 1, j)]!
-                  .add(Event(_calendarContent));
-            }
-          } else {
-            for (int j = 1; j < _calendarEnd.day + 1; j++) {
-              kEvents[DateTime(
-                  _calendarStart.year, _calendarStart.month + 1, j)] = kEvents[
-                      DateTime(
-                          _calendarStart.year, _calendarStart.month + 1, j)] ??
-                  [];
-              kEvents[DateTime(
-                      _calendarStart.year, _calendarStart.month + 1, j)]!
-                  .add(Event(_calendarContent));
-            }
-          }
-        } else if (_calendarStart.month == 2) {
-          if (_calendarStart.year % 4 != 0) {
-            for (int j = _calendarStart.day; j < 30; j++) {
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                  kEvents[DateTime(
-                          _calendarStart.year, _calendarStart.month, j)] ??
-                      [];
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-                  .add(Event(_calendarContent));
-            }
-          } else {
-            for (int j = _calendarStart.day; j < 29; j++) {
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                  kEvents[DateTime(
-                          _calendarStart.year, _calendarStart.month, j)] ??
-                      [];
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-                  .add(Event(_calendarContent));
-            }
-          }
-          for (int j = 1; j < _calendarEnd.day + 1; j++) {
-            kEvents[DateTime(
-                _calendarStart.year, _calendarStart.month + 1, j)] = kEvents[
-                    DateTime(
-                        _calendarStart.year, _calendarStart.month + 1, j)] ??
-                [];
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)]!
-                .add(Event(_calendarContent));
-          }
-        } else {
-          for (int j = _calendarStart.day; j < 31; j++) {
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                kEvents[DateTime(
-                        _calendarStart.year, _calendarStart.month, j)] ??
-                    [];
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-                .add(Event(_calendarContent));
-          }
-          for (int j = 1; j < _calendarEnd.day + 1; j++) {
-            kEvents[DateTime(
-                _calendarStart.year, _calendarStart.month + 1, j)] = kEvents[
-                    DateTime(
-                        _calendarStart.year, _calendarStart.month + 1, j)] ??
-                [];
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)]!
-                .add(Event(_calendarContent));
-          }
-        }
+        kEvents[_calendarStart]?.add(Event(element.content!));
       } else {
-        for (int j = _calendarStart.day; j < _calendarEnd.day + 1; j++) {
-          kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] ??
-                  [];
-          kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-              .add(Event(_calendarContent));
+        for (int i = 0;
+            i < _calendarEnd.difference(_calendarStart).inDays;
+            i++) {
+          kEvents[_calendarStart.add(Duration(days: i))] =
+              kEvents[_calendarStart.add(Duration(days: i))] ?? [];
+          kEvents[_calendarStart.add(Duration(days: i))]
+              ?.add(Event(element.content!));
         }
       }
-    }
+    });
     _selectedEvents = ValueNotifier(_getEventsForDay(
         DateTime(widget.kFirstDay.year, widget.kFirstDay.month, 15)));
   }
@@ -157,6 +74,7 @@ class _CalendarState extends State<Calendar> {
   makeHoliday() {
     for (int i = 0; i < widget.holidayData!.length; i++) {
       _holidayContent = widget.holidayData![i].content!;
+      print(_holidayContent);
       DateTime _holidayStart =
           DateTime.parse(widget.holidayData![i].term!.startedAt!.toString());
       DateTime _holidayEnd =
@@ -164,7 +82,7 @@ class _CalendarState extends State<Calendar> {
 
       if (_holidayStart == _holidayEnd) {
         _holiday[_holidayStart] = _holiday[_holidayStart] ?? [];
-        _holiday[_holidayStart]!.add(Event(_holidayContent));
+        _holiday[_holidayStart]?.add(Event(_holidayContent));
       } else if (_holidayStart != _holidayEnd) {
         for (int j = _holidayStart.day; j < _holidayEnd.day + 1; j++) {
           _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] =
