@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/common/loading/loading.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/pages/calendar/Calendar_repository.dart';
@@ -13,66 +14,61 @@ import 'package:url_launcher/url_launcher.dart';
 class CalendarPage extends GetView<CalendarController> {
   final name = '학사일정';
 
-  Future<Null> init() async {
-    Get.put(CalendarController());
-    await CalendarReposiory().getCalendar();
-    //await CalendarReposiory().getHoliday();
-  }
-
   @override
   Widget build(BuildContext context) {
+    CalendarReposiory().getCalendarEvent();
     return SafeArea(
-      child: GetBuilder<CalendarController>(
-          init: CalendarController(),
-          builder: (_) {
-            init();
-            return Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Stack(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: GetBuilder<CalendarController>(
+            init: CalendarController(),
+            builder: (_) {
+              return Stack(
                 children: [
-                  Positioned(
-                    top: 0,
-                    width: SizeConfig.safeBlockHorizontal * 100,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.sizeByHeight(20),
-                        vertical: SizeConfig.sizeByHeight(14),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.sizeByHeight(20),
+                          vertical: SizeConfig.sizeByHeight(14),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            oneLine.MainTitle(
+                              title: name,
+                              fontsize: SizeConfig.sizeByHeight(26),
+                              fontweight: FontWeight.w700,
+                              isGradient: false,
+                            ),
+                            CalendarIcon(),
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          oneLine.MainTitle(
-                            title: name,
-                            fontsize: SizeConfig.sizeByHeight(26),
-                            fontweight: FontWeight.w700,
-                            isGradient: false,
-                          ),
-                          CalendarIcon(),
-                        ],
-                      ),
-                    ),
+                      _.isLoading
+                          ? Container(
+                              height: SizeConfig.sizeByHeight(600),
+                              child: Loading())
+                          : Container(
+                              child: CarouselSlider(
+                                  options: CarouselOptions(
+                                    height: SizeConfig.sizeByHeight(600),
+                                    autoPlay: false,
+                                    enableInfiniteScroll: false,
+                                    enlargeCenterPage: false,
+                                    initialPage: 5,
+                                    aspectRatio: 2.0,
+                                    onPageChanged: (index, reason) {},
+                                  ),
+                                  items: _.monthArray
+                                      .map((e) => Calendar(
+                                            calendarData: _.calendarData,
+                                            holidayData: _.holidayData,
+                                            kFirstDay: e,
+                                          ))
+                                      .toList())),
+                    ],
                   ),
-                  Container(
-                      margin: EdgeInsets.only(
-                        top: SizeConfig.sizeByHeight(68),
-                      ),
-                      child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: SizeConfig.sizeByHeight(600),
-                            autoPlay: false,
-                            enableInfiniteScroll: false,
-                            enlargeCenterPage: false,
-                            initialPage: 5,
-                            aspectRatio: 2.0,
-                            onPageChanged: (index, reason) {},
-                          ),
-                          items: _.monthArray
-                              .map((e) => Calendar(
-                                    calendarData: _.calendarData,
-                                    //holidayData: _.holidayData,
-                                    kFirstDay: e,
-                                  ))
-                              .toList())),
                   Positioned(
                       bottom: SizeConfig.sizeByHeight(35),
                       right: SizeConfig.sizeByWidth(29),
@@ -99,9 +95,9 @@ class CalendarPage extends GetView<CalendarController> {
                             ],
                           ))),
                 ],
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 }

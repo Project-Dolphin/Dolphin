@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/common/dialog/dialog2.dart';
-import 'package:oceanview/common/icon/gradientIcon.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart';

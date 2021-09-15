@@ -10,31 +10,30 @@ class CalendarController extends GetxController {
   DateTime calendarCenter =
       DateTime(DateTime.now().year, DateTime.now().month, 1);
   List<CalendarData>? calendarData = [CalendarData()];
-  //List<HolidayData>? holidayData = [HolidayData()];
+  List<HolidayData>? holidayData = [HolidayData()];
 
-  final List monthArray = [
-    DateTime(DateTime.now().year, DateTime.now().month - 5, 1),
-    DateTime(DateTime.now().year, DateTime.now().month - 4, 1),
-    DateTime(DateTime.now().year, DateTime.now().month - 3, 1),
-    DateTime(DateTime.now().year, DateTime.now().month - 2, 1),
-    DateTime(DateTime.now().year, DateTime.now().month - 1, 1),
-    DateTime.now(),
-    DateTime(DateTime.now().year, DateTime.now().month + 1, 1),
-    DateTime(DateTime.now().year, DateTime.now().month + 2, 1),
-    DateTime(DateTime.now().year, DateTime.now().month + 3, 1),
-    DateTime(DateTime.now().year, DateTime.now().month + 4, 1),
-    DateTime(DateTime.now().year, DateTime.now().month + 5, 1),
-  ];
+  final List monthArray = DateTime.now().month == 1 || DateTime.now().month == 2
+      ? [
+          ...[
+            for (int i = 2; i <= 12; i++)
+              DateTime(DateTime.now().year - 1, i, 1)
+          ],
+          DateTime(DateTime.now().year, 1, 1),
+          DateTime(DateTime.now().year, 2, 1)
+        ]
+      : [
+          ...[
+            for (int i = 2; i <= 12; i++) DateTime(DateTime.now().year, i, 1)
+          ],
+          DateTime(DateTime.now().year + 1, 1, 1),
+          DateTime(DateTime.now().year + 1, 2, 1)
+        ];
 
   @override
   void onInit() {
     super.onInit();
     setDate(getDate());
     setStat(getWeekDay());
-    /*for (var i = -3; i <= 3; i++) {
-      monthArray
-          .add(DateTime(calendarCenter.year, calendarCenter.month + i, 1));
-    }*/ // late로 수정중
   }
 
   void setIsLoading(loading) {
@@ -52,10 +51,10 @@ class CalendarController extends GetxController {
     update();
   }
 
-  // void setHoliday(response) {
-  //   holidayData = response;
-  //   update();
-  // }
+  void setHoliday(response) {
+    holidayData = response;
+    update();
+  }
 
   void setDate(date) {
     formattedDate = date;

@@ -93,7 +93,7 @@ class SnackCard extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              ...menu1.map((e) => Container(
+                              ...menu2.map((e) => Container(
                                     margin: EdgeInsets.only(
                                         top: SizeConfig.sizeByHeight(13)),
                                     width: SizeConfig.sizeByWidth(180.0),
@@ -115,7 +115,7 @@ class SnackCard extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Padding(
                 padding: EdgeInsets.only(
                   bottom: SizeConfig.sizeByHeight(29.0),
@@ -203,7 +203,7 @@ class SnackCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            ...menu2.map((e) => Container(
+                            ...menu1.map((e) => Container(
                                   margin: EdgeInsets.only(
                                       bottom: SizeConfig.sizeByHeight(10.0)),
                                   width: SizeConfig.sizeByWidth(120.0),
