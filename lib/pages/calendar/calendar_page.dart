@@ -14,6 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 class CalendarPage extends GetView<CalendarController> {
   final name = '학사일정';
 
+
   @override
   Widget build(BuildContext context) {
     CalendarReposiory().getCalendarEvent();

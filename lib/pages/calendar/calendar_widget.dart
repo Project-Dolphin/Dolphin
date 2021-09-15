@@ -12,11 +12,10 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Calendar extends StatefulWidget {
-  Calendar({this.calendarData, this.holidayData, this.kFirstDay, Key? key})
-      : super(key: key);
+  Calendar({this.calendarData, this.kFirstDay, Key? key}) : super(key: key);
 
   final List<CalendarData>? calendarData;
-  final List<HolidayData>? holidayData;
+  // final List<HolidayData>? holidayData;
 
   final kFirstDay;
   late final kLastDay =
@@ -70,6 +69,7 @@ class _CalendarState extends State<Calendar> {
         DateTime(widget.kFirstDay.year, widget.kFirstDay.month, 15)));
   }
 
+
   makeHoliday() {
     for (int i = 0; i < widget.holidayData!.length; i++) {
       _holidayContent = widget.holidayData![i].content!;
@@ -93,6 +93,7 @@ class _CalendarState extends State<Calendar> {
       }
     }
   }
+
 
   void initState() {
     super.initState();
