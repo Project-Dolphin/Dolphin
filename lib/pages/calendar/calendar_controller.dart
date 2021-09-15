@@ -18,7 +18,7 @@ class CalendarController extends GetxController {
     DateTime(DateTime.now().year, DateTime.now().month - 3, 1),
     DateTime(DateTime.now().year, DateTime.now().month - 2, 1),
     DateTime(DateTime.now().year, DateTime.now().month - 1, 1),
-    DateTime.now(),
+    DateTime(DateTime.now().year, DateTime.now().month, 1),
     DateTime(DateTime.now().year, DateTime.now().month + 1, 1),
     DateTime(DateTime.now().year, DateTime.now().month + 2, 1),
     DateTime(DateTime.now().year, DateTime.now().month + 3, 1),

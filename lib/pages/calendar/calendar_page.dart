@@ -22,57 +22,54 @@ class CalendarPage extends GetView<CalendarController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: GetBuilder<CalendarController>(
-          init: CalendarController(),
-          builder: (_) {
-            init();
-            return Scaffold(
-              backgroundColor: Colors.transparent,
-              body: Stack(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: GetBuilder<CalendarController>(
+            init: CalendarController(),
+            builder: (_) {
+              init();
+              return Stack(
                 children: [
-                  Positioned(
-                    top: 0,
-                    width: SizeConfig.safeBlockHorizontal * 100,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.sizeByHeight(20),
-                        vertical: SizeConfig.sizeByHeight(14),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.sizeByHeight(20),
+                          vertical: SizeConfig.sizeByHeight(14),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            oneLine.MainTitle(
+                              title: name,
+                              fontsize: SizeConfig.sizeByHeight(26),
+                              fontweight: FontWeight.w700,
+                              isGradient: false,
+                            ),
+                            CalendarIcon(),
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          oneLine.MainTitle(
-                            title: name,
-                            fontsize: SizeConfig.sizeByHeight(26),
-                            fontweight: FontWeight.w700,
-                            isGradient: false,
-                          ),
-                          CalendarIcon(),
-                        ],
-                      ),
-                    ),
+                      Container(
+                          child: CarouselSlider(
+                              options: CarouselOptions(
+                                height: SizeConfig.sizeByHeight(600),
+                                autoPlay: false,
+                                enableInfiniteScroll: false,
+                                enlargeCenterPage: false,
+                                initialPage: 5,
+                                aspectRatio: 2.0,
+                                onPageChanged: (index, reason) {},
+                              ),
+                              items: _.monthArray
+                                  .map((e) => Calendar(
+                                        calendarData: _.calendarData,
+                                        holidayData: _.holidayData,
+                                        kFirstDay: e,
+                                      ))
+                                  .toList())),
+                    ],
                   ),
-                  Container(
-                      margin: EdgeInsets.only(
-                        top: SizeConfig.sizeByHeight(68),
-                      ),
-                      child: CarouselSlider(
-                          options: CarouselOptions(
-                            height: SizeConfig.sizeByHeight(600),
-                            autoPlay: false,
-                            enableInfiniteScroll: false,
-                            enlargeCenterPage: false,
-                            initialPage: 5,
-                            aspectRatio: 2.0,
-                            onPageChanged: (index, reason) {},
-                          ),
-                          items: _.monthArray
-                              .map((e) => Calendar(
-                                    calendarData: _.calendarData,
-                                    holidayData: _.holidayData,
-                                    kFirstDay: e,
-                                  ))
-                              .toList())),
                   Positioned(
                       bottom: SizeConfig.sizeByHeight(35),
                       right: SizeConfig.sizeByWidth(29),
@@ -99,9 +96,9 @@ class CalendarPage extends GetView<CalendarController> {
                             ],
                           ))),
                 ],
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 }
