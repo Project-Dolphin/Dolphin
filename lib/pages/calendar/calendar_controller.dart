@@ -1,8 +1,11 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CalendarController extends GetxController {
   final String title = '학사 일정';
+
+  CarouselController carouselController = new CarouselController();
   String formattedDate = '';
   String stat = '';
   bool isLoading = false;
