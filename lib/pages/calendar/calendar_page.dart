@@ -62,7 +62,9 @@ class CalendarPage extends GetView<CalendarController> {
                                     autoPlay: false,
                                     enableInfiniteScroll: false,
                                     enlargeCenterPage: false,
-                                    initialPage: DateTime.now().month - 2,
+                                    initialPage: DateTime.now().month > 2
+                                        ? DateTime.now().month - 2
+                                        : DateTime.now().month + 10,
                                     aspectRatio: 2.0,
                                     onPageChanged: (index, reason) {},
                                   ),

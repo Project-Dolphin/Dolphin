@@ -16,7 +16,7 @@ class CalendarController extends GetxController {
   List<CalendarData>? calendarData = [CalendarData()];
   List<HolidayData>? holidayData = [HolidayData()];
 
-  final List monthArray = DateTime.now().month == 1 || DateTime.now().month == 2
+  final List monthArray = DateTime.now().month <= 2
       ? [
           ...[
             for (int i = 2; i <= 12; i++)

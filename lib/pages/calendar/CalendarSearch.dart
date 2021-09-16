@@ -131,9 +131,13 @@ class _CalendarSearchState extends State<CalendarSearch> {
                                 onTap: () {
                                   calendarController.carouselController
                                       .animateToPage(
-                                          _searchResult[i][1].month - 2);
+                                          _searchResult[i][1].month > 2
+                                              ? _searchResult[i][1].month - 2
+                                              : _searchResult[i][1].month + 10);
                                   calendarController.setFocusedDay(
-                                      _searchResult[i][1].month - 2,
+                                      _searchResult[i][1].month > 2
+                                          ? _searchResult[i][1].month - 2
+                                          : _searchResult[i][1].month + 10,
                                       _searchResult[i][1]);
                                   Get.back();
                                 },
