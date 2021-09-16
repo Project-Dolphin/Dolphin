@@ -130,14 +130,25 @@ class _CalendarSearchState extends State<CalendarSearch> {
                               title: GestureDetector(
                                 onTap: () {
                                   calendarController.carouselController
-                                      .animateToPage(
-                                          _searchResult[i][1].month > 2
+                                      .animateToPage(DateTime.now().month <= 2
+                                          ? _searchResult[i][1].year ==
+                                                  DateTime.now().year - 1
+                                              ? _searchResult[i][1].month - 2
+                                              : _searchResult[i][1].month + 10
+                                          : _searchResult[i][1].year ==
+                                                  DateTime.now().year
                                               ? _searchResult[i][1].month - 2
                                               : _searchResult[i][1].month + 10);
                                   calendarController.setFocusedDay(
-                                      _searchResult[i][1].month > 2
-                                          ? _searchResult[i][1].month - 2
-                                          : _searchResult[i][1].month + 10,
+                                      DateTime.now().month <= 2
+                                          ? _searchResult[i][1].year ==
+                                                  DateTime.now().year - 1
+                                              ? _searchResult[i][1].month - 2
+                                              : _searchResult[i][1].month + 10
+                                          : _searchResult[i][1].year ==
+                                                  DateTime.now().year
+                                              ? _searchResult[i][1].month - 2
+                                              : _searchResult[i][1].month + 10,
                                       _searchResult[i][1]);
                                   Get.back();
                                 },
