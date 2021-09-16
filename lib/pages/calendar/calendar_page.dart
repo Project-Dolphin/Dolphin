@@ -17,7 +17,10 @@ class CalendarPage extends GetView<CalendarController> {
   @override
   Widget build(BuildContext context) {
     if (controller.calendarData!.length < 2) {
-      CalendarReposiory().getCalendarEvent();
+      () async {
+        await CalendarReposiory().getCalendarEvent();
+        controller.setCalendarList();
+      }();
     }
     return SafeArea(
       child: Scaffold(
@@ -63,13 +66,7 @@ class CalendarPage extends GetView<CalendarController> {
                                     aspectRatio: 2.0,
                                     onPageChanged: (index, reason) {},
                                   ),
-                                  items: _.monthArray
-                                      .map((e) => Calendar(
-                                            calendarData: _.calendarData,
-                                            holidayData: _.holidayData,
-                                            kFirstDay: e,
-                                          ))
-                                      .toList())),
+                                  items: _.calendarList)),
                     ],
                   ),
                   Positioned(
