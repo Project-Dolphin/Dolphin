@@ -16,7 +16,12 @@ class CalendarPage extends GetView<CalendarController> {
 
   @override
   Widget build(BuildContext context) {
-    CalendarReposiory().getCalendarEvent();
+    if (controller.calendarData!.length < 2) {
+      () async {
+        await CalendarReposiory().getCalendarEvent();
+        controller.setCalendarList();
+      }();
+    }
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -51,22 +56,19 @@ class CalendarPage extends GetView<CalendarController> {
                               child: Loading())
                           : Container(
                               child: CarouselSlider(
+                                  carouselController: _.carouselController,
                                   options: CarouselOptions(
                                     height: SizeConfig.sizeByHeight(600),
                                     autoPlay: false,
                                     enableInfiniteScroll: false,
                                     enlargeCenterPage: false,
-                                    initialPage: 5,
+                                    initialPage: DateTime.now().month > 2
+                                        ? DateTime.now().month - 2
+                                        : DateTime.now().month + 10,
                                     aspectRatio: 2.0,
                                     onPageChanged: (index, reason) {},
                                   ),
-                                  items: _.monthArray
-                                      .map((e) => Calendar(
-                                            calendarData: _.calendarData,
-                                            holidayData: _.holidayData,
-                                            kFirstDay: e,
-                                          ))
-                                      .toList())),
+                                  items: _.calendarList)),
                     ],
                   ),
                   Positioned(

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:intl/intl.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
+import 'package:oceanview/pages/calendar/calendar_widget.dart';
 
 class CalendarSearch extends StatefulWidget {
   @override
@@ -17,10 +18,8 @@ class _CalendarSearchState extends State<CalendarSearch> {
 
   final calendarController = Get.put(CalendarController());
 
-  List<dynamic> _searchResult = [];
+  List<List<dynamic>> _searchResult = [];
   List<dynamic> _calendarDetails = [];
-  List<DateTime> _searchResultStart = [];
-  List<DateTime> _searchResultEnd = [];
 
   @override
   void initState() {
@@ -34,7 +33,7 @@ class _CalendarSearchState extends State<CalendarSearch> {
 
   @override
   void dispose() {
-    onSearchTextChanged('');
+    controller.dispose();
     super.dispose();
   }
 
@@ -128,31 +127,59 @@ class _CalendarSearchState extends State<CalendarSearch> {
                             color: Colors.transparent,
                             elevation: 0,
                             child: new ListTile(
-                              title: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  _searchResultStart[i] != _searchResultEnd[i]
-                                      ? new Text(DateFormat('M.dd(E)', 'ko_KR')
-                                              .format(_searchResultStart[i])
-                                              .toString() +
-                                          ' ~ ' +
-                                          DateFormat('M.dd(E)', 'ko_KR')
-                                              .format(_searchResultEnd[i])
-                                              .toString())
-                                      : new Text(DateFormat('M.dd(E)', 'ko_KR')
-                                          .format(_searchResultStart[i])
-                                          .toString()),
-                                  Container(
-                                    alignment: Alignment.centerRight,
-                                    padding: EdgeInsets.only(right: 8.0),
-                                    width: fullwidth * 0.5,
-                                    child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: new Text(
-                                            _searchResult[i].toString())),
-                                  ),
-                                ],
+                              title: GestureDetector(
+                                onTap: () {
+                                  calendarController.carouselController
+                                      .animateToPage(DateTime.now().month <= 2
+                                          ? _searchResult[i][1].year ==
+                                                  DateTime.now().year - 1
+                                              ? _searchResult[i][1].month - 2
+                                              : _searchResult[i][1].month + 10
+                                          : _searchResult[i][1].year ==
+                                                  DateTime.now().year
+                                              ? _searchResult[i][1].month - 2
+                                              : _searchResult[i][1].month + 10);
+                                  calendarController.setFocusedDay(
+                                      DateTime.now().month <= 2
+                                          ? _searchResult[i][1].year ==
+                                                  DateTime.now().year - 1
+                                              ? _searchResult[i][1].month - 2
+                                              : _searchResult[i][1].month + 10
+                                          : _searchResult[i][1].year ==
+                                                  DateTime.now().year
+                                              ? _searchResult[i][1].month - 2
+                                              : _searchResult[i][1].month + 10,
+                                      _searchResult[i][1]);
+                                  Get.back();
+                                },
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    _searchResult[i][1] != _searchResult[i][2]
+                                        ? new Text(
+                                            DateFormat('M.dd(E)', 'ko_KR')
+                                                    .format(_searchResult[i][1])
+                                                    .toString() +
+                                                ' ~ ' +
+                                                DateFormat('M.dd(E)', 'ko_KR')
+                                                    .format(_searchResult[i][2])
+                                                    .toString())
+                                        : new Text(
+                                            DateFormat('M.dd(E)', 'ko_KR')
+                                                .format(_searchResult[i][1])
+                                                .toString()),
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      padding: EdgeInsets.only(right: 8.0),
+                                      width: fullwidth * 0.5,
+                                      child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: new Text(
+                                              _searchResult[i][0].toString())),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             margin: const EdgeInsets.all(0.0),
@@ -187,11 +214,13 @@ class _CalendarSearchState extends State<CalendarSearch> {
 
     _calendarDetails.forEach((calendarDetail) {
       if (calendarDetail.content.contains(text)) {
-        _searchResult.add(calendarDetail.content);
-        _searchResultStart.add(DateFormat("yyyy-M-dd")
-            .parse(calendarDetail.term.startedAt.toString()));
-        _searchResultEnd.add(DateFormat("yyyy-M-dd")
-            .parse(calendarDetail.term.endedAt.toString()));
+        _searchResult.add([
+          calendarDetail.content,
+          DateFormat("yyyy-M-dd")
+              .parse(calendarDetail.term.startedAt.toString()),
+          DateFormat("yyyy-M-dd").parse(calendarDetail.term.endedAt.toString()),
+          calendarDetail.content
+        ]);
       }
     });
 

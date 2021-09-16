@@ -10,11 +10,17 @@ import 'package:oceanview/pages/calendar/calendar_controller.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends StatefulWidget {
-  Calendar({this.calendarData, this.holidayData, this.kFirstDay, Key? key})
+  Calendar(
+      {this.calendarData,
+      this.holidayData,
+      this.kFirstDay,
+      this.specificFocusedDay,
+      Key? key})
       : super(key: key);
 
   final List<CalendarData>? calendarData;
   final List<HolidayData>? holidayData;
+  final DateTime? specificFocusedDay;
 
   final kFirstDay;
   late final kLastDay =
@@ -65,7 +71,8 @@ class _CalendarState extends State<Calendar> {
       }
     });
     _selectedEvents = ValueNotifier(_getEventsForDay(
-        DateTime(widget.kFirstDay.year, widget.kFirstDay.month, 15)));
+        // DateTime(widget.kFirstDay.year, widget.kFirstDay.month, 15)
+        _selectedDay!));
   }
 
   makeHoliday() {
@@ -95,17 +102,12 @@ class _CalendarState extends State<Calendar> {
   void initState() {
     super.initState();
 
-    if (widget.kFirstDay.month == DateTime.now().month)
-      _focusedDay = DateTime.now();
-    else
-      _focusedDay = widget.kFirstDay;
-
+    _focusedDay = widget.specificFocusedDay;
     _selectedDay = _focusedDay;
     kEvents = LinkedHashMap<DateTime, List<Event>>(
       equals: isSameDay,
       hashCode: getHashCode,
     );
-
     makeEvent();
     makeHoliday();
   }
