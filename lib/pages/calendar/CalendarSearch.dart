@@ -199,8 +199,6 @@ class _CalendarSearchState extends State<CalendarSearch> {
 
     _calendarDetails.forEach((calendarDetail) {
       if (calendarDetail.content.contains(text)) {
-        print(
-            '${calendarDetail.term.startedAt} ${calendarDetail.term.endedAt} ${calendarDetail.content}');
         _searchResult.add([
           calendarDetail.content,
           DateFormat("yyyy-M-dd")
