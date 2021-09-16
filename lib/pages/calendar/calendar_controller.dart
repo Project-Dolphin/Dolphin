@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:oceanview/pages/calendar/calendar_widget.dart';
 
 class CalendarController extends GetxController {
   final String title = '학사 일정';
@@ -32,11 +33,40 @@ class CalendarController extends GetxController {
           DateTime(DateTime.now().year + 1, 2, 1)
         ];
 
+  List<Calendar> calendarList = [];
+
   @override
   void onInit() {
     super.onInit();
     setDate(getDate());
     setStat(getWeekDay());
+  }
+
+  void setCalendarList() {
+    calendarList = monthArray.map((e) {
+      DateTime _focusedDay;
+      if (e.month == DateTime.now().month) {
+        _focusedDay = DateTime.now();
+      } else {
+        _focusedDay = e;
+      }
+      return new Calendar(
+        calendarData: calendarData,
+        holidayData: holidayData,
+        specificFocusedDay: _focusedDay,
+        kFirstDay: e,
+      );
+    }).toList();
+  }
+
+  void setFocusedDay(index, day) {
+    calendarList[index] = Calendar(
+      calendarData: calendarData,
+      holidayData: holidayData,
+      specificFocusedDay: day,
+      kFirstDay: monthArray[index],
+    );
+    update();
   }
 
   void setIsLoading(loading) {
