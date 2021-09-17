@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -111,6 +112,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     findNearStation();
     return FutureBuilder(
       future: Firebase.initializeApp(),

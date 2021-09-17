@@ -336,8 +336,11 @@ class FirstArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox(
-                    '$remainTime분 후', 30, FontWeight.w700, Color(0xFF353B45)),
+                : int.parse(remainTime!) >= 0
+                    ? TextBox('$remainTime분 후', 30, FontWeight.w700,
+                        Color(0xFF353B45))
+                    : TextBox('${int.parse(remainTime!) * -1}분 전', 30,
+                        FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [
@@ -403,8 +406,11 @@ class SecondArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox(
-                    '$remainTime분 후', 24, FontWeight.w700, Color(0xFF353B45)),
+                : int.parse(remainTime!) >= 0
+                    ? TextBox('$remainTime분 후', 24, FontWeight.w700,
+                        Color(0xFF353B45))
+                    : TextBox('${int.parse(remainTime!) * -1}분 전', 24,
+                        FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? TextBox(
                     '$arriveTime',
@@ -467,8 +473,11 @@ class ThirdArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox(
-                    '$remainTime분 후', 18, FontWeight.w500, Color(0xFF353B45)),
+                : int.parse(remainTime!) >= 0
+                    ? TextBox('$remainTime분 후', 18, FontWeight.w700,
+                        Color(0xFF353B45))
+                    : TextBox('${int.parse(remainTime!) * -1}분 전', 18,
+                        FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [
