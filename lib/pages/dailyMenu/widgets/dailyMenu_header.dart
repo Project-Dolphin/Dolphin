@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
@@ -39,19 +40,24 @@ class MyAppSpace extends StatelessWidget {
                 sigmaX: 10.0,
                 sigmaY: 10.0,
               ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      '식단',
-                      style: TextStyle(
-                          color: Color(0xFF353B45),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+              child: SafeArea(
+                bottom: false,
+                left: false,
+                right: false,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '식단',
+                        style: TextStyle(
+                            color: Color(0xFF353B45),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

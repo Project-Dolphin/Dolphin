@@ -108,7 +108,11 @@ _launchURL() async {
   const url =
       'https://www.kmou.ac.kr/onestop/cm/cntnts/cntntsView.do?mi=74&cntntsId=1755';
   if (await canLaunch(url)) {
-    await launch(url);
+    await launch(
+      url,
+      forceWebView: true,
+      enableJavaScript: true,
+    );
   } else {
     throw 'Could not launch $url';
   }

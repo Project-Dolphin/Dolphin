@@ -150,6 +150,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                         )
                       : Container()),
               flexibleSpace: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.pin,
                   background: SafeArea(
                     bottom: false,
                     child: Padding(
@@ -184,6 +185,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                       ),
                     ),
                   ),
+                  titlePadding: EdgeInsets.zero,
                   title: MyAppSpace(_)),
             ),
             SliverFillRemaining(
