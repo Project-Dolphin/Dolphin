@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:oceanview/common/icon/gradientIcon.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 
@@ -261,7 +262,10 @@ class _DashboardPageState extends State<DashboardPage> {
           sigmaY: 10,
         ),
         child: Container(
-          height: SizeConfig.blockSizeVertical * 12,
+          height:
+              foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+                  ? SizeConfig.blockSizeVertical * 12
+                  : SizeConfig.blockSizeVertical * 10,
           child: BottomNavigationBar(
             unselectedItemColor: Color(0xFF939393),
             selectedItemColor: Color(0xFF0081FF),

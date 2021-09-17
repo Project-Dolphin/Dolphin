@@ -48,6 +48,7 @@ class CityBusListPage extends GetView<CityBusController> {
                         ),
                       ),
                     ),
+                    centerTitle: true,
                     title: Text(
                       '190번 버스',
                       style: TextStyle(
