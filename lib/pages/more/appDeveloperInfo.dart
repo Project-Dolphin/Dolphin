@@ -78,7 +78,7 @@ class AppDeveloperInfo extends StatelessWidget {
                       height: SizeConfig.sizeByHeight(6),
                     ),
                     TextBox(
-                        '오션뷰 2.0.5', 14, FontWeight.w400, Color(0xFF353B45)),
+                        '오션뷰 2.0.6', 14, FontWeight.w400, Color(0xFF353B45)),
                   ],
                 ),
               ),
