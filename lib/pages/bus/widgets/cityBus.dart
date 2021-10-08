@@ -37,31 +37,7 @@ class CityBus extends GetView<CityBusController> {
         child: GetBuilder<CityBusController>(
           init: CityBusController(),
           builder: (_) {
-            var departRemainTime = [];
-            var departArriveTime = [];
-            var cityBusArriveTime = [];
-
-            if (!_.isLoading) {
-              if (_.selectedStation == '해양대구본관') {
-                for (var i = 0; i < _.nextDepartCityBus!.length; i++) {
-                  var differenceMinute = _.nextDepartCityBus![i]
-                      .difference(DateTime.now())
-                      .inMinutes;
-
-                  departRemainTime.add(differenceMinute.toString());
-                  departArriveTime
-                      .add(DateFormat('HH:mm').format(_.nextDepartCityBus![i]));
-                }
-              } else {
-                _.responseCityBus != null
-                    ? cityBusArriveTime = [
-                        _.responseCityBus!.min1 ?? 9999,
-                        _.responseCityBus!.min2 ?? 9999
-                      ]
-                    : cityBusArriveTime = [];
-              }
-            }
-
+            print(_.timer);
             return Stack(
               children: [
                 Column(
@@ -116,111 +92,109 @@ class CityBus extends GetView<CityBusController> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
-                                              children:
-                                                  _.selectedStation == '해양대구본관'
-                                                      ? [
-                                                          FirstArrive(
-                                                              _.nextDepartCityBus!
-                                                                          .length >
-                                                                      0
-                                                                  ? departRemainTime[
-                                                                      0]
-                                                                  : '없음',
-                                                              _.nextDepartCityBus!
-                                                                          .length >
-                                                                      0
-                                                                  ? departArriveTime[
-                                                                      0]
-                                                                  : ' '),
-                                                          SecondArrive(
-                                                              _.nextDepartCityBus!
-                                                                          .length >
-                                                                      1
-                                                                  ? departRemainTime[
-                                                                      1]
-                                                                  : '없음',
-                                                              _.nextDepartCityBus!
-                                                                          .length >
-                                                                      1
-                                                                  ? departArriveTime[
-                                                                      1]
-                                                                  : ' ',
-                                                              _.stationList
+                                              children: _.selectedStation ==
+                                                      '해양대구본관'
+                                                  ? [
+                                                      FirstArrive(
+                                                          _.departRemainTime
+                                                                      .length >
+                                                                  0
+                                                              ? _.departRemainTime[
+                                                                  0]
+                                                              : '없음',
+                                                          _.departArriveTime
+                                                                      .length >
+                                                                  0
+                                                              ? _.departArriveTime[
+                                                                  0]
+                                                              : ' '),
+                                                      SecondArrive(
+                                                          _.departRemainTime
+                                                                      .length >
+                                                                  1
+                                                              ? _.departRemainTime[
+                                                                  1]
+                                                              : '없음',
+                                                          _.departArriveTime
+                                                                      .length >
+                                                                  1
+                                                              ? _.departArriveTime[
+                                                                  1]
+                                                              : ' ',
+                                                          _.stationList.indexOf(_
+                                                              .selectedStation),
+                                                          busController.getIsNotiOn(_
+                                                                  .stationList
                                                                   .indexOf(_
-                                                                      .selectedStation),
-                                                              busController.getIsNotiOn(_
-                                                                      .stationList
-                                                                      .indexOf(_
-                                                                          .selectedStation) +
-                                                                  10)),
-                                                          ThirdArrive(
-                                                            _.nextDepartCityBus!
-                                                                        .length >
-                                                                    2
-                                                                ? departRemainTime[
-                                                                    2]
-                                                                : '없음',
-                                                            _.nextDepartCityBus!
-                                                                        .length >
-                                                                    2
-                                                                ? departArriveTime[
-                                                                    2]
-                                                                : ' ',
-                                                            _.stationList.indexOf(
-                                                                _.selectedStation),
-                                                            busController.getIsNotiOn(_
-                                                                    .stationList
-                                                                    .indexOf(_
-                                                                        .selectedStation) +
-                                                                20),
-                                                          )
-                                                        ]
-                                                      : [
-                                                          FirstArrive(
-                                                              cityBusArriveTime !=
-                                                                          [] &&
-                                                                      cityBusArriveTime[
-                                                                              0] !=
-                                                                          9999
-                                                                  ? cityBusArriveTime[
-                                                                          0]
-                                                                      .toString()
-                                                                  : '없음',
-                                                              cityBusArriveTime !=
-                                                                          [] &&
-                                                                      cityBusArriveTime[
-                                                                              0] !=
-                                                                          9999
-                                                                  ? DateFormat('HH:mm').format(DateTime
-                                                                          .now()
-                                                                      .add(Duration(
-                                                                          minutes:
-                                                                              cityBusArriveTime[0])))
-                                                                  : ' '),
-                                                          SecondArrive(
-                                                              cityBusArriveTime !=
-                                                                          [] &&
-                                                                      cityBusArriveTime[1] !=
-                                                                          9999
-                                                                  ? cityBusArriveTime[1]
-                                                                      .toString()
-                                                                  : '없음',
-                                                              cityBusArriveTime !=
-                                                                          [] &&
-                                                                      cityBusArriveTime[1] !=
-                                                                          9999
-                                                                  ? DateFormat('HH:mm').format(
-                                                                      DateTime.now().add(Duration(
-                                                                          minutes: cityBusArriveTime[
-                                                                              1])))
-                                                                  : ' ',
-                                                              _.stationList
-                                                                  .indexOf(_
-                                                                      .selectedStation),
-                                                              busController.getIsNotiOn(
-                                                                  _.stationList.indexOf(_.selectedStation) + 10)),
-                                                          Container(),
-                                                        ],
+                                                                      .selectedStation) +
+                                                              10)),
+                                                      ThirdArrive(
+                                                        _.departRemainTime
+                                                                    .length >
+                                                                2
+                                                            ? _.departRemainTime[
+                                                                2]
+                                                            : '없음',
+                                                        _.departArriveTime
+                                                                    .length >
+                                                                2
+                                                            ? _.departArriveTime[
+                                                                2]
+                                                            : ' ',
+                                                        _.stationList.indexOf(
+                                                            _.selectedStation),
+                                                        busController.getIsNotiOn(_
+                                                                .stationList
+                                                                .indexOf(_
+                                                                    .selectedStation) +
+                                                            20),
+                                                      )
+                                                    ]
+                                                  : [
+                                                      FirstArrive(
+                                                          _.cityBusRemainTime !=
+                                                                      [] &&
+                                                                  _.cityBusRemainTime[
+                                                                          0] !=
+                                                                      9999
+                                                              ? _.cityBusRemainTime[
+                                                                      0]
+                                                                  .toString()
+                                                              : '없음',
+                                                          _.cityBusRemainTime !=
+                                                                      [] &&
+                                                                  _.cityBusRemainTime[
+                                                                          0] !=
+                                                                      9999
+                                                              ? DateFormat(
+                                                                      'HH:mm')
+                                                                  .format(
+                                                                      _.cityBusArriveTime[
+                                                                          0])
+                                                              : ' '),
+                                                      SecondArrive(
+                                                          _.cityBusRemainTime != [] &&
+                                                                  _.cityBusRemainTime[1] !=
+                                                                      9999
+                                                              ? _.cityBusRemainTime[1]
+                                                                  .toString()
+                                                              : '없음',
+                                                          _.cityBusRemainTime != [] &&
+                                                                  _.cityBusRemainTime[1] !=
+                                                                      9999
+                                                              ? DateFormat('HH:mm')
+                                                                  .format(
+                                                                      _.cityBusArriveTime[
+                                                                          1])
+                                                              : ' ',
+                                                          _.stationList.indexOf(_
+                                                              .selectedStation),
+                                                          busController.getIsNotiOn(_
+                                                                  .stationList
+                                                                  .indexOf(_.selectedStation) +
+                                                              10)),
+                                                      Container(),
+                                                    ],
                                             );
                                           }),
                                     ),
@@ -284,14 +258,7 @@ class CityBus extends GetView<CityBusController> {
                                 _.stationList,
                                 _.selectedStation,
                                 (value) {
-                                  value == '주변정류장'
-                                      ? findNearStation()
-                                      : value == '부산역'
-                                          ? fetchStation('169100201')
-                                          : value == '영도대교'
-                                              ? fetchStation('167850202')
-                                              : CityBusRepository()
-                                                  .getNextDepartCityBus();
+                                  fetchSelectedStation(value);
                                   _.setSelectedStation(value);
                                 },
                                 findTitle: findCityBusTitle,
@@ -309,6 +276,16 @@ class CityBus extends GetView<CityBusController> {
       ),
     );
   }
+}
+
+fetchSelectedStation(selectedStation) {
+  selectedStation == '주변정류장'
+      ? findNearStation()
+      : selectedStation == '부산역'
+          ? fetchStation('169100201')
+          : selectedStation == '영도대교'
+              ? fetchStation('167850202')
+              : CityBusRepository().getNextDepartCityBus();
 }
 
 handleBusNotification(id, remainTime, isNotiOn) async {

@@ -1,13 +1,24 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:oceanview/pages/bus/widgets/cityBus.dart';
 
 class CityBusController extends GetxController {
   List<String> stationList = ['주변정류장', '해양대구본관', '부산역', '영도대교'];
   String selectedStation = '해양대구본관';
   String nearStation = '';
-  bool isLoading = false;
+  bool isLoading = true;
   CityBusData? responseCityBus = CityBusData();
   List<CityBusListData>? responseCityBusList = [CityBusListData()];
   List<DateTime>? nextDepartCityBus;
+  List<dynamic>? nextDepartCityBusRemainTime;
+  Timer? timer;
+
+  var departRemainTime = [];
+  var departArriveTime = [];
+  var cityBusRemainTime = [];
+  var cityBusArriveTime = [];
 
   @override
   void onInit() async {
@@ -15,8 +26,23 @@ class CityBusController extends GetxController {
     setStation(nearStation);
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
+
+  void setTimer(seconds, function) {
+    timer = Timer.periodic(Duration(seconds: seconds), (timer) {
+      function();
+      update();
+    });
+  }
+
   void setSelectedStation(station) {
     selectedStation = station;
+    timer?.cancel();
+    timer = null;
     update();
   }
 
@@ -41,6 +67,11 @@ class CityBusController extends GetxController {
     update();
   }
 
+  void setNextDepartCityBusRemainTime(response) {
+    nextDepartCityBusRemainTime = response;
+    update();
+  }
+
   void setDepartCityBus(response) {
     var now = DateTime.now();
     List<DateTime> departTimeList = [];
@@ -56,6 +87,70 @@ class CityBusController extends GetxController {
       }
     }
     nextDepartCityBus = departTimeList;
+    update();
+  }
+
+  void setBusRemainTimes() {
+    if (selectedStation == '해양대구본관') {
+      for (var i = 0; i < nextDepartCityBus!.length; i++) {
+        var differenceMinute =
+            nextDepartCityBus![i].difference(DateTime.now()).inMinutes;
+
+        departRemainTime.add(differenceMinute.toString());
+        departArriveTime.add(DateFormat('HH:mm').format(nextDepartCityBus![i]));
+      }
+    } else {
+      responseCityBus != null
+          ? cityBusRemainTime = [
+              responseCityBus!.min1 ?? 9999,
+              responseCityBus!.min2 ?? 9999
+            ]
+          : cityBusRemainTime = [];
+      responseCityBus != null
+          ? cityBusArriveTime = [
+              cityBusRemainTime[0] != 9999
+                  ? DateTime.now().add(Duration(minutes: cityBusRemainTime[0]))
+                  : '9999',
+              cityBusRemainTime[1] != 9999
+                  ? DateTime.now().add(Duration(minutes: cityBusRemainTime[1]))
+                  : '9999',
+            ]
+          : cityBusArriveTime = [];
+    }
+
+    if (timer == null) {
+      if (selectedStation == '해양대구본관') {
+        setTimer(30, () {
+          departRemainTime = [];
+
+          for (var i = 0; i < nextDepartCityBus!.length; i++) {
+            var differenceMinute =
+                nextDepartCityBus![i].difference(DateTime.now()).inMinutes;
+            print(differenceMinute);
+            departRemainTime.add(differenceMinute.toString());
+          }
+        });
+      } else {
+        setTimer(5, () {
+          cityBusRemainTime = [];
+
+          cityBusArriveTime.forEach((element) {
+            cityBusRemainTime.add(element != 9999
+                ? element.difference(DateTime.now()).inMinutes
+                : '9999');
+          });
+        });
+      }
+    }
+
+    selectedStation == '해양대구본관'
+        ? departRemainTime.length > 0 &&
+            int.parse(departRemainTime[0]) <= 0 &&
+            fetchSelectedStation(selectedStation)
+        : cityBusArriveTime.length > 0 &&
+            cityBusRemainTime[0] <= 0 &&
+            fetchSelectedStation(selectedStation);
+    Future.delayed(Duration(seconds: 1), () => setIsLoading(false));
     update();
   }
 }

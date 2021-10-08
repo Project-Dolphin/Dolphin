@@ -62,6 +62,7 @@ class CityBusRepository {
     Get.put(CityBusController());
     Get.find<CityBusController>()
         .setResponseCityBus(await fetchNextCityBus(bstopid));
+    Get.find<CityBusController>().setBusRemainTimes();
   }
 
   getNextDepartCityBus() async {
@@ -69,12 +70,14 @@ class CityBusRepository {
     Get.find<CityBusController>().setIsLoading(true);
     Get.find<CityBusController>()
         .setDepartCityBus(await fetchNexthDepartCityBus());
-    Get.find<CityBusController>().setIsLoading(false);
+    Get.find<CityBusController>().setBusRemainTimes();
+    // Get.find<CityBusController>().setIsLoading(false);
   }
 
   getCityBusList() async {
     Get.put(CityBusController());
     Get.find<CityBusController>()
         .setResponseCityBusList(await fetchCityBusList());
+    Get.find<CityBusController>().setBusRemainTimes();
   }
 }
