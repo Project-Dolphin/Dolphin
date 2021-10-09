@@ -37,7 +37,6 @@ class CityBus extends GetView<CityBusController> {
         child: GetBuilder<CityBusController>(
           init: CityBusController(),
           builder: (_) {
-            print(_.timer);
             return Stack(
               children: [
                 Column(
@@ -105,8 +104,11 @@ class CityBus extends GetView<CityBusController> {
                                                           _.departArriveTime
                                                                       .length >
                                                                   0
-                                                              ? _.departArriveTime[
-                                                                  0]
+                                                              ? DateFormat(
+                                                                      'HH:mm')
+                                                                  .format(
+                                                                      _.departArriveTime[
+                                                                          0])
                                                               : ' '),
                                                       SecondArrive(
                                                           _.departRemainTime
@@ -118,15 +120,17 @@ class CityBus extends GetView<CityBusController> {
                                                           _.departArriveTime
                                                                       .length >
                                                                   1
-                                                              ? _.departArriveTime[
-                                                                  1]
+                                                              ? DateFormat('HH:mm')
+                                                                  .format(
+                                                                      _.departArriveTime[
+                                                                          1])
                                                               : ' ',
                                                           _.stationList.indexOf(_
                                                               .selectedStation),
                                                           busController.getIsNotiOn(_
                                                                   .stationList
-                                                                  .indexOf(_
-                                                                      .selectedStation) +
+                                                                  .indexOf(
+                                                                      _.selectedStation) +
                                                               10)),
                                                       ThirdArrive(
                                                         _.departRemainTime
@@ -138,8 +142,11 @@ class CityBus extends GetView<CityBusController> {
                                                         _.departArriveTime
                                                                     .length >
                                                                 2
-                                                            ? _.departArriveTime[
-                                                                2]
+                                                            ? DateFormat(
+                                                                    'HH:mm')
+                                                                .format(
+                                                                    _.departArriveTime[
+                                                                        2])
                                                             : ' ',
                                                         _.stationList.indexOf(
                                                             _.selectedStation),

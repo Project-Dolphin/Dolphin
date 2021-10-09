@@ -1,7 +1,5 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'dart:async';
 import 'package:oceanview/pages/bus/widgets/cityBus.dart';
 
 class CityBusController extends GetxController {
@@ -11,14 +9,13 @@ class CityBusController extends GetxController {
   bool isLoading = true;
   CityBusData? responseCityBus = CityBusData();
   List<CityBusListData>? responseCityBusList = [CityBusListData()];
-  List<DateTime>? nextDepartCityBus;
-  List<dynamic>? nextDepartCityBusRemainTime;
+
   Timer? timer;
 
-  var departRemainTime = [];
-  var departArriveTime = [];
-  var cityBusRemainTime = [];
-  var cityBusArriveTime = [];
+  List<dynamic> departRemainTime = [];
+  List<dynamic> departArriveTime = [];
+  List<dynamic> cityBusRemainTime = [];
+  List<dynamic> cityBusArriveTime = [];
 
   @override
   void onInit() async {
@@ -67,11 +64,6 @@ class CityBusController extends GetxController {
     update();
   }
 
-  void setNextDepartCityBusRemainTime(response) {
-    nextDepartCityBusRemainTime = response;
-    update();
-  }
-
   void setDepartCityBus(response) {
     var now = DateTime.now();
     List<DateTime> departTimeList = [];
@@ -86,18 +78,17 @@ class CityBusController extends GetxController {
                 .add(DateTime(now.year, now.month, now.day, hour, minute));
       }
     }
-    nextDepartCityBus = departTimeList;
+    departArriveTime = departTimeList;
     update();
   }
 
   void setBusRemainTimes() {
     if (selectedStation == '해양대구본관') {
-      for (var i = 0; i < nextDepartCityBus!.length; i++) {
+      for (var i = 0; i < departArriveTime.length; i++) {
         var differenceMinute =
-            nextDepartCityBus![i].difference(DateTime.now()).inMinutes;
+            departArriveTime[i].difference(DateTime.now()).inMinutes;
 
         departRemainTime.add(differenceMinute.toString());
-        departArriveTime.add(DateFormat('HH:mm').format(nextDepartCityBus![i]));
       }
     } else {
       responseCityBus != null
@@ -123,15 +114,15 @@ class CityBusController extends GetxController {
         setTimer(30, () {
           departRemainTime = [];
 
-          for (var i = 0; i < nextDepartCityBus!.length; i++) {
+          for (var i = 0; i < departArriveTime.length; i++) {
             var differenceMinute =
-                nextDepartCityBus![i].difference(DateTime.now()).inMinutes;
-            print(differenceMinute);
+                departArriveTime[i].difference(DateTime.now()).inMinutes;
+
             departRemainTime.add(differenceMinute.toString());
           }
         });
       } else {
-        setTimer(5, () {
+        setTimer(30, () {
           cityBusRemainTime = [];
 
           cityBusArriveTime.forEach((element) {
