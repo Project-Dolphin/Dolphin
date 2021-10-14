@@ -12,6 +12,8 @@ class CityBusController extends GetxController {
 
   Timer? timer;
 
+  DateTime? lastFetchTime;
+
   List<dynamic> departRemainTime = [];
   List<dynamic> departArriveTime = [];
   List<dynamic> cityBusRemainTime = [];
@@ -61,6 +63,11 @@ class CityBusController extends GetxController {
 
   void setResponseCityBusList(response) {
     responseCityBusList = response;
+    update();
+  }
+
+  void setFetchTime() {
+    lastFetchTime = DateTime.now();
     update();
   }
 
