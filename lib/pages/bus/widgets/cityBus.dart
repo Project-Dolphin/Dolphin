@@ -18,7 +18,7 @@ import 'package:oceanview/services/dailyAtTimeNotification.dart';
 
 class CityBus extends GetView<CityBusController> {
   findCityBusTitle(item) {
-    return item == '주변정류장' ? Get.find<CityBusController>().nearStation : item;
+    return item == '주변정류장' ? Get.find<CityBusController>().nearStation.length > 10 ? Get.find<CityBusController>().nearStation.substring(0,7) + '...' : Get.find<CityBusController>().nearStation  : item;
   }
 
   findCityBusSubTitle(item) {
