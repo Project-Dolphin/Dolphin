@@ -17,10 +17,9 @@ class SnackCard extends StatelessWidget {
     required this.data,
   });
 
-  var menu1, menu2, menu3, menu4, menu5;
-
   @override
   Widget build(BuildContext context) {
+    var menu1, menu2, menu3, menu4, menu5;
     var idx = data!.length == 7 ? 0 : 3;
     if (data.length == 1) {
       menu1 = menu2 = menu3 = menu4 = menu5 = ['식단이 없어요'];

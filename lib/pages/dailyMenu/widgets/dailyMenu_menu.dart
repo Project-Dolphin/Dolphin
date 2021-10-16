@@ -13,7 +13,7 @@ class MealCard extends StatelessWidget {
     required this.time,
   });
 
-  List<MealData>? menu;
+  final List<MealData>? menu;
   final int type;
   final List name;
   final List time;
