@@ -3,9 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
+import 'package:package_info/package_info.dart';
 
-class AppDeveloperInfo extends StatelessWidget {
+class AppDeveloperInfo extends StatefulWidget {
   const AppDeveloperInfo({Key? key}) : super(key: key);
+
+  @override
+  _AppDeveloperInfoState createState() => _AppDeveloperInfoState();
+}
+
+class _AppDeveloperInfoState extends State<AppDeveloperInfo> {
+  PackageInfo? _packageInfo;
+  @override
+  initState() {
+    super.initState();
+    getPackageInfo();
+  }
+
+  getPackageInfo() async {
+    var packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = packageInfo;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +97,8 @@ class AppDeveloperInfo extends StatelessWidget {
                     SizedBox(
                       height: SizeConfig.sizeByHeight(6),
                     ),
-                    TextBox(
-                        '오션뷰 2.0.3', 14, FontWeight.w400, Color(0xFF353B45)),
+                    TextBox('오션뷰 ${_packageInfo?.version}', 14, FontWeight.w400,
+                        Color(0xFF353B45)),
                   ],
                 ),
               ),

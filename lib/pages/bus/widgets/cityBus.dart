@@ -18,7 +18,11 @@ import 'package:oceanview/services/dailyAtTimeNotification.dart';
 
 class CityBus extends GetView<CityBusController> {
   findCityBusTitle(item) {
-    return item == '주변정류장' ? Get.find<CityBusController>().nearStation.length > 10 ? Get.find<CityBusController>().nearStation.substring(0,7) + '...' : Get.find<CityBusController>().nearStation  : item;
+    return item == '주변정류장'
+        ? Get.find<CityBusController>().nearStation.length > 10
+            ? Get.find<CityBusController>().nearStation.substring(0, 7) + '...'
+            : Get.find<CityBusController>().nearStation
+        : item;
   }
 
   findCityBusSubTitle(item) {
@@ -349,11 +353,11 @@ class FirstArrive extends StatelessWidget {
                       remainTime == '없음'
                           ? TextBox('운행 정보가 없어요', 18, FontWeight.w500,
                               Color(0xFF353B45))
-                          : int.parse(remainTime!) >= 0
+                          : int.parse(remainTime!) > 0
                               ? TextBox('$remainTime분 후', 30, FontWeight.w700,
                                   Color(0xFF353B45))
-                              : TextBox('${int.parse(remainTime!) * -1}분 전', 30,
-                                  FontWeight.w700, Color(0xFF353B45)),
+                              : TextBox('곧 도착', 30, FontWeight.w700,
+                                  Color(0xFF353B45)),
                       TextBox(
                         '$arriveTime',
                         14,
@@ -418,11 +422,8 @@ class SecondArrive extends StatelessWidget {
                 remainTime == '없음'
                     ? TextBox(
                         '운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                    : int.parse(remainTime!) >= 0
-                        ? TextBox('$remainTime분 후', 22, FontWeight.w700,
-                            Color(0xFF353B45))
-                        : TextBox('${int.parse(remainTime!) * -1}분 전', 22,
-                            FontWeight.w700, Color(0xFF353B45)),
+                    : TextBox('$remainTime분 후', 22, FontWeight.w700,
+                        Color(0xFF353B45)),
                 arriveTime != ' '
                     ? TextBox(
                         '$arriveTime',
@@ -488,11 +489,8 @@ class ThirdArrive extends StatelessWidget {
                 remainTime == '없음'
                     ? TextBox(
                         '운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                    : int.parse(remainTime!) >= 0
-                        ? TextBox('$remainTime분 후', 18, FontWeight.w700,
-                            Color(0xFF353B45))
-                        : TextBox('${int.parse(remainTime!) * -1}분 전', 18,
-                            FontWeight.w700, Color(0xFF353B45)),
+                    : TextBox('$remainTime분 후', 18, FontWeight.w700,
+                        Color(0xFF353B45)),
                 arriveTime != ' '
                     ? Column(
                         children: [
