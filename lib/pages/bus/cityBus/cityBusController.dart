@@ -91,6 +91,7 @@ class CityBusController extends GetxController {
 
   void setBusRemainTimes() {
     if (selectedStation == '해양대구본관') {
+      departRemainTime = [];
       for (var i = 0; i < departArriveTime.length; i++) {
         var differenceMinute =
             departArriveTime[i].difference(DateTime.now()).inMinutes;
@@ -100,8 +101,8 @@ class CityBusController extends GetxController {
     } else {
       responseCityBus != null
           ? cityBusRemainTime = [
-              responseCityBus!.min1 ?? 9999,
-              responseCityBus!.min2 ?? 9999
+              responseCityBus?.min1 ?? 9999,
+              responseCityBus?.min2 ?? 9999
             ]
           : cityBusRemainTime = [];
       responseCityBus != null
@@ -121,12 +122,13 @@ class CityBusController extends GetxController {
         setTimer(30, () {
           departRemainTime = [];
 
-          for (var i = 0; i < departArriveTime.length; i++) {
-            var differenceMinute =
-                departArriveTime[i].difference(DateTime.now()).inMinutes;
-
-            departRemainTime.add(differenceMinute.toString());
-          }
+          departArriveTime.forEach((element) {
+            departRemainTime
+                .add(element.difference(DateTime.now()).inMinutes.toString());
+          });
+          departRemainTime.length > 0 &&
+              int.parse(departRemainTime[0]) <= 0 &&
+              fetchSelectedStation(selectedStation);
         });
       } else {
         setTimer(30, () {
@@ -137,17 +139,12 @@ class CityBusController extends GetxController {
                 ? element.difference(DateTime.now()).inMinutes
                 : '9999');
           });
+          cityBusArriveTime.length > 0 &&
+              cityBusRemainTime[0] <= 0 &&
+              fetchSelectedStation(selectedStation);
         });
       }
     }
-
-    selectedStation == '해양대구본관'
-        ? departRemainTime.length > 0 &&
-            int.parse(departRemainTime[0]) <= 0 &&
-            fetchSelectedStation(selectedStation)
-        : cityBusArriveTime.length > 0 &&
-            cityBusRemainTime[0] <= 0 &&
-            fetchSelectedStation(selectedStation);
     Future.delayed(Duration(seconds: 1), () => setIsLoading(false));
     update();
   }

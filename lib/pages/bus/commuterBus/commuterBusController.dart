@@ -77,9 +77,9 @@ class CommuterBusController extends GetxController {
       '봄봄카페',
       '더맛한우',
       '대연자이아파트 후문',
+      '부산항대교',
       '한라아파트',
       '동삼동 농협',
-      '부산항대교',
       '학교도착',
     ],
     [
