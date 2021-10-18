@@ -110,7 +110,6 @@ class ShuttleBusController extends GetxController {
       });
     }
 
-    Future.delayed(Duration(seconds: 1), () => setIsLoading(false));
     update();
   }
 }
