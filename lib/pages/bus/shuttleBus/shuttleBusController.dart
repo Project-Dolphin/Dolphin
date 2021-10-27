@@ -35,8 +35,8 @@ class ShuttleBusController extends GetxController {
   void setTimer(seconds, function) {
     timer = Timer.periodic(Duration(seconds: seconds), (timer) {
       function();
-      update();
     });
+    update();
   }
 
   void setSelectedStation(station) {
@@ -104,13 +104,12 @@ class ShuttleBusController extends GetxController {
           hariRemainTime.add((differenceMinute + 6).toString());
           remainTime.add(differenceMinute.toString());
         });
-        nextShuttle.length > 0 &&
-            int.parse(remainTime[0]) <= 0 &&
-            ShuttleBusRepository().getNextShuttle();
+        if (nextShuttle.length > 0 && int.parse(remainTime[0]) <= 0) {
+          ShuttleBusRepository().getNextShuttle();
+        }
       });
     }
 
-    Future.delayed(Duration(seconds: 1), () => setIsLoading(false));
     update();
   }
 }

@@ -33,6 +33,8 @@ class ShuttleBusRepository {
     Get.find<ShuttleBusController>().setIsLoading(true);
     Get.find<ShuttleBusController>().setNextShuttle(await fetchNextShuttle());
     Get.find<ShuttleBusController>().setShuttleRemainTimes();
+    await Future.delayed(Duration(seconds: 0),
+        () => Get.find<ShuttleBusController>().setIsLoading(false));
   }
 
   getShuttleList() async {

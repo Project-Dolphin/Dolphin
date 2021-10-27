@@ -126,9 +126,10 @@ class CityBusController extends GetxController {
             departRemainTime
                 .add(element.difference(DateTime.now()).inMinutes.toString());
           });
-          departRemainTime.length > 0 &&
-              int.parse(departRemainTime[0]) <= 0 &&
-              fetchSelectedStation(selectedStation);
+          if (departRemainTime.length > 0 &&
+              int.parse(departRemainTime[0]) <= 0) {
+            fetchSelectedStation(selectedStation);
+          }
         });
       } else {
         setTimer(30, () {
@@ -139,13 +140,13 @@ class CityBusController extends GetxController {
                 ? element.difference(DateTime.now()).inMinutes
                 : '9999');
           });
-          cityBusArriveTime.length > 0 &&
-              cityBusRemainTime[0] <= 0 &&
-              fetchSelectedStation(selectedStation);
+          if (cityBusArriveTime.length > 0 && cityBusRemainTime[0] <= 0) {
+            fetchSelectedStation(selectedStation);
+          }
         });
       }
     }
-    Future.delayed(Duration(seconds: 1), () => setIsLoading(false));
+
     update();
   }
 }

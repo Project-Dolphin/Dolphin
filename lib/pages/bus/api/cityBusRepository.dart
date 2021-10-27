@@ -65,6 +65,8 @@ class CityBusRepository {
         .setResponseCityBus(await fetchNextCityBus(bstopid));
     Get.find<CityBusController>().setFetchTime();
     Get.find<CityBusController>().setBusRemainTimes();
+    await Future.delayed(Duration(seconds: 0),
+        () => Get.find<CityBusController>().setIsLoading(false));
   }
 
   getNextDepartCityBus() async {
@@ -75,13 +77,15 @@ class CityBusRepository {
                 .difference(DateTime.now())
                 .inSeconds <
             -5) {
+      print('nextdepartCityBUs api call');
       Get.find<CityBusController>().setIsLoading(true);
       Get.find<CityBusController>()
           .setDepartCityBus(await fetchNexthDepartCityBus());
       Get.find<CityBusController>().setFetchTime();
       Get.find<CityBusController>().setBusRemainTimes();
 
-      // Get.find<CityBusController>().setIsLoading(false);
+      await Future.delayed(Duration(seconds: 0),
+          () => Get.find<CityBusController>().setIsLoading(false));
     }
   }
 
