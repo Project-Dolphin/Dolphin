@@ -78,9 +78,9 @@ class CommuterBus extends GetView<CommuterBusController> {
 
   setStationStatus(selectedBus) {
     if (selectedBus == '통근 버스 1호 출근') {
-      return renderStationStatus(controller.stationList_1[0], '07:25', '08:50');
+      return renderStationStatus(controller.stationList_1[0], '07:20', '08:50');
     } else if (selectedBus == '통근 버스 2호 출근') {
-      return renderStationStatus(controller.stationList_2[0], '07:58', '08:45');
+      return renderStationStatus(controller.stationList_2[0], '07:55', '08:50');
     } else if (selectedBus == '통근 버스 3호 출근') {
       return renderStationStatus(controller.stationList_3[0], '07:35', '08:50');
     } else if (selectedBus == '통근 버스 1호 퇴근') {

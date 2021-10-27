@@ -39,14 +39,22 @@ class _DailyMenupageState extends State<DailyMenupage> {
   Widget build(BuildContext context) {
     return GetBuilder<DailyMenuController>(builder: (_) {
       final List<Widget> pageList = [
-        MealCard(menu: _.societyData, type: 0, time: time, name: timeName1),
+        MealCard(
+            menu: _.societyData, type: 'floor2', time: time, name: timeName1),
         SnackCard(
             type: 1, time: timeCafeteria, name: timeName2, data: _.societyData),
         MealCard(
-            menu: _.societyData, type: 2, time: timeEmployer, name: timeName3),
-        MealCard(menu: _.dormData, type: 3, time: timeDorm, name: timeName2),
+            menu: _.societyData,
+            type: 'staff',
+            time: timeEmployer,
+            name: timeName3),
         MealCard(
-            menu: _.navyData, type: 4, time: timeMariDorm, name: timeName2),
+            menu: _.dormData, type: 'dorm', time: timeDorm, name: timeName2),
+        MealCard(
+            menu: _.navyData,
+            type: 'navy',
+            time: timeMariDorm,
+            name: timeName2),
       ];
       return Scaffold(
         backgroundColor: Colors.transparent,

@@ -17,6 +17,12 @@ class DietContainer extends GetView<DailyMenuController> {
         child: GetBuilder<DailyMenuController>(
             init: DailyMenuController(),
             builder: (_) {
+              var morningMenu = '식단이 없어요';
+              _.societyData?.forEach((element) {
+                if (element.type == 4) {
+                  morningMenu = element.value![0];
+                }
+              });
               return _.isLoading
                   ? Loading()
                   : Row(
@@ -54,15 +60,15 @@ class DietContainer extends GetView<DailyMenuController> {
                                         TextBox('식단이 없어요', 14, FontWeight.w700,
                                             Color(0xFF353B45))
                                       ]
-                                    : _.societyData![1].value![0]
-                                        .split(' + ')
+                                    : morningMenu
+                                        .split('+')
                                         .map((e) => Padding(
                                               padding: EdgeInsets.only(
                                                   bottom:
                                                       SizeConfig.sizeByHeight(
                                                           5)),
                                               child: Text(
-                                                e,
+                                                e.trim(),
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
                                                     color: Color(0xFF353B45),

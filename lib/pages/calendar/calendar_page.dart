@@ -6,7 +6,6 @@ import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/pages/calendar/Calendar_repository.dart';
 import 'package:oceanview/common/titlebox/iconSet.dart';
-import 'package:oceanview/pages/calendar/calendar_widget.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:url_launcher/url_launcher.dart';

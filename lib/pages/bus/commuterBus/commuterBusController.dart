@@ -17,7 +17,6 @@ class CommuterBusController extends GetxController {
     [
       '풍년혼수마트',
       '롯데캐슬 상가 앞',
-      '장전동 기아자동차',
       '장전동 놀이터',
       '온천장 홈플러스',
       '롯데백화점 정류장',
@@ -52,7 +51,6 @@ class CommuterBusController extends GetxController {
       '부산진역 7번출구',
       '부산역 3번출구',
       '영도대교 대궁한정식',
-      '관사',
       '학교도착',
     ],
     [
@@ -79,9 +77,9 @@ class CommuterBusController extends GetxController {
       '봄봄카페',
       '더맛한우',
       '대연자이아파트 후문',
+      '부산항대교',
       '한라아파트',
       '동삼동 농협',
-      '부산항대교',
       '학교도착',
     ],
     [
