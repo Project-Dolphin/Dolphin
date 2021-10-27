@@ -77,6 +77,7 @@ class CityBusRepository {
                 .difference(DateTime.now())
                 .inSeconds <
             -5) {
+      print('nextdepartCityBUs api call');
       Get.find<CityBusController>().setIsLoading(true);
       Get.find<CityBusController>()
           .setDepartCityBus(await fetchNexthDepartCityBus());
