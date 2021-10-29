@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:intl/intl.dart';
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
-import 'package:oceanview/pages/calendar/calendar_widget.dart';
 
 class CalendarSearch extends StatefulWidget {
   @override

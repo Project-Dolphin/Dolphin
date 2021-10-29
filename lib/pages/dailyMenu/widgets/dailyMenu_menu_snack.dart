@@ -17,20 +17,39 @@ class SnackCard extends StatelessWidget {
     required this.data,
   });
 
-  var menu1, menu2, menu3, menu4, menu5;
-
   @override
   Widget build(BuildContext context) {
-    var idx = data!.length == 7 ? 0 : 3;
-    if (data.length == 1) {
-      menu1 = menu2 = menu3 = menu4 = menu5 = ['식단이 없어요'];
-    } else {
-      menu1 = data[0 + idx].value;
-      menu2 = data[1 + idx].value;
-      menu3 = data[2 + idx].value;
-      menu4 = data[3 + idx].value;
-      menu5 = data[4 + idx].value;
-    }
+    var western, morning, ramen, flourBased, riceBowl;
+    var idx = data!.length == 10 ? 0 : 3;
+
+    western = morning = ramen = flourBased = riceBowl = ['식단이 없어요'];
+
+    data.forEach((element) {
+      switch (element.type - idx) {
+        case 3:
+          western = element.value;
+          break;
+        case 4:
+          morning = element.value;
+          break;
+        case 5:
+          ramen = element.value;
+          break;
+        case 6:
+          flourBased = element.value;
+          break;
+        case 7:
+          riceBowl = element.value;
+          break;
+        default:
+          break;
+      }
+    });
+    // western = data[0 + idx].value;
+    // morning = data[1 + idx].value;
+    // ramen = data[2 + idx].value;
+    // flourBased = data[3 + idx].value;
+    // riceBowl = data[4 + idx].value;
 
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
@@ -93,7 +112,7 @@ class SnackCard extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              ...menu2.map((e) => Container(
+                              ...morning.map((e) => Container(
                                     margin: EdgeInsets.only(
                                         top: SizeConfig.sizeByHeight(13)),
                                     width: SizeConfig.sizeByWidth(180.0),
@@ -203,7 +222,7 @@ class SnackCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            ...menu1.map((e) => Container(
+                            ...western.map((e) => Container(
                                   margin: EdgeInsets.only(
                                       bottom: SizeConfig.sizeByHeight(10.0)),
                                   width: SizeConfig.sizeByWidth(120.0),
@@ -247,7 +266,7 @@ class SnackCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            ...menu3.map((e) => Container(
+                            ...ramen.map((e) => Container(
                                   margin: EdgeInsets.only(
                                       bottom: SizeConfig.sizeByHeight(10.0)),
                                   width: SizeConfig.sizeByWidth(120.0),
@@ -300,7 +319,7 @@ class SnackCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              ...menu4.map((e) => Container(
+                              ...flourBased.map((e) => Container(
                                     margin: EdgeInsets.only(
                                         bottom: SizeConfig.sizeByHeight(10.0)),
                                     width: SizeConfig.sizeByWidth(120.0),
@@ -344,7 +363,7 @@ class SnackCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              ...menu5.map((e) => Container(
+                              ...riceBowl.map((e) => Container(
                                     margin: EdgeInsets.only(
                                         bottom: SizeConfig.sizeByHeight(10.0)),
                                     width: SizeConfig.sizeByWidth(120.0),

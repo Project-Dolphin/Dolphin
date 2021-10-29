@@ -14,7 +14,7 @@ class MealData {
   int? type;
   List<String>? value;
 
-  MealData({this.type = 99, this.value = const ["식단 없음"]});
+  MealData({this.type = 99, this.value = const ["식단이 없어요"]});
 
   MealData.fromJson(Map<String, dynamic> json) {
     type = json['type'];
