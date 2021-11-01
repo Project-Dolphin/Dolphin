@@ -84,9 +84,27 @@ class MealCard extends StatelessWidget {
         }
       case 'navy':
         {
-          menu1 = menu![0];
-          menu2 = menu![0];
-          menu3 = menu![0];
+          menu?.forEach((element) {
+            switch (element.type) {
+              case 'morning':
+                menu1 = element.value![0] == '-'
+                    ? MealData(value: emptyMenuText)
+                    : element;
+                break;
+              case 'lunch':
+                menu2 = element.value![0] == '-'
+                    ? MealData(value: emptyMenuText)
+                    : element;
+                break;
+              case 'dinner':
+                menu3 = element.value![0] == '-'
+                    ? MealData(value: emptyMenuText)
+                    : element;
+                break;
+              default:
+                break;
+            }
+          });
 
           break;
         }
@@ -100,7 +118,7 @@ class MealCard extends StatelessWidget {
 
     return GlassMorphism(
         width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-        height: SizeConfig.screenHeight * 0.9,
+        height: SizeConfig.screenHeight,
         widget: Container(
             margin: EdgeInsets.all(
               SizeConfig.sizeByWidth(12.0),

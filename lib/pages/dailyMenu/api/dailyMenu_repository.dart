@@ -24,6 +24,26 @@ class DailyMenuRepository {
     }
   }
 
+  Future<List<MealData>> navalMealParse(response) async {
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(utf8.decode(response.bodyBytes));
+
+      if (responseJson['data']?.length == 52) {
+        return [MealData()];
+      } else {
+        final data = responseJson['data'] as Map;
+        final List<MealData> result = [];
+        for (final name in data.keys) {
+          result.add(MealData(type: name, value: data[name]));
+        }
+
+        return result;
+      }
+    } else {
+      return [MealData()];
+    }
+  }
+
   Future<List<MealData>> mealDormParse(response) async {
     final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
@@ -46,7 +66,7 @@ class DailyMenuRepository {
   }
 
   Future fetchNavy() async {
-    return mealParse(await FetchAPI().fetchNavyTable());
+    return navalMealParse(await FetchAPI().fetchNavyTable());
   }
 
   Future fetchSociety() async {

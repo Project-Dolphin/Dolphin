@@ -219,7 +219,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         enlargeCenterPage: false,
-                        height: SizeConfig.screenHeight,
+                        height: SizeConfig.screenHeight * 1.1,
                         onPageChanged: (index, reason) {
                           _.setStat(index);
                           setState(

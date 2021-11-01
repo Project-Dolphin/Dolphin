@@ -68,6 +68,7 @@ class _MealContentColumn extends State<MealContentColumn> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: widget.mealMenu.length == 1
               ? [
                   Container(
@@ -87,6 +88,7 @@ class _MealContentColumn extends State<MealContentColumn> {
                 ]
               : [
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ...widget.mealMenu
                           .sublist(0, widget.mealMenu.length ~/ 2)
@@ -109,6 +111,7 @@ class _MealContentColumn extends State<MealContentColumn> {
                     ],
                   ),
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ...widget.mealMenu
                           .sublist(widget.mealMenu.length ~/ 2)

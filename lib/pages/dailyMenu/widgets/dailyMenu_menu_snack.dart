@@ -53,7 +53,7 @@ class SnackCard extends StatelessWidget {
 
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-      height: SizeConfig.screenHeight * 0.9,
+      height: SizeConfig.screenHeight,
       widget: Container(
         margin: EdgeInsets.all(
           SizeConfig.sizeByWidth(12.0),
