@@ -189,14 +189,17 @@ class _DashboardPageState extends State<DashboardPage> {
 
   _bottomNavigationBarItem({Widget? icon, String? label}) {
     return BottomNavigationBarItem(
-      icon: Container(
-        child: Center(
-          child: Container(
-              margin: EdgeInsets.only(
-                top: SizeConfig.sizeByHeight(5),
-                bottom: SizeConfig.sizeByHeight(2),
-              ),
-              child: icon!),
+      icon: Opacity(
+        opacity: 0.7,
+        child: Container(
+          child: Center(
+            child: Container(
+                margin: EdgeInsets.only(
+                  top: SizeConfig.sizeByHeight(5),
+                  bottom: SizeConfig.sizeByHeight(2),
+                ),
+                child: icon!),
+          ),
         ),
       ),
       activeIcon: Container(
@@ -223,7 +226,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           opacity: 0.5,
                           child: ColorFiltered(
                             colorFilter: ColorFilter.mode(
-                                Color(0xFFB4D5F1), BlendMode.srcATop),
+                                Color(0xFFb7b7b7), BlendMode.srcATop),
                             child: icon,
                           ),
                         ),
@@ -264,8 +267,8 @@ class _DashboardPageState extends State<DashboardPage> {
         child: Container(
           height:
               foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
-                  ? SizeConfig.blockSizeVertical * 12
-                  : SizeConfig.blockSizeVertical * 10,
+                  ? SizeConfig.blockSizeVertical * 11.5
+                  : SizeConfig.blockSizeVertical * 9.5,
           child: BottomNavigationBar(
             unselectedItemColor: Color(0xFF939393),
             selectedItemColor: Color(0xFF0081FF),
@@ -273,10 +276,12 @@ class _DashboardPageState extends State<DashboardPage> {
             currentIndex: controller.tabIndex,
             showSelectedLabels: true,
             showUnselectedLabels: true,
-            iconSize: SizeConfig.sizeByHeight(32),
-            selectedFontSize: SizeConfig.sizeByHeight(11),
-            unselectedFontSize: SizeConfig.sizeByHeight(11),
-            selectedLabelStyle: TextStyle(color: Color(0xFF0081FF)),
+            iconSize: SizeConfig.sizeByHeight(30),
+            selectedFontSize: SizeConfig.sizeByHeight(10),
+            unselectedFontSize: SizeConfig.sizeByHeight(10),
+            selectedLabelStyle: TextStyle(
+                color: Color(0xFF0081FF), fontWeight: FontWeight.w500),
+            unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500),
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white.withOpacity(0.8),
             elevation: 0,
@@ -284,8 +289,8 @@ class _DashboardPageState extends State<DashboardPage> {
               _bottomNavigationBarItem(
                 icon: Image.asset(
                   'assets/images/bottomNavigationIcon/house.fill.png',
-                  width: SizeConfig.sizeByHeight(32),
-                  height: SizeConfig.sizeByHeight(32),
+                  width: SizeConfig.sizeByHeight(30),
+                  height: SizeConfig.sizeByHeight(30),
                 ),
                 label: '홈',
               ),
@@ -294,8 +299,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   padding: EdgeInsets.only(right: SizeConfig.sizeByHeight(2)),
                   child: Image.asset(
                     'assets/images/bottomNavigationIcon/bus.png',
-                    width: SizeConfig.sizeByHeight(32),
-                    height: SizeConfig.sizeByHeight(32),
+                    width: SizeConfig.sizeByHeight(30),
+                    height: SizeConfig.sizeByHeight(30),
                   ),
                 ),
                 label: '버스',
@@ -305,8 +310,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   padding: EdgeInsets.only(right: SizeConfig.sizeByHeight(2)),
                   child: Image.asset(
                     'assets/images/bottomNavigationIcon/fork.knife.png',
-                    width: SizeConfig.sizeByHeight(32),
-                    height: SizeConfig.sizeByHeight(32),
+                    width: SizeConfig.sizeByHeight(30),
+                    height: SizeConfig.sizeByHeight(30),
                   ),
                 ),
                 label: '식단',
@@ -314,16 +319,16 @@ class _DashboardPageState extends State<DashboardPage> {
               _bottomNavigationBarItem(
                 icon: Image.asset(
                   'assets/images/bottomNavigationIcon/calendar.png',
-                  width: SizeConfig.sizeByHeight(32),
-                  height: SizeConfig.sizeByHeight(32),
+                  width: SizeConfig.sizeByHeight(30),
+                  height: SizeConfig.sizeByHeight(30),
                 ),
                 label: '학사일정',
               ),
               _bottomNavigationBarItem(
                 icon: Image.asset(
                   'assets/images/bottomNavigationIcon/ellipsis.png',
-                  width: SizeConfig.sizeByHeight(32),
-                  height: SizeConfig.sizeByHeight(32),
+                  width: SizeConfig.sizeByHeight(30),
+                  height: SizeConfig.sizeByHeight(30),
                 ),
                 label: '더보기',
               ),

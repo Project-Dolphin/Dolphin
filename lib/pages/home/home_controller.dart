@@ -12,6 +12,10 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getTodayDate();
+  }
+
+  void getTodayDate() {
     setStat(getWeekDay());
     setDate(getDate());
   }

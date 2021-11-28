@@ -123,6 +123,11 @@ class MyApp extends StatelessWidget {
         } else {
           // Loading is done, return the app:
           return GetMaterialApp(
+            builder: (context, child) {
+              return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: child!);
+            },
             initialRoute: AppRoutes.DASHBOARD,
             getPages: AppPages.list,
             debugShowCheckedModeBanner: false,

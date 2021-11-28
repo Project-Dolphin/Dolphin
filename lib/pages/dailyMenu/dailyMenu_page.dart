@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/loading/loading.dart';
+import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/common/titlebox/twolineTitle.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
@@ -50,11 +52,12 @@ class _DailyMenupageState extends State<DailyMenupage> {
             name: timeName3),
         MealCard(
             menu: _.dormData, type: 'dorm', time: timeDorm, name: timeName2),
-        MealCard(
-            menu: _.navyData,
-            type: 'navy',
-            time: timeMariDorm,
-            name: timeName2),
+        GlassMorphism(
+          width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
+          height: SizeConfig.sizeByHeight(100),
+          widget: TextBox(
+              '이번주 식단 보기를 눌러주세요', 16, FontWeight.w700, Color(0xff353b45)),
+        ),
       ];
       return Scaffold(
         backgroundColor: Colors.transparent,
@@ -109,7 +112,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                             style: TextStyle(
                                 color: _current == entry.key
                                     ? Colors.white
-                                    : Color(0xFF919191),
+                                    : Color(0xFFb7b7b7),
                                 fontSize: SizeConfig.sizeByWidth(16),
                                 fontWeight: FontWeight.w700),
                           )),

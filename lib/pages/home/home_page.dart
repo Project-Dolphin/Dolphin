@@ -26,6 +26,7 @@ Future<Null> onRefresh() async {
     DailyMenuRepository().getNavy(),
   ];
   await Future.wait(initApiList);
+  HomeController().getTodayDate();
 }
 
 class HomePage extends GetView<HomeController> {
