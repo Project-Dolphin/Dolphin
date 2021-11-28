@@ -67,7 +67,7 @@ class _DropdownState extends State<Dropdown> {
                                   ? widget.findTitle!(widget.selectedItem) ??
                                       widget.selectedItem
                                   : widget.selectedItem,
-                              16,
+                              16 * 0.9,
                               FontWeight.w700,
                               Color(0xFF353B45)),
                           widget.findSubTitle != null
@@ -82,8 +82,7 @@ class _DropdownState extends State<Dropdown> {
                                               widget.selectedItem),
                                           style: TextStyle(
                                             color: Color(0xFF4BA6FF),
-                                            fontSize:
-                                                SizeConfig.sizeByHeight(14),
+                                            fontSize: 14 * 0.9,
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
@@ -167,8 +166,7 @@ class _DropdownState extends State<Dropdown> {
                                             color: widget.selectedItem == item
                                                 ? Colors.white
                                                 : Color(0xFF353B45),
-                                            fontSize:
-                                                SizeConfig.sizeByHeight(16),
+                                            fontSize: 16 * 0.9,
                                             fontWeight:
                                                 widget.selectedItem == item
                                                     ? FontWeight.w700
@@ -193,8 +191,7 @@ class _DropdownState extends State<Dropdown> {
                                                                 ? Colors.white
                                                                 : Color(
                                                                     0xFF4BA6FF),
-                                                        fontSize: SizeConfig
-                                                            .sizeByHeight(14),
+                                                        fontSize: 14 * 0.9,
                                                         fontWeight:
                                                             FontWeight.w300,
                                                       ),

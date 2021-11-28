@@ -11,8 +11,8 @@ class MenuData {
 }
 
 class MealData {
-  int? type;
-  List<String>? value;
+  dynamic type;
+  List<dynamic>? value;
 
   MealData({this.type = 99, this.value = const ["식단이 없어요"]});
 

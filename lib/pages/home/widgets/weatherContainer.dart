@@ -53,22 +53,36 @@ class WeatherContainer extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          TextBox(
-                                              _.currentWeather!.temparature!,
-                                              42,
-                                              FontWeight.w700,
-                                              Colors.white),
-                                          TextBox(
-                                            _.currentWeather!.status! == '맑은'
-                                                ? '맑음'
-                                                : _.currentWeather!.status! ==
-                                                        '아주 미세한 방울로 내리는 가벼운 비'
-                                                    ? '가벼운 비'
-                                                    : _.currentWeather!.status!,
-                                            16,
-                                            FontWeight.w400,
-                                            Colors.white,
-                                          ),
+                                          Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                TextBox(
+                                                    _.currentWeather!
+                                                        .temparature!,
+                                                    42,
+                                                    FontWeight.w700,
+                                                    Colors.white),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: SizeConfig
+                                                            .sizeByHeight(5)),
+                                                    child: TextBox(
+                                                      _.currentWeather!
+                                                                  .status! ==
+                                                              '맑은'
+                                                          ? '맑음'
+                                                          : _.currentWeather!
+                                                                      .status! ==
+                                                                  '아주 미세한 방울로 내리는 가벼운 비'
+                                                              ? '가벼운 비'
+                                                              : _.currentWeather!
+                                                                  .status!,
+                                                      16,
+                                                      FontWeight.w400,
+                                                      Colors.white,
+                                                    ))
+                                              ]),
                                           SizedBox(
                                             height: SizeConfig.sizeByHeight(12),
                                           )
