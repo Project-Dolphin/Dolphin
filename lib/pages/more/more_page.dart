@@ -99,6 +99,7 @@ Widget renderContentsBlock(String title, List<Widget> children) {
 
 Widget renderContent(String iconPath, String title) {
   return Container(
+    color: Colors.transparent,
     width: double.infinity,
     margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(20)),
     padding: EdgeInsets.symmetric(vertical: SizeConfig.sizeByHeight(6)),

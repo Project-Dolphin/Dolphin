@@ -151,7 +151,7 @@ class _CalendarState extends State<Calendar> {
                 top: SizeConfig.sizeByHeight(40),
                 child: GlassMorphism(
                   width: SizeConfig.sizeByWidth(290),
-                  height: SizeConfig.sizeByHeight(367),
+                  height: SizeConfig.sizeByHeight(330),
                   widget: Container(
                       child: Column(
                     children: [
@@ -262,7 +262,7 @@ class _CalendarState extends State<Calendar> {
                   )),
                 )),
             Container(
-              margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(420)),
+              margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(390)),
               child: ValueListenableBuilder<List<Event>>(
                 valueListenable: _selectedEvents,
                 builder: (context, value, _) {

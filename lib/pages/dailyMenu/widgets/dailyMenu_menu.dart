@@ -77,13 +77,6 @@ class MealCard extends StatelessWidget {
         }
       case 'dorm':
         {
-          menu1 = menu![0];
-          menu2 = menu![0];
-          menu3 = menu![0];
-          break;
-        }
-      case 'navy':
-        {
           menu?.forEach((element) {
             switch (element.type) {
               case 'morning':

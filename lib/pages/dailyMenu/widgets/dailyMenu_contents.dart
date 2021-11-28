@@ -93,7 +93,7 @@ class _MealContentColumn extends State<MealContentColumn> {
                           .sublist(0, widget.mealMenu.length ~/ 2)
                           .map(
                             (e) => Container(
-                              width: SizeConfig.sizeByWidth(100),
+                              width: SizeConfig.sizeByWidth(110),
                               margin: EdgeInsets.only(
                                 bottom: SizeConfig.sizeByHeight(16),
                               ),
@@ -115,7 +115,7 @@ class _MealContentColumn extends State<MealContentColumn> {
                           .sublist(widget.mealMenu.length ~/ 2)
                           .map(
                             (e) => Container(
-                              width: SizeConfig.sizeByWidth(100),
+                              width: SizeConfig.sizeByWidth(110),
                               margin: EdgeInsets.only(
                                 right: SizeConfig.sizeByWidth(10),
                                 bottom: SizeConfig.sizeByHeight(16),
