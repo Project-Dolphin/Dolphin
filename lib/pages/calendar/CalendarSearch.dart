@@ -59,7 +59,8 @@ class _CalendarSearchState extends State<CalendarSearch> {
                     GestureDetector(
                       onTap: () => Get.back(),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        padding:
+                            EdgeInsets.only(left: SizeConfig.sizeByHeight(10)),
                         child: Icon(
                           Icons.arrow_back_ios_new,
                           size: 24,

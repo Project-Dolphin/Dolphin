@@ -60,7 +60,7 @@ class CityBus extends GetView<CityBusController> {
                       height: SizeConfig.sizeByHeight(93),
                     ),
                     Container(
-                      height: SizeConfig.sizeByHeight(350),
+                      height: SizeConfig.sizeByHeight(355),
                       child: _.isLoading
                           ? Loading()
                           : Stack(
@@ -235,7 +235,7 @@ class CityBus extends GetView<CityBusController> {
                                               children: [
                                                 TextBox(
                                                     '버스위치보기',
-                                                    12,
+                                                    13,
                                                     FontWeight.w500,
                                                     Color(0xFF353B45)),
                                                 Icon(

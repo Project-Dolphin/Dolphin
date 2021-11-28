@@ -23,9 +23,10 @@ Future<Null> onRefresh() async {
     EventRespository().getLatestEventList(),
     WeatherRepository().getCurrentWeather(),
     DailyMenuRepository().getSociety(),
-    DailyMenuRepository().getNavy(),
+    DailyMenuRepository().getDorm(),
   ];
   await Future.wait(initApiList);
+  HomeController().getTodayDate();
 }
 
 class HomePage extends GetView<HomeController> {

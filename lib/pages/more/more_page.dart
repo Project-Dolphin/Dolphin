@@ -89,7 +89,8 @@ Widget renderContentsBlock(String title, List<Widget> children) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextBox(title, 20, FontWeight.w700, Color(0xFF353B45)),
+        TextBox(title, SizeConfig.sizeByHeight(20), FontWeight.w700,
+            Color(0xFF353B45)),
         ...children
       ],
     ),
@@ -98,7 +99,10 @@ Widget renderContentsBlock(String title, List<Widget> children) {
 
 Widget renderContent(String iconPath, String title) {
   return Container(
+    color: Colors.transparent,
+    width: double.infinity,
     margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(20)),
+    padding: EdgeInsets.symmetric(vertical: SizeConfig.sizeByHeight(6)),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -110,7 +114,8 @@ Widget renderContent(String iconPath, String title) {
         SizedBox(
           width: SizeConfig.sizeByWidth(10),
         ),
-        TextBox(title, 16, FontWeight.w600, Color(0xFF353B45))
+        TextBox(title, SizeConfig.sizeByHeight(16), FontWeight.w600,
+            Color(0xFF353B45))
       ],
     ),
   );
