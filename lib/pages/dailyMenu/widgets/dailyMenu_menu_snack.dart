@@ -53,7 +53,7 @@ class SnackCard extends StatelessWidget {
 
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-      height: SizeConfig.screenHeight * 0.9,
+      height: SizeConfig.screenHeight,
       widget: Container(
         margin: EdgeInsets.all(
           SizeConfig.sizeByWidth(12.0),
@@ -97,36 +97,27 @@ class SnackCard extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        bottom: SizeConfig.sizeByHeight(5.0),
+                        bottom: SizeConfig.sizeByHeight(10.0),
                       ),
                       child: Image(
                         height: SizeConfig.blockSizeHorizontal,
                         image: AssetImage('assets/images/mealPage/divider.png'),
                       ),
                     ),
-                    Row(
+                    Column(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            bottom: SizeConfig.sizeByHeight(7.0),
-                          ),
-                          child: Column(
-                            children: [
-                              ...morning.map((e) => Container(
-                                    margin: EdgeInsets.only(
-                                        top: SizeConfig.sizeByHeight(13)),
-                                    width: SizeConfig.sizeByWidth(180.0),
-                                    child: Text(
-                                      '$e',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ))
-                            ],
-                          ),
-                        ),
+                        ...morning.map((e) => Container(
+                              alignment: Alignment.centerLeft,
+                              margin: EdgeInsets.only(
+                                  bottom: SizeConfig.sizeByHeight(13)),
+                              child: Text(
+                                '$e ',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ))
                       ],
                     ),
                   ],
@@ -229,7 +220,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     '$e',
                                     style: TextStyle(
-                                      fontSize: 15.0,
+                                      fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -273,7 +264,7 @@ class SnackCard extends StatelessWidget {
                                   child: Text(
                                     '$e',
                                     style: TextStyle(
-                                      fontSize: 15.0,
+                                      fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -326,7 +317,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       '$e',
                                       style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -370,7 +361,7 @@ class SnackCard extends StatelessWidget {
                                     child: Text(
                                       '$e',
                                       style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),

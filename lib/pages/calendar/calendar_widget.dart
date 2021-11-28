@@ -151,7 +151,7 @@ class _CalendarState extends State<Calendar> {
                 top: SizeConfig.sizeByHeight(40),
                 child: GlassMorphism(
                   width: SizeConfig.sizeByWidth(290),
-                  height: SizeConfig.sizeByHeight(367),
+                  height: SizeConfig.sizeByHeight(330),
                   widget: Container(
                       child: Column(
                     children: [
@@ -262,7 +262,7 @@ class _CalendarState extends State<Calendar> {
                   )),
                 )),
             Container(
-              margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(420)),
+              margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(390)),
               child: ValueListenableBuilder<List<Event>>(
                 valueListenable: _selectedEvents,
                 builder: (context, value, _) {
@@ -271,25 +271,52 @@ class _CalendarState extends State<Calendar> {
                     itemBuilder: (context, index) {
                       return Container(
                         child: ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: 0, vertical: -4),
-                          onTap: () => {},
-                          leading: Container(
-                            width: 4,
-                            decoration: BoxDecoration(
-                              color: Color(0xff0081ff),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          title: Transform.translate(
-                            offset: Offset(-36, 0),
-                            child: Text(
-                              '${value[index]}',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                        ),
+                            visualDensity:
+                                VisualDensity(horizontal: 0, vertical: -4),
+                            onTap: () => {},
+                            // leading: Container(
+                            //   width: 4,
+                            //   decoration: BoxDecoration(
+                            //     color: Color(0xff0081ff),
+                            //     shape: BoxShape.circle,
+                            //   ),
+                            // ),
+                            title: Transform.translate(
+                                offset: Offset(-10, 0),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height:
+                                            16 * SizeConfig.sizeByHeight(1.6),
+                                        child: Center(
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                top: SizeConfig.sizeByHeight(3),
+                                                right: SizeConfig.sizeByHeight(
+                                                    12)),
+                                            height: 5,
+                                            width: 5,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xff0081ff),
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        '${value[index]}',
+                                        softWrap: true,
+                                        style: TextStyle(
+                                            color: Color(0xff353b45),
+                                            height:
+                                                SizeConfig.sizeByHeight(1.6),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700),
+                                      ))
+                                    ]))),
                       );
                     },
                   );

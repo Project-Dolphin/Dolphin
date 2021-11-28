@@ -86,11 +86,11 @@ class CalendarPage extends GetView<CalendarController> {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              TextBox('전체일정 보기', 12, FontWeight.w500,
+                              TextBox('전체일정 보기', 13, FontWeight.w500,
                                   Color(0xFF353B45)),
                               Icon(
                                 Icons.arrow_forward_ios_rounded,
-                                size: SizeConfig.sizeByHeight(12),
+                                size: SizeConfig.sizeByHeight(13),
                                 color: Color(0xFF353B45),
                               )
                             ],
