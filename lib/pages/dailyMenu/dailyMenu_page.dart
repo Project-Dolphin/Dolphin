@@ -11,6 +11,7 @@ import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/pages/dailyMenu/widgets/dailyMenu_header.dart';
+import 'package:oceanview/services/urlUtils.dart';
 
 import 'widgets/dailyMenu_menu.dart';
 import 'widgets/dailyMenu_menu_snack.dart';
@@ -52,11 +53,14 @@ class _DailyMenupageState extends State<DailyMenupage> {
             name: timeName3),
         MealCard(
             menu: _.dormData, type: 'dorm', time: timeDorm, name: timeName2),
-        GlassMorphism(
-          width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-          height: SizeConfig.sizeByHeight(100),
-          widget: TextBox(
-              '이번주 식단 보기를 눌러주세요', 16, FontWeight.w700, Color(0xff353b45)),
+        InkWell(
+          onTap: () => UrlUtils.launchURL(menuSites[4]),
+          child: GlassMorphism(
+            width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
+            height: SizeConfig.sizeByHeight(100),
+            widget:
+                TextBox('여기를 눌러주세요', 16, FontWeight.w700, Color(0xff353b45)),
+          ),
         ),
       ];
       return Scaffold(

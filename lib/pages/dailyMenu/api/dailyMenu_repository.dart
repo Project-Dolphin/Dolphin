@@ -32,7 +32,6 @@ class DailyMenuRepository {
         return [MealData()];
       } else {
         final data = responseJson['data'] as Map;
-        print(data);
         final List<MealData> result = [];
         for (final name in data.keys) {
           result.add(MealData(type: name, value: data[name]));
