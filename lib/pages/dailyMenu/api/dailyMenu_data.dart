@@ -18,7 +18,7 @@ class MealData {
 
   MealData.fromJson(Map<String, dynamic> json) {
     type = json['type'];
-    value = json['value'].split('\n');
+    value = json['menus'];
   }
 
   Map<String, dynamic> toJson() {

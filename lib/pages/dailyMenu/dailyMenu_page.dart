@@ -11,6 +11,7 @@ import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/pages/dailyMenu/widgets/dailyMenu_header.dart';
+import 'package:oceanview/services/urlUtils.dart';
 
 import 'widgets/dailyMenu_menu.dart';
 import 'widgets/dailyMenu_menu_snack.dart';
@@ -42,21 +43,30 @@ class _DailyMenupageState extends State<DailyMenupage> {
     return GetBuilder<DailyMenuController>(builder: (_) {
       final List<Widget> pageList = [
         MealCard(
-            menu: _.societyData, type: 'floor2', time: time, name: timeName1),
+            menu: _.societyData?['student'],
+            type: 'student',
+            time: time,
+            name: timeName1),
         SnackCard(
-            type: 1, time: timeCafeteria, name: timeName2, data: _.societyData),
+            type: 1,
+            time: timeCafeteria,
+            name: timeName2,
+            data: _.societyData?['snack']),
         MealCard(
-            menu: _.societyData,
+            menu: _.societyData?['staff'],
             type: 'staff',
             time: timeEmployer,
             name: timeName3),
         MealCard(
             menu: _.dormData, type: 'dorm', time: timeDorm, name: timeName2),
-        GlassMorphism(
-          width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-          height: SizeConfig.sizeByHeight(100),
-          widget: TextBox(
-              '이번주 식단 보기를 눌러주세요', 16, FontWeight.w700, Color(0xff353b45)),
+        InkWell(
+          onTap: () => UrlUtils.launchURL(menuSites[4]),
+          child: GlassMorphism(
+            width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
+            height: SizeConfig.sizeByHeight(100),
+            widget:
+                TextBox('여기를 눌러주세요', 16, FontWeight.w700, Color(0xff353b45)),
+          ),
         ),
       ];
       return Scaffold(

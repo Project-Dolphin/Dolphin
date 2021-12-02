@@ -6,17 +6,17 @@ import 'package:oceanview/pages/dailyMenu/api/dailyMenu_data.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 
 class DailyMenuRepository {
-  Future<List<MealData>> mealParse(response) async {
+  Future<dynamic> mealParse(response) async {
     if (response.statusCode == 200) {
       final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
       if (responseJson['data']?.length == 52) {
         return [MealData()];
       } else {
-        final List<MealData> result = [
-          ...responseJson['data'].map((e) => MealData.fromJson(e))
-        ];
-
+        var result = {};
+        responseJson['data'].forEach((key, value) {
+          result[key] = [...value.map((e) => MealData.fromJson(e))];
+        });
         return result;
       }
     } else {
@@ -32,7 +32,6 @@ class DailyMenuRepository {
         return [MealData()];
       } else {
         final data = responseJson['data'] as Map;
-        print(data);
         final List<MealData> result = [];
         for (final name in data.keys) {
           result.add(MealData(type: name, value: data[name]));

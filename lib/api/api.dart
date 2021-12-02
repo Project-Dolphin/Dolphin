@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 // const BASE_URL = 'pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com';
 
 const BASE_URL = 'x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com';
+const DEV_URL = 'pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com';
 
 const PATH = const {
   'CALENDAR': '/calendar',
@@ -17,13 +18,24 @@ const PATH = const {
   'WEATHER': '/weather/now',
   'MEAL': '/diet/society/today',
   'MEAL2': '/diet/naval/today',
-  'MEAL3': '/diet/dorm/today'
+  'MEAL3': '/diet/dorm/today',
+  'DEV_MEAL': '/diet/v2/society/today'
 };
 
 class FetchAPI {
   Future fetchData(path, {queryParameters}) async {
     try {
       var url = Uri.https(BASE_URL, '/prod$path', queryParameters);
+      var response = await http.get(url);
+      return response;
+    } catch (error) {
+      print('$error');
+    }
+  }
+
+  Future fetchDevData(path, {queryParameters}) async {
+    try {
+      var url = Uri.https(DEV_URL, '/dev$path', queryParameters);
       var response = await http.get(url);
       return response;
     } catch (error) {
@@ -82,7 +94,7 @@ class FetchAPI {
   }
 
   Future fetchSocietyTable() async {
-    var response = await fetchData(PATH['MEAL']);
+    var response = await fetchDevData(PATH['DEV_MEAL']);
     return response;
   }
 
