@@ -18,9 +18,9 @@ class DietContainer extends GetView<DailyMenuController> {
             init: DailyMenuController(),
             builder: (_) {
               var morningMenu = '식단이 없어요';
-              _.societyData?.forEach((element) {
-                if (element.type == 4) {
-                  morningMenu = element.value![0];
+              _.societyData!['snack']?.forEach((element) {
+                if (element.type == '조식') {
+                  morningMenu = element.value![0].toString();
                 }
               });
               return _.isLoading
@@ -55,7 +55,7 @@ class DietContainer extends GetView<DailyMenuController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: _.societyData!.length <= 1 ||
-                                        _.societyData![1].value!.length == 0
+                                        _.societyData!['snack']?.length == 0
                                     ? [
                                         TextBox('식단이 없어요', 14, FontWeight.w700,
                                             Color(0xFF353B45))

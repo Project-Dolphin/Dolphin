@@ -87,10 +87,17 @@ class ShuttleBusController extends GetxController {
         ? (previousShuttle[0].difference(DateTime.now()).inMinutes * -1)
             .toString()
         : '';
-    for (var i = 0; i < nextShuttle.length; i++) {
+    if (int.tryParse(previousTime)! < 6) {
+      hariRemainTime.add((6 - int.parse(previousTime)).toString());
+    }
+    for (var i = 0;
+        i < (nextShuttle.length >= 3 ? 3 : nextShuttle.length);
+        i++) {
       var differenceMinute =
           nextShuttle[i].difference(DateTime.now()).inMinutes;
-      hariRemainTime.add((differenceMinute + 6).toString());
+      if (int.parse(previousTime) >= 6 || i < 3) {
+        hariRemainTime.add((differenceMinute + 6).toString());
+      }
       remainTime.add(differenceMinute.toString());
     }
 

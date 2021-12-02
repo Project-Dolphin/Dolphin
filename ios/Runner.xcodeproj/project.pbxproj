@@ -375,7 +375,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+<<<<<<< HEAD
 				MARKETING_VERSION = 2.0.7;
+=======
+>>>>>>> 5b569b35a1c721495195da3345ec9ea59844a9f9
 				PRODUCT_BUNDLE_IDENTIFIER = com.kmouin.dscios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -529,7 +532,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+<<<<<<< HEAD
 				MARKETING_VERSION = 2.0.7;
+=======
+>>>>>>> 5b569b35a1c721495195da3345ec9ea59844a9f9
 				PRODUCT_BUNDLE_IDENTIFIER = com.kmouin.dscios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -564,7 +570,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
+<<<<<<< HEAD
 				MARKETING_VERSION = 2.0.7;
+=======
+>>>>>>> 5b569b35a1c721495195da3345ec9ea59844a9f9
 				PRODUCT_BUNDLE_IDENTIFIER = com.kmouin.dscios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

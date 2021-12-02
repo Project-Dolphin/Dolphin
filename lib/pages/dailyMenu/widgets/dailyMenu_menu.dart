@@ -13,7 +13,7 @@ class MealCard extends StatelessWidget {
     required this.time,
   });
 
-  final List<MealData>? menu;
+  final List<dynamic>? menu;
   final String type;
   final List name;
   final List time;
@@ -21,48 +21,43 @@ class MealCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> emptyMenuText = ["식단이 없어요"];
-    var idx = menu!.length == 10 ? 0 : 3;
     var menu1, menu2, menu3;
     menu1 = menu2 = menu3 = MealData(value: emptyMenuText);
 
     switch (type) {
-      //2층, 3층, 5층의 경우 추후 학생 생활관 데이터 추가로 인덱스가 3이 밀릴 것을 대비해 idx 변수 선언하였음
-      case 'floor2':
+      case 'student':
         {
           menu?.forEach((element) {
-            switch (element.type! - idx) {
-              case 0:
+            switch (element.type) {
+              case '중식':
                 menu1 = element.value![0] == '-'
                     ? MealData(value: emptyMenuText)
                     : element;
                 break;
-              case 1:
-                menu2 = element.value![0] == '-'
-                    ? MealData(value: emptyMenuText)
-                    : element;
-                break;
-              case 2:
-                menu3 = element.value![0] == '-'
-                    ? MealData(value: emptyMenuText)
-                    : element;
-                break;
+              // case '석식':
+              //   menu2 = element;
+              //   break;
+              // case '일품식':
+              //   menu3 = element;
+              //   break;
               default:
                 break;
             }
           });
+          menu2 = menu3 = null;
           break;
         }
       case 'staff':
         {
           menu?.forEach((element) {
-            switch (element.type! - idx) {
-              case 8:
+            switch (element.type) {
+              case '중식':
                 menu1 = element.value![0] == '-'
                     ? MealData(value: emptyMenuText)
                     : element;
 
                 break;
-              case 9:
+              case '일품식':
                 menu2 = element.value![0] == '-'
                     ? MealData(value: emptyMenuText)
                     : element;
@@ -106,8 +101,6 @@ class MealCard extends StatelessWidget {
           break;
         }
     }
-
-    // menu1!.type == 99 ? menu1!.value = emptyMenuText : menu1 = menu1;
 
     return GlassMorphism(
         width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),

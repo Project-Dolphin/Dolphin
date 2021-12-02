@@ -20,36 +20,30 @@ class SnackCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var western, morning, ramen, flourBased, riceBowl;
-    var idx = data!.length == 10 ? 0 : 3;
 
     western = morning = ramen = flourBased = riceBowl = ['식단이 없어요'];
 
     data.forEach((element) {
-      switch (element.type - idx) {
-        case 3:
+      switch (element.type) {
+        case '양식코너':
           western = element.value;
           break;
-        case 4:
+        case '조식':
           morning = element.value;
           break;
-        case 5:
+        case '라면코너':
           ramen = element.value;
           break;
-        case 6:
+        case '분식코너':
           flourBased = element.value;
           break;
-        case 7:
+        case '덮밥코너':
           riceBowl = element.value;
           break;
         default:
           break;
       }
     });
-    // western = data[0 + idx].value;
-    // morning = data[1 + idx].value;
-    // ramen = data[2 + idx].value;
-    // flourBased = data[3 + idx].value;
-    // riceBowl = data[4 + idx].value;
 
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
