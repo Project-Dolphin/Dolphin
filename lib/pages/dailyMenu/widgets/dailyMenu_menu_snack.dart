@@ -26,19 +26,30 @@ class SnackCard extends StatelessWidget {
     data.forEach((element) {
       switch (element.type) {
         case '양식코너':
-          western = element.value;
+          western = element?.value.length < 1 || element.value[0].contains('년')
+              ? ['식단이 없어요']
+              : element.value;
           break;
         case '조식':
-          morning = element.value;
+          morning = element?.value.length < 1 || element.value[0].contains('년')
+              ? ['식단이 없어요']
+              : element.value;
           break;
         case '라면코너':
-          ramen = element.value;
+          ramen = element?.value.length < 1 || element.value[0].contains('년')
+              ? ['식단이 없어요']
+              : element.value;
           break;
         case '분식코너':
-          flourBased = element.value;
+          flourBased =
+              element?.value.length < 1 || element.value[0].contains('년')
+                  ? ['식단이 없어요']
+                  : element.value;
           break;
         case '덮밥코너':
-          riceBowl = element.value;
+          riceBowl = element?.value.length < 1 || element.value[0].contains('년')
+              ? ['식단이 없어요']
+              : element.value;
           break;
         default:
           break;

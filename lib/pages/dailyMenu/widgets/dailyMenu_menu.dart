@@ -30,9 +30,10 @@ class MealCard extends StatelessWidget {
           menu?.forEach((element) {
             switch (element.type) {
               case '중식':
-                menu1 = element.value![0] == '-'
-                    ? MealData(value: emptyMenuText)
-                    : element;
+                menu1 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
                 break;
               // case '석식':
               //   menu2 = element;
@@ -52,15 +53,17 @@ class MealCard extends StatelessWidget {
           menu?.forEach((element) {
             switch (element.type) {
               case '중식':
-                menu1 = element.value![0] == '-'
-                    ? MealData(value: emptyMenuText)
-                    : element;
+                menu1 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
 
                 break;
               case '일품식':
-                menu2 = element.value![0] == '-'
-                    ? MealData(value: emptyMenuText)
-                    : element;
+                menu2 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
 
                 break;
               default:
@@ -75,19 +78,22 @@ class MealCard extends StatelessWidget {
           menu?.forEach((element) {
             switch (element.type) {
               case 'morning':
-                menu1 = element.value![0] == '-'
-                    ? MealData(value: emptyMenuText)
-                    : element;
+                menu1 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
                 break;
               case 'lunch':
-                menu2 = element.value![0] == '-'
-                    ? MealData(value: emptyMenuText)
-                    : element;
+                menu2 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
                 break;
               case 'dinner':
-                menu3 = element.value![0] == '-'
-                    ? MealData(value: emptyMenuText)
-                    : element;
+                menu3 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
                 break;
               default:
                 break;
