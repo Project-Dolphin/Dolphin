@@ -97,8 +97,8 @@ class _AppDeveloperInfoState extends State<AppDeveloperInfo> {
                     SizedBox(
                       height: SizeConfig.sizeByHeight(6),
                     ),
-                    TextBox(
-                        '오션뷰 2.0.8', 14, FontWeight.w400, Color(0xFF353B45)),
+                    TextBox('오션뷰 ${_packageInfo?.version}', 14, FontWeight.w400,
+                        Color(0xFF353B45)),
                   ],
                 ),
               ),
