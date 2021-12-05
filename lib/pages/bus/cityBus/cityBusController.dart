@@ -212,21 +212,21 @@ class CityBusListData {
       {this.carNo, this.nodeId, this.lat, this.lon, this.gpsTm, this.bstopnm});
 
   CityBusListData.fromJson(Map<String, dynamic> json) {
-    carNo = json['carNo'];
-    nodeId = json['nodeId'];
+    carNo = json['carno'];
+    nodeId = json['nodeid'];
     lat = json['lat'];
-    lon = json['lon'];
-    gpsTm = json['gpsTm'];
+    lon = json['lin'];
+    gpsTm = json['gpsym'];
     bstopnm = json['bstopnm'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['carNo'] = this.carNo;
-    data['nodeId'] = this.nodeId;
+    data['carno'] = this.carNo;
+    data['nodeid'] = this.nodeId;
     data['lat'] = this.lat;
-    data['lon'] = this.lon;
-    data['gpsTm'] = this.gpsTm;
+    data['lin'] = this.lon;
+    data['gpsym'] = this.gpsTm;
     data['bstopnm'] = this.bstopnm;
     return data;
   }
