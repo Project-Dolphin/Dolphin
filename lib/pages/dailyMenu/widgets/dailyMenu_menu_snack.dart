@@ -17,24 +17,48 @@ class SnackCard extends StatelessWidget {
     required this.data,
   });
 
-  var menu1, menu2, menu3, menu4, menu5;
-
   @override
   Widget build(BuildContext context) {
-    var idx = data!.length == 7 ? 0 : 3;
-    if (data.length == 1) {
-      menu1 = menu2 = menu3 = menu4 = menu5 = ['식단이 없어요'];
-    } else {
-      menu1 = data[0 + idx].value;
-      menu2 = data[1 + idx].value;
-      menu3 = data[2 + idx].value;
-      menu4 = data[3 + idx].value;
-      menu5 = data[4 + idx].value;
-    }
+    var western, morning, ramen, flourBased, riceBowl;
+
+    western = morning = ramen = flourBased = riceBowl = ['식단이 없어요'];
+
+    data.forEach((element) {
+      switch (element.type) {
+        case '양식코너':
+          western = element?.value.length < 1 || element.value[0].contains('년')
+              ? ['식단이 없어요']
+              : element.value;
+          break;
+        case '조식':
+          morning = element?.value.length < 1 || element.value[0].contains('년')
+              ? ['식단이 없어요']
+              : element.value;
+          break;
+        case '라면코너':
+          ramen = element?.value.length < 1 || element.value[0].contains('년')
+              ? ['식단이 없어요']
+              : element.value;
+          break;
+        case '분식코너':
+          flourBased =
+              element?.value.length < 1 || element.value[0].contains('년')
+                  ? ['식단이 없어요']
+                  : element.value;
+          break;
+        case '덮밥코너':
+          riceBowl = element?.value.length < 1 || element.value[0].contains('년')
+              ? ['식단이 없어요']
+              : element.value;
+          break;
+        default:
+          break;
+      }
+    });
 
     return GlassMorphism(
       width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-      height: SizeConfig.screenHeight * 0.9,
+      height: SizeConfig.screenHeight,
       widget: Container(
         margin: EdgeInsets.all(
           SizeConfig.sizeByWidth(12.0),
@@ -78,36 +102,27 @@ class SnackCard extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        bottom: SizeConfig.sizeByHeight(5.0),
+                        bottom: SizeConfig.sizeByHeight(10.0),
                       ),
                       child: Image(
                         height: SizeConfig.blockSizeHorizontal,
                         image: AssetImage('assets/images/mealPage/divider.png'),
                       ),
                     ),
-                    Row(
+                    Column(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            bottom: SizeConfig.sizeByHeight(7.0),
-                          ),
-                          child: Column(
-                            children: [
-                              ...menu1.map((e) => Container(
-                                    margin: EdgeInsets.only(
-                                        top: SizeConfig.sizeByHeight(13)),
-                                    width: SizeConfig.sizeByWidth(180.0),
-                                    child: Text(
-                                      '$e',
-                                      style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ))
-                            ],
-                          ),
-                        ),
+                        ...morning.map((e) => Container(
+                              alignment: Alignment.centerLeft,
+                              margin: EdgeInsets.only(
+                                  bottom: SizeConfig.sizeByHeight(13)),
+                              child: Text(
+                                '$e ',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ))
                       ],
                     ),
                   ],
@@ -115,7 +130,7 @@ class SnackCard extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Padding(
                 padding: EdgeInsets.only(
                   bottom: SizeConfig.sizeByHeight(29.0),
@@ -203,14 +218,14 @@ class SnackCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            ...menu2.map((e) => Container(
+                            ...western.map((e) => Container(
                                   margin: EdgeInsets.only(
                                       bottom: SizeConfig.sizeByHeight(10.0)),
                                   width: SizeConfig.sizeByWidth(120.0),
                                   child: Text(
                                     '$e',
                                     style: TextStyle(
-                                      fontSize: 15.0,
+                                      fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -247,14 +262,14 @@ class SnackCard extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            ...menu3.map((e) => Container(
+                            ...ramen.map((e) => Container(
                                   margin: EdgeInsets.only(
                                       bottom: SizeConfig.sizeByHeight(10.0)),
                                   width: SizeConfig.sizeByWidth(120.0),
                                   child: Text(
                                     '$e',
                                     style: TextStyle(
-                                      fontSize: 15.0,
+                                      fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                     ),
                                   ),
@@ -300,14 +315,14 @@ class SnackCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              ...menu4.map((e) => Container(
+                              ...flourBased.map((e) => Container(
                                     margin: EdgeInsets.only(
                                         bottom: SizeConfig.sizeByHeight(10.0)),
                                     width: SizeConfig.sizeByWidth(120.0),
                                     child: Text(
                                       '$e',
                                       style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
@@ -344,14 +359,14 @@ class SnackCard extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              ...menu5.map((e) => Container(
+                              ...riceBowl.map((e) => Container(
                                     margin: EdgeInsets.only(
                                         bottom: SizeConfig.sizeByHeight(10.0)),
                                     width: SizeConfig.sizeByWidth(120.0),
                                     child: Text(
                                       '$e',
                                       style: TextStyle(
-                                        fontSize: 15.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),

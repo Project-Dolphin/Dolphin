@@ -11,14 +11,14 @@ class MenuData {
 }
 
 class MealData {
-  int? type;
-  List<String>? value;
+  dynamic type;
+  List<dynamic>? value;
 
-  MealData({this.type = 99, this.value = const ["식단 없음"]});
+  MealData({this.type = 99, this.value = const ["식단이 없어요"]});
 
   MealData.fromJson(Map<String, dynamic> json) {
     type = json['type'];
-    value = json['value'].split('\n');
+    value = json['menus'];
   }
 
   Map<String, dynamic> toJson() {

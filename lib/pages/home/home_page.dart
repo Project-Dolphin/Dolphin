@@ -17,12 +17,16 @@ import 'package:oceanview/pages/home/widgets/noticeContainer.dart';
 import 'package:oceanview/pages/home/widgets/weatherContainer.dart';
 
 Future<Null> onRefresh() async {
-  await CityBusRepository().getNextDepartCityBus();
-  await NoticeRepository().getNotice();
-  await EventRespository().getLatestEventList();
-  await WeatherRepository().getCurrentWeather();
-  await DailyMenuRepository().getSociety();
-  await DailyMenuRepository().getNavy();
+  List<Future> initApiList = [
+    CityBusRepository().getNextDepartCityBus(),
+    NoticeRepository().getNotice(),
+    EventRespository().getLatestEventList(),
+    WeatherRepository().getCurrentWeather(),
+    DailyMenuRepository().getSociety(),
+    DailyMenuRepository().getDorm(),
+  ];
+  await Future.wait(initApiList);
+  HomeController().getTodayDate();
 }
 
 class HomePage extends GetView<HomeController> {

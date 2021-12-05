@@ -6,16 +6,44 @@ import 'package:oceanview/pages/dailyMenu/api/dailyMenu_data.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 
 class DailyMenuRepository {
-  Future<List<MealData>> mealParse(response) async {
+  Future<dynamic> mealParse(response) async {
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(utf8.decode(response.bodyBytes));
+
+      if (responseJson['data']?.length == 52) {
+        return {
+          'student': [MealData()],
+          'snack': [MealData()],
+          'staff': [MealData()],
+        };
+      } else {
+        var result = {};
+        responseJson['data'].forEach((key, value) {
+          result[key] = [...value.map((e) => MealData.fromJson(e))];
+        });
+        return result;
+      }
+    } else {
+      return {
+        'student': [MealData()],
+        'snack': [MealData()],
+        'staff': [MealData()],
+      };
+    }
+  }
+
+  Future<List<MealData>> dormMealParse(response) async {
     if (response.statusCode == 200) {
       final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
       if (responseJson['data']?.length == 52) {
         return [MealData()];
       } else {
-        final List<MealData> result = [
-          ...responseJson['data'].map((e) => MealData.fromJson(e))
-        ];
+        final data = responseJson['data'] as Map;
+        final List<MealData> result = [];
+        for (final name in data.keys) {
+          result.add(MealData(type: name, value: data[name]));
+        }
 
         return result;
       }
@@ -24,20 +52,20 @@ class DailyMenuRepository {
     }
   }
 
-  Future<List<MealData>> mealDormParse(response) async {
-    final responseJson = json.decode(utf8.decode(response.bodyBytes));
+  // Future<List<MealData>> mealDormParse(response) async {
+  //   final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
-    if (responseJson['data'].length == 52 ||
-        responseJson['message'] == 'Missing Authentication Token') {
-      return [MealData()];
-    } else {
-      final List<MealData> result = [
-        ...responseJson['data'].map((e) => MealData.fromJson(e))
-      ];
+  //   if (responseJson['data'].length == 52 ||
+  //       responseJson['message'] == 'Missing Authentication Token') {
+  //     return [MealData()];
+  //   } else {
+  //     final List<MealData> result = [
+  //       ...responseJson['data'].map((e) => MealData.fromJson(e))
+  //     ];
 
-      return result;
-    }
-  }
+  //     return result;
+  //   }
+  // }
 
   void menuFill(List listItem, int size) {
     while (listItem.length < size) {
@@ -45,23 +73,19 @@ class DailyMenuRepository {
     }
   }
 
-  Future fetchNavy() async {
-    return mealParse(await FetchAPI().fetchNavyTable());
+  Future fetchDorm() async {
+    return dormMealParse(await FetchAPI().fetchDormTable());
   }
 
   Future fetchSociety() async {
     return mealParse(await FetchAPI().fetchSocietyTable());
   }
 
-  Future fetchDorm() async {
-    return mealParse(await FetchAPI().fetchDormTable());
-  }
-
   Future<void> getDailyMenu() async {
     Get.put(DailyMenuController());
     Get.find<DailyMenuController>().setIsLoading(true);
     Get.find<DailyMenuController>().setSocietyMeal(await fetchSociety());
-    Get.find<DailyMenuController>().setNavyMeal(await fetchNavy());
+    Get.find<DailyMenuController>().setNavyMeal(await fetchDorm());
     Get.find<DailyMenuController>().setIsLoading(false);
   }
 
@@ -71,9 +95,9 @@ class DailyMenuRepository {
     Get.find<DailyMenuController>().setIsLoading(false);
   }
 
-  getNavy() async {
+  getDorm() async {
     Get.put(DailyMenuController());
-    Get.find<DailyMenuController>().setNavyMeal(await fetchNavy());
+    Get.find<DailyMenuController>().setDormMeal(await fetchDorm());
     Get.find<DailyMenuController>().setIsLoading(false);
   }
 }

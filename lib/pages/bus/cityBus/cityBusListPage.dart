@@ -48,6 +48,7 @@ class CityBusListPage extends GetView<CityBusController> {
                         ),
                       ),
                     ),
+                    centerTitle: true,
                     title: Text(
                       '190번 버스',
                       style: TextStyle(
@@ -157,7 +158,7 @@ class CityBusListPage extends GetView<CityBusController> {
           child: Container(
             margin: EdgeInsets.only(
                 top: SizeConfig.sizeByHeight(50),
-                bottom: SizeConfig.sizeByHeight(50)),
+                bottom: SizeConfig.sizeByHeight(48)),
             width: 1,
             height: double.infinity,
             color: Color(0xFF4BA6FF),

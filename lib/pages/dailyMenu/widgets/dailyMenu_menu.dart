@@ -13,64 +13,104 @@ class MealCard extends StatelessWidget {
     required this.time,
   });
 
-  List<MealData>? menu;
-  final int type;
+  final List<dynamic>? menu;
+  final String type;
   final List name;
   final List time;
 
   @override
   Widget build(BuildContext context) {
     List<String> emptyMenuText = ["식단이 없어요"];
-    var idx = menu!.length == 7 ? 0 : 3;
     var menu1, menu2, menu3;
+    menu1 = menu2 = menu3 = MealData(value: emptyMenuText);
 
-    if (menu!.length <= 1) {
-      menu1 = menu2 = menu3 = MealData(value: emptyMenuText);
-    } else {
-      switch (type) {
-        //2층, 3층, 5층의 경우 추후 학생 생활관 데이터 추가로 인덱스가 3이 밀릴 것을 대비해 idx 변수 선언하였음
-        case 0:
-          {
-            menu1 = idx == 0 ? MealData(value: emptyMenuText) : menu![0];
-            menu2 = idx == 0 ? MealData(value: emptyMenuText) : menu![1];
-            menu3 = idx == 0 ? MealData(value: emptyMenuText) : menu![2];
-            break;
-          }
-        case 2:
-          {
-            menu1 = menu![5 + idx];
-            menu2 = menu![6 + idx];
-            menu3 = null;
+    switch (type) {
+      case 'student':
+        {
+          menu?.forEach((element) {
+            switch (element.type) {
+              case '중식':
+                menu1 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
+                break;
+              // case '석식':
+              //   menu2 = element;
+              //   break;
+              // case '일품식':
+              //   menu3 = element;
+              //   break;
+              default:
+                break;
+            }
+          });
+          menu2 = menu3 = null;
+          break;
+        }
+      case 'staff':
+        {
+          menu?.forEach((element) {
+            switch (element.type) {
+              case '중식':
+                menu1 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
 
-            break;
-          }
-        case 3:
-          {
-            menu1 = menu![0];
-            menu2 = menu![0];
-            menu3 = menu![0];
-            break;
-          }
-        case 4:
-          {
-            menu1 = menu![0];
-            menu2 = menu![0];
-            menu3 = menu![0];
+                break;
+              case '일품식':
+                menu2 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
 
-            break;
-          }
-        default:
-          {
-            break;
-          }
-      }
+                break;
+              default:
+                break;
+            }
+          });
+          menu3 = null;
+          break;
+        }
+      case 'dorm':
+        {
+          menu?.forEach((element) {
+            switch (element.type) {
+              case 'morning':
+                menu1 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
+                break;
+              case 'lunch':
+                menu2 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
+                break;
+              case 'dinner':
+                menu3 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
+                break;
+              default:
+                break;
+            }
+          });
+
+          break;
+        }
+      default:
+        {
+          break;
+        }
     }
-
-    menu1!.type == 99 ? menu1!.value = emptyMenuText : menu1 = menu1;
 
     return GlassMorphism(
         width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
-        height: SizeConfig.screenHeight * 0.9,
+        height: SizeConfig.screenHeight,
         widget: Container(
             margin: EdgeInsets.all(
               SizeConfig.sizeByWidth(12.0),

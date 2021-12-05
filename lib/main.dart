@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -112,6 +112,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     findNearStation();
     return FutureBuilder(
       future: Firebase.initializeApp(),
@@ -122,6 +123,11 @@ class MyApp extends StatelessWidget {
         } else {
           // Loading is done, return the app:
           return GetMaterialApp(
+            builder: (context, child) {
+              return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: child!);
+            },
             initialRoute: AppRoutes.DASHBOARD,
             getPages: AppPages.list,
             debugShowCheckedModeBanner: false,

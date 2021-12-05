@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 //식당 운영시간
 const time = [
   "11:30 ~ 13:30",
-  "17:00 ~ 18:30",
-  "",
 ]; //학생식당 (2층)
 const timeCafeteria = [
   "08:00 ~ 09:30",
@@ -57,7 +55,7 @@ const dinnerClose = [
 ];
 
 //식단 종류
-const timeName1 = ["중식", "석식", "일품식"]; //학생식당
+const timeName1 = ["중식"]; //학생식당
 const timeName2 = ["조식", "중식", "석식"]; //스낵코너, 생활관(학생,승선)
 const timeName3 = ["중식", "일품식", ""]; //교직원
 

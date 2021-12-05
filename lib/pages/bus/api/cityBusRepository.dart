@@ -60,21 +60,38 @@ class CityBusRepository {
 
   getNextCityBus(bstopid) async {
     Get.put(CityBusController());
+
     Get.find<CityBusController>()
         .setResponseCityBus(await fetchNextCityBus(bstopid));
+    Get.find<CityBusController>().setFetchTime();
+    Get.find<CityBusController>().setBusRemainTimes();
+    await Future.delayed(Duration(seconds: 0),
+        () => Get.find<CityBusController>().setIsLoading(false));
   }
 
   getNextDepartCityBus() async {
     Get.put(CityBusController());
-    Get.find<CityBusController>().setIsLoading(true);
-    Get.find<CityBusController>()
-        .setDepartCityBus(await fetchNexthDepartCityBus());
-    Get.find<CityBusController>().setIsLoading(false);
+    if (Get.find<CityBusController>().lastFetchTime == null ||
+        Get.find<CityBusController>()
+                .lastFetchTime!
+                .difference(DateTime.now())
+                .inSeconds <
+            -5) {
+      Get.find<CityBusController>().setIsLoading(true);
+      Get.find<CityBusController>()
+          .setDepartCityBus(await fetchNexthDepartCityBus());
+      Get.find<CityBusController>().setFetchTime();
+      Get.find<CityBusController>().setBusRemainTimes();
+
+      await Future.delayed(Duration(seconds: 0),
+          () => Get.find<CityBusController>().setIsLoading(false));
+    }
   }
 
   getCityBusList() async {
     Get.put(CityBusController());
     Get.find<CityBusController>()
         .setResponseCityBusList(await fetchCityBusList());
+    Get.find<CityBusController>().setBusRemainTimes();
   }
 }

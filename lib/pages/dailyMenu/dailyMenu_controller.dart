@@ -8,7 +8,11 @@ class DailyMenuController extends GetxController {
   final String title = '식단';
   String stat = '';
   bool isLoading = true;
-  List<MealData>? societyData = [MealData()];
+  Map<dynamic, dynamic>? societyData = {
+    'student': [MealData()],
+    'snack': [MealData()],
+    'staff': [MealData()],
+  };
   List<MealData>? navyData = [MealData()];
   List<MealData>? dormData = [MealData()];
   bool isMoreButtonVisible = true;

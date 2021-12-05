@@ -31,24 +31,6 @@ class ShuttleBus extends GetView<ShuttleBusController> {
           child: GetBuilder<ShuttleBusController>(
               init: ShuttleBusController(),
               builder: (_) {
-                var remainTime = [];
-                var arriveTime = [];
-                var hariRemainTime = [];
-                var previousTime = _.previousShuttle.length > 0
-                    ? (_.previousShuttle[0]
-                                .difference(DateTime.now())
-                                .inMinutes *
-                            -1)
-                        .toString()
-                    : '';
-
-                for (var i = 0; i < _.nextShuttle.length; i++) {
-                  var differenceMinute =
-                      _.nextShuttle[i].difference(DateTime.now()).inMinutes;
-                  hariRemainTime.add((differenceMinute + 6).toString());
-                  remainTime.add(differenceMinute.toString());
-                  arriveTime.add(DateFormat('HH:mm').format(_.nextShuttle[i]));
-                }
                 return Stack(
                   children: [
                     Column(
@@ -71,15 +53,18 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                           padding:
                               EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
                           child: Column(children: [
-                            _.isLoading || previousTime == ''
+                            _.isLoading || _.previousTime == ''
                                 ? SizedBox(
                                     height: SizeConfig.sizeByHeight(14),
                                   )
                                 : _.selectedStation == '학교종점 (아치나루터)'
-                                    ? TextBox('이전차는 약 $previousTime분전에 지나갔어요',
-                                        12, FontWeight.w400, Color(0xFF353B45))
-                                    : hariRemainTime.length > 0 &&
-                                            int.parse(hariRemainTime[0]) <= 6
+                                    ? TextBox(
+                                        '이전차는 약 ${_.previousTime}분전에 지나갔어요',
+                                        12,
+                                        FontWeight.w400,
+                                        Color(0xFF353B45))
+                                    : _.hariRemainTime.length > 0 &&
+                                            int.parse(_.hariRemainTime[0]) <= 6
                                         ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
                                             FontWeight.w400, Color(0xFF353B45))
                                         : SizedBox(
@@ -134,24 +119,24 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                                                   FirstArrive(
                                                                       _.nextShuttle.length >
                                                                               0
-                                                                          ? remainTime[
+                                                                          ? _.remainTime[
                                                                               0]
                                                                           : '없음',
                                                                       _.nextShuttle.length >
                                                                               0
-                                                                          ? arriveTime[
-                                                                              0]
+                                                                          ? DateFormat('HH:mm')
+                                                                              .format(_.nextShuttle[0])
                                                                           : ' '),
                                                                   SecondArrive(
                                                                       _.nextShuttle.length >
                                                                               1
-                                                                          ? remainTime[
+                                                                          ? _.remainTime[
                                                                               1]
                                                                           : '없음',
                                                                       _.nextShuttle.length >
                                                                               1
-                                                                          ? arriveTime[
-                                                                              1]
+                                                                          ? DateFormat('HH:mm').format(_.nextShuttle[
+                                                                              1])
                                                                           : ' ',
                                                                       _.stationList
                                                                           .indexOf(_
@@ -163,13 +148,13 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                                                   ThirdArrive(
                                                                       _.nextShuttle.length >
                                                                               2
-                                                                          ? remainTime[
+                                                                          ? _.remainTime[
                                                                               2]
                                                                           : '없음',
                                                                       _.nextShuttle.length >
                                                                               2
-                                                                          ? arriveTime[
-                                                                              2]
+                                                                          ? DateFormat('HH:mm').format(_.nextShuttle[
+                                                                              2])
                                                                           : ' ',
                                                                       _.stationList
                                                                           .indexOf(_
@@ -182,14 +167,14 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                                                   FirstArrive(
                                                                       _.nextShuttle.length >
                                                                               0
-                                                                          ? hariRemainTime[
+                                                                          ? _.hariRemainTime[
                                                                               0]
                                                                           : '없음',
                                                                       ' '),
                                                                   SecondArrive(
                                                                       _.nextShuttle.length >
                                                                               1
-                                                                          ? hariRemainTime[
+                                                                          ? _.hariRemainTime[
                                                                               1]
                                                                           : '없음',
                                                                       ' ',
@@ -203,7 +188,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                                                   ThirdArrive(
                                                                       _.nextShuttle.length >
                                                                               2
-                                                                          ? hariRemainTime[
+                                                                          ? _.hariRemainTime[
                                                                               2]
                                                                           : '없음',
                                                                       ' ',
@@ -336,8 +321,10 @@ class FirstArrive extends StatelessWidget {
           children: [
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
-                : TextBox(
-                    '$remainTime분 후', 30, FontWeight.w700, Color(0xFF353B45)),
+                : int.parse(remainTime!) > 0
+                    ? TextBox('$remainTime분 후', 30, FontWeight.w700,
+                        Color(0xFF353B45))
+                    : TextBox('곧 도착', 30, FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [
@@ -468,7 +455,7 @@ class ThirdArrive extends StatelessWidget {
             remainTime == '없음'
                 ? TextBox('운행 정보가 없어요', 18, FontWeight.w500, Color(0xFF353B45))
                 : TextBox(
-                    '$remainTime분 후', 18, FontWeight.w500, Color(0xFF353B45)),
+                    '$remainTime분 후', 18, FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
                 ? Column(
                     children: [

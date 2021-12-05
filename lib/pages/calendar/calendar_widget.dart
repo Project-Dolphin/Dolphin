@@ -6,16 +6,21 @@ import 'package:intl/intl.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
-
 import 'package:oceanview/pages/calendar/calendar_controller.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Calendar extends StatefulWidget {
-  Calendar({this.calendarData, this.kFirstDay, Key? key}) : super(key: key);
+  Calendar(
+      {this.calendarData,
+      this.holidayData,
+      this.kFirstDay,
+      this.specificFocusedDay,
+      Key? key})
+      : super(key: key);
 
   final List<CalendarData>? calendarData;
-  // final List<HolidayData>? holidayData;
+  final List<HolidayData>? holidayData;
+  final DateTime? specificFocusedDay;
 
   final kFirstDay;
   late final kLastDay =
@@ -43,154 +48,68 @@ class _CalendarState extends State<Calendar> {
 
   final Map<DateTime, List<Event>> _holiday = ({});
 
-  String _calendarContent = '';
   String _holidayContent = '';
 
   makeEvent() {
-    for (int i = 0; i < widget.calendarData!.length; i++) {
-      _calendarContent = widget.calendarData![i].content!;
-      DateTime _calendarStart = DateFormat("yyyy-M-dd")
-          .parse(widget.calendarData![i].term!.startedAt.toString());
-      DateTime _calendarEnd = DateFormat("yyyy-M-dd")
-          .parse(widget.calendarData![i].term!.endedAt.toString());
+    widget.calendarData!.forEach((element) {
+      DateTime _calendarStart =
+          DateFormat("yyyy-M-dd").parse(element.term!.startedAt.toString());
+      DateTime _calendarEnd =
+          DateFormat("yyyy-M-dd").parse(element.term!.endedAt.toString());
       if (_calendarStart == _calendarEnd) {
         kEvents[_calendarStart] = kEvents[_calendarStart] ?? [];
-        kEvents[_calendarStart]!.add(Event(_calendarContent));
-      } else if (_calendarStart.month != _calendarEnd.month) {
-        if (_calendarStart.month == 1 ||
-            _calendarStart.month == 3 ||
-            _calendarStart.month == 5 ||
-            _calendarStart.month == 7 ||
-            _calendarStart.month == 8 ||
-            _calendarStart.month == 10 ||
-            _calendarStart.month == 12) {
-          for (int j = _calendarStart.day; j < 32; j++) {
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                kEvents[DateTime(
-                        _calendarStart.year, _calendarStart.month, j)] ??
-                    [];
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-                .add(Event(_calendarContent));
-          }
-          if (_calendarStart.month == 12) {
-            for (int j = 1; j < _calendarEnd.day + 1; j++) {
-              kEvents[DateTime(_calendarStart.year + 1, 1, j)] =
-                  kEvents[DateTime(_calendarStart.year + 1, 1, j)] ?? [];
-              kEvents[DateTime(_calendarStart.year + 1, 1, j)]!
-                  .add(Event(_calendarContent));
-            }
-          } else {
-            for (int j = 1; j < _calendarEnd.day + 1; j++) {
-              kEvents[DateTime(
-                  _calendarStart.year, _calendarStart.month + 1, j)] = kEvents[
-                      DateTime(
-                          _calendarStart.year, _calendarStart.month + 1, j)] ??
-                  [];
-              kEvents[DateTime(
-                      _calendarStart.year, _calendarStart.month + 1, j)]!
-                  .add(Event(_calendarContent));
-            }
-          }
-        } else if (_calendarStart.month == 2) {
-          if (_calendarStart.year % 4 != 0) {
-            for (int j = _calendarStart.day; j < 30; j++) {
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                  kEvents[DateTime(
-                          _calendarStart.year, _calendarStart.month, j)] ??
-                      [];
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-                  .add(Event(_calendarContent));
-            }
-          } else {
-            for (int j = _calendarStart.day; j < 29; j++) {
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                  kEvents[DateTime(
-                          _calendarStart.year, _calendarStart.month, j)] ??
-                      [];
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-                  .add(Event(_calendarContent));
-            }
-          }
-          for (int j = 1; j < _calendarEnd.day + 1; j++) {
-            kEvents[DateTime(
-                _calendarStart.year, _calendarStart.month + 1, j)] = kEvents[
-                    DateTime(
-                        _calendarStart.year, _calendarStart.month + 1, j)] ??
-                [];
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)]!
-                .add(Event(_calendarContent));
-          }
-        } else {
-          for (int j = _calendarStart.day; j < 31; j++) {
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-                kEvents[DateTime(
-                        _calendarStart.year, _calendarStart.month, j)] ??
-                    [];
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-                .add(Event(_calendarContent));
-          }
-          for (int j = 1; j < _calendarEnd.day + 1; j++) {
-            kEvents[DateTime(
-                _calendarStart.year, _calendarStart.month + 1, j)] = kEvents[
-                    DateTime(
-                        _calendarStart.year, _calendarStart.month + 1, j)] ??
-                [];
-            kEvents[DateTime(_calendarStart.year, _calendarStart.month + 1, j)]!
-                .add(Event(_calendarContent));
-          }
-        }
+        kEvents[_calendarStart]?.add(Event(element.content!));
       } else {
-        for (int j = _calendarStart.day; j < _calendarEnd.day + 1; j++) {
-          kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] =
-              kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)] ??
+        for (int i = 0;
+            i < _calendarEnd.difference(_calendarStart).inDays;
+            i++) {
+          kEvents[_calendarStart.add(Duration(days: i))] =
+              kEvents[_calendarStart.add(Duration(days: i))] ?? [];
+          kEvents[_calendarStart.add(Duration(days: i))]
+              ?.add(Event(element.content!));
+        }
+      }
+    });
+    _selectedEvents = ValueNotifier(_getEventsForDay(
+        // DateTime(widget.kFirstDay.year, widget.kFirstDay.month, 15)
+        _selectedDay!));
+  }
+
+  makeHoliday() {
+    for (int i = 0; i < widget.holidayData!.length; i++) {
+      _holidayContent = widget.holidayData![i].content!;
+
+      DateTime _holidayStart =
+          DateTime.parse(widget.holidayData![i].term!.startedAt!.toString());
+      DateTime _holidayEnd =
+          DateTime.parse(widget.holidayData![i].term!.endedAt!.toString());
+
+      if (_holidayStart == _holidayEnd) {
+        _holiday[_holidayStart] = _holiday[_holidayStart] ?? [];
+        _holiday[_holidayStart]?.add(Event(_holidayContent));
+      } else if (_holidayStart != _holidayEnd) {
+        for (int j = _holidayStart.day; j < _holidayEnd.day + 1; j++) {
+          _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] =
+              _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] ??
                   [];
-          kEvents[DateTime(_calendarStart.year, _calendarStart.month, j)]!
-              .add(Event(_calendarContent));
+          _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)]!
+              .add(Event(_holidayContent));
         }
       }
     }
-    _selectedEvents = ValueNotifier(_getEventsForDay(
-        DateTime(widget.kFirstDay.year, widget.kFirstDay.month, 15)));
   }
-
-  // makeHoliday() {
-  //   for (int i = 0; i < widget.holidayData!.length; i++) {
-  //     _holidayContent = widget.holidayData![i].content!;
-  //     DateTime _holidayStart =
-  //         DateTime.parse(widget.holidayData![i].term!.startedAt!.toString());
-  //     DateTime _holidayEnd =
-  //         DateTime.parse(widget.holidayData![i].term!.endedAt!.toString());
-
-  //     if (_holidayStart == _holidayEnd) {
-  //       _holiday[_holidayStart] = _holiday[_holidayStart] ?? [];
-  //       _holiday[_holidayStart]!.add(Event(_holidayContent));
-  //     } else if (_holidayStart != _holidayEnd) {
-  //       for (int j = _holidayStart.day; j < _holidayEnd.day + 1; j++) {
-  //         _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] =
-  //             _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)] ??
-  //                 [];
-  //         _holiday[DateTime(_holidayStart.year, _holidayStart.month, j)]!
-  //             .add(Event(_holidayContent));
-  //       }
-  //     }
-  //   }
-  // }
 
   void initState() {
     super.initState();
 
-    if (widget.kFirstDay.month == DateTime.now().month)
-      _focusedDay = DateTime.now();
-    else
-      _focusedDay = widget.kFirstDay;
-
+    _focusedDay = widget.specificFocusedDay;
     _selectedDay = _focusedDay;
     kEvents = LinkedHashMap<DateTime, List<Event>>(
       equals: isSameDay,
       hashCode: getHashCode,
     );
-
     makeEvent();
+    makeHoliday();
   }
 
   @override
@@ -232,7 +151,7 @@ class _CalendarState extends State<Calendar> {
                 top: SizeConfig.sizeByHeight(40),
                 child: GlassMorphism(
                   width: SizeConfig.sizeByWidth(290),
-                  height: SizeConfig.sizeByHeight(367),
+                  height: SizeConfig.sizeByHeight(330),
                   widget: Container(
                       child: Column(
                     children: [
@@ -343,7 +262,7 @@ class _CalendarState extends State<Calendar> {
                   )),
                 )),
             Container(
-              margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(420)),
+              margin: EdgeInsets.only(top: SizeConfig.sizeByHeight(390)),
               child: ValueListenableBuilder<List<Event>>(
                 valueListenable: _selectedEvents,
                 builder: (context, value, _) {
@@ -352,25 +271,52 @@ class _CalendarState extends State<Calendar> {
                     itemBuilder: (context, index) {
                       return Container(
                         child: ListTile(
-                          visualDensity:
-                              VisualDensity(horizontal: 0, vertical: -4),
-                          onTap: () => {},
-                          leading: Container(
-                            width: 4,
-                            decoration: BoxDecoration(
-                              color: Color(0xff0081ff),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          title: Transform.translate(
-                            offset: Offset(-36, 0),
-                            child: Text(
-                              '${value[index]}',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                        ),
+                            visualDensity:
+                                VisualDensity(horizontal: 0, vertical: -4),
+                            onTap: () => {},
+                            // leading: Container(
+                            //   width: 4,
+                            //   decoration: BoxDecoration(
+                            //     color: Color(0xff0081ff),
+                            //     shape: BoxShape.circle,
+                            //   ),
+                            // ),
+                            title: Transform.translate(
+                                offset: Offset(-10, 0),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height:
+                                            16 * SizeConfig.sizeByHeight(1.6),
+                                        child: Center(
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                top: SizeConfig.sizeByHeight(3),
+                                                right: SizeConfig.sizeByHeight(
+                                                    12)),
+                                            height: 5,
+                                            width: 5,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xff0081ff),
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        '${value[index]}',
+                                        softWrap: true,
+                                        style: TextStyle(
+                                            color: Color(0xff353b45),
+                                            height:
+                                                SizeConfig.sizeByHeight(1.6),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700),
+                                      ))
+                                    ]))),
                       );
                     },
                   );

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/services/urlUtils.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class TwolineTitle extends StatelessWidget {
   const TwolineTitle({
@@ -231,7 +230,7 @@ class MoreText extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextBox(description, 12, FontWeight.w500, Color(0xFF353B45)),
+              TextBox(description, 13, FontWeight.w500, Color(0xFF353B45)),
               Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: SizeConfig.sizeByHeight(12),

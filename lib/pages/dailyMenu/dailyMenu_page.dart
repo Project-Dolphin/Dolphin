@@ -3,14 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
+import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/loading/loading.dart';
+import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/common/titlebox/twolineTitle.dart';
-import 'package:oceanview/pages/dailyMenu/api/dailyMenu_data.dart';
 import 'package:oceanview/pages/dailyMenu/dailyMenu_controller.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/titlebox/onelineTitle.dart' as oneLine;
 import 'package:oceanview/pages/dailyMenu/widgets/dailyMenu_header.dart';
-import 'package:oceanview/pages/more/more_page.dart';
+import 'package:oceanview/services/urlUtils.dart';
 
 import 'widgets/dailyMenu_menu.dart';
 import 'widgets/dailyMenu_menu_snack.dart';
@@ -41,14 +42,32 @@ class _DailyMenupageState extends State<DailyMenupage> {
   Widget build(BuildContext context) {
     return GetBuilder<DailyMenuController>(builder: (_) {
       final List<Widget> pageList = [
-        MealCard(menu: _.societyData, type: 0, time: time, name: timeName1),
+        MealCard(
+            menu: _.societyData?['student'],
+            type: 'student',
+            time: time,
+            name: timeName1),
         SnackCard(
-            type: 1, time: timeCafeteria, name: timeName2, data: _.societyData),
+            type: 1,
+            time: timeCafeteria,
+            name: timeName2,
+            data: _.societyData?['snack']),
         MealCard(
-            menu: _.societyData, type: 2, time: timeEmployer, name: timeName3),
-        MealCard(menu: _.dormData, type: 3, time: timeDorm, name: timeName2),
+            menu: _.societyData?['staff'],
+            type: 'staff',
+            time: timeEmployer,
+            name: timeName3),
         MealCard(
-            menu: _.navyData, type: 4, time: timeMariDorm, name: timeName2),
+            menu: _.dormData, type: 'dorm', time: timeDorm, name: timeName2),
+        InkWell(
+          onTap: () => UrlUtils.launchURL(menuSites[4]),
+          child: GlassMorphism(
+            width: SizeConfig.screenWidth - SizeConfig.sizeByWidth(20.0),
+            height: SizeConfig.sizeByHeight(100),
+            widget:
+                TextBox('여기를 눌러주세요', 16, FontWeight.w700, Color(0xff353b45)),
+          ),
+        ),
       ];
       return Scaffold(
         backgroundColor: Colors.transparent,
@@ -103,7 +122,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                             style: TextStyle(
                                 color: _current == entry.key
                                     ? Colors.white
-                                    : Color(0xFF919191),
+                                    : Color(0xFFb7b7b7),
                                 fontSize: SizeConfig.sizeByWidth(16),
                                 fontWeight: FontWeight.w700),
                           )),
@@ -152,6 +171,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                         )
                       : Container()),
               flexibleSpace: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.pin,
                   background: SafeArea(
                     bottom: false,
                     child: Padding(
@@ -186,6 +206,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                       ),
                     ),
                   ),
+                  titlePadding: EdgeInsets.zero,
                   title: MyAppSpace(_)),
             ),
             SliverFillRemaining(
@@ -211,7 +232,7 @@ class _DailyMenupageState extends State<DailyMenupage> {
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         enlargeCenterPage: false,
-                        height: SizeConfig.screenHeight,
+                        height: SizeConfig.screenHeight * 1.1,
                         onPageChanged: (index, reason) {
                           _.setStat(index);
                           setState(

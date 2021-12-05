@@ -17,6 +17,14 @@ class DietContainer extends GetView<DailyMenuController> {
         child: GetBuilder<DailyMenuController>(
             init: DailyMenuController(),
             builder: (_) {
+              var morningMenu = '식단이 없어요';
+              _.societyData!['snack']?.forEach((element) {
+                if (element.type == '조식' && element.value?.length > 0) {
+                  if (!element.value[0]?.contains('년')) {
+                    morningMenu = element.value![0].toString();
+                  }
+                }
+              });
               return _.isLoading
                   ? Loading()
                   : Row(
@@ -49,20 +57,20 @@ class DietContainer extends GetView<DailyMenuController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: _.societyData!.length <= 1 ||
-                                        _.societyData![1].value!.length == 0
+                                        _.societyData!['snack']?.length == 0
                                     ? [
                                         TextBox('식단이 없어요', 14, FontWeight.w700,
                                             Color(0xFF353B45))
                                       ]
-                                    : _.societyData![1].value![0]
-                                        .split(' + ')
+                                    : morningMenu
+                                        .split('+')
                                         .map((e) => Padding(
                                               padding: EdgeInsets.only(
                                                   bottom:
                                                       SizeConfig.sizeByHeight(
                                                           5)),
                                               child: Text(
-                                                e,
+                                                e.trim(),
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
                                                     color: Color(0xFF353B45),

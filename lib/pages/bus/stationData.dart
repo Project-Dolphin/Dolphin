@@ -33,14 +33,12 @@ Future<void> findNearStation() async {
 
   await CityBusRepository().getNextCityBus(nodeId);
   await onRefresh();
-  Get.find<CityBusController>().setIsLoading(false);
 }
 
 Future<void> fetchStation(String nodeId) async {
   Get.put(CityBusController());
   Get.find<CityBusController>().setIsLoading(true);
   await CityBusRepository().getNextCityBus(nodeId);
-  Get.find<CityBusController>().setIsLoading(false);
 }
 
 Future<Position> _determinePosition() async {
