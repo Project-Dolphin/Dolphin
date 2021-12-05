@@ -11,7 +11,12 @@ class DailyMenuRepository {
       final responseJson = json.decode(utf8.decode(response.bodyBytes));
 
       if (responseJson['data']?.length == 52) {
-        return [MealData()];
+        return {
+          'student': [MealData()],
+          'snack': [MealData()],
+          'staff': [MealData()],
+        };
+        ;
       } else {
         var result = {};
         responseJson['data'].forEach((key, value) {
@@ -20,7 +25,12 @@ class DailyMenuRepository {
         return result;
       }
     } else {
-      return [MealData()];
+      return {
+        'student': [MealData()],
+        'snack': [MealData()],
+        'staff': [MealData()],
+      };
+      ;
     }
   }
 
