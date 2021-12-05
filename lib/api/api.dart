@@ -1,7 +1,5 @@
 import 'package:http/http.dart' as http;
 
-// const BASE_URL = 'pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com';
-
 const BASE_URL = 'x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com';
 const DEV_URL = 'pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com';
 
@@ -16,10 +14,10 @@ const PATH = const {
   'SHUTTLE_ALL': '/timetable/shuttle',
   'DEPART_190': '/timetable/190',
   'WEATHER': '/weather/now',
-  'MEAL': '/diet/society/today',
+  // 'MEAL': '/diet/society/today',
+  'MEAL': '/diet/v2/society/today',
   'MEAL2': '/diet/naval/today',
   'MEAL3': '/diet/dorm/today',
-  'DEV_MEAL': '/diet/v2/society/today'
 };
 
 class FetchAPI {
@@ -33,15 +31,15 @@ class FetchAPI {
     }
   }
 
-  Future fetchDevData(path, {queryParameters}) async {
-    try {
-      var url = Uri.https(DEV_URL, '/dev$path', queryParameters);
-      var response = await http.get(url);
-      return response;
-    } catch (error) {
-      print('$error');
-    }
-  }
+  // Future fetchDevData(path, {queryParameters}) async {
+  //   try {
+  //     var url = Uri.https(DEV_URL, '/dev$path', queryParameters);
+  //     var response = await http.get(url);
+  //     return response;
+  //   } catch (error) {
+  //     print('$error');
+  //   }
+  // }
 
   Future fetchCityBusInfo(bstopid) async {
     var response = await fetchData('${PATH['BUS_190']}/${bstopid.trim()}');
@@ -94,7 +92,7 @@ class FetchAPI {
   }
 
   Future fetchSocietyTable() async {
-    var response = await fetchDevData(PATH['DEV_MEAL']);
+    var response = await fetchData(PATH['MEAL']);
     return response;
   }
 
