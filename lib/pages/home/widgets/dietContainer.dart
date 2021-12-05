@@ -19,11 +19,10 @@ class DietContainer extends GetView<DailyMenuController> {
             builder: (_) {
               var morningMenu = '식단이 없어요';
               _.societyData!['snack']?.forEach((element) {
-                if (element.type == '조식') {
-                  morningMenu = element.value![0].contains('년') ||
-                          element.value.length < 1
-                      ? '식단이 없어요'
-                      : element.value![0].toString();
+                if (element.type == '조식' && element.value?.length > 0) {
+                  if (!element.value[0]?.contains('년')) {
+                    morningMenu = element.value![0].toString();
+                  }
                 }
               });
               return _.isLoading

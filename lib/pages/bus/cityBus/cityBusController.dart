@@ -101,8 +101,12 @@ class CityBusController extends GetxController {
     } else {
       responseCityBus != null
           ? cityBusRemainTime = [
-              responseCityBus?.min1 ?? 9999,
-              responseCityBus?.min2 ?? 9999
+              responseCityBus?.min1 == 999 || responseCityBus?.min1 == null
+                  ? 9999
+                  : responseCityBus?.min1,
+              responseCityBus?.min1 == 999 || responseCityBus?.min1 == null
+                  ? 9999
+                  : responseCityBus?.min1,
             ]
           : cityBusRemainTime = [];
       responseCityBus != null

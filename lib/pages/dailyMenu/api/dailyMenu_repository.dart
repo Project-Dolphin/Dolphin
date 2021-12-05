@@ -16,7 +16,6 @@ class DailyMenuRepository {
           'snack': [MealData()],
           'staff': [MealData()],
         };
-        ;
       } else {
         var result = {};
         responseJson['data'].forEach((key, value) {
@@ -30,7 +29,6 @@ class DailyMenuRepository {
         'snack': [MealData()],
         'staff': [MealData()],
       };
-      ;
     }
   }
 
