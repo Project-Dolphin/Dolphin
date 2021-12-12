@@ -92,6 +92,5 @@ class CityBusRepository {
     Get.put(CityBusController());
     Get.find<CityBusController>()
         .setResponseCityBusList(await fetchCityBusList());
-    Get.find<CityBusController>().setBusRemainTimes();
   }
 }
