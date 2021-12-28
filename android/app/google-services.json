@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "238762269352-m03rov6plfvi509a6pfh521otfrolu3f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kmouin.dscios",
+            "certificate_hash": "8a506a2a1c1c0b79cf429bd2acbab460929902dd"
+          }
+        },
+        {
           "client_id": "238762269352-fao456enjpjuu7e9omu1jhq2jkcg0dj1.apps.googleusercontent.com",
           "client_type": 3
         }
