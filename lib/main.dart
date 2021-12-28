@@ -4,7 +4,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -51,7 +50,18 @@ FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  if (Firebase.apps.length == 0) {
+    Firebase.initializeApp(
+        options: const FirebaseOptions(
+      apiKey:
+          '	AAAAN5dXGqg:APA91bELcxT-XIYUeLPmfWs9not4_1FKpbR_5oCQwzQmfmiL-Rn2flbAugNkYd2Sj4qS-uaDH7LJ8KieB9gUlzirjUbjTyyPr2ISxcmzPsD3W9f4J7nTOgsqZD1awcsUknlkfweEHH1j',
+      appId: '1:238762269352:android:9c3821ff635f1acb96c09d',
+      messagingSenderId: '238762269352',
+      projectId: 'oceanview_android',
+    ));
+  } else {
+    Firebase.app(); // 이미 초기화되었다면, 초기화 된 것을 사용함
+  }
 
   // Set the background messaging handler early on, as a named top-level function
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
@@ -114,30 +124,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     findNearStation();
-    return FutureBuilder(
-      future: Firebase.initializeApp(),
-      builder: (context, AsyncSnapshot snapshot) {
-        // Show splash screen while waiting for app resources to load:
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return MaterialApp(debugShowCheckedModeBanner: false, home: Splash());
-        } else {
-          // Loading is done, return the app:
-          return GetMaterialApp(
-            builder: (context, child) {
-              return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                  child: child!);
-            },
-            initialRoute: AppRoutes.DASHBOARD,
-            getPages: AppPages.list,
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.light,
-            // darkTheme: AppTheme.dark,
-            // themeMode: ThemeMode.system,
-          );
-        }
+    return GetMaterialApp(
+      builder: (context, child) {
+        return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            child: child!);
       },
+      initialRoute: AppRoutes.DASHBOARD,
+      getPages: AppPages.list,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      // darkTheme: AppTheme.dark,
+      // themeMode: ThemeMode.system,
     );
+    // return FutureBuilder(
+    //   future: Firebase.initializeApp(),
+    //   builder: (context, AsyncSnapshot snapshot) {
+    //     // Show splash screen while waiting for app resources to load:
+    //     if (snapshot.connectionState == ConnectionState.waiting) {
+    //       return MaterialApp(debugShowCheckedModeBanner: false, home: Splash());
+    //     } else {
+    //       // Loading is done, return the app:
+
+    //   },
+    // );
   }
 }
 
