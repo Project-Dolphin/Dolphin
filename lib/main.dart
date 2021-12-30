@@ -20,7 +20,7 @@ import 'themes/app_theme.dart';
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
+  await initFirebase();
   print('Handling a background message ${message.messageId}');
 }
 
@@ -54,6 +54,8 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
+    await initFirebase();
+
     channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
@@ -107,17 +109,18 @@ void main() async {
 }
 
 Future<void> initFirebase() async {
-  if (Firebase.apps.length == 0) {
+  if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
+        name: "OceanView",
         options: const FirebaseOptions(
-      apiKey:
-          '	AAAAN5dXGqg:APA91bELcxT-XIYUeLPmfWs9not4_1FKpbR_5oCQwzQmfmiL-Rn2flbAugNkYd2Sj4qS-uaDH7LJ8KieB9gUlzirjUbjTyyPr2ISxcmzPsD3W9f4J7nTOgsqZD1awcsUknlkfweEHH1j',
-      appId: '1:238762269352:android:9c3821ff635f1acb96c09d',
-      messagingSenderId: '238762269352',
-      projectId: 'oceanview_android',
-    ));
+          apiKey:
+              '	AAAAN5dXGqg:APA91bELcxT-XIYUeLPmfWs9not4_1FKpbR_5oCQwzQmfmiL-Rn2flbAugNkYd2Sj4qS-uaDH7LJ8KieB9gUlzirjUbjTyyPr2ISxcmzPsD3W9f4J7nTOgsqZD1awcsUknlkfweEHH1j',
+          appId: '1:238762269352:android:9c3821ff635f1acb96c09d',
+          messagingSenderId: '238762269352',
+          projectId: 'oceanview_android',
+        ));
   } else {
-    Firebase.app(); // 이미 초기화되었다면, 초기화 된 것을 사용함
+    Firebase.app('OceanView'); // 이미 초기화되었다면, 초기화 된 것을 사용함
   }
 }
 
@@ -127,7 +130,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     findNearStation();
     return FutureBuilder(
-      future: Firebase.initializeApp(),
+      future: Future.delayed(Duration(milliseconds: 500)),
       builder: (context, AsyncSnapshot snapshot) {
         // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {
