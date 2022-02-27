@@ -4,7 +4,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oceanview/pages/bus/stationData.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -21,7 +20,7 @@ import 'themes/app_theme.dart';
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
+  await initFirebase();
   print('Handling a background message ${message.messageId}');
 }
 
@@ -51,12 +50,12 @@ FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
-
   // Set the background messaging handler early on, as a named top-level function
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   if (!kIsWeb) {
+    await initFirebase();
+
     channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
@@ -109,19 +108,34 @@ void main() async {
   initializeDateFormatting().then((_) => runApp(MyApp()));
 }
 
+Future<void> initFirebase() async {
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+        name: "OceanView",
+        options: const FirebaseOptions(
+          apiKey:
+              '	AAAAN5dXGqg:APA91bELcxT-XIYUeLPmfWs9not4_1FKpbR_5oCQwzQmfmiL-Rn2flbAugNkYd2Sj4qS-uaDH7LJ8KieB9gUlzirjUbjTyyPr2ISxcmzPsD3W9f4J7nTOgsqZD1awcsUknlkfweEHH1j',
+          appId: '1:238762269352:android:9c3821ff635f1acb96c09d',
+          messagingSenderId: '238762269352',
+          projectId: 'oceanview_android',
+        ));
+  } else {
+    Firebase.app('OceanView'); // 이미 초기화되었다면, 초기화 된 것을 사용함
+  }
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     findNearStation();
     return FutureBuilder(
-      future: Firebase.initializeApp(),
+      future: Future.delayed(Duration(milliseconds: 500)),
       builder: (context, AsyncSnapshot snapshot) {
         // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {
           return MaterialApp(debugShowCheckedModeBanner: false, home: Splash());
         } else {
-          // Loading is done, return the app:
           return GetMaterialApp(
             builder: (context, child) {
               return MediaQuery(
