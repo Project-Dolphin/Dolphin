@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 //식당 운영시간
-const time = [
-  "11:30 ~ 13:30",
-]; //학생식당 (2층)
+const time = ["11:30 ~ 14:00\n15:00 ~ 18:30"]; //학생식당 (2층)
 const timeCafeteria = [
   "08:00 ~ 09:30",
   "09:30 ~ 15:00",
@@ -36,26 +34,26 @@ const breakfastClose = [
 ];
 const lunchOpen = [
   TimeOfDay(hour: 11, minute: 30),
-  TimeOfDay(hour: 9, minute: 30),
+  TimeOfDay(hour: 8, minute: 0),
   TimeOfDay(hour: 11, minute: 40),
   TimeOfDay(hour: 12, minute: 0),
 ];
 const lunchClose = [
-  TimeOfDay(hour: 13, minute: 30),
-  TimeOfDay(hour: 15, minute: 0),
+  TimeOfDay(hour: 14, minute: 0),
+  TimeOfDay(hour: 14, minute: 0),
   TimeOfDay(hour: 13, minute: 0),
 ];
 const dinnerOpen = [
-  TimeOfDay(hour: 17, minute: 0),
+  TimeOfDay(hour: 15, minute: 0),
   TimeOfDay(hour: 16, minute: 0),
 ];
 const dinnerClose = [
   TimeOfDay(hour: 18, minute: 30),
-  TimeOfDay(hour: 18, minute: 0),
+  TimeOfDay(hour: 18, minute: 30),
 ];
 
 //식단 종류
-const timeName1 = ["중식"]; //학생식당
+const timeName1 = ["백반", "국밥"]; //학생식당
 const timeName2 = ["조식", "중식", "석식"]; //스낵코너, 생활관(학생,승선)
 const timeName3 = ["중식", "일품식", ""]; //교직원
 

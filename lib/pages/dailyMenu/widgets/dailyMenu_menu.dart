@@ -29,23 +29,23 @@ class MealCard extends StatelessWidget {
         {
           menu?.forEach((element) {
             switch (element.type) {
-              case '중식':
+              case '백반':
                 menu1 =
                     element?.value.length < 1 || element.value[0].contains('년')
                         ? MealData(value: emptyMenuText)
                         : element;
                 break;
-              // case '석식':
-              //   menu2 = element;
-              //   break;
-              // case '일품식':
-              //   menu3 = element;
-              //   break;
+              case '국밥':
+                menu2 =
+                    element?.value.length < 1 || element.value[0].contains('년')
+                        ? MealData(value: emptyMenuText)
+                        : element;
+                break;
               default:
                 break;
             }
           });
-          menu2 = menu3 = null;
+          menu3 = null;
           break;
         }
       case 'staff':
@@ -140,7 +140,7 @@ class MealCard extends StatelessWidget {
                           ),
                           child: MealContentColumn(
                             mealName: name[1],
-                            mealTime: time[1],
+                            mealTime: time[0],
                             mealMenu: menu2!.value,
                             imageName: "cutlery_red.png",
                           ),
