@@ -6,7 +6,7 @@ class HomeController extends GetxController {
   String formattedDate = ' ';
   List noticeList = [];
   List latestEventList = [];
-  Weather? currentWeather;
+  Weather currentWeather = Weather();
   String stat = ' ';
 
   @override

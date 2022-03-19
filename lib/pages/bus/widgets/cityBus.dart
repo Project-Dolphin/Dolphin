@@ -26,7 +26,9 @@ class CityBus extends GetView<CityBusController> {
   }
 
   findCityBusSubTitle(item) {
-    return item == '주변정류장' || item == '부산역' || item == '영도대교' ? '해양대행' : '';
+    return item == '주변정류장' || item == '부산역.초량시장입구' || item == '영도대교'
+        ? '해양대행'
+        : '';
   }
 
   @override
@@ -292,8 +294,8 @@ class CityBus extends GetView<CityBusController> {
 fetchSelectedStation(selectedStation) {
   selectedStation == '주변정류장'
       ? findNearStation()
-      : selectedStation == '부산역'
-          ? fetchStation('169100201')
+      : selectedStation == '부산역.초량시장입구'
+          ? fetchStation('169130201')
           : selectedStation == '영도대교'
               ? fetchStation('167850202')
               : CityBusRepository().getNextDepartCityBus();
