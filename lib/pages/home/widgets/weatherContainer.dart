@@ -17,7 +17,7 @@ class WeatherContainer extends StatelessWidget {
       child: GetBuilder<HomeController>(
           init: HomeController(),
           builder: (_) {
-            return _.currentWeather == null
+            return _.currentWeather.status == null
                 ? Loading(
                     color: Colors.white,
                   )
@@ -39,9 +39,9 @@ class WeatherContainer extends StatelessWidget {
                                   Expanded(
                                       flex: 1,
                                       child: Image.asset(
-                                        _.currentWeather!.status!.contains('맑')
+                                        _.currentWeather.status!.contains('맑')
                                             ? 'assets/images/homePage/weatherIcon_sunny.png'
-                                            : _.currentWeather!.status!
+                                            : _.currentWeather.status!
                                                     .contains('비')
                                                 ? 'assets/images/homePage/weatherIcon_rainy.png'
                                                 : 'assets/images/homePage/weatherIcon_cloudy.png',
@@ -58,7 +58,7 @@ class WeatherContainer extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 TextBox(
-                                                    _.currentWeather!
+                                                    _.currentWeather
                                                         .temparature!,
                                                     42,
                                                     FontWeight.w700,
@@ -68,16 +68,7 @@ class WeatherContainer extends StatelessWidget {
                                                         left: SizeConfig
                                                             .sizeByHeight(5)),
                                                     child: TextBox(
-                                                      _.currentWeather!
-                                                                  .status! ==
-                                                              '맑은'
-                                                          ? '맑음'
-                                                          : _.currentWeather!
-                                                                      .status! ==
-                                                                  '아주 미세한 방울로 내리는 가벼운 비'
-                                                              ? '가벼운 비'
-                                                              : _.currentWeather!
-                                                                  .status!,
+                                                      _.currentWeather.status!,
                                                       16,
                                                       FontWeight.w400,
                                                       Colors.white,
@@ -123,7 +114,7 @@ class WeatherContainer extends StatelessWidget {
                                   SizedBox(
                                     width: SizeConfig.sizeByHeight(13),
                                   ),
-                                  TextBox(_.currentWeather!.windSpeed!, 18,
+                                  TextBox(_.currentWeather.windSpeed!, 18,
                                       FontWeight.w700, Colors.white),
                                 ],
                               ),
@@ -155,7 +146,7 @@ class WeatherContainer extends StatelessWidget {
                                   SizedBox(
                                     width: SizeConfig.sizeByHeight(13),
                                   ),
-                                  TextBox(_.currentWeather!.humidity!, 18,
+                                  TextBox(_.currentWeather.humidity!, 18,
                                       FontWeight.w700, Colors.white),
                                 ],
                               ),

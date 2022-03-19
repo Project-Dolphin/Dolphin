@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 /// Manages & returns the users FCM token.
@@ -28,17 +27,6 @@ class _TokenMonitor extends State<TokenMonitor> {
   @override
   void initState() {
     super.initState();
-    FirebaseMessaging.instance
-        .getToken(
-            // vapidKey:
-            //     'BGpdLRsMJKvFDD9odfPk92uBg-JbQbyoiZdah0XlUyrjG4SDgUsE1iC_kdRgt4Kn0CO7K3RTswPZt61NNuO0XoA')
-            )
-        .then((token) {
-      setToken(token!);
-      print(_token);
-    });
-    _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
-    _tokenStream.listen(setToken);
   }
 
   @override

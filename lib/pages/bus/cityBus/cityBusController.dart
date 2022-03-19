@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:oceanview/pages/bus/widgets/cityBus.dart';
 
 class CityBusController extends GetxController {
-  List<String> stationList = ['주변정류장', '해양대구본관', '부산역', '영도대교'];
+  List<String> stationList = ['주변정류장', '해양대구본관', '부산역.초량시장입구', '영도대교'];
   String selectedStation = '해양대구본관';
   String nearStation = '';
   bool isLoading = true;

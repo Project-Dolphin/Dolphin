@@ -26,8 +26,8 @@ Future<void> findNearStation() async {
   });
 
   if (!changeStation) {
-    nearStation = '부산역';
-    nodeId = '169100201';
+    nearStation = '부산역.초량시장입구';
+    nodeId = '169130201';
   }
   Get.find<CityBusController>().setStation(nearStation);
 
@@ -398,39 +398,39 @@ List station_190 = [
     "gpsY": 35.117926224452
   },
   {
-    "nodeName": "초량시장입구",
+    "nodeName": "부산역.초량시장입구",
     "nodeId": 169130201,
     "arsNo": "03074",
     "gpsX": 129.040577627837,
     "gpsY": 35.118492523925
   },
   {
-    "nodeName": "부산역",
-    "nodeId": 169100201,
-    "arsNo": "03064",
-    "gpsX": 129.040208807805,
-    "gpsY": 35.116590670941
+    "nodeName": "영주동",
+    "nodeId": 510030000,
+    "arsNo": "01701",
+    "gpsX": 129.03718412296925,
+    "gpsY": 35.1095333755579,
   },
   {
-    "nodeName": "중부경찰서",
-    "nodeId": 167700305,
-    "arsNo": "01039",
+    "nodeName": "중부경찰서삼거리",
+    "nodeId": 510080000,
+    "arsNo": "01703",
     "gpsX": 129.0363783333,
     "gpsY": 35.1076833333
   },
   {
-    "nodeName": "중앙동(중앙역)",
-    "nodeId": 167860202,
-    "arsNo": "01042",
-    "gpsX": 129.036024663725,
-    "gpsY": 35.105432821007
+    "nodeName": "중앙역.부산우체국",
+    "nodeId": 510120000,
+    "arsNo": "01705",
+    "gpsX": 129.03629017371208,
+    "gpsY": 35.10335150682202
   },
   {
-    "nodeName": "중앙동주민센터",
-    "nodeId": 167720201,
-    "arsNo": "01055",
-    "gpsX": 129.036337474608,
-    "gpsY": 35.100950218399
+    "nodeName": "부산데파트",
+    "nodeId": 509930000,
+    "arsNo": "01707",
+    "gpsX": 129.03643872743066,
+    "gpsY": 35.10084087064239
   },
   {
     "nodeName": "영도대교",
@@ -538,14 +538,14 @@ List station_190 = [
     "gpsY": 35.08184
   },
   {
-    "nodeName": "동삼주택",
+    "nodeName": "동삼시장",
     "nodeId": 209710201,
     "arsNo": "04087",
     "gpsX": 129.0703833333,
     "gpsY": 35.0785666667
   },
   {
-    "nodeName": "동삼동국민은행",
+    "nodeName": "동삼국민은행앞교차로",
     "nodeId": 171190201,
     "arsNo": "04089",
     "gpsX": 129.0726133333,

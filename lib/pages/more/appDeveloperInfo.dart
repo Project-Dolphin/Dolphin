@@ -69,8 +69,7 @@ class _AppDeveloperInfoState extends State<AppDeveloperInfo> {
                     SizedBox(
                       height: SizeConfig.sizeByHeight(30),
                     ),
-                    renderRole(
-                        '💻', 'App Developer', ['이시형', '김덕현', '김민욱', '박선호']),
+                    renderRole('💻', 'App Developer', ['이시형', '김덕현']),
                     SizedBox(
                       height: SizeConfig.sizeByHeight(30),
                     ),
