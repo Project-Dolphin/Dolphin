@@ -19,11 +19,6 @@ import 'package:oceanview/pages/more/more_page.dart';
 import 'dashboard_controller.dart';
 
 class DashboardPage extends StatefulWidget {
-  DashboardPage() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  }
-
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }

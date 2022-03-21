@@ -140,7 +140,7 @@ class MealCard extends StatelessWidget {
                           ),
                           child: MealContentColumn(
                             mealName: name[1],
-                            mealTime: time[0],
+                            mealTime: time[1],
                             mealMenu: menu2!.value,
                             imageName: "cutlery_red.png",
                           ),
