@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 const BASE_URL = 'x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com';
 const DEV_URL = 'pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com';
 
-const NEW_DEV_URL = 'localhost:8080';
+const NEW_DEV_URL = 'ec2-3-34-85-59.ap-northeast-2.compute.amazonaws.com';
 
 const PATH = const {
   'CALENDAR': '/calendar',
@@ -40,16 +40,6 @@ class FetchAPI {
       print('$error');
     }
   }
-
-  // Future fetchDevData(path, {queryParameters}) async {
-  //   try {
-  //     var url = Uri.https(DEV_URL, '/dev$path', queryParameters);
-  //     var response = await http.get(url);
-  //     return response;
-  //   } catch (error) {
-  //     print('$error');
-  //   }
-  // }
 
   Future fetchCityBusInfo(bstopid) async {
     var response = await fetchData('${PATH['BUS_190']}/${bstopid.trim()}');
