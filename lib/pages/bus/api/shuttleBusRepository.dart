@@ -6,26 +6,26 @@ import 'package:oceanview/pages/bus/shuttleBus/shuttleBusController.dart';
 
 class ShuttleBusRepository {
   List<dynamic> apiToJson(response) {
-    if (response.statusCode == 200) {
+    try {
       final jsonResult =
           convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
-      final jsonNextShuttle = jsonResult['data'];
-      final previousShuttle = jsonNextShuttle['previous'] ?? {'type': 'none'};
-      final nextShuttle = jsonNextShuttle['next'] ?? [];
 
-      return [previousShuttle, nextShuttle];
-    } else {
-      print('error ${response.statusCode}');
-      return [[], []];
+      return jsonResult['nextShuttle'] ?? [];
+    } catch (e) {
+      print('error ${e}');
+      return [];
     }
   }
 
-  Future<List<dynamic>> fetchNextShuttle() async {
-    return apiToJson(await FetchAPI().fetchNextShuttle());
-  }
-
-  Future<List<dynamic>> fetchShuttleList() async {
-    return apiToJson(await FetchAPI().fetchShuttleList());
+  Future<List<NextShuttle>?> fetchNextShuttle() async {
+    var response = await FetchAPI().fetchNextShuttle();
+    if (response != null) {
+      return apiToJson(response)
+          .map((element) => NextShuttle.fromJson(element))
+          .toList();
+    } else {
+      return [];
+    }
   }
 
   getNextShuttle() async {
@@ -35,11 +35,5 @@ class ShuttleBusRepository {
     Get.find<ShuttleBusController>().setShuttleRemainTimes();
     await Future.delayed(Duration(seconds: 0),
         () => Get.find<ShuttleBusController>().setIsLoading(false));
-  }
-
-  getShuttleList() async {
-    Get.put(ShuttleBusController());
-    Get.find<ShuttleBusController>().setShuttleList([]);
-    Get.find<ShuttleBusController>().setShuttleList(await fetchShuttleList());
   }
 }

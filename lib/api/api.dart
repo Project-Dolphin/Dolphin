@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 const BASE_URL = 'x4hvqlt6g5.execute-api.ap-northeast-2.amazonaws.com';
 const DEV_URL = 'pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com';
 
+const NEW_DEV_URL = 'localhost:8080';
+
 const PATH = const {
   'CALENDAR': '/calendar',
   'LATEST_CALENDAR': '/calendar/latest',
@@ -10,8 +12,7 @@ const PATH = const {
   'HOLIDAY': '/holiday',
   'BUS_190': '/businfo',
   'SHUTTLE_NEXT': '/shuttle/next',
-  'SHUTTLE_LIST': '/shuttle/today',
-  'SHUTTLE_ALL': '/timetable/shuttle',
+  'NEW_SHUTTLE_NEXT': '/bus/nextshuttle',
   'DEPART_190': '/timetable/190',
   'WEATHER': '/weather/now',
   'MEAL': '/diet/v2/society/today',
@@ -23,6 +24,16 @@ class FetchAPI {
   Future fetchData(path, {queryParameters}) async {
     try {
       var url = Uri.https(BASE_URL, '/prod$path', queryParameters);
+      var response = await http.get(url);
+      return response;
+    } catch (error) {
+      print('$error');
+    }
+  }
+
+  Future fetchNewServerData(path, {queryParameters}) async {
+    try {
+      var url = Uri.http(NEW_DEV_URL, path, queryParameters);
       var response = await http.get(url);
       return response;
     } catch (error) {
@@ -56,12 +67,7 @@ class FetchAPI {
   }
 
   Future fetchNextShuttle() async {
-    var response = await fetchData(PATH['SHUTTLE_NEXT']);
-    return response;
-  }
-
-  Future fetchShuttleList() async {
-    var response = await fetchData(PATH['SHUTTLE_LIST']);
+    var response = await fetchNewServerData(PATH['NEW_SHUTTLE_NEXT']);
     return response;
   }
 

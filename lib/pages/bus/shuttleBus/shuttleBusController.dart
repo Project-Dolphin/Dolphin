@@ -5,21 +5,9 @@ import 'package:oceanview/pages/bus/api/shuttleBusRepository.dart';
 
 class ShuttleBusController extends GetxController {
   bool isLoading = false;
-  List<String> stationList = [
-    '학교종점 (아치나루터)',
-    '하리상가',
-  ];
-  String selectedStation = '학교종점 (아치나루터)';
+  List<NextShuttle> nextShuttle = [];
 
   Timer? timer;
-
-  List<dynamic> nextShuttle = [];
-  List<dynamic> previousShuttle = [];
-  List<dynamic> shuttleList = [];
-
-  List<dynamic> remainTime = [];
-  List<dynamic> hariRemainTime = [];
-  String previousTime = '';
 
   @override
   void onInit() async {
@@ -39,90 +27,84 @@ class ShuttleBusController extends GetxController {
     update();
   }
 
-  void setSelectedStation(station) {
-    selectedStation = station;
-    update();
-  }
-
   void setIsLoading(loading) {
     isLoading = loading;
     update();
   }
 
   void setNextShuttle(response) {
-    var now = DateTime.now();
-    List<DateTime> newPreviousShuttle = [];
-    List<DateTime> newNextShuttle = [];
-    for (var i = 0; i < response[1].length; i++) {
-      if (response[1][i]['type'] != 'none') {
-        var hour = int.parse(response[1][i]['time'].substring(0, 2));
-        var minute = int.parse(response[1][i]['time'].substring(2, 4));
-        now.hour > hour
-            ? newNextShuttle
-                .add(DateTime(now.year, now.month, now.day + 1, hour, minute))
-            : newNextShuttle
-                .add(DateTime(now.year, now.month, now.day, hour, minute));
-      }
-    }
-
-    if (response[0].length > 0 && response[0]['type'] != 'none') {
-      var hour = int.parse(response[0]['time'].substring(0, 2));
-      var minute = int.parse(response[0]['time'].substring(2, 4));
-      newPreviousShuttle
-          .add(DateTime(now.year, now.month, now.day, hour, minute));
-    }
-    nextShuttle = newNextShuttle;
-    previousShuttle = newPreviousShuttle;
-
-    update();
-  }
-
-  void setShuttleList(shuttleList) {
-    shuttleList = shuttleList;
+    nextShuttle = response;
     update();
   }
 
   void setShuttleRemainTimes() {
-    previousTime = previousShuttle.length > 0
-        ? (previousShuttle[0].difference(DateTime.now()).inMinutes * -1)
-            .toString()
-        : '';
-    if (int.tryParse(previousTime).runtimeType == int) {
-      if (int.parse(previousTime) < 6) {
-        hariRemainTime.add((6 - int.parse(previousTime)).toString());
-      }
-    }
-    for (var i = 0;
-        i < (nextShuttle.length >= 3 ? 3 : nextShuttle.length);
-        i++) {
-      var differenceMinute =
-          nextShuttle[i].difference(DateTime.now()).inMinutes;
-      if (int.tryParse(previousTime).runtimeType == int) {
-        if (int.parse(previousTime) >= 6 || i < 3) {
-          hariRemainTime.add((differenceMinute + 6).toString());
-        }
-      } else {
-        hariRemainTime.add((differenceMinute + 6).toString());
-      }
-      remainTime.add(differenceMinute.toString());
-    }
-
     if (timer == null) {
-      setTimer(30, () {
-        remainTime = [];
-        hariRemainTime = [];
+      setTimer(5, () {
+        for (var i = 0; i < nextShuttle.length; i++) {
+          var element = nextShuttle[i];
+          DateTime now = DateTime.now();
+          var shuttleTime = new DateTime(
+              now.year,
+              now.month,
+              now.day,
+              int.parse(element.time?.split(':')[0] ?? ''),
+              int.parse(element.time?.split(':')[1] ?? ''));
+          var differenceMinute = shuttleTime.difference(now).inMinutes;
+          nextShuttle[i].remainMinutes = differenceMinute;
+        }
 
-        nextShuttle.forEach((element) {
-          var differenceMinute = element.difference(DateTime.now()).inMinutes;
-          hariRemainTime.add((differenceMinute + 6).toString());
-          remainTime.add(differenceMinute.toString());
-        });
-        if (nextShuttle.length > 0 && int.parse(remainTime[0]) <= 0) {
+        if (nextShuttle.length > 0 && nextShuttle[0].remainMinutes! < 0) {
+          print('next ${nextShuttle[0].remainMinutes}');
           ShuttleBusRepository().getNextShuttle();
         }
       });
     }
 
     update();
+  }
+}
+
+class NextShuttleData {
+  List<NextShuttle>? nextShuttle;
+
+  NextShuttleData({this.nextShuttle});
+
+  NextShuttleData.fromJson(Map<String, dynamic> json) {
+    if (json['nextShuttle'] != null) {
+      nextShuttle = <NextShuttle>[];
+      json['nextShuttle'].forEach((v) {
+        nextShuttle!.add(new NextShuttle.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.nextShuttle != null) {
+      data['nextShuttle'] = this.nextShuttle!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class NextShuttle {
+  String? destination;
+  String? time;
+  int? remainMinutes;
+
+  NextShuttle({this.destination, this.time, this.remainMinutes});
+
+  NextShuttle.fromJson(Map<String, dynamic> json) {
+    destination = json['destination'];
+    time = json['time'];
+    remainMinutes = json['remainMinutes'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['destination'] = this.destination;
+    data['time'] = this.time;
+    data['remainMinutes'] = this.remainMinutes;
+    return data;
   }
 }

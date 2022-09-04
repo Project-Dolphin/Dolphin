@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:oceanview/common/container/glassMorphism.dart';
 import 'package:oceanview/common/dialog/dialog.dart';
-import 'package:oceanview/common/dropdown/dropdownButton.dart';
 import 'package:oceanview/common/loading/loading.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
@@ -39,7 +37,7 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                         FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
-                            '정류장 선택',
+                            '예시 문장 들어갈 곳',
                             style: TextStyle(
                               color: Color(0xFF0081FF),
                               fontSize: 10,
@@ -53,23 +51,9 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                           padding:
                               EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
                           child: Column(children: [
-                            _.isLoading || _.previousTime == ''
-                                ? SizedBox(
-                                    height: SizeConfig.sizeByHeight(14),
-                                  )
-                                : _.selectedStation == '학교종점 (아치나루터)'
-                                    ? TextBox(
-                                        '이전차는 약 ${_.previousTime}분전에 지나갔어요',
-                                        12,
-                                        FontWeight.w400,
-                                        Color(0xFF353B45))
-                                    : _.hariRemainTime.length > 0 &&
-                                            int.parse(_.hariRemainTime[0]) <= 6
-                                        ? TextBox('이전차는 약 3분전에 지나갔어요', 12,
-                                            FontWeight.w400, Color(0xFF353B45))
-                                        : SizedBox(
-                                            height: SizeConfig.sizeByHeight(14),
-                                          ),
+                            SizedBox(
+                              height: SizeConfig.sizeByHeight(14),
+                            ),
                             SizedBox(
                               height: SizeConfig.sizeByHeight(10),
                             ),
@@ -109,97 +93,73 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                                                   init: BusController(),
                                                   builder: (busController) {
                                                     return Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children:
-                                                          _.selectedStation ==
-                                                                  '학교종점 (아치나루터)'
-                                                              ? [
-                                                                  FirstArrive(
-                                                                      _.nextShuttle.length >
-                                                                              0
-                                                                          ? _.remainTime[
-                                                                              0]
-                                                                          : '없음',
-                                                                      _.nextShuttle.length >
-                                                                              0
-                                                                          ? DateFormat('HH:mm')
-                                                                              .format(_.nextShuttle[0])
-                                                                          : ' '),
-                                                                  SecondArrive(
-                                                                      _.nextShuttle.length >
-                                                                              1
-                                                                          ? _.remainTime[
-                                                                              1]
-                                                                          : '없음',
-                                                                      _.nextShuttle.length >
-                                                                              1
-                                                                          ? DateFormat('HH:mm').format(_.nextShuttle[
-                                                                              1])
-                                                                          : ' ',
-                                                                      _.stationList
-                                                                          .indexOf(_
-                                                                              .selectedStation),
-                                                                      busController.getIsNotiOn(_
-                                                                              .stationList
-                                                                              .indexOf(_.selectedStation) +
-                                                                          30)),
-                                                                  ThirdArrive(
-                                                                      _.nextShuttle.length >
-                                                                              2
-                                                                          ? _.remainTime[
-                                                                              2]
-                                                                          : '없음',
-                                                                      _.nextShuttle.length >
-                                                                              2
-                                                                          ? DateFormat('HH:mm').format(_.nextShuttle[
-                                                                              2])
-                                                                          : ' ',
-                                                                      _.stationList
-                                                                          .indexOf(_
-                                                                              .selectedStation),
-                                                                      busController
-                                                                          .getIsNotiOn(_.stationList.indexOf(_.selectedStation) +
-                                                                              40))
-                                                                ]
-                                                              : [
-                                                                  FirstArrive(
-                                                                      _.nextShuttle.length >
-                                                                              0
-                                                                          ? _.hariRemainTime[
-                                                                              0]
-                                                                          : '없음',
-                                                                      ' '),
-                                                                  SecondArrive(
-                                                                      _.nextShuttle.length >
-                                                                              1
-                                                                          ? _.hariRemainTime[
-                                                                              1]
-                                                                          : '없음',
-                                                                      ' ',
-                                                                      _.stationList
-                                                                          .indexOf(_
-                                                                              .selectedStation),
-                                                                      busController.getIsNotiOn(_
-                                                                              .stationList
-                                                                              .indexOf(_.selectedStation) +
-                                                                          30)),
-                                                                  ThirdArrive(
-                                                                      _.nextShuttle.length >
-                                                                              2
-                                                                          ? _.hariRemainTime[
-                                                                              2]
-                                                                          : '없음',
-                                                                      ' ',
-                                                                      _.stationList
-                                                                          .indexOf(_
-                                                                              .selectedStation),
-                                                                      busController
-                                                                          .getIsNotiOn(_.stationList.indexOf(_.selectedStation) +
-                                                                              40))
-                                                                ],
-                                                    );
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          FirstArrive(
+                                                              _.nextShuttle
+                                                                          .length >
+                                                                      0
+                                                                  ? _
+                                                                      .nextShuttle[
+                                                                          0]
+                                                                      .remainMinutes
+                                                                      .toString()
+                                                                  : '없음',
+                                                              _.nextShuttle
+                                                                          .length >
+                                                                      0
+                                                                  ? _
+                                                                      .nextShuttle[
+                                                                          0]
+                                                                      .time
+                                                                  : ' '),
+                                                          SecondArrive(
+                                                              _.nextShuttle
+                                                                          .length >
+                                                                      1
+                                                                  ? _
+                                                                      .nextShuttle[
+                                                                          1]
+                                                                      .remainMinutes
+                                                                      .toString()
+                                                                  : '없음',
+                                                              _.nextShuttle
+                                                                          .length >
+                                                                      1
+                                                                  ? _
+                                                                      .nextShuttle[
+                                                                          1]
+                                                                      .time
+                                                                  : ' ',
+                                                              0,
+                                                              busController
+                                                                  .getIsNotiOn(
+                                                                      30)),
+                                                          ThirdArrive(
+                                                              _.nextShuttle
+                                                                          .length >
+                                                                      2
+                                                                  ? _
+                                                                      .nextShuttle[
+                                                                          2]
+                                                                      .remainMinutes
+                                                                      .toString()
+                                                                  : '없음',
+                                                              _.nextShuttle
+                                                                          .length >
+                                                                      2
+                                                                  ? _
+                                                                      .nextShuttle[
+                                                                          2]
+                                                                      .time
+                                                                  : ' ',
+                                                              0,
+                                                              busController
+                                                                  .getIsNotiOn(
+                                                                      40))
+                                                        ]);
                                                   }),
                                             ),
                                             Row(
@@ -251,21 +211,6 @@ class ShuttleBus extends GetView<ShuttleBusController> {
                           ]),
                         ),
                       ],
-                    ),
-                    Positioned.fill(
-                      top: SizeConfig.sizeByHeight(24),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Dropdown(
-                          _.stationList,
-                          _.selectedStation,
-                          (value) {
-                            ShuttleBusRepository().getNextShuttle();
-                            _.setSelectedStation(value);
-                          },
-                          findSubTitle: findShuttleBusSubTitle,
-                        ),
-                      ),
                     ),
                   ],
                 );
