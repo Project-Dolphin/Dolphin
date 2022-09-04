@@ -23,198 +23,211 @@ class ShuttleBus extends GetView<ShuttleBusController> {
       width: SizeConfig.sizeByWidth(300),
       height: SizeConfig.sizeByHeight(478),
       widget: Container(
-          margin: EdgeInsets.symmetric(
-              vertical: SizeConfig.sizeByWidth(8),
-              horizontal: SizeConfig.sizeByHeight(16)),
-          child: GetBuilder<ShuttleBusController>(
-              init: ShuttleBusController(),
-              builder: (_) {
-                return Stack(
+        margin: EdgeInsets.symmetric(
+            vertical: SizeConfig.sizeByWidth(8),
+            horizontal: SizeConfig.sizeByHeight(16)),
+        child: GetBuilder<ShuttleBusController>(
+          init: ShuttleBusController(),
+          builder: (_) {
+            return Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            '예시 문장 들어갈 곳',
-                            style: TextStyle(
-                              color: Color(0xFF0081FF),
-                              fontSize: 10,
-                            ),
-                          ),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        '정류장',
+                        style: TextStyle(
+                          color: Color(0xFF0081FF),
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.sizeByHeight(12),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        width: SizeConfig.sizeByWidth(200),
+                        height: SizeConfig.sizeByHeight(35),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Color(0xFFFBFBFB),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 6),
+                              blurRadius: 20,
+                              spreadRadius: -5,
+                              color: Color(0xFFA9A9A9).withOpacity(0.21),
+                            )
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextBox(
+                                '학교종점', 16, FontWeight.w700, Color(0xff3f3f3f))
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.sizeByHeight(16),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
+                      child: Column(children: [
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(14),
                         ),
                         SizedBox(
-                          height: SizeConfig.sizeByHeight(55),
+                          height: SizeConfig.sizeByHeight(10),
                         ),
-                        Padding(
-                          padding:
-                              EdgeInsets.only(top: SizeConfig.sizeByHeight(10)),
-                          child: Column(children: [
-                            SizedBox(
-                              height: SizeConfig.sizeByHeight(14),
-                            ),
-                            SizedBox(
-                              height: SizeConfig.sizeByHeight(10),
-                            ),
-                            Container(
-                              height: SizeConfig.sizeByHeight(350),
-                              child: _.isLoading
-                                  ? Loading()
-                                  : Stack(
-                                      children: [
-                                        Container(
-                                          width: 1,
-                                          margin: EdgeInsets.only(
-                                              left:
-                                                  SizeConfig.sizeByHeight(45)),
-                                          height: SizeConfig.sizeByHeight(290),
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                                colors: <Color>[
-                                                  Color(0xFF4BA6FF)
-                                                      .withOpacity(0),
-                                                  Color(0xFF3299F3),
-                                                  Color(0xFF4BA6FF)
-                                                      .withOpacity(0),
-                                                ],
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                stops: [0.0, 0.5, 1.0],
-                                                tileMode: TileMode.clamp),
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: GetBuilder<BusController>(
-                                                  init: BusController(),
-                                                  builder: (busController) {
-                                                    return Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          FirstArrive(
-                                                              _.nextShuttle
-                                                                          .length >
-                                                                      0
-                                                                  ? _
-                                                                      .nextShuttle[
-                                                                          0]
-                                                                      .remainMinutes
-                                                                      .toString()
-                                                                  : '없음',
-                                                              _.nextShuttle
-                                                                          .length >
-                                                                      0
-                                                                  ? _
-                                                                      .nextShuttle[
-                                                                          0]
-                                                                      .time
-                                                                  : ' '),
-                                                          SecondArrive(
-                                                              _.nextShuttle
-                                                                          .length >
-                                                                      1
-                                                                  ? _
-                                                                      .nextShuttle[
-                                                                          1]
-                                                                      .remainMinutes
-                                                                      .toString()
-                                                                  : '없음',
-                                                              _.nextShuttle
-                                                                          .length >
-                                                                      1
-                                                                  ? _
-                                                                      .nextShuttle[
-                                                                          1]
-                                                                      .time
-                                                                  : ' ',
-                                                              0,
-                                                              busController
-                                                                  .getIsNotiOn(
-                                                                      30)),
-                                                          ThirdArrive(
-                                                              _.nextShuttle
-                                                                          .length >
-                                                                      2
-                                                                  ? _
-                                                                      .nextShuttle[
-                                                                          2]
-                                                                      .remainMinutes
-                                                                      .toString()
-                                                                  : '없음',
-                                                              _.nextShuttle
-                                                                          .length >
-                                                                      2
-                                                                  ? _
-                                                                      .nextShuttle[
-                                                                          2]
-                                                                      .time
-                                                                  : ' ',
-                                                              0,
-                                                              busController
-                                                                  .getIsNotiOn(
-                                                                      40))
-                                                        ]);
-                                                  }),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                ElevatedButton(
-                                                    onPressed: () =>
-                                                        UrlUtils.launchURL(
-                                                            'https://www.kmou.ac.kr/kmou/cm/cntnts/cntntsView.do?mi=1418&cntntsId=328'),
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary:
-                                                          Colors.transparent,
-                                                      shadowColor:
-                                                          Colors.transparent,
-                                                      padding: EdgeInsets.all(
-                                                          SizeConfig
-                                                              .sizeByHeight(
-                                                                  8.5)),
-                                                    ),
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        TextBox(
-                                                            '전체시간보기',
-                                                            12,
-                                                            FontWeight.w500,
-                                                            Color(0xFF353B45)),
-                                                        Icon(
-                                                          Icons
-                                                              .arrow_forward_ios_rounded,
-                                                          size: SizeConfig
-                                                              .sizeByHeight(12),
-                                                          color:
-                                                              Color(0xFF353B45),
-                                                        )
-                                                      ],
-                                                    )),
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                      ],
+                        Container(
+                          height: SizeConfig.sizeByHeight(350),
+                          child: _.isLoading
+                              ? Loading()
+                              : Stack(
+                                  children: [
+                                    Container(
+                                      width: 1,
+                                      margin: EdgeInsets.only(
+                                          left: SizeConfig.sizeByHeight(45)),
+                                      height: SizeConfig.sizeByHeight(290),
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: <Color>[
+                                              Color(0xFF4BA6FF).withOpacity(0),
+                                              Color(0xFF3299F3),
+                                              Color(0xFF4BA6FF).withOpacity(0),
+                                            ],
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            stops: [0.0, 0.5, 1.0],
+                                            tileMode: TileMode.clamp),
+                                      ),
                                     ),
-                            ),
-                          ]),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: GetBuilder<BusController>(
+                                              init: BusController(),
+                                              builder: (busController) {
+                                                return Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      FirstArrive(
+                                                        _.nextShuttle.length > 0
+                                                            ? _.nextShuttle[0]
+                                                                .remainMinutes
+                                                                .toString()
+                                                            : '없음',
+                                                        _.nextShuttle.length > 0
+                                                            ? _.nextShuttle[0]
+                                                                .time
+                                                            : ' ',
+                                                        _.nextShuttle.length > 0
+                                                            ? _.nextShuttle[0]
+                                                                .destination
+                                                            : ' ',
+                                                      ),
+                                                      SecondArrive(
+                                                          _.nextShuttle.length >
+                                                                  1
+                                                              ? _.nextShuttle[1]
+                                                                  .remainMinutes
+                                                                  .toString()
+                                                              : '없음',
+                                                          _.nextShuttle.length >
+                                                                  1
+                                                              ? _.nextShuttle[1]
+                                                                  .time
+                                                              : ' ',
+                                                          _.nextShuttle.length >
+                                                                  1
+                                                              ? _.nextShuttle[1]
+                                                                  .destination
+                                                              : ' ',
+                                                          busController
+                                                              .getIsNotiOn(30)),
+                                                      ThirdArrive(
+                                                          _.nextShuttle.length >
+                                                                  2
+                                                              ? _.nextShuttle[2]
+                                                                  .remainMinutes
+                                                                  .toString()
+                                                              : '없음',
+                                                          _.nextShuttle.length >
+                                                                  2
+                                                              ? _.nextShuttle[2]
+                                                                  .time
+                                                              : ' ',
+                                                          _.nextShuttle.length >
+                                                                  2
+                                                              ? _.nextShuttle[2]
+                                                                  .destination
+                                                              : ' ',
+                                                          busController
+                                                              .getIsNotiOn(40))
+                                                    ]);
+                                              }),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            ElevatedButton(
+                                                onPressed: () => UrlUtils.launchURL(
+                                                    'https://www.kmou.ac.kr/kmou/cm/cntnts/cntntsView.do?mi=1418&cntntsId=328'),
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: Colors.transparent,
+                                                  shadowColor:
+                                                      Colors.transparent,
+                                                  padding: EdgeInsets.all(
+                                                      SizeConfig.sizeByHeight(
+                                                          8.5)),
+                                                ),
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    TextBox(
+                                                        '전체시간보기',
+                                                        12,
+                                                        FontWeight.w500,
+                                                        Color(0xFF353B45)),
+                                                    Icon(
+                                                      Icons
+                                                          .arrow_forward_ios_rounded,
+                                                      size: SizeConfig
+                                                          .sizeByHeight(12),
+                                                      color: Color(0xFF353B45),
+                                                    )
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
                         ),
-                      ],
+                      ]),
                     ),
                   ],
-                );
-              })),
+                )
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -237,11 +250,13 @@ handleBusNotification(id, remainTime, isNotiOn) async {
 }
 
 class FirstArrive extends StatelessWidget {
-  const FirstArrive(this.remainTime, this.arriveTime, {Key? key})
+  const FirstArrive(this.remainTime, this.arriveTime, this.destination,
+      {Key? key})
       : super(key: key);
 
   final String? remainTime;
   final String? arriveTime;
+  final String? destination;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -271,15 +286,33 @@ class FirstArrive extends StatelessWidget {
                         Color(0xFF353B45))
                     : TextBox('곧 도착', 30, FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
-                ? Column(
-                    children: [
-                      TextBox(
-                        '$arriveTime',
-                        14,
-                        FontWeight.w400,
-                        Color(0xFF717171),
-                      ),
-                    ],
+                ? Padding(
+                    padding: EdgeInsets.only(top: SizeConfig.sizeByHeight(4)),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            TextBox(
+                              '$arriveTime',
+                              14,
+                              FontWeight.w400,
+                              Color(0xFF717171),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.sizeByHeight(8),
+                            ),
+                            destination != '하리'
+                                ? TextBox(
+                                    '$destination',
+                                    14,
+                                    FontWeight.w700,
+                                    Color(0xFF4BA6FF),
+                                  )
+                                : Container(),
+                          ],
+                        )
+                      ],
+                    ),
                   )
                 : SizedBox(
                     height: SizeConfig.sizeByHeight(4),
@@ -292,14 +325,14 @@ class FirstArrive extends StatelessWidget {
 }
 
 class SecondArrive extends StatelessWidget {
-  const SecondArrive(this.remainTime, this.arriveTime, this.stationIndex,
-      this.isNotificationOn,
+  const SecondArrive(
+      this.remainTime, this.arriveTime, this.destination, this.isNotificationOn,
       {Key? key})
       : super(key: key);
 
   final String? remainTime;
   final String? arriveTime;
-  final int? stationIndex;
+  final String? destination;
   final bool? isNotificationOn;
   @override
   Widget build(BuildContext context) {
@@ -314,8 +347,8 @@ class SecondArrive extends StatelessWidget {
                 primary: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
-              onPressed: () => handleBusNotification(
-                  30 + stationIndex!, remainTime, isNotificationOn),
+              onPressed: () =>
+                  handleBusNotification(30, remainTime, isNotificationOn),
               child: Image.asset(
                 isNotificationOn!
                     ? 'assets/images/busPage/notiIcon_next_on.png'
@@ -338,11 +371,29 @@ class SecondArrive extends StatelessWidget {
                 : TextBox(
                     '$remainTime분 후', 24, FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
-                ? TextBox(
-                    '$arriveTime',
-                    14,
-                    FontWeight.w400,
-                    Color(0xFF717171),
+                ? Padding(
+                    padding: EdgeInsets.only(top: SizeConfig.sizeByHeight(4)),
+                    child: Row(
+                      children: [
+                        TextBox(
+                          '$arriveTime',
+                          14,
+                          FontWeight.w400,
+                          Color(0xFF717171),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.sizeByHeight(8),
+                        ),
+                        destination != '하리'
+                            ? TextBox(
+                                '$destination',
+                                14,
+                                FontWeight.w700,
+                                Color(0xFF4BA6FF),
+                              )
+                            : Container(),
+                      ],
+                    ),
                   )
                 : SizedBox(
                     height: SizeConfig.sizeByHeight(5),
@@ -355,14 +406,14 @@ class SecondArrive extends StatelessWidget {
 }
 
 class ThirdArrive extends StatelessWidget {
-  const ThirdArrive(this.remainTime, this.arriveTime, this.stationIndex,
-      this.isNotificationOn,
+  const ThirdArrive(
+      this.remainTime, this.arriveTime, this.destination, this.isNotificationOn,
       {Key? key})
       : super(key: key);
 
   final String? remainTime;
   final String? arriveTime;
-  final int? stationIndex;
+  final String? destination;
   final bool? isNotificationOn;
 
   @override
@@ -378,8 +429,8 @@ class ThirdArrive extends StatelessWidget {
                 primary: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
-              onPressed: () => handleBusNotification(
-                  40 + stationIndex!, remainTime, isNotificationOn),
+              onPressed: () =>
+                  handleBusNotification(40, remainTime, isNotificationOn),
               child: Image.asset(
                 isNotificationOn!
                     ? 'assets/images/busPage/notiIcon_later_on.png'
@@ -402,18 +453,36 @@ class ThirdArrive extends StatelessWidget {
                 : TextBox(
                     '$remainTime분 후', 18, FontWeight.w700, Color(0xFF353B45)),
             arriveTime != ' '
-                ? Column(
-                    children: [
-                      TextBox(
-                        '$arriveTime',
-                        14,
-                        FontWeight.w400,
-                        Color(0xFF717171),
-                      ),
-                      SizedBox(
-                        height: SizeConfig.sizeByHeight(2),
-                      ),
-                    ],
+                ? Padding(
+                    padding: EdgeInsets.only(top: SizeConfig.sizeByHeight(4)),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            TextBox(
+                              '$arriveTime',
+                              14,
+                              FontWeight.w400,
+                              Color(0xFF717171),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.sizeByHeight(8),
+                            ),
+                            destination != '하리'
+                                ? TextBox(
+                                    '$destination',
+                                    14,
+                                    FontWeight.w700,
+                                    Color(0xFF4BA6FF),
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                        SizedBox(
+                          height: SizeConfig.sizeByHeight(2),
+                        ),
+                      ],
+                    ),
                   )
                 : SizedBox(
                     height: SizeConfig.sizeByHeight(5),

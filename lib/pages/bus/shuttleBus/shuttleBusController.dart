@@ -55,7 +55,9 @@ class ShuttleBusController extends GetxController {
 
         if (nextShuttle.length > 0 && nextShuttle[0].remainMinutes! < 0) {
           print('next ${nextShuttle[0].remainMinutes}');
+          timer?.cancel();
           ShuttleBusRepository().getNextShuttle();
+          setShuttleRemainTimes();
         }
       });
     }
