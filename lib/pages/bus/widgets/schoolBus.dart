@@ -22,10 +22,10 @@ class SchoolBus extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                renderSchoolBus('학교 - 남포동간 2회 운행', '영도대교 대궁한정식'),
+                renderSchoolBus('학교 - 남포동간 4회 운행', '영도대교 대궁한정식'),
                 Column(
                   children: [
-                    renderSchoolBus('학교 - 대연동간 2회 운행', '경성대부경대역 3번출구 눈사랑 안경점'),
+                    renderSchoolBus('학교 - 대연동간 4회 운행', '경성대부경대역 3번출구 눈사랑 안경점'),
                     SizedBox(
                       height: SizeConfig.sizeByHeight(54),
                     )
@@ -103,9 +103,25 @@ class SchoolBus extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    TextBox('11:00', 14, FontWeight.w700, Color(0xFF353B45)),
+                    TextBox('11:25', 14, FontWeight.w700, Color(0xFF353B45)),
+                    TextBox('11:50', 14, FontWeight.w700, Color(0xFF353B45)),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     TextBox('14:00', 14, FontWeight.w700, Color(0xFF353B45)),
                     TextBox('14:25', 14, FontWeight.w700, Color(0xFF353B45)),
                     TextBox('14:50', 14, FontWeight.w700, Color(0xFF353B45)),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextBox('16:00', 14, FontWeight.w700, Color(0xFF353B45)),
+                    TextBox('16:25', 14, FontWeight.w700, Color(0xFF353B45)),
+                    TextBox('16:50', 14, FontWeight.w700, Color(0xFF353B45)),
                   ],
                 ),
               ],

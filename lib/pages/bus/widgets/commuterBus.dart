@@ -7,15 +7,15 @@ import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/bus/commuterBus/commuterBusController.dart';
 
-class CommuterBus extends GetView<CommuterBusController> {
-  findCommuterBusTitle(item) {
-    return item.contains('출근')
-        ? item.replaceFirst(' 출근', '')
-        : item.contains('퇴근')
-            ? item.replaceFirst(' 퇴근', '')
-            : item;
-  }
+findCommuterBusTitle(item) {
+  return item.contains('출근')
+      ? item.replaceFirst(' 출근', '')
+      : item.contains('퇴근')
+          ? item.replaceFirst(' 퇴근', '')
+          : item;
+}
 
+class CommuterBus extends GetView<CommuterBusController> {
   findCommuterBusSubTitle(item) {
     return item.contains('출근')
         ? '출근'
@@ -78,9 +78,9 @@ class CommuterBus extends GetView<CommuterBusController> {
 
   setStationStatus(selectedBus) {
     if (selectedBus == '통근 버스 1호 출근') {
-      return renderStationStatus(controller.stationList_1[0], '07:20', '08:50');
+      return renderStationStatus(controller.stationList_1[0], '07:30', ' ');
     } else if (selectedBus == '통근 버스 2호 출근') {
-      return renderStationStatus(controller.stationList_2[0], '07:55', '08:50');
+      return renderStationStatus(controller.stationList_2[0], '07:50', ' ');
     } else if (selectedBus == '통근 버스 3호 출근') {
       return renderStationStatus(controller.stationList_3[0], '07:35', '08:50');
     } else if (selectedBus == '통근 버스 1호 퇴근') {

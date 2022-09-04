@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:oceanview/common/sizeConfig.dart';
 import 'package:oceanview/common/text/textBox.dart';
 import 'package:oceanview/pages/bus/bus_controller.dart';
+import 'package:oceanview/pages/bus/widgets/commuterBus.dart';
 
 class Dropdown extends StatefulWidget {
   const Dropdown(this.itemList, this.selectedItem, this.setItemState,
@@ -157,11 +158,7 @@ class _DropdownState extends State<Dropdown> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        item.contains('출근')
-                                            ? item.replaceFirst(' 출근', '')
-                                            : item.contains('퇴근')
-                                                ? item.replaceFirst(' 퇴근', '')
-                                                : item,
+                                        findCommuterBusTitle(item),
                                         style: TextStyle(
                                             color: widget.selectedItem == item
                                                 ? Colors.white

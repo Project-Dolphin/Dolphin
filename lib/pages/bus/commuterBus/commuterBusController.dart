@@ -15,8 +15,6 @@ class CommuterBusController extends GetxController {
       : '통근 버스 1호 퇴근';
   List<List<String>> stationList_1 = [
     [
-      '풍년혼수마트',
-      '롯데캐슬 상가 앞',
       '장전동 놀이터',
       '온천장 홈플러스',
       '롯데백화점 정류장',
@@ -26,16 +24,15 @@ class CommuterBusController extends GetxController {
       '양정역',
       '부전역',
       '서면역',
-      '범일역 5번출구',
-      '부산진역 7번출구',
-      '부산역 3번출구',
-      '영도대교 대궁한정식',
+      '범일역',
+      '부산진역',
+      '부산역',
       '학교도착',
     ],
     [
       '학교출발',
-      '영도구청',
-      '중앙역',
+      '동삼동',
+      '중부경찰서 삼거리',
       '부산역',
       '서면',
       '시청',
@@ -47,9 +44,7 @@ class CommuterBusController extends GetxController {
   List<List<String>> stationList_2 = [
     [
       '서면역',
-      '범일역 5번출구',
-      '부산진역 7번출구',
-      '부산역 3번출구',
+      '부산역',
       '영도대교 대궁한정식',
       '학교도착',
     ],
