@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:oceanview/pages/home/dayStatus/dayStatusRepository.dart';
 import 'package:oceanview/pages/home/weather/responseWeather.dart';
 
 class HomeController extends GetxController {
@@ -16,7 +17,7 @@ class HomeController extends GetxController {
   }
 
   void getTodayDate() {
-    setStat(getWeekDay());
+    new DayStatusRepository().getDayStatus();
     setDate(getDate());
   }
 
@@ -60,14 +61,5 @@ class HomeController extends GetxController {
     var now = new DateTime.now();
     var formatter = new DateFormat('M.d E');
     return weekdayToKor(formatter.format(now));
-  }
-
-  String getWeekDay() {
-    var now = new DateTime.now();
-    return [6, 7].contains(now.weekday)
-        ? '주말'
-        : [7, 8, 1, 2].contains(now.month)
-            ? '방학'
-            : '평일';
   }
 }

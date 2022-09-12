@@ -5,15 +5,14 @@ import 'dart:convert' as convert;
 import 'package:oceanview/pages/bus/cityBus/cityBusController.dart';
 
 class CityBusRepository {
-  List<dynamic> shuttleApiToJson(response) {
-    if (response.statusCode == 200) {
+  List<dynamic> departCityBusApiToJson(response) {
+    try {
       final jsonResult =
           convert.jsonDecode(convert.utf8.decode(response.bodyBytes));
-      final jsonNextShuttle = jsonResult['data'];
 
-      return jsonNextShuttle;
-    } else {
-      print('error ${response.statusCode}');
+      return jsonResult['nextDepartBus'] ?? [];
+    } catch (e) {
+      print('error ${e}');
       return [];
     }
   }
@@ -54,8 +53,10 @@ class CityBusRepository {
     return cityBusListApiToJson(await FetchAPI().fetchCityBusList());
   }
 
-  Future<List<dynamic>> fetchNexthDepartCityBus() async {
-    return shuttleApiToJson(await FetchAPI().fetchNextDepartCityBus());
+  Future<List<DepartCityBus>?> fetchNextDepartCityBus() async {
+    var response =
+        departCityBusApiToJson(await FetchAPI().fetchNextDepartCityBus());
+    return response.map((element) => DepartCityBus.fromJson(element)).toList();
   }
 
   getNextCityBus(bstopid) async {
@@ -79,7 +80,7 @@ class CityBusRepository {
             -5) {
       Get.find<CityBusController>().setIsLoading(true);
       Get.find<CityBusController>()
-          .setDepartCityBus(await fetchNexthDepartCityBus());
+          .setDepartCityBus(await fetchNextDepartCityBus());
       Get.find<CityBusController>().setFetchTime();
       Get.find<CityBusController>().setBusRemainTimes();
 

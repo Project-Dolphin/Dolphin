@@ -30,18 +30,10 @@ class BusContainer extends GetView<CityBusController> {
             init: CityBusController(),
             builder: (_) {
               return TextBox(
-                _.departArriveTime.length > 0
-                    ? _.departArriveTime[0]
-                                .difference(DateTime.now())
-                                .inMinutes >
-                            1
-                        ? '${_.departArriveTime[0].difference(DateTime.now()).inMinutes.toString()}분 후 출발'
-                        : _.departArriveTime[0]
-                                    .difference(DateTime.now())
-                                    .inMinutes >
-                                -1
-                            ? '곧 도착'
-                            : '${(_.departArriveTime[0].difference(DateTime.now()).inMinutes * -1).toString()}분 전 출발'
+                _.departBus.length > 0
+                    ? _.departBus[0].remainMinutes! > 1
+                        ? '${_.departBus[0].remainMinutes}분 후 출발'
+                        : '곧 도착'
                     : '다음 차가 없어요',
                 SizeConfig.sizeByHeight(16),
                 FontWeight.w700,

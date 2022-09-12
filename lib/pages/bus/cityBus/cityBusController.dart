@@ -14,8 +14,7 @@ class CityBusController extends GetxController {
 
   DateTime? lastFetchTime;
 
-  List<dynamic> departRemainTime = [];
-  List<dynamic> departArriveTime = [];
+  List<DepartCityBus> departBus = [];
   List<dynamic> cityBusRemainTime = [];
   List<dynamic> cityBusArriveTime = [];
 
@@ -57,7 +56,6 @@ class CityBusController extends GetxController {
 
   void setResponseCityBus(response) {
     responseCityBus = response;
-
     update();
   }
 
@@ -72,33 +70,12 @@ class CityBusController extends GetxController {
   }
 
   void setDepartCityBus(response) {
-    var now = DateTime.now();
-    List<DateTime> departTimeList = [];
-    for (var i = 0; i < response.length; i++) {
-      if (response[i]['type'] != 'none') {
-        var hour = int.parse(response[i]['time'].substring(0, 2));
-        var minute = int.parse(response[i]['time'].substring(2, 4));
-        now.hour > hour
-            ? departTimeList
-                .add(DateTime(now.year, now.month, now.day + 1, hour, minute))
-            : departTimeList
-                .add(DateTime(now.year, now.month, now.day, hour, minute));
-      }
-    }
-    departArriveTime = departTimeList;
+    departBus = response;
     update();
   }
 
   void setBusRemainTimes() {
-    if (selectedStation == '해양대구본관') {
-      departRemainTime = [];
-      for (var i = 0; i < departArriveTime.length; i++) {
-        var differenceMinute =
-            departArriveTime[i].difference(DateTime.now()).inMinutes;
-
-        departRemainTime.add(differenceMinute.toString());
-      }
-    } else {
+    if (selectedStation != '해양대구본관') {
       responseCityBus != null
           ? cityBusRemainTime = [
               responseCityBus?.min1 == 999 || responseCityBus?.min1 == null
@@ -120,18 +97,25 @@ class CityBusController extends GetxController {
             ]
           : cityBusArriveTime = [];
     }
-
     if (timer == null) {
       if (selectedStation == '해양대구본관') {
-        setTimer(30, () {
-          departRemainTime = [];
+        setTimer(5, () {
+          for (var i = 0; i < departBus.length; i++) {
+            var element = departBus[i];
+            DateTime now = DateTime.now();
+            var departBusTime = new DateTime(
+                now.year,
+                now.month,
+                now.day,
+                int.parse(element.bus?.split(':')[0] ?? ''),
+                int.parse(element.bus?.split(':')[1] ?? ''));
+            var differenceMinute = departBusTime.difference(now).inMinutes;
+            departBus[i].remainMinutes = differenceMinute;
+          }
 
-          departArriveTime.forEach((element) {
-            departRemainTime
-                .add(element.difference(DateTime.now()).inMinutes.toString());
-          });
-          if (departRemainTime.length > 0 &&
-              int.parse(departRemainTime[0]) <= 0) {
+          if (departBus.length > 0 && departBus[0].remainMinutes! < 0) {
+            print('next ${departBus[0].remainMinutes}');
+            timer?.cancel();
             fetchSelectedStation(selectedStation);
           }
         });
@@ -228,6 +212,25 @@ class CityBusListData {
     data['lin'] = this.lon;
     data['gpsym'] = this.gpsTm;
     data['bstopnm'] = this.bstopnm;
+    return data;
+  }
+}
+
+class DepartCityBus {
+  String? bus;
+  int? remainMinutes;
+
+  DepartCityBus({this.bus, this.remainMinutes});
+
+  DepartCityBus.fromJson(Map<String, dynamic> json) {
+    bus = json['bus'];
+    remainMinutes = json['remainMinutes'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['bus'] = this.bus;
+    data['remainMinutes'] = this.remainMinutes;
     return data;
   }
 }

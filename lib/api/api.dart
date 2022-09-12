@@ -6,6 +6,7 @@ const DEV_URL = 'pxfpulri8j.execute-api.ap-northeast-2.amazonaws.com';
 const NEW_DEV_URL = 'ec2-3-34-85-59.ap-northeast-2.compute.amazonaws.com';
 
 const PATH = const {
+  'HOME': '/',
   'CALENDAR': '/calendar',
   'LATEST_CALENDAR': '/calendar/latest',
   'NOTICES': '/notices',
@@ -13,7 +14,7 @@ const PATH = const {
   'BUS_190': '/businfo',
   'SHUTTLE_NEXT': '/shuttle/next',
   'NEW_SHUTTLE_NEXT': '/bus/nextshuttle',
-  'DEPART_190': '/timetable/190',
+  'NEW_DEPART_190': '/bus/departbus',
   'WEATHER': '/weather/now',
   'MEAL': '/diet/v2/society/today',
   'MEAL2': '/diet/naval/today',
@@ -41,6 +42,11 @@ class FetchAPI {
     }
   }
 
+  Future fetchHomeStatus() async {
+    var response = await fetchNewServerData(PATH['HOME']);
+    return response;
+  }
+
   Future fetchCityBusInfo(bstopid) async {
     var response = await fetchData('${PATH['BUS_190']}/${bstopid.trim()}');
     return response;
@@ -52,7 +58,7 @@ class FetchAPI {
   }
 
   Future fetchNextDepartCityBus() async {
-    var response = await fetchData(PATH['DEPART_190']);
+    var response = await fetchNewServerData(PATH['NEW_DEPART_190']);
     return response;
   }
 

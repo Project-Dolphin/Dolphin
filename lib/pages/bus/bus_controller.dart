@@ -6,11 +6,12 @@ import 'package:oceanview/pages/bus/widgets/commuterBus.dart';
 import 'package:oceanview/pages/bus/widgets/schoolBus.dart';
 import 'package:oceanview/pages/bus/widgets/shuttleBus.dart';
 import 'package:intl/intl.dart';
+import 'package:oceanview/pages/home/dayStatus/dayStatusRepository.dart';
 
 class BusController extends GetxController {
   final String title = 'Home Title';
   String formattedDate = '';
-  String stat = '';
+  String stat = ' ';
   final List<String> titleList = ['190번', '셔틀버스', '통근버스', '학교버스'];
   final List<dynamic> testPageList = [
     CityBus(),
@@ -46,7 +47,7 @@ class BusController extends GetxController {
   void onInit() {
     super.onInit();
     setDate(getDate());
-    setStat(getWeekDay());
+    new DayStatusRepository().getDayStatus();
     initNotification();
     Timer.periodic(Duration(seconds: 10), (Timer t) => setDate(getDate()));
   }

@@ -101,58 +101,38 @@ class CityBus extends GetView<CityBusController> {
                                                       '해양대구본관'
                                                   ? [
                                                       FirstArrive(
-                                                          _.departRemainTime
-                                                                      .length >
-                                                                  0
-                                                              ? _.departRemainTime[
-                                                                  0]
+                                                          _.departBus.length > 0
+                                                              ? _.departBus[0].remainMinutes
+                                                                  .toString()
                                                               : '없음',
-                                                          _.departArriveTime
-                                                                      .length >
-                                                                  0
-                                                              ? DateFormat(
-                                                                      'HH:mm')
-                                                                  .format(
-                                                                      _.departArriveTime[
-                                                                          0])
+                                                          _.departBus.length > 0
+                                                              ? _.departBus[0]
+                                                                  .bus!
                                                               : ' '),
                                                       SecondArrive(
-                                                          _.departRemainTime
-                                                                      .length >
-                                                                  1
-                                                              ? _.departRemainTime[
-                                                                  1]
+                                                          _.departBus.length > 1
+                                                              ? _.departBus[1].remainMinutes
+                                                                  .toString()
                                                               : '없음',
-                                                          _.departArriveTime
-                                                                      .length >
-                                                                  1
-                                                              ? DateFormat('HH:mm')
-                                                                  .format(
-                                                                      _.departArriveTime[
-                                                                          1])
+                                                          _.departBus.length > 1
+                                                              ? _.departBus[1]
+                                                                  .bus!
                                                               : ' ',
                                                           _.stationList.indexOf(_
                                                               .selectedStation),
                                                           busController.getIsNotiOn(_
                                                                   .stationList
-                                                                  .indexOf(
-                                                                      _.selectedStation) +
+                                                                  .indexOf(_
+                                                                      .selectedStation) +
                                                               10)),
                                                       ThirdArrive(
-                                                        _.departRemainTime
-                                                                    .length >
-                                                                2
-                                                            ? _.departRemainTime[
-                                                                2]
+                                                        _.departBus.length > 2
+                                                            ? _.departBus[2].remainMinutes
+                                                                .toString()
                                                             : '없음',
-                                                        _.departArriveTime
-                                                                    .length >
-                                                                2
-                                                            ? DateFormat(
-                                                                    'HH:mm')
-                                                                .format(
-                                                                    _.departArriveTime[
-                                                                        2])
+                                                        _.departBus.length > 2
+                                                            ? _.departBus[2]
+                                                                .bus!
                                                             : ' ',
                                                         _.stationList.indexOf(
                                                             _.selectedStation),
